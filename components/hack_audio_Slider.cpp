@@ -175,8 +175,6 @@ void HackAudio::Slider::resized()
     if (getSliderStyle() == juce::Slider::LinearVertical)
     {
 
-        setSliderStyle(juce::Slider::LinearVertical);
-
         sliderArea.setBounds(64, height / 6, 12, height - (height / 3));
 
         thumbArea.setX(sliderArea.getCentreX() - 16);
@@ -192,10 +190,8 @@ void HackAudio::Slider::resized()
         setSize(128, height);
 
     }
-    else
+    else if (getSliderStyle() == juce::Slider::LinearHorizontal)
     {
-
-        setSliderStyle(juce::Slider::LinearHorizontal);
 
         sliderArea.setBounds(0, 0, width - 128, 12);
 
