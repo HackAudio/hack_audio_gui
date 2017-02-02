@@ -8,7 +8,7 @@ HackAudio::Slider::Slider()
 
     pipAreas.resize(10);
 
-    animationAcc = 0;
+    animationAcc = 1;
     animationVel = 0;
 
     animationStart = animationEnd = juce::Point<int>(0, 0);
@@ -54,7 +54,7 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent& e)
 
             if (getSliderStyle() == juce::Slider::LinearVertical)
             {
-                animationEnd = juce::Point<int>(0, ((i / (float)pipAreas.size())) * (trackArea.getHeight() - trackArea.getWidth()));
+                animationEnd = thumbArea.getPosition().withY(trackArea.getBottom() - ((i/(float)pipAreas.size()) * trackArea.getHeight()) - thumbArea.getHeight());
             }
             else if (getSliderStyle() == juce::Slider::LinearHorizontal)
             {
@@ -79,10 +79,13 @@ void HackAudio::Slider::timerCallback()
         }
         else
         {
-            animationAcc -= ANIMATION_SPEED * 8;
+            animationAcc -= ANIMATION_SPEED;
         }
 
-        animationVel += animationAcc;
+        if (std::abs(animationVel) < 16)
+        {
+            animationVel += animationAcc;
+        }
 
         thumbArea.translate(0, animationVel);
     }
@@ -97,7 +100,7 @@ void HackAudio::Slider::timerCallback()
             animationAcc -= ANIMATION_SPEED;
         }
 
-        if (std::abs(animationVel) < 8)
+        if (std::abs(animationVel) < 16)
         {
             animationVel += animationAcc;
         }
