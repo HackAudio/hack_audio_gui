@@ -2,7 +2,8 @@
 #define HACK_AUDIO_SLIDER
 
 class Slider : public juce::Slider,
-               public juce::Timer
+               public juce::Timer,
+               public juce::SliderListener
 {
 public:
 
@@ -17,6 +18,8 @@ private:
 
     void timerCallback() override;
 
+    void sliderValueChanged(juce::Slider*) override;
+
     void paint (juce::Graphics& g) override;
     void resized() override;
 
@@ -28,8 +31,9 @@ private:
 
     bool isResizing;
     juce::Array<juce::Rectangle<int>> pipAreas;
-    juce::Rectangle<int> sliderArea;
+    juce::Rectangle<int> trackArea;
     juce::Rectangle<int> thumbArea;
+    juce::Rectangle<int> highlightArea;
 
 };
 
