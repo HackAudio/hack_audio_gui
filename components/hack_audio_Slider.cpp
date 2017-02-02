@@ -68,9 +68,6 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent& e)
 
 void HackAudio::Slider::timerCallback()
 {
-    int width  = getWidth();
-    int height = getHeight();
-
     if (getSliderStyle() == juce::Slider::LinearVertical)
     {
         if (thumbArea.getY() <= (animationStart.getY() + animationEnd.getY()) / 2)
