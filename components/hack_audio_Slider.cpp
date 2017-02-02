@@ -8,7 +8,7 @@ HackAudio::Slider::Slider()
 
     pipAreas.resize(10);
 
-    animationAcc = 1;
+    animationAcc = 0;
     animationVel = 0;
 
     animationStart = animationEnd = juce::Point<int>(0, 0);
@@ -88,6 +88,8 @@ void HackAudio::Slider::timerCallback()
         }
 
         thumbArea.translate(0, animationVel);
+        highlightArea.setHeight(std::abs(trackArea.getBottom() - thumbArea.getCentreY()));
+        highlightArea.setY(thumbArea.getCentreY());
     }
     else if (getSliderStyle() == juce::Slider::LinearHorizontal)
     {
@@ -106,6 +108,7 @@ void HackAudio::Slider::timerCallback()
         }
 
         thumbArea.translate(animationVel, 0);
+        highlightArea.setWidth(std::abs(trackArea.getX() - thumbArea.getCentreX()));
     }
 
     if (thumbArea.getPosition().getDistanceFrom(animationEnd) < 16)
@@ -196,7 +199,7 @@ void HackAudio::Slider::resized()
     {
 
         trackArea.setBounds(74, height / 6, 12, height - (height / 3));
-
+        highlightArea.setWidth(trackArea.getWidth());
         thumbArea.setX(trackArea.getCentreX() - 16);
 
         for (int i = 0; i < pipAreas.size(); ++i)
@@ -212,7 +215,8 @@ void HackAudio::Slider::resized()
     {
 
         trackArea.setBounds(width / 6, 74, width - (width / 3), 12);
-
+        highlightArea.setHeight(trackArea.getHeight());
+        highlightArea.setPosition(trackArea.getPosition());
         thumbArea.setY(trackArea.getCentreY() - 16);
 
         for (int i = 0; i < pipAreas.size(); ++i)
