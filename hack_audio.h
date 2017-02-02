@@ -24,6 +24,8 @@ END_JUCE_MODULE_DECLARATION
 namespace HackAudio
 {
 
+#define ANIMATION_SPEED 0.1
+
     struct Colours
     {
 
