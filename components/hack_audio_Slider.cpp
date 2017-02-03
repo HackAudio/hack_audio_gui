@@ -54,11 +54,11 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent& e)
 
             if (getSliderStyle() == juce::Slider::LinearVertical)
             {
-                animationEnd = thumbArea.getPosition().withY(trackArea.getBottom() - ((getValue()/getMaximum()) * trackArea.getHeight() + thumbArea.getHeight() / 2));
+                animationEnd = thumbArea.getPosition().withY(thumbSpan.getY() - (getValue()/getMaximum()) * thumbSpan.getHeight());
             }
             else if (getSliderStyle() == juce::Slider::LinearHorizontal)
             {
-                animationEnd = thumbArea.getPosition().withX(trackArea.getX() + ((getValue()/getMaximum()) * trackArea.getWidth() - thumbArea.getHeight() / 2));
+                animationEnd = thumbArea.getPosition().withX(thumbSpan.getX() + (getValue()/getMaximum()) * thumbSpan.getWidth());
             }
 
             startTimerHz(60);
@@ -167,7 +167,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     // Draw Slider Pips
     for (int i = 0; i < pipAreas.size(); ++i)
     {
-        if ((i / (float)pipAreas.size()) - (getValue() / getMaximum()) >= 0)
+        if ((i / (float)pipAreas.size()) - (getValue() / getMaximum()) > 0)
         {
             g.setColour(HackAudio::Colours::Gray);
         }
