@@ -198,11 +198,10 @@ void HackAudio::Slider::resized()
         trackArea.setBounds(74, height / 6, 12, height - (height / 3));
         highlightArea.setWidth(trackArea.getWidth());
         thumbArea.setX(trackArea.getCentreX() - 16);
-
         for (int i = 0; i < pipAreas.size(); ++i)
         {
             juce::Rectangle<int>& r = pipAreas.getReference(i);
-            r.setBounds(32, (trackArea.getBottom() - 8) - ((trackArea.getHeight()-8) / (pipAreas.size() - 1)) * i, 8, 8);
+            r.setBounds(32, (trackArea.getBottom() - 8) - ((((float)(trackArea.getHeight() - 8) / (float)(pipAreas.size() - 1))) * i), 8, 8);
         }
 
         setSize(128, height);
@@ -219,7 +218,7 @@ void HackAudio::Slider::resized()
         for (int i = 0; i < pipAreas.size(); ++i)
         {
             juce::Rectangle<int>& r = pipAreas.getReference(i);
-            r.setBounds(trackArea.getX() + ((trackArea.getWidth() - 8) / (pipAreas.size() - 1)) * i, 32, 8, 8);
+            r.setBounds(trackArea.getX() + ((float)(trackArea.getWidth() - 8) / (float)(pipAreas.size() - 1)) * i, 32, 8, 8);
         }
 
         setSize(width, 128);
