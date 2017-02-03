@@ -54,11 +54,11 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent& e)
 
             if (getSliderStyle() == juce::Slider::LinearVertical)
             {
-                animationEnd = thumbArea.getPosition().withY(trackArea.getBottom() - ((i/(float)pipAreas.size()) * trackArea.getHeight()) - thumbArea.getHeight());
+                animationEnd = thumbArea.getPosition().withY(trackArea.getBottom() - ((getValue()/getMaximum()) * trackArea.getHeight() + thumbArea.getHeight() / 2));
             }
             else if (getSliderStyle() == juce::Slider::LinearHorizontal)
             {
-                animationEnd = thumbArea.getPosition().withX(trackArea.getX() + ((i/(float)pipAreas.size()) * trackArea.getWidth()));
+                animationEnd = thumbArea.getPosition().withX(trackArea.getX() + ((getValue()/getMaximum()) * trackArea.getWidth() - thumbArea.getHeight() / 2));
             }
 
             startTimerHz(60);
@@ -127,15 +127,15 @@ void HackAudio::Slider::sliderValueChanged(juce::Slider*)
     {
         if (getSliderStyle() == juce::Slider::LinearVertical)
         {
-            highlightArea.setBounds(trackArea.getX(), trackArea.getBottom() - ((getValue()/getMaximum()) * trackArea.getHeight()), trackArea.getWidth(), (getValue()/getMaximum()) * trackArea.getHeight());
-
             thumbArea.setBounds(thumbArea.getX(), trackArea.getBottom() - ((getValue()/getMaximum()) * trackArea.getHeight() + thumbArea.getHeight() / 2), thumbArea.getWidth(), thumbArea.getHeight());
+
+            highlightArea.setBounds(trackArea.getX(), thumbArea.getCentreY(), trackArea.getWidth(), std::abs(trackArea.getBottom() - thumbArea.getCentreY()));
         }
         else if (getSliderStyle() == juce::Slider::LinearHorizontal)
         {
-            highlightArea.setBounds(trackArea.getX(), trackArea.getY(), (getValue()/getMaximum()) * (trackArea.getWidth() ), trackArea.getHeight());
-
             thumbArea.setBounds(trackArea.getX() + ((getValue()/getMaximum()) * trackArea.getWidth() - thumbArea.getHeight() / 2), thumbArea.getY(), thumbArea.getWidth(), thumbArea.getHeight());
+
+            highlightArea.setBounds(trackArea.getX(), trackArea.getY(), std::abs(trackArea.getX() - thumbArea.getCentreX()), trackArea.getHeight());
         }
     }
 }
