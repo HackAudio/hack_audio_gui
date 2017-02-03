@@ -42,7 +42,7 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent& e)
         juce::Slider::mouseDown(e);
     }
 
-    for (int i = 0; i < pipAreas.size(); ++i)
+    for (int i = 0; i <= pipAreas.size(); ++i)
     {
         if (pipAreas[i].contains(e.getPosition()))
         {
@@ -50,7 +50,7 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent& e)
 
             isAnimating = true;
 
-            setValue((i / (float)pipAreas.size()) * getMaximum());
+            setValue((i / (float)(pipAreas.size() - 1) * getMaximum()));
 
             if (getSliderStyle() == juce::Slider::LinearVertical)
             {
@@ -127,13 +127,13 @@ void HackAudio::Slider::sliderValueChanged(juce::Slider*)
     {
         if (getSliderStyle() == juce::Slider::LinearVertical)
         {
-            thumbArea.setBounds(thumbArea.getX(), trackArea.getBottom() - ((getValue()/getMaximum()) * trackArea.getHeight() + thumbArea.getHeight() / 2), thumbArea.getWidth(), thumbArea.getHeight());
+            thumbArea.setBounds(thumbArea.getX(), thumbSpan.getY() - ((getValue()/getMaximum()) * thumbSpan.getHeight()), thumbArea.getWidth(), thumbArea.getHeight());
 
             highlightArea.setBounds(trackArea.getX(), thumbArea.getCentreY(), trackArea.getWidth(), std::abs(trackArea.getBottom() - thumbArea.getCentreY()));
         }
         else if (getSliderStyle() == juce::Slider::LinearHorizontal)
         {
-            thumbArea.setBounds(trackArea.getX() + ((getValue()/getMaximum()) * trackArea.getWidth() - thumbArea.getHeight() / 2), thumbArea.getY(), thumbArea.getWidth(), thumbArea.getHeight());
+            thumbArea.setBounds(thumbSpan.getX() + ((getValue()/getMaximum()) * thumbSpan.getWidth()), thumbArea.getY(), thumbArea.getWidth(), thumbArea.getHeight());
 
             highlightArea.setBounds(trackArea.getX(), trackArea.getY(), std::abs(trackArea.getX() - thumbArea.getCentreX()), trackArea.getHeight());
         }
@@ -167,7 +167,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     // Draw Slider Pips
     for (int i = 0; i < pipAreas.size(); ++i)
     {
-        if ((i / (float)pipAreas.size()) - (getValue() / getMaximum()) > 0.0025)
+        if ((i / (float)pipAreas.size()) - (getValue() / getMaximum()) >= 0)
         {
             g.setColour(HackAudio::Colours::Gray);
         }
@@ -197,7 +197,10 @@ void HackAudio::Slider::resized()
 
         trackArea.setBounds(74, height / 6, 12, height - (height / 3));
         highlightArea.setWidth(trackArea.getWidth());
+
         thumbArea.setX(trackArea.getCentreX() - 16);
+        thumbSpan.setBounds(trackArea.getX(), trackArea.getBottom() - thumbArea.getHeight() / 2, trackArea.getWidth(), trackArea.getHeight());
+
         for (int i = 0; i < pipAreas.size(); ++i)
         {
             juce::Rectangle<int>& r = pipAreas.getReference(i);
@@ -206,6 +209,8 @@ void HackAudio::Slider::resized()
 
         setSize(128, height);
 
+        setMouseDragSensitivity(trackArea.getHeight());
+
     }
     else if (getSliderStyle() == juce::Slider::LinearHorizontal)
     {
@@ -213,7 +218,9 @@ void HackAudio::Slider::resized()
         trackArea.setBounds(width / 6, 74, width - (width / 3), 12);
         highlightArea.setHeight(trackArea.getHeight());
         highlightArea.setPosition(trackArea.getPosition());
+
         thumbArea.setY(trackArea.getCentreY() - 16);
+        thumbSpan.setBounds(trackArea.getX() - thumbArea.getWidth() / 2, trackArea.getY(), trackArea.getWidth(), trackArea.getHeight());
 
         for (int i = 0; i < pipAreas.size(); ++i)
         {
@@ -222,6 +229,8 @@ void HackAudio::Slider::resized()
         }
 
         setSize(width, 128);
+
+        setMouseDragSensitivity(trackArea.getWidth());
 
     }
 
