@@ -60,6 +60,20 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent& e)
             {
                 animationEnd = thumbArea.getPosition().withX(thumbSpan.getX() + (getValue()/getMaximum()) * thumbSpan.getWidth());
             }
+            else if (isRotary())
+            {
+                int radius = (thumbArea.getWidth() / 2) - (thumbArea.getWidth() / 8);
+
+                float angle = ((7.0f * M_PI) / 6.0f) + (((i/9.0f) * 10.0f) * (M_PI / 6.0f));
+
+                float startAngle = thumbArea.getCentre().getAngleToPoint(indicatorArea.getCentre());
+                juce::Point<float> start = thumbArea.getCentre().getPointOnCircumference(radius, startAngle);
+                animationStart.setXY(start.x, start.y);
+
+                juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, angle);
+                animationEnd.setXY(destination.x, destination.y);
+
+            }
 
             startTimerHz(60);
         }
@@ -107,12 +121,48 @@ void HackAudio::Slider::timerCallback()
         thumbArea.translate(animationVel, 0);
         indicatorArea.setWidth(std::abs(trackArea.getX() - thumbArea.getCentreX()));
     }
+    else if (isRotary())
+    {
+        int radius = (thumbArea.getWidth() / 2) - (thumbArea.getWidth() / 8);
 
-    if (thumbArea.getPosition().getDistanceFrom(animationEnd) < 16)
+        float startAngle   = thumbArea.getCentre().getAngleToPoint(animationStart);
+        float targetAngle  = thumbArea.getCentre().getAngleToPoint(animationEnd);
+        float currentAngle = thumbArea.getCentre().getAngleToPoint(indicatorArea.getCentre());
+
+        if (currentAngle <= (startAngle + targetAngle) / 2)
+        {
+            animationAcc += ANIMATION_SPEED;
+        }
+        else
+        {
+            animationAcc -= ANIMATION_SPEED;
+        }
+
+        if (std::abs(animationVel) < 16)
+        {
+            animationVel += animationAcc;
+        }
+
+
+        currentAngle += (animationVel * M_PI) / 180;
+        juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, currentAngle);
+
+        indicatorArea.setCentre(destination.x, destination.y);
+
+    }
+
+    if (
+        ((!isRotary()) && (thumbArea.getPosition().getDistanceFrom(animationEnd) < 16)) ||
+        ((isRotary()) && (indicatorArea.getCentre().getDistanceFrom(animationEnd) < 4))
+        )
     {
         animationAcc = 0;
         animationVel = 0;
-        thumbArea.setPosition(animationEnd);
+
+
+        (isRotary()) ? indicatorArea.setCentre(animationEnd) : thumbArea.setPosition(animationEnd);
+
+
         isAnimating = false;
         stopTimer();
         repaint();
@@ -273,6 +323,13 @@ void HackAudio::Slider::resized()
             juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, angle);
             r.setCentre(destination.x, destination.y);
         }
+
+        int radius = (thumbArea.getWidth() / 2) - (thumbArea.getWidth() / 8);
+
+        float angle = ((7.0f * M_PI) / 6.0f) + ((((getValue()/getMaximum())) * 10.0f) * (M_PI / 6.0f));
+
+        juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, angle);
+        indicatorArea.setCentre(destination.x, destination.y);
 
         setSize(128, 128);
 
