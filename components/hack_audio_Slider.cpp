@@ -52,11 +52,11 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent& e)
 
             setValue((i / (float)(pipAreas.size() - 1) * getMaximum()));
 
-            if (getSliderStyle() == juce::Slider::LinearVertical)
+            if (isVertical())
             {
                 animationEnd = thumbArea.getPosition().withY(thumbSpan.getY() - (getValue()/getMaximum()) * thumbSpan.getHeight());
             }
-            else if (getSliderStyle() == juce::Slider::LinearHorizontal)
+            else if (isHorizontal())
             {
                 animationEnd = thumbArea.getPosition().withX(thumbSpan.getX() + (getValue()/getMaximum()) * thumbSpan.getWidth());
             }
@@ -68,7 +68,7 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent& e)
 
 void HackAudio::Slider::timerCallback()
 {
-    if (getSliderStyle() == juce::Slider::LinearVertical)
+    if (isVertical())
     {
         if (thumbArea.getY() <= (animationStart.getY() + animationEnd.getY()) / 2)
         {
@@ -88,7 +88,7 @@ void HackAudio::Slider::timerCallback()
         highlightArea.setHeight(std::abs(trackArea.getBottom() - thumbArea.getCentreY()));
         highlightArea.setY(thumbArea.getCentreY());
     }
-    else if (getSliderStyle() == juce::Slider::LinearHorizontal)
+    else if (isHorizontal())
     {
         if (thumbArea.getX() <= (animationStart.getX() + animationEnd.getX()) / 2)
         {
@@ -125,13 +125,13 @@ void HackAudio::Slider::sliderValueChanged(juce::Slider*)
 {
     if (!isAnimating)
     {
-        if (getSliderStyle() == juce::Slider::LinearVertical)
+        if (isVertical())
         {
             thumbArea.setBounds(thumbArea.getX(), thumbSpan.getY() - ((getValue()/getMaximum()) * thumbSpan.getHeight()), thumbArea.getWidth(), thumbArea.getHeight());
 
             highlightArea.setBounds(trackArea.getX(), thumbArea.getCentreY(), trackArea.getWidth(), std::abs(trackArea.getBottom() - thumbArea.getCentreY()));
         }
-        else if (getSliderStyle() == juce::Slider::LinearHorizontal)
+        else if (isHorizontal())
         {
             thumbArea.setBounds(thumbSpan.getX() + ((getValue()/getMaximum()) * thumbSpan.getWidth()), thumbArea.getY(), thumbArea.getWidth(), thumbArea.getHeight());
 
@@ -192,7 +192,7 @@ void HackAudio::Slider::resized()
 
     thumbArea.setSize(32, 32);
 
-    if (getSliderStyle() == juce::Slider::LinearVertical)
+    if (isVertical())
     {
 
         trackArea.setBounds(74, height / 6, 12, height - (height / 3));
@@ -212,7 +212,7 @@ void HackAudio::Slider::resized()
         setMouseDragSensitivity(trackArea.getHeight());
 
     }
-    else if (getSliderStyle() == juce::Slider::LinearHorizontal)
+    else if (isHorizontal())
     {
 
         trackArea.setBounds(width / 6, 74, width - (width / 3), 12);
