@@ -38,8 +38,10 @@ namespace HackAudio
     };
 
     class Slider;
+    class Button;
 
     #include "components/hack_audio_Slider.h"
+    #include "components/hack_audio_Button.h"
 
 }
 

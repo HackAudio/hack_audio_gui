@@ -13,6 +13,7 @@ namespace HackAudio
 	const juce::Colour Colours::Cyan  (0xFF59C6C3);
 
     #include "components/hack_audio_Slider.cpp"
+    #include "components/hack_audio_Button.cpp"
 
 }
 
