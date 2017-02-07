@@ -34,7 +34,7 @@ private:
     juce::Rectangle<int> trackArea;
     juce::Rectangle<int> thumbArea;
     juce::Rectangle<int> thumbSpan;
-    juce::Rectangle<int> highlightArea;
+    juce::Rectangle<int> indicatorArea;
 
 };
 
