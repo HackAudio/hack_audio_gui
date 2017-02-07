@@ -152,17 +152,23 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     g.fillPath(p);
 
     // Draw Slider Tracks and Thumb
-    g.setColour(HackAudio::Colours::Gray);
-    g.fillRoundedRectangle(trackArea.getX(), trackArea.getY(), trackArea.getWidth(), trackArea.getHeight(), 8);
+    if (!isRotary())
+    {
+        g.setColour(HackAudio::Colours::Gray);
+        g.fillRoundedRectangle(trackArea.getX(), trackArea.getY(), trackArea.getWidth(), trackArea.getHeight(), 8);
 
-    g.setColour(HackAudio::Colours::Cyan);
-    g.fillRoundedRectangle(highlightArea.getX(), highlightArea.getY(), highlightArea.getWidth(), highlightArea.getHeight(), 8);
+        g.setColour(HackAudio::Colours::Cyan);
+        g.fillRoundedRectangle(highlightArea.getX(), highlightArea.getY(), highlightArea.getWidth(), highlightArea.getHeight(), 8);
+    }
 
     g.setColour(HackAudio::Colours::White);
     g.fillEllipse(thumbArea.getX(), thumbArea.getY(), thumbArea.getWidth(), thumbArea.getHeight());
 
-    g.setColour(HackAudio::Colours::Black);
-    g.drawEllipse(thumbArea.getX(), thumbArea.getY(), thumbArea.getWidth(), thumbArea.getHeight(), 8);
+    if (!isRotary())
+    {
+        g.setColour(HackAudio::Colours::Black);
+        g.drawEllipse(thumbArea.getX(), thumbArea.getY(), thumbArea.getWidth(), thumbArea.getHeight(), 8);
+    }
 
     // Draw Slider Pips
     for (int i = 0; i < pipAreas.size(); ++i)
@@ -231,6 +237,31 @@ void HackAudio::Slider::resized()
         setSize(width, 128);
 
         setMouseDragSensitivity(trackArea.getWidth());
+
+    }
+    else if (isRotary())
+    {
+
+        trackArea.setBounds(0, 0, 0, 0);
+        highlightArea.setBounds(0, 0, 0, 0);
+
+        thumbArea.setBounds(32, 32, 64, 64);
+
+        for (int i = 0; i < pipAreas.size(); ++i)
+        {
+            juce::Rectangle<int>& r = pipAreas.getReference(i);
+
+            int radius = sqrt ( pow(thumbArea.getWidth() / 2, 2) * 2);
+
+            float angle = ((7.0f * M_PI) / 6.0f) + (((i/9.0f) * 10.0f) * (M_PI / 6.0f));
+
+            juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, angle);
+            r.setCentre(destination.x, destination.y);
+        }
+
+        setSize(128, 128);
+
+        setMouseDragSensitivity(2 * M_PI * 32);
 
     }
 
