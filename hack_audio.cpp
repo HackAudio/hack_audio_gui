@@ -14,6 +14,7 @@ namespace HackAudio
 
     #include "components/hack_audio_Slider.cpp"
     #include "components/hack_audio_Button.cpp"
+    #include "components/hack_audio_Label.cpp"
 
 }
 
