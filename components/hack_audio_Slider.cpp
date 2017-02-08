@@ -206,7 +206,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
 
     // Draw Background
     juce::Path p;
-    p.addRoundedRectangle(0, 0, width, height, 32, 32, false, true, true, false);
+    p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_RADIUS, false, true, true, false);
     g.setColour(HackAudio::Colours::Black);
     g.fillPath(p);
 

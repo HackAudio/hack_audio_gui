@@ -21,10 +21,11 @@ END_JUCE_MODULE_DECLARATION
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <juce_audio_basics/juce_audio_basics.h>
 
+#define ANIMATION_SPEED 0.1
+#define CORNER_RADIUS   24
+
 namespace HackAudio
 {
-
-#define ANIMATION_SPEED 0.1
 
     struct Colours
     {
