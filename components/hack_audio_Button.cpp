@@ -100,7 +100,7 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
 	g.fillPath(p);
 
 	g.setColour(HackAudio::Colours::Black);
-	// g.strokePath
+    g.strokePath(p, juce::PathStrokeType::PathStrokeType(8));
 
 }
 
