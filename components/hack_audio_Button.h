@@ -12,6 +12,8 @@ public:
 private:
 
     void mouseDown(const juce::MouseEvent& e) override;
+    void mouseDrag(const juce::MouseEvent& e) override;
+    void mouseUp  (const juce::MouseEvent& e) override;
 
     void timerCallback() override;
 
@@ -28,6 +30,8 @@ private:
     juce::Rectangle<int> thumbArea;
 	juce::Rectangle<int> trackArea;
 	juce::Rectangle<int> indicatorArea;
+
+    bool isDraggable;
 
 };
 

@@ -16,23 +16,59 @@ HackAudio::Button::~Button()
 void HackAudio::Button::mouseDown(const juce::MouseEvent& e)
 {
 
+    isDraggable = false;
+
 	if (!trackArea.contains(e.getPosition()) && !thumbArea.contains(e.getPosition())) { return; }
 
-	animationStart.setXY(thumbArea.getX(), thumbArea.getY());
+    if (thumbArea.contains(e.getPosition()))
+    {
+        isDraggable = true;
+    }
 
-	if (e.getMouseDownX() <= getWidth() / 2)
-	{
+}
+
+void HackAudio::Button::mouseDrag(const juce::MouseEvent& e)
+{
+
+    if (!isDraggable || !e.mouseWasDraggedSinceMouseDown()) { return; }
+
+    if (e.x < 32 || thumbArea.getX() < 32)
+    {
+        thumbArea.setX(32);
+
+    }
+    else if (e.x > 64 || thumbArea.getX() > 64)
+    {
+        thumbArea.setX(64);
+    }
+    else
+    {
+        thumbArea.setX(e.x);
+    }
+
+    indicatorArea.setWidth((thumbArea.getX() - indicatorArea.getX()) + thumbArea.getWidth()/2);
+
+    repaint();
+
+}
+
+void HackAudio::Button::mouseUp(const juce::MouseEvent& e)
+{
+
+    animationStart.setXY(thumbArea.getX(), thumbArea.getY());
+
+    if (e.x <= getWidth() / 2)
+    {
         setToggleState(false, juce::sendNotification);
-		animationEnd.setXY(32, 16);
-	}
-	else
-	{
+        animationEnd.setXY(32, 16);
+    }
+    else
+    {
         setToggleState(true, juce::sendNotification);
-		animationEnd.setXY(64, 16);
-	}
+        animationEnd.setXY(64, 16);
+    }
 
-	startTimerHz(60);
-
+    startTimerHz(60);
 }
 
 void HackAudio::Button::timerCallback()
