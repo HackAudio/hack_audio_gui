@@ -22,7 +22,9 @@ END_JUCE_MODULE_DECLARATION
 #include <juce_audio_basics/juce_audio_basics.h>
 
 #define ANIMATION_SPEED 0.1
-#define CORNER_RADIUS   24
+
+#define CORNER_RADIUS   24, 24
+#define CORNER_CONFIG   false, true, true, false
 
 namespace HackAudio
 {

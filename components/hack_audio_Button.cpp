@@ -77,7 +77,7 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
 
 	//Draw Background
 	juce::Path p;
-	p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_RADIUS, false, true, true, false);
+	p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
 	g.setColour(HackAudio::Colours::Black);
 	g.fillPath(p);
 
