@@ -231,7 +231,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     }
     else
     {
-        g.setColour(HackAudio::Colours::Black);
+        g.setColour(HackAudio::Colours::Gray);
         g.fillEllipse(indicatorArea.getX(), indicatorArea.getY(), indicatorArea.getWidth(), indicatorArea.getHeight());
     }
 
