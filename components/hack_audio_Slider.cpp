@@ -44,7 +44,7 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent& e)
 
     for (int i = 0; i <= pipAreas.size(); ++i)
     {
-        if (pipAreas[i].contains(e.getPosition()))
+        if (pipAreas[i].getCentre().getDistanceFrom(e.getPosition()) <= 16)
         {
             animationStart = thumbArea.getPosition();
 
