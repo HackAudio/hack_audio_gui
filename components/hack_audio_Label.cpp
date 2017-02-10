@@ -2,7 +2,7 @@
 
 HackAudio::Label::Label()
 {
-    isResizing = false;
+    setInterceptsMouseClicks(false, false);
 }
 
 HackAudio::Label::~Label()
@@ -29,26 +29,21 @@ juce::String HackAudio::Label::getPostfix()
 void HackAudio::Label::setPostfix(juce::String post)
 {
     postfix = post;
+    repaint();
 }
 
-// listenTo
-
-void paint(juce::Graphics& g)
+void HackAudio::Label::paint(juce::Graphics& g)
 {
 
+    int width  = getWidth();
+    int height = getHeight();
 
+    juce::Path p;
+    p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
+    g.setColour(HackAudio::Colours::Black);
+    g.fillPath(p);
 
-}
-
-void resized()
-{
-
-    if (isResizing) { return; }
-
-    isResizing = true;
-
-
-
-    isResizing = false;
+    g.setColour(HackAudio::Colours::White);
+    g.drawFittedText(prefix + getText() + postfix, getLocalBounds(), juce::Justification::centred, 1);
 
 }
