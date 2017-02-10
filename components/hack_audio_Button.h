@@ -9,6 +9,16 @@ public:
     Button();
     ~Button();
 
+    enum ButtonStyle
+    {
+        BarSingleton,
+        BarToggle,
+        SlidingToggle
+    };
+
+    void setButtonStyle(ButtonStyle style);
+    ButtonStyle getButtonStyle();
+
 private:
 
     void mouseDown(const juce::MouseEvent& e) override;
@@ -32,6 +42,8 @@ private:
 	juce::Rectangle<int> indicatorArea;
 
     bool isDraggable;
+
+    ButtonStyle buttonStyle;
 
 };
 

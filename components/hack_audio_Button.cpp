@@ -13,66 +13,125 @@ HackAudio::Button::~Button()
 
 }
 
+void HackAudio::Button::setButtonStyle(HackAudio::Button::ButtonStyle style)
+{
+    buttonStyle = style;
+    resized();
+    repaint();
+}
+
+HackAudio::Button::ButtonStyle HackAudio::Button::getButtonStyle()
+{
+    return buttonStyle;
+}
+
 void HackAudio::Button::mouseDown(const juce::MouseEvent& e)
 {
 
-    isDraggable = false;
-
-	if (!trackArea.contains(e.getPosition()) && !thumbArea.contains(e.getPosition())) { return; }
-
-    if (thumbArea.contains(e.getPosition()))
+    if (buttonStyle == ButtonStyle::BarSingleton)
     {
-        isDraggable = true;
-    }
 
+        setToggleState(true, juce::sendNotification);
+
+    }
+    else if (buttonStyle == ButtonStyle::BarToggle)
+    {
+
+        juce::Button::mouseDown(e);
+
+    }
+    else if (buttonStyle == ButtonStyle::SlidingToggle)
+    {
+
+        isDraggable = false;
+
+        if (!trackArea.contains(e.getPosition()) && !thumbArea.contains(e.getPosition())) { return; }
+
+        if (thumbArea.contains(e.getPosition()))
+        {
+            isDraggable = true;
+        }
+
+    }
 }
 
 void HackAudio::Button::mouseDrag(const juce::MouseEvent& e)
 {
 
-    if (!isDraggable || !e.mouseWasDraggedSinceMouseDown()) { return; }
-
-    if (e.x < 32 || thumbArea.getX() < 32)
+    if (buttonStyle != ButtonStyle::SlidingToggle)
     {
-        thumbArea.setX(32);
-
-    }
-    else if (e.x > 64 || thumbArea.getX() > 64)
-    {
-        thumbArea.setX(64);
+        juce::Button::mouseDrag(e);
     }
     else
     {
-        thumbArea.setX(e.x);
+
+        if (!isDraggable || !e.mouseWasDraggedSinceMouseDown()) { return; }
+
+        if (e.x < 32 || thumbArea.getX() < 32)
+        {
+            thumbArea.setX(32);
+
+        }
+        else if (e.x > 64 || thumbArea.getX() > 64)
+        {
+            thumbArea.setX(64);
+        }
+        else
+        {
+            thumbArea.setX(e.x);
+        }
+
+        indicatorArea.setWidth((thumbArea.getX() - indicatorArea.getX()) + thumbArea.getWidth()/2);
+
+        repaint();
+
     }
-
-    indicatorArea.setWidth((thumbArea.getX() - indicatorArea.getX()) + thumbArea.getWidth()/2);
-
-    repaint();
 
 }
 
 void HackAudio::Button::mouseUp(const juce::MouseEvent& e)
 {
 
-    animationStart.setXY(thumbArea.getX(), thumbArea.getY());
 
-    if (e.x <= getWidth() / 2)
+    if (buttonStyle == ButtonStyle::BarSingleton)
     {
-        setToggleState(false, juce::sendNotification);
-        animationEnd.setXY(32, 16);
-    }
-    else
-    {
-        setToggleState(true, juce::sendNotification);
-        animationEnd.setXY(64, 16);
-    }
 
-    startTimerHz(60);
+        setToggleState(false, juce::dontSendNotification);
+
+    }
+    else if (buttonStyle == ButtonStyle::BarToggle)
+    {
+
+        juce::Button::mouseUp(e);
+
+    }
+    else if (buttonStyle == ButtonStyle::SlidingToggle)
+    {
+
+        animationStart.setXY(thumbArea.getX(), thumbArea.getY());
+
+        if (e.x <= getWidth() / 2)
+        {
+            setToggleState(false, juce::sendNotification);
+            animationEnd.setXY(32, 16);
+        }
+        else
+        {
+            setToggleState(true, juce::sendNotification);
+            animationEnd.setXY(64, 16);
+        }
+
+        startTimerHz(60);
+
+    }
 }
 
 void HackAudio::Button::timerCallback()
 {
+
+    if (buttonStyle != ButtonStyle::SlidingToggle) { stopTimer(); return; }
+
+
 
 	if (thumbArea.getX() <= (animationStart.getX() + animationEnd.getX()) / 2)
 	{
@@ -114,29 +173,55 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
 	//Draw Background
 	juce::Path p;
 	p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
-	g.setColour(HackAudio::Colours::Black);
-	g.fillPath(p);
 
-	p.clear();
 
-    p.addRoundedRectangle(trackArea.getX(), trackArea.getY(), trackArea.getWidth(), trackArea.getHeight(), 8, 8, false, true, true, false);
-    g.setColour(HackAudio::Colours::Gray);
-    g.fillPath(p);
+    if (buttonStyle != ButtonStyle::SlidingToggle)
+    {
 
-    p.clear();
+        g.setColour(HackAudio::Colours::White);
 
-	p.addRoundedRectangle(indicatorArea.getX(), indicatorArea.getY(), indicatorArea.getWidth(), indicatorArea.getHeight(), 8, 8, false, true, true, false);
-	g.setColour(HackAudio::Colours::Cyan);
-	g.fillPath(p);
+        if (isMouseOverButton)
+        {
+            g.setColour(HackAudio::Colours::Black);
+        }
 
-	p.clear();
+        if (isButtonDown)
+        {
+            g.setColour(HackAudio::Colours::White);
+        }
 
-	p.addRoundedRectangle(thumbArea.getX(), thumbArea.getY(), thumbArea.getWidth(), thumbArea.getHeight(), 8, 8, false, true, true, false);
-	g.setColour(HackAudio::Colours::White);
-	g.fillPath(p);
+        g.fillPath(p);
 
-	g.setColour(HackAudio::Colours::Black);
-    g.strokePath(p, juce::PathStrokeType::PathStrokeType(8));
+        p.clear();
+
+    }
+    else
+    {
+
+        g.setColour(HackAudio::Colours::Black);
+        g.fillPath(p);
+
+        p.clear();
+
+        p.addRoundedRectangle(trackArea.getX(), trackArea.getY(), trackArea.getWidth(), trackArea.getHeight(), 8, 8, false, true, true, false);
+        g.setColour(HackAudio::Colours::Gray);
+        g.fillPath(p);
+
+        p.clear();
+
+        p.addRoundedRectangle(indicatorArea.getX(), indicatorArea.getY(), indicatorArea.getWidth(), indicatorArea.getHeight(), 8, 8, false, true, true, false);
+        g.setColour(HackAudio::Colours::Cyan);
+        g.fillPath(p);
+
+        p.clear();
+
+        p.addRoundedRectangle(thumbArea.getX(), thumbArea.getY(), thumbArea.getWidth(), thumbArea.getHeight(), 8, 8, false, true, true, false);
+        g.setColour(HackAudio::Colours::White);
+        g.fillPath(p);
+
+        g.setColour(HackAudio::Colours::Black);
+        g.strokePath(p, juce::PathStrokeType::PathStrokeType(8));
+    }
 
 }
 
@@ -146,24 +231,40 @@ void HackAudio::Button::resized()
 
 	isResizing = true;
 
-    trackArea.setBounds(32, 16, 64, 32);
 
-	thumbArea.setSize(32, 32);
-	indicatorArea.setPosition(32, 16);
-	indicatorArea.setHeight(32);
+    if (buttonStyle != ButtonStyle::SlidingToggle)
+    {
 
-	if (getToggleState())
-	{
-		thumbArea.setPosition(32, 16);
-	}
-	else
-	{
-		thumbArea.setPosition(64, 16);
-	}
+        trackArea.setBounds(0, 0, 0, 0);
+        indicatorArea.setBounds(0, 0, 0, 0);
+        thumbArea.setBounds(0, 0, 0, 0);
 
-	indicatorArea.setWidth((thumbArea.getX() - indicatorArea.getX()) + thumbArea.getWidth()/2);
+        setSize(128, 64);
 
-	setSize(128, 64);
+    }
+    else
+    {
+
+        trackArea.setBounds(32, 16, 64, 32);
+
+        thumbArea.setSize(32, 32);
+        indicatorArea.setPosition(32, 16);
+        indicatorArea.setHeight(32);
+
+        if (getToggleState())
+        {
+            thumbArea.setPosition(32, 16);
+        }
+        else
+        {
+            thumbArea.setPosition(64, 16);
+        }
+
+        indicatorArea.setWidth((thumbArea.getX() - indicatorArea.getX()) + thumbArea.getWidth()/2);
+
+        setSize(128, 64);
+
+    }
 
 	isResizing = false;
 }
