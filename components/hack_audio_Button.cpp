@@ -191,8 +191,21 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
         }
 
         g.fillPath(p);
-
         p.clear();
+
+        g.setColour(HackAudio::Colours::Gray);
+
+        if (isMouseOverButton)
+        {
+            g.setColour(HackAudio::Colours::White);
+        }
+
+        if (isButtonDown)
+        {
+            g.setColour(HackAudio::Colours::Gray);
+        }
+
+        g.drawFittedText(getButtonText(), 0, 0, width, height, juce::Justification::centred, 1);
 
     }
     else
