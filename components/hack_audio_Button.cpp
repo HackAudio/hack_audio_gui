@@ -172,13 +172,11 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
     int width  = getWidth();
     int height = getHeight();
 
-	//Draw Background
-	juce::Path p;
-	p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
-
-
     if (buttonStyle != ButtonStyle::SlidingToggle)
     {
+
+        juce::Path p;
+        p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, false, !(isConnectedOnTop() || isConnectedOnRight()), !(isConnectedOnBottom() || isConnectedOnLeft()), false);
 
         g.setColour(HackAudio::Colours::White);
 
@@ -213,6 +211,8 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
     else
     {
 
+        juce::Path p;
+        p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
         g.setColour(HackAudio::Colours::Black);
         g.fillPath(p);
 
