@@ -6,7 +6,7 @@ HackAudio::Button::Button() : juce::Button("")
 	setClickingTogglesState(true);
 	setTriggeredOnMouseDown(false);
 	isResizing = false;
-    currentColourInterpolation.reset(10, 0.75);
+    currentColourInterpolation.reset(50, 0.1);
 }
 
 HackAudio::Button::~Button()
