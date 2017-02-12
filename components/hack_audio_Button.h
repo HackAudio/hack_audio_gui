@@ -36,6 +36,8 @@ private:
 	juce::Point<int> animationStart;
 	juce::Point<int> animationEnd;
 
+    juce::LinearSmoothedValue<float> currentColourInterpolation;
+
 	bool isResizing;
     juce::Rectangle<int> thumbArea;
 	juce::Rectangle<int> trackArea;

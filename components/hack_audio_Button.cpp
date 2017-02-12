@@ -6,6 +6,7 @@ HackAudio::Button::Button() : juce::Button("")
 	setClickingTogglesState(true);
 	setTriggeredOnMouseDown(false);
 	isResizing = false;
+    currentColourInterpolation.reset(10, 0.75);
 }
 
 HackAudio::Button::~Button()
@@ -131,37 +132,51 @@ void HackAudio::Button::mouseUp(const juce::MouseEvent& e)
 void HackAudio::Button::timerCallback()
 {
 
-    if (buttonStyle != ButtonStyle::SlidingToggle) { stopTimer(); return; }
+    if (buttonStyle != ButtonStyle::SlidingToggle)
+    {
 
+        if (currentColourInterpolation.isSmoothing())
+        {
+            repaint();
+        }
+        else
+        {
+            return;
+        }
 
+    }
+    else
+    {
 
-	if (thumbArea.getX() <= (animationStart.getX() + animationEnd.getX()) / 2)
-	{
-		animationAcc += ANIMATION_SPEED;
-	}
-	else
-	{
-		animationAcc -= ANIMATION_SPEED;
-	}
+        if (thumbArea.getX() <= (animationStart.getX() + animationEnd.getX()) / 2)
+        {
+            animationAcc += ANIMATION_SPEED;
+        }
+        else
+        {
+            animationAcc -= ANIMATION_SPEED;
+        }
 
-	if (std::abs(animationVel) < 16)
-	{
-		animationVel += animationAcc;
-	}
+        if (std::abs(animationVel) < 16)
+        {
+            animationVel += animationAcc;
+        }
 
-	thumbArea.translate(animationVel, 0);
-    indicatorArea.setWidth((thumbArea.getX() - indicatorArea.getX()) + thumbArea.getWidth()/2);
+        thumbArea.translate(animationVel, 0);
+        indicatorArea.setWidth((thumbArea.getX() - indicatorArea.getX()) + thumbArea.getWidth()/2);
 
-	if (thumbArea.getPosition().getDistanceFrom(animationEnd) < 8)
-	{
-		animationAcc = 0;
-		animationVel = 0;
+        if (thumbArea.getPosition().getDistanceFrom(animationEnd) < 8)
+        {
+            animationAcc = 0;
+            animationVel = 0;
 
-		thumbArea.setPosition(animationEnd);
+            thumbArea.setPosition(animationEnd);
 
-		stopTimer();
-        repaint();
-	}
+            stopTimer();
+            repaint();
+        }
+
+    }
 
 	repaint();
 
@@ -178,32 +193,23 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
         juce::Path p;
         p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, false, !(isConnectedOnTop() || isConnectedOnRight()), !(isConnectedOnBottom() || isConnectedOnLeft()), false);
 
-        g.setColour(HackAudio::Colours::White);
-
         if (isMouseOverButton)
         {
-            g.setColour(HackAudio::Colours::Black);
+            currentColourInterpolation.setValue(0.0f);
         }
 
         if (isButtonDown)
         {
-            g.setColour(HackAudio::Colours::White);
+            currentColourInterpolation.setValue(1.0f);
         }
+
+
+        g.setColour(HackAudio::Colours::White.interpolatedWith(HackAudio::Colours::Black, currentColourInterpolation.getNextValue()));
 
         g.fillPath(p);
         p.clear();
 
-        g.setColour(HackAudio::Colours::Gray);
-
-        if (isMouseOverButton)
-        {
-            g.setColour(HackAudio::Colours::White);
-        }
-
-        if (isButtonDown)
-        {
-            g.setColour(HackAudio::Colours::Gray);
-        }
+        g.setColour(HackAudio::Colours::Gray.interpolatedWith(HackAudio::Colours::White, currentColourInterpolation.getNextValue()));
 
         g.drawFittedText(getButtonText(), 0, 0, width, height, juce::Justification::centred, 1);
 
@@ -256,6 +262,7 @@ void HackAudio::Button::resized()
 
         setSize(128, 64);
 
+        startTimerHz(60);
     }
     else
     {
