@@ -74,11 +74,19 @@ void HackAudio::Slider::mouseUp(const juce::MouseEvent& e)
     {
         if (pipAreas[i].getCentre().getDistanceFrom(e.getPosition()) <= 16)
         {
+
+            if (std::abs((i / (float)(pipAreas.size() - 1.0f) * getMaximum()) - getValue()) > 0.01f)
+            {
+                setValue((i / (float)(pipAreas.size() - 1.0f) * getMaximum()));
+            }
+            else
+            {
+                return;
+            }
+
             animationStart = thumbArea.getPosition();
 
             isAnimating = true;
-
-            setValue((i / (float)(pipAreas.size() - 1) * getMaximum()));
 
             if (isVertical())
             {
@@ -266,7 +274,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     // Draw Slider Pips
     for (int i = 0; i < pipAreas.size(); ++i)
     {
-        if ((i / (float)pipAreas.size()) - (getValue() / getMaximum()) > 0)
+        if ((i / (float)(pipAreas.size() - 1)) - (getValue() / getMaximum()) > 0)
         {
             g.setColour(HackAudio::Colours::Gray);
         }
