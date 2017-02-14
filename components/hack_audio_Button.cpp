@@ -6,7 +6,7 @@ HackAudio::Button::Button() : juce::Button("")
 	setClickingTogglesState(true);
 	setTriggeredOnMouseDown(false);
 	isResizing = false;
-    currentColourInterpolation.reset(50, 0.1);
+    currentColourInterpolation.reset(50, 0.2);
 }
 
 HackAudio::Button::~Button()
@@ -28,6 +28,8 @@ HackAudio::Button::ButtonStyle HackAudio::Button::getButtonStyle()
 
 void HackAudio::Button::mouseDown(const juce::MouseEvent& e)
 {
+
+    currentColourInterpolation.setValue(1.0f);
 
     if (buttonStyle == ButtonStyle::BarSingleton)
     {
@@ -61,7 +63,9 @@ void HackAudio::Button::mouseDrag(const juce::MouseEvent& e)
 
     if (buttonStyle != ButtonStyle::SlidingToggle)
     {
+
         juce::Button::mouseDrag(e);
+
     }
     else
     {
@@ -94,7 +98,6 @@ void HackAudio::Button::mouseDrag(const juce::MouseEvent& e)
 
 void HackAudio::Button::mouseUp(const juce::MouseEvent& e)
 {
-
 
     if (buttonStyle == ButtonStyle::BarSingleton)
     {
@@ -138,10 +141,23 @@ void HackAudio::Button::timerCallback()
         if (currentColourInterpolation.isSmoothing())
         {
             repaint();
+
+            if (std::abs(currentColourInterpolation.getTargetValue() - currentColourInterpolation.getNextValue()) < 0.0001)
+            {
+                currentColourInterpolation.setValue(currentColourInterpolation.getTargetValue());
+            }
+
         }
         else
         {
-            return;
+            if (currentColourInterpolation.getTargetValue() == 1.0f && !(juce::Desktop::getInstance().getDraggingMouseSource(0)))
+            {
+                currentColourInterpolation.setValue(0.0f);
+            }
+            else
+            {
+                return;
+            }
         }
 
     }
@@ -193,23 +209,26 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
         juce::Path p;
         p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, false, !(isConnectedOnTop() || isConnectedOnRight()), !(isConnectedOnBottom() || isConnectedOnLeft()), false);
 
-        if (isMouseOverButton)
+        juce::Colour background;
+        juce::Colour foreground;
+
+        if (getToggleState() &&  buttonStyle != ButtonStyle::BarSingleton)
         {
-            currentColourInterpolation.setValue(0.0f);
+            background = HackAudio::Colours::Cyan;
+            foreground = HackAudio::Colours::White;
+        }
+        else
+        {
+            background = HackAudio::Colours::White;
+            foreground = HackAudio::Colours::Gray;
         }
 
-        if (isButtonDown)
-        {
-            currentColourInterpolation.setValue(1.0f);
-        }
-
-
-        g.setColour(HackAudio::Colours::White.interpolatedWith(HackAudio::Colours::Black, currentColourInterpolation.getNextValue()));
+        g.setColour(background.interpolatedWith(HackAudio::Colours::Black, currentColourInterpolation.getNextValue()));
 
         g.fillPath(p);
         p.clear();
 
-        g.setColour(HackAudio::Colours::Gray.interpolatedWith(HackAudio::Colours::White, currentColourInterpolation.getNextValue()));
+        g.setColour(foreground.interpolatedWith(HackAudio::Colours::Gray, currentColourInterpolation.getNextValue()));
 
         g.drawFittedText(getButtonText(), 0, 0, width, height, juce::Justification::centred, 1);
 
