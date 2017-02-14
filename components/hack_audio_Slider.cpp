@@ -14,7 +14,8 @@ HackAudio::Slider::Slider()
     animationStart = animationEnd = juce::Point<int>(0, 0);
 
     isAnimating   = false;
-    isResizing = false;
+    isResizing    = false;
+    isDraggable   = false;
 
     addListener(this);
 
@@ -33,13 +34,40 @@ void HackAudio::Slider::setDefaultValue(double defaultValue)
     setDoubleClickReturnValue(true, defaultValue);
 }
 
-void HackAudio::Slider::mouseDown(const juce::MouseEvent& e)
+void HackAudio::Slider::mouseDown(const juce::MouseEvent &e)
+{
+    if (trackArea.contains(e.getPosition()) || thumbArea.contains(e.getPosition()))
+    {
+        isDraggable = true;
+        juce::Slider::mouseDown(e);
+    }
+    else
+    {
+        isDraggable = false;
+        return;
+    }
+}
+
+void HackAudio::Slider::mouseDrag(const juce::MouseEvent& e)
+{
+    if (isDraggable)
+    {
+        juce::Slider::mouseDrag(e);
+    }
+    else
+    {
+        return;
+    }
+}
+
+void HackAudio::Slider::mouseUp(const juce::MouseEvent& e)
 {
     if (trackArea.contains(e.getPosition()) || thumbArea.contains(e.getPosition()))
     {
         isAnimating = false;
         stopTimer();
-        juce::Slider::mouseDown(e);
+        juce::Slider::mouseUp(e);
+        return;
     }
 
     for (int i = 0; i <= pipAreas.size(); ++i)
