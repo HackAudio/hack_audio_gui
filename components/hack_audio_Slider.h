@@ -10,7 +10,7 @@ public:
     Slider();
     ~Slider();
 
-    void setDefaultValue(double defaultValue);
+    void setDefaultValue(bool shouldHaveDefault, double defaultValue);
 
 private:
 
@@ -39,6 +39,9 @@ private:
     juce::Rectangle<int> indicatorArea;
 
     bool isDraggable;
+
+    bool hasDefault;
+    double sliderDefault;
 
 };
 

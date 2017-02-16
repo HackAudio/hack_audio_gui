@@ -5,6 +5,7 @@ HackAudio::Slider::Slider()
     setSliderStyle(juce::Slider::LinearVertical);
     setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     setSliderSnapsToMousePosition(false);
+    setDoubleClickReturnValue(false, 0);
 
     pipAreas.resize(10);
 
@@ -29,15 +30,22 @@ HackAudio::Slider::~Slider()
 
 }
 
-void HackAudio::Slider::setDefaultValue(double defaultValue)
+void HackAudio::Slider::setDefaultValue(bool shouldHaveDefault, double defaultValue)
 {
-    setDoubleClickReturnValue(true, defaultValue);
+    hasDefault = shouldHaveDefault;
+    sliderDefault = defaultValue;
 }
 
 void HackAudio::Slider::mouseDown(const juce::MouseEvent &e)
 {
     if (trackArea.contains(e.getPosition()) || thumbArea.contains(e.getPosition()))
     {
+        if (e.mods.isAltDown() && hasDefault)
+        {
+            setValue(sliderDefault);
+            return;
+        }
+
         isDraggable = true;
         juce::Slider::mouseDown(e);
     }
