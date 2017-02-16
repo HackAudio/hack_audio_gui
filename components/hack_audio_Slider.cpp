@@ -83,9 +83,9 @@ void HackAudio::Slider::mouseUp(const juce::MouseEvent& e)
         if (pipAreas[i].getCentre().getDistanceFrom(e.getPosition()) <= 16)
         {
 
-            if (std::abs((i / (float)(pipAreas.size() - 1.0f) * getMaximum()) - getValue()) > 0.01f)
+            if (std::abs((i / (float)(pipAreas.size() - 1.0f) * (getMaximum() - getMinimum()) + getMinimum()) - getValue()) > 0.01f)
             {
-                setValue((i / (float)(pipAreas.size() - 1.0f) * getMaximum()));
+                setValue((i / (float)(pipAreas.size() - 1.0f)) * (getMaximum() - getMinimum()) + getMinimum());
             }
             else
             {
