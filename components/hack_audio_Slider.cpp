@@ -98,11 +98,11 @@ void HackAudio::Slider::mouseUp(const juce::MouseEvent& e)
 
             if (isVertical())
             {
-                animationEnd = thumbArea.getPosition().withY(thumbSpan.getY() - (getValue()/getMaximum()) * thumbSpan.getHeight());
+                animationEnd = thumbArea.getPosition().withY(thumbSpan.getY() - ((getValue() - getMinimum()) / (getMaximum() - getMinimum())) * thumbSpan.getHeight());
             }
             else if (isHorizontal())
             {
-                animationEnd = thumbArea.getPosition().withX(thumbSpan.getX() + (getValue()/getMaximum()) * thumbSpan.getWidth());
+                animationEnd = thumbArea.getPosition().withX(thumbSpan.getX() + ((getValue() - getMinimum()) / (getMaximum() - getMinimum())) * thumbSpan.getWidth());
             }
             else if (isRotary())
             {
@@ -221,13 +221,13 @@ void HackAudio::Slider::sliderValueChanged(juce::Slider*)
     {
         if (isVertical())
         {
-            thumbArea.setBounds(thumbArea.getX(), thumbSpan.getY() - ((getValue()/getMaximum()) * thumbSpan.getHeight()), thumbArea.getWidth(), thumbArea.getHeight());
+            thumbArea.setBounds(thumbArea.getX(), thumbSpan.getY() - (((getValue() - getMinimum()) / (getMaximum() - getMinimum())) * thumbSpan.getHeight()), thumbArea.getWidth(), thumbArea.getHeight());
 
             indicatorArea.setBounds(trackArea.getX(), thumbArea.getCentreY(), trackArea.getWidth(), std::abs(trackArea.getBottom() - thumbArea.getCentreY()));
         }
         else if (isHorizontal())
         {
-            thumbArea.setBounds(thumbSpan.getX() + ((getValue()/getMaximum()) * thumbSpan.getWidth()), thumbArea.getY(), thumbArea.getWidth(), thumbArea.getHeight());
+            thumbArea.setBounds(thumbSpan.getX() + (((getValue() - getMinimum()) / (getMaximum() - getMinimum())) * thumbSpan.getWidth()), thumbArea.getY(), thumbArea.getWidth(), thumbArea.getHeight());
 
             indicatorArea.setBounds(trackArea.getX(), trackArea.getY(), std::abs(trackArea.getX() - thumbArea.getCentreX()), trackArea.getHeight());
         }
@@ -235,7 +235,7 @@ void HackAudio::Slider::sliderValueChanged(juce::Slider*)
         {
             int radius = (thumbArea.getWidth() / 2) - (thumbArea.getWidth() / 8);
 
-            float angle = ((7.0f * M_PI) / 6.0f) + ((((getValue()/getMaximum())) * 10.0f) * (M_PI / 6.0f));
+            float angle = ((7.0f * M_PI) / 6.0f) + (((((getValue() - getMinimum()) / (getMaximum() - getMinimum()))) * 10.0f) * (M_PI / 6.0f));
 
             juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, angle);
             indicatorArea.setCentre(destination.x, destination.y);
@@ -282,7 +282,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     // Draw Slider Pips
     for (int i = 0; i < pipAreas.size(); ++i)
     {
-        if ((i / (float)(pipAreas.size() - 1)) - (getValue() / getMaximum()) > 0)
+        if ((i / (float)(pipAreas.size() - 1)) - ((getValue() - getMinimum()) / (getMaximum() - getMinimum())) > 0)
         {
             g.setColour(HackAudio::Colours::Gray);
         }
@@ -370,7 +370,7 @@ void HackAudio::Slider::resized()
 
         int radius = (thumbArea.getWidth() / 2) - (thumbArea.getWidth() / 8);
 
-        float angle = ((7.0f * M_PI) / 6.0f) + ((((getValue()/getMaximum())) * 10.0f) * (M_PI / 6.0f));
+        float angle = ((7.0f * M_PI) / 6.0f) + (((((getValue() - getMinimum()) / (getMaximum() - getMinimum()))) * 10.0f) * (M_PI / 6.0f));
 
         juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, angle);
         indicatorArea.setCentre(destination.x, destination.y);
