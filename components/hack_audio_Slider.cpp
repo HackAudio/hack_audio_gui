@@ -21,8 +21,6 @@ HackAudio::Slider::Slider()
     addListener(this);
 
     setSize(128, 384);
-
-    sliderValueChanged(this);
 }
 
 HackAudio::Slider::~Slider()
@@ -217,6 +215,7 @@ void HackAudio::Slider::timerCallback()
 
 void HackAudio::Slider::sliderValueChanged(juce::Slider*)
 {
+
     if (!isAnimating)
     {
         if (isVertical())
@@ -241,6 +240,12 @@ void HackAudio::Slider::sliderValueChanged(juce::Slider*)
             indicatorArea.setCentre(destination.x, destination.y);
         }
     }
+}
+
+void HackAudio::Slider::parentHierarchyChanged()
+{
+    resized();
+    sliderValueChanged(this);
 }
 
 void HackAudio::Slider::paint(juce::Graphics& g)
