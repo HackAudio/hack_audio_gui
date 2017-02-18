@@ -287,7 +287,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     // Draw Slider Pips
     for (int i = 0; i < pipAreas.size(); ++i)
     {
-        if ((i / (float)(pipAreas.size() - 1)) - ((getValue() - getMinimum()) / (getMaximum() - getMinimum())) > 0)
+        if ((i / (float)(pipAreas.size() - 1)) - 0.025 > ((getValue() - getMinimum()) / (getMaximum() - getMinimum())))
         {
             g.setColour(HackAudio::Colours::Gray);
         }
