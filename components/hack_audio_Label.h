@@ -1,6 +1,9 @@
 #ifndef HACK_AUDIO_LABEL_H
 #define HACK_AUDIO_LABEL_H
 
+namespace HackAudio
+{
+
 class Label : public juce::Label
 {
 public:
@@ -25,5 +28,7 @@ private:
 
     bool isResizing;
 };
+
+}
 
 #endif

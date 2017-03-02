@@ -1,6 +1,9 @@
 #ifndef HACK_AUDIO_SLIDER
 #define HACK_AUDIO_SLIDER
 
+namespace HackAudio
+{
+
 class Slider : public juce::Slider,
                public juce::Timer,
                public juce::SliderListener
@@ -46,5 +49,7 @@ private:
     double sliderDefault;
 
 };
+
+}
 
 #endif

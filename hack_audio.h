@@ -40,14 +40,10 @@ namespace HackAudio
 
     };
 
-    class Slider;
-    class Button;
-    class Label;
-
-    #include "components/hack_audio_Slider.h"
-    #include "components/hack_audio_Button.h"
-    #include "components/hack_audio_Label.h"
-
 }
+
+#include "components/hack_audio_Slider.h"
+#include "components/hack_audio_Button.h"
+#include "components/hack_audio_Label.h"
 
 #endif

@@ -1,6 +1,9 @@
 #ifndef HACK_AUDIO_BUTTON_H
 #define HACK_AUDIO_BUTTON_H
 
+namespace HackAudio
+{
+
 class Button : public juce::Button,
                public juce::Timer
 {
@@ -48,5 +51,7 @@ private:
     ButtonStyle buttonStyle;
 
 };
+
+}
 
 #endif
