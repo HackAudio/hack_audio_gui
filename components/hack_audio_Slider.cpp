@@ -17,8 +17,9 @@ HackAudio::Slider::Slider()
     animationStart = animationEnd = juce::Point<int>(0, 0);
 
     isAnimating   = false;
-    resizeGuard    = false;
+    resizeGuard   = false;
     isDraggable   = false;
+    isSettable    = false;
 
     addListener(this);
 
@@ -47,10 +48,22 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent &e)
         }
 
         isDraggable = true;
+        isSettable  = false;
         juce::Slider::mouseDown(e);
     }
     else
     {
+
+        isSettable = false;
+
+        for (int i = 0; i <= pipAreas.size(); ++i)
+        {
+            if (pipAreas[i].getCentre().getDistanceFrom(e.getPosition()) <= 16)
+            {
+                isSettable = true;
+            }
+        }
+
         isDraggable = false;
         return;
     }
@@ -77,6 +90,8 @@ void HackAudio::Slider::mouseUp(const juce::MouseEvent& e)
         juce::Slider::mouseUp(e);
         return;
     }
+
+    if (isSettable == false) { return; }
 
     for (int i = 0; i <= pipAreas.size(); ++i)
     {

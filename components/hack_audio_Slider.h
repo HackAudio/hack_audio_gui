@@ -44,6 +44,7 @@ private:
     juce::Rectangle<int> indicatorArea;
 
     bool isDraggable;
+    bool isSettable;
 
     bool hasDefault;
     double sliderDefault;
