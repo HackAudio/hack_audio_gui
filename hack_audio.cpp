@@ -12,3 +12,5 @@ const juce::Colour HackAudio::Colours::Cyan  (0xFF59C6C3);
 #include "components/hack_audio_Slider.cpp"
 #include "components/hack_audio_Button.cpp"
 #include "components/hack_audio_Label.cpp"
+
+#include "layout/hack_audio_FlexBox.cpp"

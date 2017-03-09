@@ -46,4 +46,6 @@ namespace HackAudio
 #include "components/hack_audio_Button.h"
 #include "components/hack_audio_Label.h"
 
+#include "layout/hack_audio_FlexBox.h"
+
 #endif
