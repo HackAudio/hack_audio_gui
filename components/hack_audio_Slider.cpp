@@ -2,8 +2,10 @@
 
 HackAudio::Slider::Slider()
 {
-    setSliderStyle(juce::Slider::LinearVertical);
+    resizeGuard = true;
     setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    resizeGuard = false;
+
     setSliderSnapsToMousePosition(false);
     setDoubleClickReturnValue(false, 0);
 
@@ -15,7 +17,7 @@ HackAudio::Slider::Slider()
     animationStart = animationEnd = juce::Point<int>(0, 0);
 
     isAnimating   = false;
-    isResizing    = false;
+    resizeGuard    = false;
     isDraggable   = false;
 
     addListener(this);
@@ -306,14 +308,16 @@ void HackAudio::Slider::resized()
     int width  = getWidth();
     int height = getHeight();
 
-    if (isResizing) { return; }
+    if (resizeGuard) { return; }
 
-    isResizing = true;
+    resizeGuard = true;
 
     thumbArea.setSize(32, 32);
 
     if (isVertical())
     {
+
+        if (height == 0) { return; }
 
         trackArea.setBounds(74, height / 6, 12, height - (height / 3));
         indicatorArea.setWidth(trackArea.getWidth());
@@ -334,6 +338,8 @@ void HackAudio::Slider::resized()
     }
     else if (isHorizontal())
     {
+
+        if (width == 0) { return; }
 
         trackArea.setBounds(width / 6, 74, width - (width / 3), 12);
         indicatorArea.setHeight(trackArea.getHeight());
@@ -386,7 +392,7 @@ void HackAudio::Slider::resized()
 
     }
 
-    isResizing = false;
+    resizeGuard = false;
 
 }
 

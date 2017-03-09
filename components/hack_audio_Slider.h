@@ -36,7 +36,7 @@ private:
     juce::Point<int> animationStart;
     juce::Point<int> animationEnd;
 
-    bool isResizing;
+    bool resizeGuard;
     juce::Array<juce::Rectangle<int>> pipAreas;
     juce::Rectangle<int> trackArea;
     juce::Rectangle<int> thumbArea;
