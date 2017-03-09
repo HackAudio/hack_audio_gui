@@ -14,7 +14,7 @@ HackAudio::FlexBox::~FlexBox()
 
 void HackAudio::FlexBox::addComponent(juce::Component* component)
 {
-    items.add(juce::FlexItem(*component));
+    items.add(juce::FlexItem(*component).withWidth(component->getWidth()).withHeight(component->getHeight()).withAlignSelf(juce::FlexItem::AlignSelf::center));
     applyLayout();
 }
 
