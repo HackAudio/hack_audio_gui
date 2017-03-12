@@ -9,7 +9,7 @@ HackAudio::Slider::Slider()
     setSliderSnapsToMousePosition(false);
     setDoubleClickReturnValue(false, 0);
 
-    pipAreas.resize(10);
+    pipLocations.resize(10);
 
     animationAcc = 0;
     animationVel = 0;
@@ -56,9 +56,9 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent &e)
 
         isSettable = false;
 
-        for (int i = 0; i <= pipAreas.size(); ++i)
+        for (int i = 0; i <= pipLocations.size(); ++i)
         {
-            if (pipAreas[i].getCentre().getDistanceFrom(e.getPosition()) <= 16)
+            if (pipLocations[i].getDistanceFrom(e.getPosition()) <= 16)
             {
                 isSettable = true;
             }
@@ -93,14 +93,14 @@ void HackAudio::Slider::mouseUp(const juce::MouseEvent& e)
 
     if (isSettable == false) { return; }
 
-    for (int i = 0; i <= pipAreas.size(); ++i)
+    for (int i = 0; i <= pipLocations.size(); ++i)
     {
-        if (pipAreas[i].getCentre().getDistanceFrom(e.getPosition()) <= 16)
+        if (pipLocations[i].getDistanceFrom(e.getPosition()) <= 16)
         {
 
-            if (std::abs((i / (float)(pipAreas.size() - 1.0f) * (getMaximum() - getMinimum()) + getMinimum()) - getValue()) > 0.01f)
+            if (std::abs((i / (float)(pipLocations.size() - 1.0f) * (getMaximum() - getMinimum()) + getMinimum()) - getValue()) > 0.01f)
             {
-                setValue((i / (float)(pipAreas.size() - 1.0f)) * (getMaximum() - getMinimum()) + getMinimum());
+                setValue((i / (float)(pipLocations.size() - 1.0f)) * (getMaximum() - getMinimum()) + getMinimum());
             }
             else
             {
@@ -302,9 +302,9 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     }
 
     // Draw Slider Pips
-    for (int i = 0; i < pipAreas.size(); ++i)
+    for (int i = 0; i < pipLocations.size(); ++i)
     {
-        if ((i / (float)(pipAreas.size() - 1)) - 0.025 > ((getValue() - getMinimum()) / (getMaximum() - getMinimum())))
+        if ((i / (float)(pipLocations.size() - 1)) - 0.025 > ((getValue() - getMinimum()) / (getMaximum() - getMinimum())))
         {
             g.setColour(HackAudio::Colours::Gray);
         }
@@ -312,8 +312,16 @@ void HackAudio::Slider::paint(juce::Graphics& g)
         {
             g.setColour(HackAudio::Colours::Cyan);
         }
-        juce::Rectangle<int>& r = pipAreas.getReference(i);
-        g.fillEllipse(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+        juce::Point<int>& p = pipLocations.getReference(i);
+
+        if (!isRotary())
+        {
+            g.fillEllipse(p.getX(), p.getY(), 8, 8);
+        }
+        else
+        {
+            g.fillEllipse(p.getX() - 4, p.getY() - 4, 8, 8);
+        }
     }
 }
 
@@ -340,10 +348,10 @@ void HackAudio::Slider::resized()
         thumbArea.setX(trackArea.getCentreX() - 16);
         thumbSpan.setBounds(trackArea.getX(), trackArea.getBottom() - thumbArea.getHeight() / 2, trackArea.getWidth(), trackArea.getHeight());
 
-        for (int i = 0; i < pipAreas.size(); ++i)
+        for (int i = 0; i < pipLocations.size(); ++i)
         {
-            juce::Rectangle<int>& r = pipAreas.getReference(i);
-            r.setBounds(32, (trackArea.getBottom() - 8) - ((((float)(trackArea.getHeight() - 8) / (float)(pipAreas.size() - 1))) * i), 8, 8);
+            juce::Point<int>& p = pipLocations.getReference(i);
+            p.setXY(32, (trackArea.getBottom() - 8) - ((((float)(trackArea.getHeight() - 8) / (float)(pipLocations.size() - 1)))));
         }
 
         setSize(128, height);
@@ -363,10 +371,10 @@ void HackAudio::Slider::resized()
         thumbArea.setY(trackArea.getCentreY() - 16);
         thumbSpan.setBounds(trackArea.getX() - thumbArea.getWidth() / 2, trackArea.getY(), trackArea.getWidth(), trackArea.getHeight());
 
-        for (int i = 0; i < pipAreas.size(); ++i)
+        for (int i = 0; i < pipLocations.size(); ++i)
         {
-            juce::Rectangle<int>& r = pipAreas.getReference(i);
-            r.setBounds(trackArea.getX() + ((float)(trackArea.getWidth() - 8) / (float)(pipAreas.size() - 1)) * i, 32, 8, 8);
+            juce::Point<int>& p = pipLocations.getReference(i);
+            p.setXY(trackArea.getX() + ((float)(trackArea.getWidth() - 8) / (float)(pipLocations.size() - 1)) * i, 32);
         }
 
         setSize(width, 128);
@@ -382,16 +390,18 @@ void HackAudio::Slider::resized()
         thumbArea.setBounds(32, 32, 64, 64);
         indicatorArea.setSize(8, 8);
 
-        for (int i = 0; i < pipAreas.size(); ++i)
+        for (int i = 0; i < pipLocations.size(); ++i)
         {
-            juce::Rectangle<int>& r = pipAreas.getReference(i);
+            juce::Point<int>& p = pipLocations.getReference(i);
 
             int radius = sqrt ( pow(thumbArea.getWidth() / 2, 2) * 2);
 
             float angle = ((7.0f * M_PI) / 6.0f) + (((i/9.0f) * 10.0f) * (M_PI / 6.0f));
 
             juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, angle);
-            r.setCentre(destination.x, destination.y);
+            p.setXY(destination.x, destination.y);
+
+
         }
 
         int radius = (thumbArea.getWidth() / 2) - (thumbArea.getWidth() / 8);
