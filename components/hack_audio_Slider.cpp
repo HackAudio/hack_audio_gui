@@ -305,7 +305,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     for (int i = 0; i < pipLocations.size(); ++i)
     {
 
-        int minPipSize = 7;
+        int minPipSize = 6;
         int maxPipSize = 8;
 
         int pipSize;
@@ -318,7 +318,17 @@ void HackAudio::Slider::paint(juce::Graphics& g)
         else
         {
             g.setColour(HackAudio::Colours::Cyan);
-            pipSize = maxPipSize;
+
+            float diff = (i / (float)(pipLocations.size() - 1)) - ((getValue() - getMinimum()) / (getMaximum() - getMinimum()));
+
+            if (diff > 0)
+            {
+                pipSize = maxPipSize - (maxPipSize * diff);
+            }
+            else
+            {
+                pipSize = maxPipSize;
+            }
         }
         juce::Point<int>& p = pipLocations.getReference(i);
 
