@@ -304,23 +304,31 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     // Draw Slider Pips
     for (int i = 0; i < pipLocations.size(); ++i)
     {
+
+        int minPipSize = 7;
+        int maxPipSize = 8;
+
+        int pipSize;
+
         if ((i / (float)(pipLocations.size() - 1)) - 0.025 > ((getValue() - getMinimum()) / (getMaximum() - getMinimum())))
         {
             g.setColour(HackAudio::Colours::Gray);
+            pipSize = minPipSize;
         }
         else
         {
             g.setColour(HackAudio::Colours::Cyan);
+            pipSize = maxPipSize;
         }
         juce::Point<int>& p = pipLocations.getReference(i);
 
         if (!isRotary())
         {
-            g.fillEllipse(p.getX(), p.getY(), 8, 8);
+            g.fillEllipse(p.getX() - (pipSize - minPipSize), p.getY() - (pipSize - minPipSize), pipSize, pipSize);
         }
         else
         {
-            g.fillEllipse(p.getX() - 4, p.getY() - 4, 8, 8);
+            g.fillEllipse(p.getX() - pipSize/2, p.getY() - pipSize/2, pipSize, pipSize);
         }
     }
 }
