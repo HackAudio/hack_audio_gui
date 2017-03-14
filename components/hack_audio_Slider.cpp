@@ -404,7 +404,7 @@ void HackAudio::Slider::resized()
         for (int i = 0; i < pipLocations.size(); ++i)
         {
             juce::Point<int>& p = pipLocations.getReference(i);
-            p.setXY(32, (trackArea.getBottom() - 8) - ((((float)(trackArea.getHeight() - 8) / (float)(pipLocations.size() - 1)))));
+            p.setXY(32, (trackArea.getBottom() - 8) - ((((float)(trackArea.getHeight() - 8) / (float)(pipLocations.size() - 1)) * i)));
         }
 
         setSize(128, height);
