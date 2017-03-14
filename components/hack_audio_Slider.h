@@ -37,7 +37,6 @@ private:
     juce::Point<int> animationEnd;
 
     bool resizeGuard;
-    juce::Array<juce::Rectangle<int>> pipAreas; //TODO: save pip locations, allow size to change
     juce::Array<juce::Point<int>> pipLocations;
     juce::Rectangle<int> trackArea;
     juce::Rectangle<int> thumbArea;
