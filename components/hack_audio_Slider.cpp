@@ -123,7 +123,8 @@ void HackAudio::Slider::mouseUp(const juce::MouseEvent& e)
             {
                 int radius = (thumbArea.getWidth() / 2) - (thumbArea.getWidth() / 8);
 
-                float angle = ((7.0f * M_PI) / 6.0f) + (((i/9.0f) * 10.0f) * (M_PI / 6.0f));
+                float offset = ((11.0f * M_PI) / 6.0f) / pipLocations.size(); // 330˚ knob range divided by number of pips
+                float angle = ((7.0f * M_PI) / 6.0f) + (i * offset);
 
                 float startAngle = thumbArea.getCentre().getAngleToPoint(indicatorArea.getCentre());
                 juce::Point<float> start = thumbArea.getCentre().getPointOnCircumference(radius, startAngle);
@@ -251,7 +252,8 @@ void HackAudio::Slider::sliderValueChanged(juce::Slider*)
         {
             int radius = (thumbArea.getWidth() / 2) - (thumbArea.getWidth() / 8);
 
-            float angle = ((7.0f * M_PI) / 6.0f) + (((((getValue() - getMinimum()) / (getMaximum() - getMinimum()))) * 10.0f) * (M_PI / 6.0f));
+            float offset = ((7.0f * M_PI) / 4.0f);
+            float angle = ((7.0f * M_PI) / 6.0f) + (((getValue() - getMinimum()) / (getMaximum() - getMinimum())) * offset);
 
             juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, angle);
             indicatorArea.setCentre(destination.x, destination.y);
@@ -467,7 +469,8 @@ void HackAudio::Slider::resized()
 
             int radius = sqrt ( pow(thumbArea.getWidth() / 2, 2) * 2);
 
-            float angle = ((7.0f * M_PI) / 6.0f) + (((i/9.0f) * 10.0f) * (M_PI / 6.0f));
+            float offset = ((11.0f * M_PI) / 6.0f) / pipLocations.size(); // 330˚ knob range divided by number of pips
+            float angle = ((7.0f * M_PI) / 6.0f) + (i * offset);
 
             juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, angle);
             p.setXY(destination.x, destination.y);
@@ -477,7 +480,7 @@ void HackAudio::Slider::resized()
 
         int radius = (thumbArea.getWidth() / 2) - (thumbArea.getWidth() / 8);
 
-        float angle = ((7.0f * M_PI) / 6.0f) + (((((getValue() - getMinimum()) / (getMaximum() - getMinimum()))) * 10.0f) * (M_PI / 6.0f));
+        float angle = ((7.0f * M_PI) / 6.0f) + (((((getValue() - getMinimum()) / (getMaximum() - getMinimum()))) * (float)pipLocations.size()) * (M_PI / 6.0f));
 
         juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, angle);
         indicatorArea.setCentre(destination.x, destination.y);
