@@ -310,7 +310,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
         int minPipSize = 6;
         int maxPipSize = 8;
 
-        int pipSize;
+        int pipSize = minPipSize;
 
         if (isVertical())
         {
@@ -363,26 +363,29 @@ void HackAudio::Slider::paint(juce::Graphics& g)
         else if (isRotary())
         {
 
-            if ((i / (float)(pipLocations.size() - 1)) - 0.025 > ((getValue() - getMinimum()) / (getMaximum() - getMinimum())))
+            float angle = thumbArea.getCentre().getAngleToPoint(pipLocations[i]);
+            float indicatorAngle = thumbArea.getCentre().getAngleToPoint(indicatorArea.getCentre());
+
+            if (angle >= indicatorAngle)
             {
                 g.setColour(HackAudio::Colours::Gray);
                 pipSize = minPipSize;
             }
             else
             {
-                g.setColour(HackAudio::Colours::Cyan);
-
-                float diff = (i / (float)(pipLocations.size() - 1)) - ((getValue() - getMinimum()) / (getMaximum() - getMinimum()));
-
-                if (diff > 0)
+                float diff = angle - indicatorAngle;
+                if (diff <= 0 && diff > -0.4)
                 {
-                    pipSize = maxPipSize - (maxPipSize * diff);
+                    g.setColour(HackAudio::Colours::Cyan);
+                    pipSize = maxPipSize * (-diff + 0.2);
                 }
                 else
                 {
-                    pipSize = maxPipSize;
+                    g.setColour(HackAudio::Colours::Cyan);
+                    pipSize = minPipSize;
                 }
             }
+
         }
 
         juce::Point<int>& p = pipLocations.getReference(i);

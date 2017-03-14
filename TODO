@@ -1,10 +1,10 @@
 TODO:
 
-	- Animate Pips on Rotary Value Change
-
-	- Dijkstra Implementation for HackAudio::Diagram
+	- Make Rotary & Linear Slider Pip Sizing Consistent
 
 	- Adjust Pip Min/Max Size Based On Number of Pips and Available Space
+
+    - Dijkstra Implementation for HackAudio::Diagram
 
 
 
