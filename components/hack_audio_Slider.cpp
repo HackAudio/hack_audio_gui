@@ -321,7 +321,16 @@ void HackAudio::Slider::paint(juce::Graphics& g)
             else
             {
                 g.setColour(HackAudio::Colours::Cyan);
-                pipSize = maxPipSize;
+
+                int diff = ((pipLocations[i].getY() - thumbArea.getY()));
+                if (diff > thumbArea.getHeight() / 2)
+                {
+                    pipSize = maxPipSize;
+                }
+                else
+                {
+                    pipSize = std::max(minPipSize, maxPipSize - (maxPipSize / std::max(1, diff)));
+                }
             }
 
         }
@@ -336,7 +345,16 @@ void HackAudio::Slider::paint(juce::Graphics& g)
             else
             {
                 g.setColour(HackAudio::Colours::Cyan);
-                pipSize = maxPipSize;
+
+                int diff = ((thumbArea.getX() + thumbArea.getWidth() - pipLocations[i].getX()));
+                if (diff > thumbArea.getWidth() / 2)
+                {
+                    pipSize = maxPipSize;
+                }
+                else
+                {
+                    pipSize = std::max(minPipSize, maxPipSize - (maxPipSize / std::max(1, diff)));
+                }
             }
 
         }
