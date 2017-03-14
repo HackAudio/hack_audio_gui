@@ -1,7 +1,5 @@
 TODO:
 
-	- Linear Slider Pip Drawing Locations Should Scale With Pip Size
-
 	- Adjust Pip Min/Max Size Based On Number of Pips and Available Space
 
     - Dijkstra Implementation for HackAudio::Diagram
