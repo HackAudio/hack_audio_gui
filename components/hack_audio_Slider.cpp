@@ -313,7 +313,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
         if (isVertical())
         {
 
-            if (thumbArea.getY() - thumbArea.getWidth() / 2 > pipLocations[i].getY())
+            if (thumbArea.getY() > pipLocations[i].getY())
             {
                 g.setColour(HackAudio::Colours::Gray);
                 pipSize = minPipSize;
@@ -328,7 +328,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
         else if (isHorizontal())
         {
 
-            if (thumbArea.getX() + thumbArea.getWidth() / 2 < pipLocations[i].getX())
+            if (thumbArea.getX() + thumbArea.getWidth() < pipLocations[i].getX())
             {
                 g.setColour(HackAudio::Colours::Gray);
                 pipSize = minPipSize;
