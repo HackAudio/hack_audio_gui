@@ -1,0 +1,19 @@
+TODO:
+
+	- Set Rotary Knob Angle Min/Max as Globals
+
+	- Animate Pips on Rotary Value Change
+
+	- Dijkstra Implementation for HackAudio::Diagram
+
+	- Adjust Pip Min/Max Size Based On Number of Pips and Available Space
+
+
+
+BUG:
+
+	- Pip Mouse Hit-Testing Becomes Less Accurate With Increased Pip Count
+
+	- Rotary Pip Location Setting is Currently Off By 1 (See Angle Range of Pips vs. Angle Range of Indicator)
+
+	- Investigate Juce 30fps Graphics Limitations
