@@ -1,6 +1,6 @@
 TODO:
 
-	- Make Rotary & Linear Slider Pip Sizing Consistent
+	- Linear Slider Pip Drawing Locations Should Scale With Pip Size
 
 	- Adjust Pip Min/Max Size Based On Number of Pips and Available Space
 

@@ -387,6 +387,12 @@ void HackAudio::Slider::paint(juce::Graphics& g)
                 }
             }
 
+            if (i == 0 || (i == pipLocations.size()-1 && getValue() == getMaximum()))
+            {
+                g.setColour(HackAudio::Colours::Cyan);
+                pipSize = maxPipSize;
+            }
+
         }
 
         juce::Point<int>& p = pipLocations.getReference(i);
