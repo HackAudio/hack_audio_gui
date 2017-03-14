@@ -325,13 +325,13 @@ void HackAudio::Slider::paint(juce::Graphics& g)
                 g.setColour(HackAudio::Colours::Cyan);
 
                 int diff = ((pipLocations[i].getY() - thumbArea.getY()));
-                if (diff > thumbArea.getHeight() / 2)
+                if (diff > maxPipSize && diff > 0)
                 {
                     pipSize = maxPipSize;
                 }
                 else
                 {
-                    pipSize = std::max(minPipSize, maxPipSize - (maxPipSize / std::max(1, diff)));
+                    pipSize = diff;
                 }
             }
 
@@ -348,14 +348,15 @@ void HackAudio::Slider::paint(juce::Graphics& g)
             {
                 g.setColour(HackAudio::Colours::Cyan);
 
-                int diff = ((thumbArea.getX() + thumbArea.getWidth() - pipLocations[i].getX()));
-                if (diff > thumbArea.getWidth() / 2)
+                float diff = ((thumbArea.getX() + thumbArea.getWidth() - pipLocations[i].getX()));
+
+                if (diff > maxPipSize && diff > 0)
                 {
                     pipSize = maxPipSize;
                 }
                 else
                 {
-                    pipSize = std::max(minPipSize, maxPipSize - (maxPipSize / std::max(1, diff)));
+                    pipSize = diff;
                 }
             }
 
@@ -482,7 +483,6 @@ void HackAudio::Slider::resized()
         }
 
         int radius = (thumbArea.getWidth() / 2) - (thumbArea.getWidth() / 8);
-
 
         float offset = ROTARY_ANGLERANGE * ((getValue() - getMinimum()) / (getMaximum() - getMinimum()));
         float angle = ROTARY_ANGLESTART + offset;
