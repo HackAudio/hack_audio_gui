@@ -383,7 +383,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
                 else
                 {
                     g.setColour(HackAudio::Colours::Cyan);
-                    pipSize = minPipSize;
+                    pipSize = maxPipSize;
                 }
             }
 
