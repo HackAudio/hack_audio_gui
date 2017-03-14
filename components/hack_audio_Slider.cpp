@@ -310,26 +310,61 @@ void HackAudio::Slider::paint(juce::Graphics& g)
 
         int pipSize;
 
-        if ((i / (float)(pipLocations.size() - 1)) - 0.025 > ((getValue() - getMinimum()) / (getMaximum() - getMinimum())))
+        if (isVertical())
         {
-            g.setColour(HackAudio::Colours::Gray);
-            pipSize = minPipSize;
-        }
-        else
-        {
-            g.setColour(HackAudio::Colours::Cyan);
 
-            float diff = (i / (float)(pipLocations.size() - 1)) - ((getValue() - getMinimum()) / (getMaximum() - getMinimum()));
-
-            if (diff > 0)
+            if (thumbArea.getY() - thumbArea.getWidth() / 2 > pipLocations[i].getY())
             {
-                pipSize = maxPipSize - (maxPipSize * diff);
+                g.setColour(HackAudio::Colours::Gray);
+                pipSize = minPipSize;
             }
             else
             {
+                g.setColour(HackAudio::Colours::Cyan);
                 pipSize = maxPipSize;
             }
+
         }
+        else if (isHorizontal())
+        {
+
+            if (thumbArea.getX() + thumbArea.getWidth() / 2 < pipLocations[i].getX())
+            {
+                g.setColour(HackAudio::Colours::Gray);
+                pipSize = minPipSize;
+            }
+            else
+            {
+                g.setColour(HackAudio::Colours::Cyan);
+                pipSize = maxPipSize;
+            }
+
+        }
+        else if (isRotary())
+        {
+
+            if ((i / (float)(pipLocations.size() - 1)) - 0.025 > ((getValue() - getMinimum()) / (getMaximum() - getMinimum())))
+            {
+                g.setColour(HackAudio::Colours::Gray);
+                pipSize = minPipSize;
+            }
+            else
+            {
+                g.setColour(HackAudio::Colours::Cyan);
+
+                float diff = (i / (float)(pipLocations.size() - 1)) - ((getValue() - getMinimum()) / (getMaximum() - getMinimum()));
+
+                if (diff > 0)
+                {
+                    pipSize = maxPipSize - (maxPipSize * diff);
+                }
+                else
+                {
+                    pipSize = maxPipSize;
+                }
+            }
+        }
+
         juce::Point<int>& p = pipLocations.getReference(i);
 
         if (!isRotary())
