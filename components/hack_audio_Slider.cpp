@@ -37,6 +37,18 @@ void HackAudio::Slider::setDefaultValue(bool shouldHaveDefault, double defaultVa
     sliderDefault = defaultValue;
 }
 
+void HackAudio::Slider::setPipCount(int count)
+{
+    pipLocations.resize(count);
+    resized();
+    repaint();
+}
+
+int HackAudio::Slider::getPipCount()
+{
+    return pipLocations.size();
+}
+
 void HackAudio::Slider::mouseDown(const juce::MouseEvent &e)
 {
     if (trackArea.contains(e.getPosition()) || thumbArea.contains(e.getPosition()))

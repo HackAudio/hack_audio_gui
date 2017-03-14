@@ -15,6 +15,9 @@ public:
 
     void setDefaultValue(bool shouldHaveDefault, double defaultValue);
 
+    void setPipCount(int count);
+    int getPipCount();
+
 private:
 
     void mouseDown(const juce::MouseEvent& e) override;
