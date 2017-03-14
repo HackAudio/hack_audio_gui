@@ -1,7 +1,5 @@
 TODO:
 
-	- Set Rotary Knob Angle Min/Max as Globals
-
 	- Animate Pips on Rotary Value Change
 
 	- Dijkstra Implementation for HackAudio::Diagram

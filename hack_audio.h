@@ -26,6 +26,9 @@ END_JUCE_MODULE_DECLARATION
 #define CORNER_RADIUS   24, 24
 #define CORNER_CONFIG   false, true, true, false
 
+#define ROTARY_ANGLESTART ((7.0f * M_PI) / 6.0f)
+#define ROTARY_ANGLERANGE ((11.0f * M_PI) / 6.0f)
+
 namespace HackAudio
 {
 
