@@ -20,6 +20,8 @@ HackAudio::Slider::Slider()
     resizeGuard   = false;
     isDraggable   = false;
     isSettable    = false;
+    
+    pipsShown     = true;
 
     addListener(this);
 
@@ -35,6 +37,17 @@ void HackAudio::Slider::setDefaultValue(bool shouldHaveDefault, double defaultVa
 {
     hasDefault = shouldHaveDefault;
     sliderDefault = defaultValue;
+}
+
+void HackAudio::Slider::setPipState(bool shouldBeShown)
+{
+    pipsShown = shouldBeShown;
+    repaint();
+}
+
+bool HackAudio::Slider::getPipState()
+{
+    return pipsShown;
 }
 
 void HackAudio::Slider::setPipCount(int count)
@@ -316,7 +329,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     }
 
     // Draw Slider Pips
-    for (int i = 0; i < pipLocations.size(); ++i)
+    for (int i = 0; i < pipLocations.size() && pipsShown; ++i)
     {
 
         int minPipSize = 6;

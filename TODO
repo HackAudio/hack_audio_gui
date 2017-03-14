@@ -1,5 +1,7 @@
 TODO:
 
+    - Adjust Linear Slider Positioning To Center When Pips Are Disabled
+
 	- Adjust Pip Min/Max Size Based On Number of Pips and Available Space
 
     - Dijkstra Implementation for HackAudio::Diagram

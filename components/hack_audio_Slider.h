@@ -15,8 +15,11 @@ public:
 
     void setDefaultValue(bool shouldHaveDefault, double defaultValue);
 
+    void setPipState(bool shouldBeShown);
+    bool getPipState();
+
     void setPipCount(int count);
-    int getPipCount();
+    int  getPipCount();
 
 private:
 
@@ -40,6 +43,7 @@ private:
     juce::Point<int> animationEnd;
 
     bool resizeGuard;
+    bool pipsShown;
     juce::Array<juce::Point<int>> pipLocations;
     juce::Rectangle<int> trackArea;
     juce::Rectangle<int> thumbArea;
