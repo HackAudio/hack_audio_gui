@@ -4,11 +4,9 @@ TODO:
 
 	- Dijkstra Implementation for HackAudio::Diagram
 
-
+    - Revise Component Size Constraints
 
 BUG:
-
-	- Pip Mouse Hit-Testing Becomes Less Accurate With Increased Pip Count
 
 	- Rotary Pip Location Setting is Currently Off By 1 (See Angle Range of Pips vs. Angle Range of Indicator)
 
