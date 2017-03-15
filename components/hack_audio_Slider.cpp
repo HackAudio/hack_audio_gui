@@ -22,6 +22,9 @@ HackAudio::Slider::Slider()
     isSettable    = false;
     
     pipsShown     = true;
+    pipSize       = 0;
+    minPipSize    = 6;
+    maxPipSize    = 8;
 
     addListener(this);
 
@@ -84,7 +87,7 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent &e)
 
         for (int i = 0; i <= pipLocations.size(); ++i)
         {
-            if (pipLocations[i].getDistanceFrom(e.getPosition()) <= 16)
+            if (pipLocations[i].getDistanceFrom(e.getPosition()) <= maxPipSize * 0.75f)
             {
                 isSettable = true;
             }
@@ -121,7 +124,7 @@ void HackAudio::Slider::mouseUp(const juce::MouseEvent& e)
 
     for (int i = 0; i <= pipLocations.size(); ++i)
     {
-        if (pipLocations[i].getDistanceFrom(e.getPosition()) <= 16)
+        if (pipLocations[i].getDistanceFrom(e.getPosition()) <= maxPipSize * 0.75f)
         {
 
             if (std::abs((i / (float)(pipLocations.size() - 1.0f) * (getMaximum() - getMinimum()) + getMinimum()) - getValue()) > 0.01f)
@@ -333,10 +336,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     for (int i = 0; i < pipLocations.size() && pipsShown; ++i)
     {
 
-        int minPipSize = 6;
-        int maxPipSize = 8;
-
-        int pipSize = minPipSize;
+        pipSize = minPipSize;
 
         if (isVertical())
         {

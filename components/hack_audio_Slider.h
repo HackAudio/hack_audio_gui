@@ -70,7 +70,12 @@ private:
     juce::Point<int> animationEnd;
 
     bool resizeGuard;
+
     bool pipsShown;
+    int pipSize;
+    int minPipSize;
+    int maxPipSize;
+
     juce::Array<juce::Point<int>> pipLocations;
     juce::Rectangle<int> trackArea;
     juce::Rectangle<int> thumbArea;
