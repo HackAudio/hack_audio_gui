@@ -445,7 +445,7 @@ void HackAudio::Slider::resized()
     if (isVertical())
     {
 
-        if (height == 0) { return; }
+        if (height == 0) { resizeGuard = false; return; }
 
         trackArea.setBounds(trackOffset, height / 6, 12, height - (height / 3));
         indicatorArea.setWidth(trackArea.getWidth());
@@ -468,7 +468,7 @@ void HackAudio::Slider::resized()
     else if (isHorizontal())
     {
 
-        if (width == 0) { return; }
+        if (width == 0) { resizeGuard = false; return; }
 
         trackArea.setBounds(width / 6, trackOffset, width - (width / 3), 12);
         indicatorArea.setHeight(trackArea.getHeight());
