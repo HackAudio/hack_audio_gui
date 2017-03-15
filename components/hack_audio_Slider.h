@@ -48,6 +48,14 @@ public:
     */
     int  getPipCount();
 
+    /**
+        Sets the size range slider pips will be drawn at
+     
+        @parameter minSize  the size of inactive pips (pip < sliderValue)
+        @parameter maxSize  the size of active pips (pip > sliderValue)
+    */
+    void setPipSize(int minSize, int maxSize);
+
 private:
 
     void mouseDown(const juce::MouseEvent& e) override;

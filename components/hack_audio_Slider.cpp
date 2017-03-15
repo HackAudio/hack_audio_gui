@@ -66,6 +66,14 @@ int HackAudio::Slider::getPipCount()
     return pipLocations.size();
 }
 
+void HackAudio::Slider::setPipSize(int minSize, int maxSize)
+{
+    minPipSize = minSize;
+    maxPipSize = maxSize;
+    resized();
+    repaint();
+}
+
 void HackAudio::Slider::mouseDown(const juce::MouseEvent &e)
 {
     if (trackArea.contains(e.getPosition()) || thumbArea.contains(e.getPosition()))
