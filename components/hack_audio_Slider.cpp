@@ -42,6 +42,7 @@ void HackAudio::Slider::setDefaultValue(bool shouldHaveDefault, double defaultVa
 void HackAudio::Slider::setPipState(bool shouldBeShown)
 {
     pipsShown = shouldBeShown;
+    resized();
     repaint();
 }
 
@@ -439,13 +440,16 @@ void HackAudio::Slider::resized()
 
     thumbArea.setSize(32, 32);
 
+    int trackOffset = (pipsShown) ? 74 : 58;
+
     if (isVertical())
     {
 
         if (height == 0) { return; }
 
-        trackArea.setBounds(74, height / 6, 12, height - (height / 3));
+        trackArea.setBounds(trackOffset, height / 6, 12, height - (height / 3));
         indicatorArea.setWidth(trackArea.getWidth());
+        indicatorArea.setX(trackArea.getX());
 
         thumbArea.setX(trackArea.getCentreX() - 16);
         thumbSpan.setBounds(trackArea.getX(), trackArea.getBottom() - thumbArea.getHeight() / 2, trackArea.getWidth(), trackArea.getHeight());
@@ -466,7 +470,7 @@ void HackAudio::Slider::resized()
 
         if (width == 0) { return; }
 
-        trackArea.setBounds(width / 6, 74, width - (width / 3), 12);
+        trackArea.setBounds(width / 6, trackOffset, width - (width / 3), 12);
         indicatorArea.setHeight(trackArea.getHeight());
         indicatorArea.setPosition(trackArea.getPosition());
 

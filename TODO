@@ -1,10 +1,8 @@
 TODO:
 
-    - Adjust Linear Slider Positioning To Center When Pips Are Disabled
-
 	- Adjust Pip Min/Max Size Based On Number of Pips and Available Space
 
-    - Dijkstra Implementation for HackAudio::Diagram
+	- Dijkstra Implementation for HackAudio::Diagram
 
 
 
@@ -16,4 +14,4 @@ BUG:
 
 	- Investigate Juce 30fps Graphics Limitations
 
-    - When Clicking on A Rotary's Pips The Selected Pip is Not Max Size
+	- When Clicking on A Rotary's Pips The Selected Pip is Not Max Size
