@@ -398,7 +398,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
         else if (isRotary())
         {
 
-            float angle = thumbArea.getCentre().getAngleToPoint(pipLocations[i]);
+            float angle = thumbArea.getCentre().getAngleToPoint(pipLocations[i-1]);
             float indicatorAngle = thumbArea.getCentre().getAngleToPoint(indicatorArea.getCentre());
 
             if (angle >= indicatorAngle)

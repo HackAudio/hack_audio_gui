@@ -11,7 +11,3 @@ BUG:
 	- Rotary Pip Location Setting is Currently Off By 1 (See Angle Range of Pips vs. Angle Range of Indicator)
 
 	- Investigate Juce 30fps Graphics Limitations
-
-	- When Clicking on A Rotary's Pips The Selected Pip is Not Max Size
-
-    - Rotary Last Pip Does Not Reach Max Size
