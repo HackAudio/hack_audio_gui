@@ -4,6 +4,12 @@
 namespace HackAudio
 {
 
+/**
+
+ A custom slider using the generic juce::Slider API while adding custom styling and new methods.
+
+*/
+
 class Slider : public juce::Slider,
                public juce::Timer,
                public juce::SliderListener
@@ -13,12 +19,33 @@ public:
     Slider();
     ~Slider();
 
+    /**
+        Sets whether the slider should snap to a value when double clicked and, if so, what value
+     
+        @param shouldHaveDefault    whether the slider accepts double clicks
+     
+        @param defaultValue         the value the slider should snap too (must be in slider's range)
+    */
     void setDefaultValue(bool shouldHaveDefault, double defaultValue);
 
+    /**
+        Sets the visibility state of the slider's decorative pips
+    */
     void setPipState(bool shouldBeShown);
+
+    /**
+        Returns the current visibility of the slider's pips
+    */
     bool getPipState();
 
+    /**
+        Sets the number of pips the slider should display, adjusting their spacing automatically
+    */
     void setPipCount(int count);
+
+    /**
+        Returns the current number of pips for the slider
+    */
     int  getPipCount();
 
 private:

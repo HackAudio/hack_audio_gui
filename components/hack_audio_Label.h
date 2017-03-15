@@ -4,6 +4,12 @@
 namespace HackAudio
 {
 
+/**
+
+ A custom label using the generic juce::Slider API that supports pre/post-fixes 
+ 
+ */
+
 class Label : public juce::Label
 {
 public:
@@ -11,11 +17,26 @@ public:
     Label();
     ~Label();
 
-    juce::String getPrefix();
+    /**
+     Sets the prefix that should always display before the label text
+     */
     void setPrefix(juce::String pre);
 
-    juce::String getPostfix();
+    /**
+        Returns the label's current prefix string
+     */
+    juce::String getPrefix();
+
+
+    /**
+        Sets the postfix that should always display after the label text
+    */
     void setPostfix(juce::String post);
+
+    /**
+     Returns the label's current postfix string
+     */
+    juce::String getPostfix();
 
 private:
 
