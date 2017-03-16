@@ -448,12 +448,13 @@ void HackAudio::Slider::resized()
 
     thumbArea.setSize(32, 32);
 
-    int trackOffset = (pipsShown) ? 74 : 58;
-
     if (isVertical())
     {
 
         if (height == 0) { resizeGuard = false; return; }
+
+//        int trackOffset = (pipsShown) ? 74 : 58;
+        int trackOffset = (pipsShown) ? (width / 2) + 10 : (width / 2) - 6;
 
         trackArea.setBounds(trackOffset, height / 6, 12, height - (height / 3));
         indicatorArea.setWidth(trackArea.getWidth());
@@ -465,10 +466,10 @@ void HackAudio::Slider::resized()
         for (int i = 0; i < pipLocations.size(); ++i)
         {
             juce::Point<int>& p = pipLocations.getReference(i);
-            p.setXY(32, (trackArea.getBottom()) - ((((float)(trackArea.getHeight()) / (float)(pipLocations.size() - 1)) * i)));
+            p.setXY(trackArea.getX() - 42, (trackArea.getBottom()) - ((((float)(trackArea.getHeight()) / (float)(pipLocations.size() - 1)) * i)));
         }
 
-        setSize(128, height);
+        setSize(width, height);
 
         setMouseDragSensitivity(trackArea.getHeight());
 
@@ -477,6 +478,9 @@ void HackAudio::Slider::resized()
     {
 
         if (width == 0) { resizeGuard = false; return; }
+
+//        int trackOffset = (pipsShown) ? 74 : 58;
+        int trackOffset = (pipsShown) ? (height / 2) + 10 : (height / 2) - 6;
 
         trackArea.setBounds(width / 6, trackOffset, width - (width / 3), 12);
         indicatorArea.setHeight(trackArea.getHeight());
@@ -488,10 +492,10 @@ void HackAudio::Slider::resized()
         for (int i = 0; i < pipLocations.size(); ++i)
         {
             juce::Point<int>& p = pipLocations.getReference(i);
-            p.setXY(trackArea.getX() + ((float)(trackArea.getWidth()) / (float)(pipLocations.size() - 1)) * i, 40);
+            p.setXY(trackArea.getX() + ((float)(trackArea.getWidth()) / (float)(pipLocations.size() - 1)) * i, trackArea.getY() - 34);
         }
 
-        setSize(width, 128);
+        setSize(width, height);
 
         setMouseDragSensitivity(trackArea.getWidth());
 
@@ -515,8 +519,6 @@ void HackAudio::Slider::resized()
 
             juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, angle);
             p.setXY(destination.x, destination.y);
-
-
         }
 
         int radius = (thumbArea.getWidth() / 2) - (thumbArea.getWidth() / 8);
