@@ -51,7 +51,6 @@ private:
 
     int fontSize;
 
-    bool resizeGuard;
 };
 
 }
