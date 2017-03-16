@@ -4,10 +4,10 @@
 
 #include "hack_audio.h"
 
-const juce::Colour HackAudio::Colours::Black (0xFF010D13);
-const juce::Colour HackAudio::Colours::Gray  (0xFF1E2324);
-const juce::Colour HackAudio::Colours::White (0xFFCAD8DD);
-const juce::Colour HackAudio::Colours::Cyan  (0xFF59C6C3);
+const juce::Colour HackAudio::Colours::Black (0xFF010D14);
+const juce::Colour HackAudio::Colours::Gray  (0xFF262C2D);
+const juce::Colour HackAudio::Colours::White (0xFFCAD8DE);
+const juce::Colour HackAudio::Colours::Cyan  (0xFF60CAC8);
 
 #include "components/hack_audio_Slider.cpp"
 #include "components/hack_audio_Button.cpp"
