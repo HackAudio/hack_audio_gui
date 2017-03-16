@@ -74,6 +74,11 @@ void HackAudio::Slider::setPipSize(int minSize, int maxSize)
     repaint();
 }
 
+void HackAudio::Slider::setSymmetricSize(int size)
+{
+    setSize(size, size);
+}
+
 void HackAudio::Slider::mouseDown(const juce::MouseEvent &e)
 {
     if (trackArea.contains(e.getPosition()) || thumbArea.contains(e.getPosition()))
@@ -448,12 +453,13 @@ void HackAudio::Slider::resized()
 
     thumbArea.setSize(32, 32);
 
-    int trackOffset = (pipsShown) ? 74 : 58;
-
     if (isVertical())
     {
 
         if (height == 0) { resizeGuard = false; return; }
+
+//        int trackOffset = (pipsShown) ? 74 : 58;
+        int trackOffset = (pipsShown) ? (width / 2) + 10 : (width / 2) - 6;
 
         trackArea.setBounds(trackOffset, height / 6, 12, height - (height / 3));
         indicatorArea.setWidth(trackArea.getWidth());
@@ -465,10 +471,10 @@ void HackAudio::Slider::resized()
         for (int i = 0; i < pipLocations.size(); ++i)
         {
             juce::Point<int>& p = pipLocations.getReference(i);
-            p.setXY(32, (trackArea.getBottom()) - ((((float)(trackArea.getHeight()) / (float)(pipLocations.size() - 1)) * i)));
+            p.setXY(trackArea.getX() - 42, (trackArea.getBottom()) - ((((float)(trackArea.getHeight()) / (float)(pipLocations.size() - 1)) * i)));
         }
 
-        setSize(128, height);
+        setSize(width, height);
 
         setMouseDragSensitivity(trackArea.getHeight());
 
@@ -477,6 +483,9 @@ void HackAudio::Slider::resized()
     {
 
         if (width == 0) { resizeGuard = false; return; }
+
+//        int trackOffset = (pipsShown) ? 74 : 58;
+        int trackOffset = (pipsShown) ? (height / 2) + 10 : (height / 2) - 6;
 
         trackArea.setBounds(width / 6, trackOffset, width - (width / 3), 12);
         indicatorArea.setHeight(trackArea.getHeight());
@@ -488,10 +497,10 @@ void HackAudio::Slider::resized()
         for (int i = 0; i < pipLocations.size(); ++i)
         {
             juce::Point<int>& p = pipLocations.getReference(i);
-            p.setXY(trackArea.getX() + ((float)(trackArea.getWidth()) / (float)(pipLocations.size() - 1)) * i, 40);
+            p.setXY(trackArea.getX() + ((float)(trackArea.getWidth()) / (float)(pipLocations.size() - 1)) * i, trackArea.getY() - 34);
         }
 
-        setSize(width, 128);
+        setSize(width, height);
 
         setMouseDragSensitivity(trackArea.getWidth());
 
@@ -499,9 +508,16 @@ void HackAudio::Slider::resized()
     else if (isRotary())
     {
 
+        if (width != height)
+        {
+            int size;
+            size = std::min(width, height);
+            width = height = size;
+        }
+
         trackArea.setBounds(0, 0, 0, 0);
 
-        thumbArea.setBounds(32, 32, 64, 64);
+        thumbArea.setBounds(width / 4, height / 4, width / 2, height / 2);
         indicatorArea.setSize(8, 8);
 
         for (int i = 0; i < pipLocations.size(); ++i)
@@ -515,8 +531,6 @@ void HackAudio::Slider::resized()
 
             juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, angle);
             p.setXY(destination.x, destination.y);
-
-
         }
 
         int radius = (thumbArea.getWidth() / 2) - (thumbArea.getWidth() / 8);
@@ -527,7 +541,7 @@ void HackAudio::Slider::resized()
         juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, angle);
         indicatorArea.setCentre(destination.x, destination.y);
 
-        setSize(128, 128);
+        setSize(width, height);
 
         setMouseDragSensitivity(2 * M_PI * 32);
 

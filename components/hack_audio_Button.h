@@ -67,12 +67,14 @@ private:
 
     juce::LinearSmoothedValue<float> currentColourInterpolation;
 
-	bool isResizing;
+	bool resizeGuard;
     juce::Rectangle<int> thumbArea;
 	juce::Rectangle<int> trackArea;
 	juce::Rectangle<int> indicatorArea;
 
     bool isDraggable;
+
+    int fontSize;
 
     ButtonStyle buttonStyle;
 

@@ -42,12 +42,15 @@ private:
 
     void paint(juce::Graphics& g) override;
 
+    void resized() override;
+
     juce::String prefix;
     juce::String postfix;
 
     juce::Rectangle<int> textArea;
 
-    bool isResizing;
+    int fontSize;
+
 };
 
 }
