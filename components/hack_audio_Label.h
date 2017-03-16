@@ -49,6 +49,8 @@ private:
 
     juce::Rectangle<int> textArea;
 
+    int fontSize;
+
     bool resizeGuard;
 };
 
