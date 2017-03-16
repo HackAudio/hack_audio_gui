@@ -1,13 +1,11 @@
 TODO:
 
-	- Adjust Pip Min/Max Size Based On Number of Pips and Available Space
-
 	- Dijkstra Implementation for HackAudio::Diagram
 
     - Revise Component Size Constraints
 
 BUG:
 
-	- Rotary Pip Location Setting is Currently Off By 1 (See Angle Range of Pips vs. Angle Range of Indicator)
-
 	- Investigate Juce 30fps Graphics Limitations
+
+    - Adjust Pip Min/Max Size Based On Number of Pips and Available Space
