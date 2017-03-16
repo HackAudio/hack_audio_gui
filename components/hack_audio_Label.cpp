@@ -4,7 +4,7 @@ HackAudio::Label::Label()
 {
     setInterceptsMouseClicks(false, false);
 
-    currentColourInterpolation.reset(50, 0.45);
+    currentColourInterpolation.reset(50, 0.5);
 
     animationStatus = true;
 
