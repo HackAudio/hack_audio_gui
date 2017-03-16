@@ -55,6 +55,6 @@ void HackAudio::Label::resized()
     int width = getWidth();
     int height = getHeight();
 
-    setFont(juce::Font(std::min(width, height) / 4));
+    getFont().setHeight(std::min(width, height) / 4);
     
 }
