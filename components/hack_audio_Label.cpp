@@ -47,3 +47,8 @@ void HackAudio::Label::paint(juce::Graphics& g)
     g.drawFittedText(prefix + getText() + postfix, getLocalBounds(), juce::Justification::centred, 1);
 
 }
+
+void HackAudio::Label::resized()
+{
+    
+}

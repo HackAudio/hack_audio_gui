@@ -5,7 +5,7 @@ HackAudio::Button::Button() : juce::Button("")
 	setButtonText("");
 	setClickingTogglesState(true);
 	setTriggeredOnMouseDown(false);
-	isResizing = false;
+	resizeGuard = false;
     currentColourInterpolation.reset(50, 0.45);
 }
 
@@ -267,9 +267,9 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
 
 void HackAudio::Button::resized()
 {
-	if (isResizing) { return; }
+	if (resizeGuard) { return; }
 
-	isResizing = true;
+	resizeGuard = true;
 
 
     if (buttonStyle != ButtonStyle::SlidingToggle)
@@ -307,5 +307,5 @@ void HackAudio::Button::resized()
 
     }
 
-	isResizing = false;
+	resizeGuard = false;
 }
