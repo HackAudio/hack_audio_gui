@@ -74,6 +74,8 @@ private:
 
     bool isDraggable;
 
+    int fontSize;
+
     ButtonStyle buttonStyle;
 
 };
