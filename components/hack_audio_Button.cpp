@@ -39,12 +39,13 @@ void HackAudio::Button::mouseDown(const juce::MouseEvent& e)
     if (buttonStyle == ButtonStyle::BarSingleton)
     {
 
+        startTimerHz(60);
         setToggleState(true, juce::sendNotification);
 
     }
     else if (buttonStyle == ButtonStyle::BarToggle)
     {
-
+        startTimerHz(60);
         juce::Button::mouseDown(e);
 
     }
@@ -104,6 +105,8 @@ void HackAudio::Button::mouseDrag(const juce::MouseEvent& e)
 void HackAudio::Button::mouseUp(const juce::MouseEvent& e)
 {
 
+
+
     if (buttonStyle == ButtonStyle::BarSingleton)
     {
 
@@ -161,6 +164,10 @@ void HackAudio::Button::timerCallback()
             }
             else
             {
+                if (currentColourInterpolation.getNextValue() == 0.0f)
+                {
+                    stopTimer();
+                }
                 return;
             }
         }
@@ -291,7 +298,6 @@ void HackAudio::Button::resized()
 
         setSize(width, height);
 
-        startTimerHz(60);
     }
     else
     {
