@@ -21,8 +21,11 @@ public:
 
     /**
      Sets the prefix that should always display before the label text
+     
+     @parameter preText     the text to append before the label's main text
+     @parameter notificationType    whether to send a change message to any Label::Listener objects
      */
-    void setPrefix(juce::String pre);
+    void setPrefix(juce::String preText, juce::NotificationType notificationType);
 
     /**
         Returns the label's current prefix string
@@ -31,9 +34,12 @@ public:
 
 
     /**
-        Sets the postfix that should always display after the label text
+     Sets the postfix that should always display after the label text
+     
+     @parameter postText     the text to append before the label's main text
+     @parameter notificationType    whether to send a change message to any Label::Listener objects
     */
-    void setPostfix(juce::String post);
+    void setPostfix(juce::String postText, juce::NotificationType notificationType);
 
     /**
      Returns the label's current postfix string

@@ -22,11 +22,11 @@ juce::String HackAudio::Label::getPrefix()
     return prefix;
 }
 
-void HackAudio::Label::setPrefix(juce::String pre)
+void HackAudio::Label::setPrefix(juce::String preText, juce::NotificationType notificationType)
 {
-    prefix = pre;
+    prefix = preText;
 
-    if (animationStatusPrePostFix)
+    if (animationStatusPrePostFix && notificationType == juce::sendNotification)
     {
         labelTextChanged(this);
     }
@@ -39,11 +39,11 @@ juce::String HackAudio::Label::getPostfix()
     return postfix;
 }
 
-void HackAudio::Label::setPostfix(juce::String post)
+void HackAudio::Label::setPostfix(juce::String postText, juce::NotificationType notificationType)
 {
-    postfix = post;
+    postfix = postText;
 
-    if (animationStatusPrePostFix)
+    if (animationStatusPrePostFix && notificationType == juce::sendNotification)
     {
         labelTextChanged(this);
     }
