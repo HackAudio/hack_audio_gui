@@ -3,6 +3,13 @@
 HackAudio::Label::Label()
 {
     setInterceptsMouseClicks(false, false);
+
+    currentColourInterpolation.reset(50, 0.45);
+
+    animationStatus = true;
+    animationStatusPrePostFix = false;
+
+    addListener(this);
 }
 
 HackAudio::Label::~Label()
@@ -18,6 +25,12 @@ juce::String HackAudio::Label::getPrefix()
 void HackAudio::Label::setPrefix(juce::String pre)
 {
     prefix = pre;
+
+    if (animationStatusPrePostFix)
+    {
+        labelTextChanged(this);
+    }
+
     repaint();
 }
 
@@ -29,7 +42,57 @@ juce::String HackAudio::Label::getPostfix()
 void HackAudio::Label::setPostfix(juce::String post)
 {
     postfix = post;
+
+    if (animationStatusPrePostFix)
+    {
+        labelTextChanged(this);
+    }
+
     repaint();
+}
+
+void HackAudio::Label::setAnimationStatus(bool shouldAnimate, bool shouldAnimatePrefixPostfix)
+{
+    animationStatus = shouldAnimate;
+    animationStatusPrePostFix = shouldAnimatePrefixPostfix;
+}
+
+void HackAudio::Label::labelTextChanged(juce::Label* labelThatHasChanged)
+{
+    if (animationStatus || animationStatusPrePostFix)
+    {
+        currentColourInterpolation.setValue(1.0f);
+        startTimerHz(60);
+    }
+}
+
+void HackAudio::Label::timerCallback()
+{
+
+    if (currentColourInterpolation.isSmoothing())
+    {
+        repaint();
+
+        if (std::abs(currentColourInterpolation.getTargetValue() - currentColourInterpolation.getNextValue()) < 0.0001)
+        {
+            currentColourInterpolation.setValue(currentColourInterpolation.getTargetValue());
+        }
+    }
+    else
+    {
+        if (currentColourInterpolation.getTargetValue() == 1.0f)
+        {
+            currentColourInterpolation.setValue(0.0f);
+        }
+        else
+        {
+            if (currentColourInterpolation.getNextValue() == 0.0f)
+            {
+                stopTimer();
+            }
+            return;
+        }
+    }
 }
 
 void HackAudio::Label::paint(juce::Graphics& g)
@@ -43,7 +106,8 @@ void HackAudio::Label::paint(juce::Graphics& g)
     g.setColour(HackAudio::Colours::Black);
     g.fillPath(p);
 
-    g.setColour(HackAudio::Colours::White);
+    g.setColour(HackAudio::Colours::White.interpolatedWith(HackAudio::Colours::Cyan, currentColourInterpolation.getNextValue()));
+
     g.setFont(getFont());
     g.drawText(prefix + getText() + postfix, 0, 0, width, height, juce::Justification::centred, 1);
 

@@ -10,7 +10,9 @@ namespace HackAudio
  
  */
 
-class Label : public juce::Label
+class Label : public juce::Label,
+              public juce::LabelListener,
+              public juce::Timer
 {
 public:
 
@@ -38,7 +40,19 @@ public:
      */
     juce::String getPostfix();
 
+    /**
+     Toggles whether the label should animate when its text changes
+     
+     @parameter shouldAnimate               determines whether to animate on setText()
+     @parameter shouldAnimatePrePostfix  determines whether to animate when setPrefix() or setPostfix() are called
+    */
+    void setAnimationStatus(bool shouldAnimate, bool shouldAnimatePrePostfix=false);
+
 private:
+
+    void labelTextChanged(juce::Label* labelThatHasChanged) override;
+
+    void timerCallback() override;
 
     void paint(juce::Graphics& g) override;
 
@@ -46,6 +60,11 @@ private:
 
     juce::String prefix;
     juce::String postfix;
+
+    bool animationStatus;
+    bool animationStatusPrePostFix;
+
+    juce::LinearSmoothedValue<float> currentColourInterpolation;
 
     juce::Rectangle<int> textArea;
 
