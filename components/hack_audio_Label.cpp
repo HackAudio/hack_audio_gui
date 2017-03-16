@@ -7,7 +7,6 @@ HackAudio::Label::Label()
     currentColourInterpolation.reset(50, 0.45);
 
     animationStatus = true;
-    animationStatusPrePostFix = false;
 
     addListener(this);
 }
@@ -26,7 +25,7 @@ void HackAudio::Label::setPrefix(juce::String preText, juce::NotificationType no
 {
     prefix = preText;
 
-    if (animationStatusPrePostFix && notificationType == juce::sendNotification)
+    if (notificationType == juce::sendNotification)
     {
         labelTextChanged(this);
     }
@@ -43,7 +42,7 @@ void HackAudio::Label::setPostfix(juce::String postText, juce::NotificationType 
 {
     postfix = postText;
 
-    if (animationStatusPrePostFix && notificationType == juce::sendNotification)
+    if (notificationType == juce::sendNotification)
     {
         labelTextChanged(this);
     }
@@ -51,15 +50,14 @@ void HackAudio::Label::setPostfix(juce::String postText, juce::NotificationType 
     repaint();
 }
 
-void HackAudio::Label::setAnimationStatus(bool shouldAnimate, bool shouldAnimatePrefixPostfix)
+void HackAudio::Label::setAnimationStatus(bool shouldAnimate)
 {
     animationStatus = shouldAnimate;
-    animationStatusPrePostFix = shouldAnimatePrefixPostfix;
 }
 
 void HackAudio::Label::labelTextChanged(juce::Label* labelThatHasChanged)
 {
-    if (animationStatus || animationStatusPrePostFix)
+    if (animationStatus)
     {
         currentColourInterpolation.setValue(1.0f);
         startTimerHz(60);

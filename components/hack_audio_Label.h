@@ -49,10 +49,9 @@ public:
     /**
      Toggles whether the label should animate when its text changes
      
-     @parameter shouldAnimate               determines whether to animate on setText()
-     @parameter shouldAnimatePrePostfix  determines whether to animate when setPrefix() or setPostfix() are called
+     @parameter shouldAnimate   determines whether to animate when setting the text, prefix, or postfix
     */
-    void setAnimationStatus(bool shouldAnimate, bool shouldAnimatePrePostfix=false);
+    void setAnimationStatus(bool shouldAnimate);
 
 private:
 
@@ -68,7 +67,6 @@ private:
     juce::String postfix;
 
     bool animationStatus;
-    bool animationStatusPrePostFix;
 
     juce::LinearSmoothedValue<float> currentColourInterpolation;
 
