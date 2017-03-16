@@ -3,7 +3,6 @@
 HackAudio::Label::Label()
 {
     setInterceptsMouseClicks(false, false);
-    fontSize = 12;
 }
 
 HackAudio::Label::~Label()
@@ -45,7 +44,7 @@ void HackAudio::Label::paint(juce::Graphics& g)
     g.fillPath(p);
 
     g.setColour(HackAudio::Colours::White);
-    g.setFont(juce::Font(fontSize));
+    g.setFont(getFont());
     g.drawText(prefix + getText() + postfix, 0, 0, width, height, juce::Justification::centred, 1);
 
 }
@@ -56,6 +55,6 @@ void HackAudio::Label::resized()
     int width = getWidth();
     int height = getHeight();
 
-    fontSize = std::min(width, height) / 4;
+    setFont(juce::Font(std::min(width, height) / 4));
     
 }
