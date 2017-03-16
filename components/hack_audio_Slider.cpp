@@ -177,7 +177,7 @@ void HackAudio::Slider::mouseUp(const juce::MouseEvent& e)
 
             }
 
-            startTimerHz(60);
+            startTimerHz(ANIMATION_FPS);
         }
     }
 }

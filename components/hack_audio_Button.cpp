@@ -49,13 +49,13 @@ void HackAudio::Button::mouseDown(const juce::MouseEvent& e)
     if (buttonStyle == ButtonStyle::BarSingleton)
     {
 
-        startTimerHz(60);
+        startTimerHz(ANIMATION_FPS);
         setToggleState(true, juce::sendNotification);
 
     }
     else if (buttonStyle == ButtonStyle::BarToggle)
     {
-        startTimerHz(60);
+        startTimerHz(ANIMATION_FPS);
         juce::Button::mouseDown(e);
 
     }

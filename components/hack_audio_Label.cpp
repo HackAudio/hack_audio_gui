@@ -60,7 +60,7 @@ void HackAudio::Label::labelTextChanged(juce::Label* labelThatHasChanged)
     if (animationStatus)
     {
         currentColourInterpolation.setValue(1.0f);
-        startTimerHz(60);
+        startTimerHz(ANIMATION_FPS);
     }
 }
 
