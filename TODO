@@ -2,8 +2,6 @@ TODO:
 
 	- Dijkstra Implementation for HackAudio::Diagram
 
-    - Revise Component Size Constraints
-
 BUG:
 
 	- Investigate Juce 30fps Graphics Limitations
