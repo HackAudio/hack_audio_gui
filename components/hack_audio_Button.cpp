@@ -9,8 +9,6 @@ HackAudio::Button::Button() : juce::Button("")
 
 	resizeGuard = false;
 
-    fontSize = 12;
-
     currentColourInterpolation.reset(50, 0.45);
 }
 
@@ -29,6 +27,18 @@ void HackAudio::Button::setButtonStyle(HackAudio::Button::ButtonStyle style)
 HackAudio::Button::ButtonStyle HackAudio::Button::getButtonStyle()
 {
     return buttonStyle;
+}
+
+void HackAudio::Button::setFont(juce::Font font)
+{
+    buttonFont = font;
+    resized();
+    repaint();
+}
+
+juce::Font HackAudio::Button::getFont()
+{
+    return buttonFont;
 }
 
 void HackAudio::Button::mouseDown(const juce::MouseEvent& e)
@@ -242,7 +252,7 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
 
         g.setColour(foreground.interpolatedWith(HackAudio::Colours::Gray, currentColourInterpolation.getNextValue()));
 
-        g.setFont(juce::Font(fontSize));
+        g.setFont(buttonFont);
         g.drawText(getButtonText(), 0, 0, width, height, juce::Justification::centred, 1);
 
     }
@@ -294,7 +304,8 @@ void HackAudio::Button::resized()
         indicatorArea.setBounds(0, 0, 0, 0);
         thumbArea.setBounds(0, 0, 0, 0);
 
-        fontSize = std::min(width, height) / 4;
+        int fontSize = std::min(width, height) / 4;
+        buttonFont.setHeight(fontSize);
 
         setSize(width, height);
 

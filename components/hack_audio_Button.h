@@ -48,6 +48,17 @@ public:
     */
     ButtonStyle getButtonStyle();
 
+    /**
+     Sets the button's font style
+    */
+    void setFont(juce::Font font);
+
+    /**
+     Return the button's current font
+    */
+    juce::Font getFont();
+
+
 private:
 
     void mouseDown(const juce::MouseEvent& e) override;
@@ -74,7 +85,7 @@ private:
 
     bool isDraggable;
 
-    int fontSize;
+    juce::Font buttonFont;
 
     ButtonStyle buttonStyle;
 
