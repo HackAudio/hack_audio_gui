@@ -547,6 +547,8 @@ void HackAudio::Slider::resized()
 
     }
 
+    sliderValueChanged(this);
+
     resizeGuard = false;
 
 }
