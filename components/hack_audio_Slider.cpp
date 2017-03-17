@@ -458,7 +458,6 @@ void HackAudio::Slider::resized()
 
         if (height == 0) { resizeGuard = false; return; }
 
-//        int trackOffset = (pipsShown) ? 74 : 58;
         int trackOffset = (pipsShown) ? (width / 2) + 10 : (width / 2) - 6;
 
         trackArea.setBounds(trackOffset, height / 6, 12, height - (height / 3));
@@ -484,7 +483,6 @@ void HackAudio::Slider::resized()
 
         if (width == 0) { resizeGuard = false; return; }
 
-//        int trackOffset = (pipsShown) ? 74 : 58;
         int trackOffset = (pipsShown) ? (height / 2) + 10 : (height / 2) - 6;
 
         trackArea.setBounds(width / 6, trackOffset, width - (width / 3), 12);
