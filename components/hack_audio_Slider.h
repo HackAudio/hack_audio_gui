@@ -57,6 +57,11 @@ public:
     void setPipSize(int minSize, int maxSize);
 
     /**
+     Resets the pip size to its default minimum and maximum
+    */
+    void resetPipSize();
+
+    /**
      Sets the size of the slider with a 1:1 aspect ratio. Useful for rotary sliders
 
      @paremeter size     the size that both the width and height will be set to
@@ -64,6 +69,8 @@ public:
     void setSymmetricSize(int size);
 
 private:
+
+    void setPipScale();
 
     void mouseDown(const juce::MouseEvent& e) override;
     void mouseDrag(const juce::MouseEvent& e) override;

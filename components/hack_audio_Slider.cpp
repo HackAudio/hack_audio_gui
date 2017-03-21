@@ -57,6 +57,7 @@ bool HackAudio::Slider::getPipState()
 void HackAudio::Slider::setPipCount(int count)
 {
     pipLocations.resize(count);
+    setPipScale();
     resized();
     repaint();
 }
@@ -70,8 +71,30 @@ void HackAudio::Slider::setPipSize(int minSize, int maxSize)
 {
     minPipSize = minSize;
     maxPipSize = maxSize;
+    setPipScale();
     resized();
     repaint();
+}
+
+void HackAudio::Slider::resetPipSize()
+{
+    minPipSize = 6;
+    maxPipSize = 8;
+    setPipScale();
+    resized();
+    repaint();
+}
+
+void HackAudio::Slider::setPipScale()
+{
+    int pipSizeCheck = trackArea.getHeight() / (pipLocations.size() - 1);
+
+    if (pipSizeCheck < maxPipSize * 2)
+    {
+        minPipSize *= pipSizeCheck/ maxPipSize;
+        maxPipSize = pipSizeCheck;
+
+    }
 }
 
 void HackAudio::Slider::setSymmetricSize(int size)
