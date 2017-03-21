@@ -228,7 +228,7 @@ void HackAudio::Slider::mouseUp(const juce::MouseEvent& e)
             {
                 int radius = (thumbArea.getWidth() / 2) - (thumbArea.getWidth() / 8);
 
-                float offset = ROTARY_ANGLERANGE / pipLocations.size();
+                float offset = ROTARY_ANGLERANGE / (pipLocations.size() - 1);
                 float angle = ROTARY_ANGLESTART + (i * offset);
 
                 float startAngle = thumbArea.getCentre().getAngleToPoint(indicatorArea.getCentre());
@@ -357,8 +357,10 @@ void HackAudio::Slider::sliderValueChanged(juce::Slider*)
         {
             int radius = (thumbArea.getWidth() / 2) - (thumbArea.getWidth() / 8);
 
-            float offset = ((7.0f * M_PI) / 4.0f);
-            float angle = ((7.0f * M_PI) / 6.0f) + (((getValue() - getMinimum()) / (getMaximum() - getMinimum())) * offset);
+//            float offset = ((7.0f * M_PI) / 4.0f);
+//            float angle = ((7.0f * M_PI) / 6.0f) + (((getValue() - getMinimum()) / (getMaximum() - getMinimum())) * offset);
+
+            float angle = ROTARY_ANGLESTART + (ROTARY_ANGLERANGE * ((getValue() - getMinimum()) / (getMaximum() - getMinimum())));
 
             juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, angle);
             indicatorArea.setCentre(destination.x, destination.y);
