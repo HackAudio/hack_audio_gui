@@ -207,7 +207,7 @@ void HackAudio::Button::timerCallback()
         thumbArea.translate(animationVel, 0);
         indicatorArea.setWidth((thumbArea.getX() - indicatorArea.getX()) + thumbArea.getWidth()/2);
 
-        if (thumbArea.getPosition().getDistanceFrom(animationEnd) < 4)
+        if (thumbArea.getPosition().getDistanceFrom(animationEnd) <= 4 || thumbArea.getX() < 32 || thumbArea.getX() > 64)
         {
             animationAcc = 0;
             animationVel = 0;
