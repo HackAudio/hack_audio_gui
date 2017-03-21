@@ -325,11 +325,11 @@ void HackAudio::Button::resized()
 
         if (getToggleState())
         {
-            thumbArea.setPosition(32, 16);
+            thumbArea.setPosition(64, 16);
         }
         else
         {
-            thumbArea.setPosition(64, 16);
+            thumbArea.setPosition(32, 16);
         }
 
         indicatorArea.setWidth((thumbArea.getX() - indicatorArea.getX()) + thumbArea.getWidth()/2);
