@@ -56,6 +56,7 @@ bool HackAudio::Slider::getPipState()
 
 void HackAudio::Slider::setPipCount(int count)
 {
+    count = std::max(2, count);
     pipLocations.resize(count);
     setPipScale();
     resized();
