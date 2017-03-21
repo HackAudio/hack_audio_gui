@@ -7,5 +7,3 @@ BUG:
 	- Investigate Juce 30fps Graphics Limitations
 
     - Adjust Pip Min/Max Size Based On Number of Pips and Available Space
-
-    - Slider Animations Only Work In Their Originally Designed Sizes

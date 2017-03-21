@@ -258,8 +258,8 @@ void HackAudio::Slider::timerCallback()
     }
 
     if (
-        ((!isRotary()) && (thumbArea.getPosition().getDistanceFrom(animationEnd) < 16)) ||
-        ((isRotary()) && (indicatorArea.getCentre().getDistanceFrom(animationEnd) < 4))
+        ((!isRotary()) && (thumbArea.getPosition().getDistanceFrom(animationEnd) <= 16)) ||
+        ((isRotary()) && (indicatorArea.getCentre().getDistanceFrom(animationEnd) <= 16))
         )
     {
         animationAcc = 0;
