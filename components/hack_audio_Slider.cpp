@@ -587,7 +587,9 @@ void HackAudio::Slider::resized()
         trackArea.setBounds(0, 0, 0, 0);
 
         thumbArea.setBounds(width / 4, height / 4, width / 2, height / 2);
-        indicatorArea.setSize(8, 8);
+
+        int indicatorSize = std::min(thumbArea.getWidth() / (DEFAULT_PIPMAX / 2), DEFAULT_PIPMAX);
+        indicatorArea.setSize(indicatorSize, indicatorSize);
 
         for (int i = 0; i < pipLocations.size(); ++i)
         {
