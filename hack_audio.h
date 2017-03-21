@@ -30,6 +30,9 @@ END_JUCE_MODULE_DECLARATION
 #define ROTARY_ANGLESTART ((7.0f * M_PI) / 6.0f)
 #define ROTARY_ANGLERANGE ((5.0f * M_PI) / 3.0f)
 
+#define DEFAULT_PIPMIN 6
+#define DEFAULT_PIPMAX 8
+
 namespace HackAudio
 {
 

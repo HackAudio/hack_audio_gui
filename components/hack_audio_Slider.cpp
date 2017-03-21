@@ -23,8 +23,8 @@ HackAudio::Slider::Slider()
     
     pipsShown     = true;
     pipSize       = 0;
-    minPipSize    = 6;
-    maxPipSize    = 8;
+    minPipSize    = DEFAULT_PIPMIN;
+    maxPipSize    = DEFAULT_PIPMAX;
 
     addListener(this);
 
@@ -78,8 +78,8 @@ void HackAudio::Slider::setPipSize(int minSize, int maxSize)
 
 void HackAudio::Slider::resetPipSize()
 {
-    minPipSize = 6;
-    maxPipSize = 8;
+    minPipSize = DEFAULT_PIPMIN;
+    maxPipSize = DEFAULT_PIPMAX;
     setPipScale();
     resized();
     repaint();
