@@ -576,7 +576,7 @@ void HackAudio::Slider::resized()
 
             int radius = sqrt ( pow(thumbArea.getWidth() / 2, 2) * 2);
 
-            float offset = ROTARY_ANGLERANGE / pipLocations.size();
+            float offset = ROTARY_ANGLERANGE / (pipLocations.size() - 1);
             float angle = ROTARY_ANGLESTART + (i * offset);
 
             juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, angle);

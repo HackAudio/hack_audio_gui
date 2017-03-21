@@ -5,5 +5,3 @@ TODO:
 BUG:
 
 	- Investigate Juce 30fps Graphics Limitations
-
-    - Rotary Pip Angle Range Can Go Past Indicator Angle Range
