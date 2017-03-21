@@ -92,6 +92,12 @@ void HackAudio::Slider::setPipScale()
     if (!isRotary())
     {
         pipSizeCheck = trackArea.getHeight() / (pipLocations.size() - 1);
+
+        if (pipSizeCheck < maxPipSize * 2)
+        {
+            minPipSize *= pipSizeCheck/ maxPipSize;
+            maxPipSize = pipSizeCheck;
+        }
     }
     else
     {
@@ -105,13 +111,15 @@ void HackAudio::Slider::setPipScale()
         juce::Point<float> pointTwo = thumbArea.getCentre().getPointOnCircumference(radius, angleTwo);
 
         pipSizeCheck = pointOne.getDistanceFrom(pointTwo);
+
+        if (pipSizeCheck < maxPipSize)
+        {
+            minPipSize *= pipSizeCheck/ maxPipSize;
+            maxPipSize = pipSizeCheck;
+        }
     }
 
-    if (pipSizeCheck < maxPipSize * 2)
-    {
-        minPipSize *= pipSizeCheck/ maxPipSize;
-        maxPipSize = pipSizeCheck;
-    }
+
 }
 
 void HackAudio::Slider::setSymmetricSize(int size)
