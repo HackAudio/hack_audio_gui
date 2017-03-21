@@ -194,7 +194,7 @@ void HackAudio::Button::timerCallback()
             animationAcc -= ANIMATION_SPEED;
         }
 
-        if (std::abs(animationVel) < 16)
+        if (std::abs(animationVel) < 4)
         {
             animationVel += animationAcc;
         }
@@ -202,7 +202,7 @@ void HackAudio::Button::timerCallback()
         thumbArea.translate(animationVel, 0);
         indicatorArea.setWidth((thumbArea.getX() - indicatorArea.getX()) + thumbArea.getWidth()/2);
 
-        if (thumbArea.getPosition().getDistanceFrom(animationEnd) < 16)
+        if (thumbArea.getPosition().getDistanceFrom(animationEnd) < 4)
         {
             animationAcc = 0;
             animationVel = 0;
