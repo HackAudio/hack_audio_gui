@@ -7,3 +7,5 @@ BUG:
 	- Investigate Juce 30fps Graphics Limitations
 
     - Adjust Pip Min/Max Size Based On Number of Pips and Available Space
+
+    - Rotary Pip Angle Range Can Go Past Indicator Angle Range
