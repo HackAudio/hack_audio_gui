@@ -130,20 +130,25 @@ void HackAudio::Button::mouseUp(const juce::MouseEvent& e)
     else if (buttonStyle == ButtonStyle::SlidingToggle)
     {
 
-        animationStart.setXY(thumbArea.getX(), thumbArea.getY());
-
-        if (e.x <= getWidth() / 2)
+        if (trackArea.contains(e.getPosition()))
         {
-            setToggleState(false, juce::sendNotification);
-            animationEnd.setXY(32, 16);
-        }
-        else
-        {
-            setToggleState(true, juce::sendNotification);
-            animationEnd.setXY(64, 16);
-        }
 
-        startTimerHz(60);
+            animationStart.setXY(thumbArea.getX(), thumbArea.getY());
+
+            if (e.x <= getWidth() / 2)
+            {
+                setToggleState(false, juce::sendNotification);
+                animationEnd.setXY(32, 16);
+            }
+            else
+            {
+                setToggleState(true, juce::sendNotification);
+                animationEnd.setXY(64, 16);
+            }
+
+            startTimerHz(60);
+
+        }
 
     }
     
