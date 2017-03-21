@@ -88,11 +88,11 @@ void HackAudio::Button::mouseDrag(const juce::MouseEvent& e)
 
         if (!isDraggable || !e.mouseWasDraggedSinceMouseDown()) { return; }
 
-        int xoffset = e.getMouseDownX() - thumbArea.getX();
+        int xoffset = thumbArea.getX();
 
         if (e.x > 32 || e.x < 64)
         {
-            thumbArea.setX(e.x - xoffset);
+            thumbArea.setX(xoffset + (e.getDistanceFromDragStartX() / 8));
         }
 
         if (thumbArea.getX() < 32)
