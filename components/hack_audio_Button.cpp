@@ -115,8 +115,6 @@ void HackAudio::Button::mouseDrag(const juce::MouseEvent& e)
 void HackAudio::Button::mouseUp(const juce::MouseEvent& e)
 {
 
-
-
     if (buttonStyle == ButtonStyle::BarSingleton)
     {
 
@@ -148,6 +146,7 @@ void HackAudio::Button::mouseUp(const juce::MouseEvent& e)
         startTimerHz(60);
 
     }
+    
 }
 
 void HackAudio::Button::timerCallback()
@@ -203,7 +202,7 @@ void HackAudio::Button::timerCallback()
         thumbArea.translate(animationVel, 0);
         indicatorArea.setWidth((thumbArea.getX() - indicatorArea.getX()) + thumbArea.getWidth()/2);
 
-        if (thumbArea.getPosition().getDistanceFrom(animationEnd) < 8)
+        if (thumbArea.getPosition().getDistanceFrom(animationEnd) < 16)
         {
             animationAcc = 0;
             animationVel = 0;
