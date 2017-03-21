@@ -2,6 +2,16 @@ TODO:
 
 	- Dijkstra Implementation for HackAudio::Diagram
 
+    - Provide Public API For Manipulation of HackAudio::FlexBox's Internal juce::FlexItems
+
+    - Allow ANIMATION_SPEED / ANIMATION_FPS To Be Changed Easily & Consistently For Animation Debugging
+
 BUG:
 
 	- Investigate Juce 30fps Graphics Limitations
+
+    - Occasionally indicatorArea of HackAudio::Button::SlidingToggle Will Have An Extreme Negative Width (Undefined Behavior / Possibly Uninitialized Values?)
+
+    - HackAudio::Button::SlidingToggle Does Not Function Correctly If The Thumb Is Dragged But Mouse Is Released Outside Component Bounds
+
+    - Slider Max Pip Reduces Size When More Pips Are Present Even If The Slider Is At Max Value
