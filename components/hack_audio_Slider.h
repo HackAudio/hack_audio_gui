@@ -75,6 +75,8 @@ private:
 
     void parentHierarchyChanged() override;
 
+    void stopAnimation();
+
     void paint (juce::Graphics& g) override;
     void resized() override;
 

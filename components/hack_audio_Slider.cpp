@@ -83,6 +83,9 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent &e)
 {
     if (trackArea.contains(e.getPosition()) || thumbArea.contains(e.getPosition()))
     {
+
+        stopAnimation();
+
         if (e.mods.isAltDown() && hasDefault)
         {
             setValue(sliderDefault);
@@ -102,6 +105,7 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent &e)
         {
             if (pipLocations[i].getDistanceFrom(e.getPosition()) <= maxPipSize * 0.75f)
             {
+                stopAnimation();
                 isSettable = true;
             }
         }
@@ -307,6 +311,14 @@ void HackAudio::Slider::parentHierarchyChanged()
 {
     resized();
     sliderValueChanged(this);
+}
+
+void HackAudio::Slider::stopAnimation()
+{
+    isAnimating = false;
+    animationAcc = 0;
+    animationVel = 0;
+    stopTimer();
 }
 
 void HackAudio::Slider::paint(juce::Graphics& g)
