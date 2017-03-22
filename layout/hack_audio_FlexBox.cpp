@@ -7,6 +7,8 @@ HackAudio::FlexBox::FlexBox()
 
     flexBoxBounds.setBounds(0, 0, 0, 0);
 
+    defaultFlexSettings.alignSelf = juce::FlexItem::AlignSelf::center;
+
     resizeGuard = false;
 
 }
@@ -16,13 +18,30 @@ HackAudio::FlexBox::~FlexBox()
 
 }
 
+void HackAudio::FlexBox::setDefaultItem(juce::FlexItem item, bool updateExistingItems)
+{
+    defaultFlexSettings = item;
+
+    if (updateExistingItems)
+    {
+        applyGlobalFlexItem(item);
+    }
+
+}
+
 void HackAudio::FlexBox::addComponent(juce::Component* component)
 {
-    items.add(juce::FlexItem(*component).withWidth(component->getWidth()).withHeight(component->getHeight()).withAlignSelf(juce::FlexItem::AlignSelf::center));
+
+    juce::FlexItem itemToAdd = defaultFlexSettings;
+    itemToAdd.associatedComponent = component;
+    itemToAdd.width  = component->getWidth();
+    itemToAdd.height = component->getHeight();
+    items.add(itemToAdd);
 
     component->addComponentListener(this);
 
     applyLayout();
+
 }
 
 void HackAudio::FlexBox::removeComponent(juce::Component* component)

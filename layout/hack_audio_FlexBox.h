@@ -19,6 +19,14 @@ public:
     ~FlexBox();
 
     /**
+     Sets the default juce::FlexItem settings to use when adding new items
+     
+     @parameter item    the juce::FlexItem to use as default
+     @parameter updateExistingItems whether or not to conform the current items to the passed default
+    */
+    void setDefaultItem(juce::FlexItem item, bool updateExistingItems);
+
+    /**
      Add a component to be controlled by the FlexBox (forces a layout adjusment)
      
      @paremeter component   the component to add
@@ -107,6 +115,8 @@ private:
     bool resizeGuard;
 
     juce::Rectangle<int> flexBoxBounds;
+
+    juce::FlexItem defaultFlexSettings;
 
 };
 
