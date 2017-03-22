@@ -31,7 +31,7 @@ public:
      
      @paremeter component   the component to add
     */
-    void addComponent(juce::Component* component);
+    void addComponent(juce::Component* component, int customOrder = 0);
 
     /**
      Remove a component from being controlled by the FlexBox

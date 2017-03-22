@@ -29,13 +29,14 @@ void HackAudio::FlexBox::setDefaultItem(juce::FlexItem item, bool updateExisting
 
 }
 
-void HackAudio::FlexBox::addComponent(juce::Component* component)
+void HackAudio::FlexBox::addComponent(juce::Component* component, int customOrder)
 {
 
     juce::FlexItem itemToAdd = defaultFlexSettings;
     itemToAdd.associatedComponent = component;
     itemToAdd.width  = component->getWidth();
     itemToAdd.height = component->getHeight();
+    itemToAdd.order  = customOrder;
     items.add(itemToAdd);
 
     component->addComponentListener(this);
