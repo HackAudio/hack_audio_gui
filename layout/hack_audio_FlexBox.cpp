@@ -38,6 +38,36 @@ void HackAudio::FlexBox::removeComponent(juce::Component* component)
     }
 }
 
+void HackAudio::FlexBox::setDirection(juce::FlexBox::Direction newDirection)
+{
+    flexDirection = newDirection;
+    applyLayout();
+}
+
+void HackAudio::FlexBox::setWrap(juce::FlexBox::Wrap newWrap)
+{
+    flexWrap = newWrap;
+    applyLayout();
+}
+
+void HackAudio::FlexBox::setAlignContent(juce::FlexBox::AlignContent newAlignment)
+{
+    alignContent = newAlignment;
+    applyLayout();
+}
+
+void HackAudio::FlexBox::setAlignItems(juce::FlexBox::AlignItems newAlignment)
+{
+    alignItems = newAlignment;
+    applyLayout();
+}
+
+void HackAudio::FlexBox::setJustifyContent(juce::FlexBox::JustifyContent newJustification)
+{
+    justifyContent = newJustification;
+    applyLayout();
+}
+
 void HackAudio::FlexBox::applyItemFlex(float newFlexGrow)
 {
     for (int i = 0; i < items.size(); ++i)

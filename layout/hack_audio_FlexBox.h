@@ -33,6 +33,32 @@ public:
     void removeComponent(juce::Component* component);
 
     /**
+     Specifies how flex items are placed in the flex container, and defines the direction of the main axis
+    */
+    void setDirection(juce::FlexBox::Direction newDirection);
+
+    /**
+     Specifies whether items are forced into a single line or can be wrapped onto multiple lines
+    */
+    void setWrap(juce::FlexBox::Wrap newWrap);
+
+    /**
+     Specifies how a flex container's lines are placed within the flex container when there is extra space on the cross-axis
+    */
+    void setAlignContent(juce::FlexBox::AlignContent newAlignment);
+
+    /**
+     Specifies the alignment of flex items along the cross-axis of each line
+    */
+    void setAlignItems(juce::FlexBox::AlignItems newAlignment);
+
+    /**
+     Defines how the container distributes space between and around items along the main-axis
+    */
+    void setJustifyContent(juce::FlexBox::JustifyContent newJustification);
+
+
+    /**
      Sets the flex for all contained items
      */
     void applyItemFlex(float newFlexGrow);
