@@ -13,5 +13,3 @@ BUG:
     - Occasionally indicatorArea of HackAudio::Button::SlidingToggle Will Have An Extreme Negative Width (Undefined Behavior / Possibly Uninitialized Values?)
 
     - HackAudio::Button::SlidingToggle Does Not Function Correctly If The Thumb Is Dragged But Mouse Is Released Outside Component Bounds
-
-    - Slider Max Pip Reduces Size When More Pips Are Present Even If The Slider Is At Max Value

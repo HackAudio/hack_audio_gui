@@ -502,6 +502,12 @@ void HackAudio::Slider::paint(juce::Graphics& g)
                 pipSize = currentMaxPipSize;
             }
 
+            if (!isAnimating && getValue() == getMaximum())
+            {
+                g.setColour(HackAudio::Colours::Cyan);
+                pipSize = currentMaxPipSize;
+            }
+
         }
 
         juce::Point<int>& p = pipLocations.getReference(i);
