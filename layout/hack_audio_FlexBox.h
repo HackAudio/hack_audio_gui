@@ -102,6 +102,8 @@ private:
 
     void componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized) override;
 
+    void componentVisibilityChanged(juce::Component& component) override;
+
     bool resizeGuard;
 
     juce::Rectangle<int> flexBoxBounds;

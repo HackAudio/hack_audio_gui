@@ -2,8 +2,6 @@ TODO:
 
 	- Dijkstra Implementation for HackAudio::Diagram
 
-    - Allow HackAudio::FlexBox To Handle Item Visibility Changes
-
 BUG:
 
 	- Investigate Juce 30fps Graphics Limitations
