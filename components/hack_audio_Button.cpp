@@ -130,7 +130,7 @@ void HackAudio::Button::mouseUp(const juce::MouseEvent& e)
     else if (buttonStyle == ButtonStyle::SlidingToggle)
     {
 
-        if (trackArea.contains(e.getPosition()))
+        if (trackArea.contains(e.getPosition()) || isDraggable)
         {
 
             animationStart.setXY(thumbArea.getX(), thumbArea.getY());
