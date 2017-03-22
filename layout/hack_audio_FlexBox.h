@@ -11,7 +11,7 @@ namespace HackAudio
 */
 
 class FlexBox : public juce::FlexBox,
-                public juce::Component
+                public juce::ComponentListener
 {
 public:
 
@@ -39,9 +39,18 @@ public:
     */
     void applyBounds(juce::Rectangle<int> bounds);
 
+    /**
+     Custom API for calling juce::FlexBox::performLayout(...) that handles component resizing callbacks
+    */
+    void applyLayout();
+
 private:
 
-    void applyLayout();
+    void componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized) override;
+
+    bool resizeGuard;
+
+    juce::Rectangle<int> flexBoxBounds;
 
 };
 
