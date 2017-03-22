@@ -2,6 +2,10 @@ TODO:
 
 	- Dijkstra Implementation for HackAudio::Diagram
 
+    - FlexBox Item Order API
+
 BUG:
 
 	- Investigate Juce 30fps Graphics Limitations
+
+    - FlexBox Still Reserves Space For Items With 0 Width/Height
