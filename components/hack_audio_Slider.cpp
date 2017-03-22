@@ -476,7 +476,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
             float angle = thumbArea.getCentre().getAngleToPoint(pipLocations[i-1]);
             float indicatorAngle = thumbArea.getCentre().getAngleToPoint(indicatorArea.getCentre());
 
-            if (angle >= indicatorAngle)
+            if (angle >= indicatorAngle || (!isAnimating && getValue() == getMinimum()))
             {
                 g.setColour(HackAudio::Colours::Gray);
                 pipSize = currentMinPipSize;
