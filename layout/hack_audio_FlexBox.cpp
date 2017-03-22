@@ -194,25 +194,33 @@ void HackAudio::FlexBox::componentMovedOrResized(juce::Component &component, boo
 void HackAudio::FlexBox::componentVisibilityChanged(juce::Component &component)
 {
 
-    for (int i = 0; i < items.size(); ++i)
+    if (component.isVisible())
     {
-        juce::FlexItem& fi = items.getReference(i);
+        juce::FlexItem fi = defaultFlexSettings;
 
-        if (fi.associatedComponent == &component)
+        fi.associatedComponent = &component;
+        fi.width = component.getProperties().getWithDefault(juce::Identifier("flexWidthCache"), juce::var(0));
+        fi.height = component.getProperties().getWithDefault(juce::Identifier("flexHeightCache"), juce::var(0));
+
+        component.getProperties().remove(juce::Identifier("flexWidthCache"));
+        component.getProperties().remove(juce::Identifier("flexHeightCache"));
+
+        int index = component.getProperties().getWithDefault(juce::Identifier("flexIndexCache"), juce::var(0));
+        items.insert(index, fi);
+    }
+    else
+    {
+        for (int i = 0; i < items.size(); ++i)
         {
-            if (component.isVisible())
+            juce::FlexItem& fi = items.getReference(i);
+
+            if (fi.associatedComponent == &component)
             {
-                fi.width = component.getProperties().getWithDefault(juce::Identifier("flexWidthCache"), juce::var(0));
-                fi.height = component.getProperties().getWithDefault(juce::Identifier("flexHeightCache"), juce::var(0));
-                component.getProperties().remove(juce::Identifier("flexWidthCache"));
-                component.getProperties().remove(juce::Identifier("flexHeightCache"));
-            }
-            else
-            {
+                component.getProperties().set(juce::Identifier("flexIndexCache"), juce::var(i));
                 component.getProperties().set(juce::Identifier("flexWidthCache"), juce::var(component.getWidth()));
                 component.getProperties().set(juce::Identifier("flexHeightCache"), juce::var(component.getHeight()));
-                fi.width  = 0;
-                fi.height = 0;
+
+                items.remove(i);
             }
         }
     }
