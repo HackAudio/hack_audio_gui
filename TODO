@@ -2,9 +2,7 @@ TODO:
 
 	- Dijkstra Implementation for HackAudio::Diagram
 
-    - Provide Public API For Manipulation of HackAudio::FlexBox's Internal juce::FlexItems
-
-    - Allow ANIMATION_SPEED / ANIMATION_FPS To Be Changed Easily & Consistently For Animation Debugging
+    - Allow HackAudio::FlexBox To Handle Item Visibility Changes
 
 BUG:
 

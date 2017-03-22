@@ -33,6 +33,28 @@ public:
     void removeComponent(juce::Component* component);
 
     /**
+     Sets the flex for all contained items
+     */
+    void applyItemFlex(float newFlexGrow);
+    void applyItemFlex(float newFlexGrow, float newFlexShrink);
+    void applyItemFlex(float newFlexGrow, float newFlexShrink, float newFlexBasis);
+
+    /**
+     Sets the width for all contained items
+    */
+    void applyItemWidth(float newWidth);
+
+    /**
+     Sets the height for all contained items
+    */
+    void applyItemHeight(float newHeight);
+
+    /**
+     Sets the margin for all contained items
+    */
+    void applyItemMargin(juce::FlexItem::Margin newMargin);
+
+    /**
      Sets the bounds the FlexBox should use and performs a layout adjustment
      
      @parameter bounds  the bounds the FlexBox should conform to
