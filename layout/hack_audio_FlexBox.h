@@ -54,6 +54,12 @@ public:
     */
     void applyItemMargin(juce::FlexItem::Margin newMargin);
 
+
+    /**
+     Sets all FlexItem properties to those of newFlexProperties
+    */
+    void applyGlobalFlexItem(juce::FlexItem newFlexProperties);
+
     /**
      Sets the bounds the FlexBox should use and performs a layout adjustment
      

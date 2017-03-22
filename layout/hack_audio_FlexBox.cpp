@@ -95,6 +95,17 @@ void HackAudio::FlexBox::applyItemMargin(juce::FlexItem::Margin newMargin)
     applyLayout();
 }
 
+void HackAudio::FlexBox::applyGlobalFlexItem(juce::FlexItem newFlexProperties)
+{
+    for (int i = 0; i < items.size(); ++i)
+    {
+        juce::Component * c = items[i].associatedComponent;
+        items[i] = newFlexProperties;
+        items.getReference(i).associatedComponent = c;
+    }
+    applyLayout();
+}
+
 void HackAudio::FlexBox::applyBounds(juce::Rectangle<int> bounds)
 {
     flexBoxBounds = bounds;
