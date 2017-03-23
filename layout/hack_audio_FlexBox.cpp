@@ -6,7 +6,7 @@ HackAudio::FlexBox::FlexBox()
     flexDirection  = juce::FlexBox::Direction::row;
     alignItems     = juce::FlexBox::AlignItems::center;
     alignContent   = juce::FlexBox::AlignContent::center;
-    justifyContent = juce::FlexBox::JustifyContent::spaceBetween;
+    justifyContent = juce::FlexBox::JustifyContent::spaceAround;
 
     flexBoxBounds.setBounds(0, 0, 0, 0);
 
