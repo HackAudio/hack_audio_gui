@@ -214,14 +214,54 @@ void HackAudio::FlexBox::componentMovedOrResized(juce::Component &component, boo
 
     if (resizeGuard) { return; }
 
-    for (int i = 0; i < items.size(); ++i)
+    if (component.getWidth() == 0 || component.getHeight() == 0)
     {
-        juce::FlexItem& fi = items.getReference(i);
 
-        if (fi.associatedComponent == &component)
+        for (int i = 0; i < items.size(); ++i)
         {
+
+            juce::FlexItem& fi = items.getReference(i);
+
+            if (fi.associatedComponent == &component)
+            {
+
+                component.getProperties().set(juce::Identifier("flexIndexCache"), juce::var(i));
+
+                items.remove(i);
+
+            }
+        }
+    }
+    else
+    {
+        if(component.getProperties().contains(juce::Identifier("flexIndexCache")))
+        {
+
+            juce::FlexItem fi = defaultFlexSettings;
+
+            fi.associatedComponent = &component;
+
             fi.width  = component.getWidth();
             fi.height = component.getHeight();
+
+            int index = component.getProperties().getWithDefault(juce::Identifier("flexIndexCache"), juce::var(0));
+            items.insert(index, fi);
+
+            component.getProperties().remove(juce::Identifier("flexIndexCache"));
+
+        }
+        else
+        {
+            for (int i = 0; i < items.size(); ++i)
+            {
+                juce::FlexItem& fi = items.getReference(i);
+
+                if (fi.associatedComponent == &component)
+                {
+                    fi.width  = component.getWidth();
+                    fi.height = component.getHeight();
+                }
+            }
         }
     }
 

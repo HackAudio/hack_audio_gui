@@ -5,5 +5,3 @@ TODO:
 BUG:
 
 	- Investigate Juce 30fps Graphics Limitations
-
-    - FlexBox Still Reserves Space For Items With 0 Width/Height
