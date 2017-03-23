@@ -11,7 +11,7 @@ namespace HackAudio
  */
 
 class Button : public juce::Button,
-               public juce::Timer
+               private juce::Timer
 {
 public:
 

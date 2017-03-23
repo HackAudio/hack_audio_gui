@@ -11,8 +11,8 @@ namespace HackAudio
  */
 
 class Label : public juce::Label,
-              public juce::LabelListener,
-              public juce::Timer
+              private juce::LabelListener,
+              private juce::Timer
 {
 public:
 
