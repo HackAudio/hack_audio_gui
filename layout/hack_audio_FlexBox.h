@@ -11,7 +11,7 @@ namespace HackAudio
 */
 
 class FlexBox : private juce::FlexBox,
-                public juce::ComponentListener
+                private juce::ComponentListener
 {
 public:
 
