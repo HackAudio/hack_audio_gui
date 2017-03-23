@@ -280,11 +280,13 @@ void HackAudio::FlexBox::componentVisibilityChanged(juce::Component &component)
         fi.width = component.getProperties().getWithDefault(juce::Identifier("flexWidthCache"), juce::var(0));
         fi.height = component.getProperties().getWithDefault(juce::Identifier("flexHeightCache"), juce::var(0));
 
-        component.getProperties().remove(juce::Identifier("flexWidthCache"));
-        component.getProperties().remove(juce::Identifier("flexHeightCache"));
-
         int index = component.getProperties().getWithDefault(juce::Identifier("flexIndexCache"), juce::var(0));
         items.insert(index, fi);
+
+        component.getProperties().remove(juce::Identifier("flexWidthCache"));
+        component.getProperties().remove(juce::Identifier("flexHeightCache"));
+        component.getProperties().remove(juce::Identifier("flexIndexCache"));
+
     }
     else
     {
