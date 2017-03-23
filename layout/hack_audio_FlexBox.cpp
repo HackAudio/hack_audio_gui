@@ -126,6 +126,46 @@ juce::Array<juce::FlexItem> HackAudio::FlexBox::getItems()
     return items;
 }
 
+juce::FlexItem* HackAudio::FlexBox::getItem(juce::Component *component)
+{
+
+    for (int i = 0; i < items.size(); ++i)
+    {
+
+        juce::FlexItem& fi = items.getReference(i);
+
+        if (fi.associatedComponent == component)
+        {
+
+            return &fi;
+
+        }
+    }
+
+    return nullptr;
+
+}
+
+void HackAudio::FlexBox::setItem(juce::Component *component, juce::FlexItem newFlexProperties)
+{
+
+    for (int i = 0; i < items.size(); ++i)
+    {
+
+        if (items[i].associatedComponent == component)
+        {
+
+            newFlexProperties.associatedComponent = component;
+            newFlexProperties.width  = component->getWidth();
+            newFlexProperties.height = component->getHeight();
+
+            items[i] = newFlexProperties;
+            
+        }
+    }
+
+}
+
 void HackAudio::FlexBox::applyItemFlex(float newFlexGrow)
 {
     for (int i = 0; i < items.size(); ++i)
