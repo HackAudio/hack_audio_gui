@@ -260,6 +260,11 @@ void HackAudio::FlexBox::applyLayout()
 
     if (!validBounds) { return; }
 
+    for (int i = 0; i < items.size(); ++i)
+    {
+        assert(items[i].associatedComponent);
+    }
+
     resizeGuard = true;
     performLayout(flexBoxBounds);
     resizeGuard = false;
