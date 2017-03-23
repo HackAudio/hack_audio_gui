@@ -3,6 +3,9 @@
 HackAudio::FlexBox::FlexBox()
 {
 
+    flexDirection  = juce::FlexBox::Direction::row;
+    alignItems     = juce::FlexBox::AlignItems::center;
+    alignContent   = juce::FlexBox::AlignContent::center;
     justifyContent = juce::FlexBox::JustifyContent::spaceBetween;
 
     flexBoxBounds.setBounds(0, 0, 0, 0);
@@ -66,10 +69,20 @@ void HackAudio::FlexBox::setDirection(juce::FlexBox::Direction newDirection)
     applyLayout();
 }
 
+juce::FlexBox::Direction HackAudio::FlexBox::getDirection()
+{
+    return flexDirection;
+}
+
 void HackAudio::FlexBox::setWrap(juce::FlexBox::Wrap newWrap)
 {
     flexWrap = newWrap;
     applyLayout();
+}
+
+juce::FlexBox::Wrap HackAudio::FlexBox::getWrap()
+{
+    return flexWrap;
 }
 
 void HackAudio::FlexBox::setAlignContent(juce::FlexBox::AlignContent newAlignment)
@@ -78,16 +91,31 @@ void HackAudio::FlexBox::setAlignContent(juce::FlexBox::AlignContent newAlignmen
     applyLayout();
 }
 
+juce::FlexBox::AlignContent HackAudio::FlexBox::getAlignContent()
+{
+    return alignContent;
+}
+
 void HackAudio::FlexBox::setAlignItems(juce::FlexBox::AlignItems newAlignment)
 {
     alignItems = newAlignment;
     applyLayout();
 }
 
+juce::FlexBox::AlignItems HackAudio::FlexBox::getAlignItems()
+{
+    return alignItems;
+}
+
 void HackAudio::FlexBox::setJustifyContent(juce::FlexBox::JustifyContent newJustification)
 {
     justifyContent = newJustification;
     applyLayout();
+}
+
+juce::FlexBox::JustifyContent HackAudio::FlexBox::getJustifyContent()
+{
+    return justifyContent;
 }
 
 void HackAudio::FlexBox::applyItemFlex(float newFlexGrow)

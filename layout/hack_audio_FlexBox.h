@@ -10,7 +10,7 @@ namespace HackAudio
 
 */
 
-class FlexBox : public juce::FlexBox,
+class FlexBox : private juce::FlexBox,
                 public juce::ComponentListener
 {
 public:
@@ -46,9 +46,19 @@ public:
     void setDirection(juce::FlexBox::Direction newDirection);
 
     /**
+     Returns the FlexBox's current direction
+     */
+    juce::FlexBox::Direction getDirection();
+
+    /**
      Specifies whether items are forced into a single line or can be wrapped onto multiple lines
     */
     void setWrap(juce::FlexBox::Wrap newWrap);
+
+    /**
+     Returns the FlexBox's current wrapping
+     */
+    juce::FlexBox::Wrap getWrap();
 
     /**
      Specifies how a flex container's lines are placed within the flex container when there is extra space on the cross-axis
@@ -56,14 +66,29 @@ public:
     void setAlignContent(juce::FlexBox::AlignContent newAlignment);
 
     /**
+     Returns the FlexBox's current content alignment
+     */
+    juce::FlexBox::AlignContent getAlignContent();
+
+    /**
      Specifies the alignment of flex items along the cross-axis of each line
     */
     void setAlignItems(juce::FlexBox::AlignItems newAlignment);
 
     /**
+     Returns the FlexBox's current item alignment
+    */
+    juce::FlexBox::AlignItems getAlignItems();
+
+    /**
      Defines how the container distributes space between and around items along the main-axis
     */
     void setJustifyContent(juce::FlexBox::JustifyContent newJustification);
+
+    /**
+     Returns the FlexBox's current justification
+    */
+    juce::FlexBox::JustifyContent getJustifyContent();
 
 
     /**
