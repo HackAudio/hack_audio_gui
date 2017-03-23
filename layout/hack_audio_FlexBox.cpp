@@ -118,6 +118,11 @@ juce::FlexBox::JustifyContent HackAudio::FlexBox::getJustifyContent()
     return justifyContent;
 }
 
+juce::Array<juce::FlexItem> HackAudio::FlexBox::getItems()
+{
+    return items;
+}
+
 void HackAudio::FlexBox::applyItemFlex(float newFlexGrow)
 {
     for (int i = 0; i < items.size(); ++i)

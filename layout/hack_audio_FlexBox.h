@@ -92,6 +92,11 @@ public:
 
 
     /**
+     Returns the FlexItems currently held by the FlexBox
+    */
+    juce::Array<juce::FlexItem> getItems();
+
+    /**
      Sets the flex for all contained items
      */
     void applyItemFlex(float newFlexGrow);
