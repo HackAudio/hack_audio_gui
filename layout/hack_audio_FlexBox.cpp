@@ -35,30 +35,30 @@ void HackAudio::FlexBox::setDefaultItem(juce::FlexItem item, bool updateExisting
 
 }
 
-void HackAudio::FlexBox::addComponent(juce::Component* component, int customOrder)
+void HackAudio::FlexBox::addComponent(juce::Component& component, int customOrder)
 {
 
     juce::FlexItem itemToAdd = defaultFlexSettings;
-    itemToAdd.associatedComponent = component;
-    itemToAdd.width  = component->getWidth();
-    itemToAdd.height = component->getHeight();
+    itemToAdd.associatedComponent = &component;
+    itemToAdd.width  = component.getWidth();
+    itemToAdd.height = component.getHeight();
     itemToAdd.order  = customOrder;
     items.add(itemToAdd);
 
-    component->addComponentListener(this);
+    component.addComponentListener(this);
 
     applyLayout();
 
 }
 
-void HackAudio::FlexBox::removeComponent(juce::Component* component)
+void HackAudio::FlexBox::removeComponent(juce::Component& component)
 {
     for (int i = 0; i < items.size(); ++i)
     {
 
         juce::FlexItem& fi = items.getReference(i);
 
-        if (fi.associatedComponent == component || !fi.associatedComponent)
+        if (fi.associatedComponent == &component || !fi.associatedComponent)
         {
             items.remove(i);
         }
@@ -126,7 +126,7 @@ juce::Array<juce::FlexItem> HackAudio::FlexBox::getItems()
     return items;
 }
 
-juce::FlexItem* HackAudio::FlexBox::getItem(juce::Component *component)
+juce::FlexItem* HackAudio::FlexBox::getItem(juce::Component& component)
 {
 
     for (int i = 0; i < items.size(); ++i)
@@ -134,7 +134,7 @@ juce::FlexItem* HackAudio::FlexBox::getItem(juce::Component *component)
 
         juce::FlexItem& fi = items.getReference(i);
 
-        if (fi.associatedComponent == component)
+        if (fi.associatedComponent == &component)
         {
 
             return &fi;
@@ -146,18 +146,18 @@ juce::FlexItem* HackAudio::FlexBox::getItem(juce::Component *component)
 
 }
 
-void HackAudio::FlexBox::setItem(juce::Component *component, juce::FlexItem newFlexProperties)
+void HackAudio::FlexBox::setItem(juce::Component& component, juce::FlexItem newFlexProperties)
 {
 
     for (int i = 0; i < items.size(); ++i)
     {
 
-        if (items[i].associatedComponent == component)
+        if (items[i].associatedComponent == &component)
         {
 
-            newFlexProperties.associatedComponent = component;
-            newFlexProperties.width  = component->getWidth();
-            newFlexProperties.height = component->getHeight();
+            newFlexProperties.associatedComponent = &component;
+            newFlexProperties.width  = component.getWidth();
+            newFlexProperties.height = component.getHeight();
 
             items[i] = newFlexProperties;
             
@@ -266,7 +266,7 @@ void HackAudio::FlexBox::applyLayout()
 
 }
 
-void HackAudio::FlexBox::componentMovedOrResized(juce::Component &component, bool wasMoved, bool wasResized)
+void HackAudio::FlexBox::componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized)
 {
 
     if (resizeGuard) { return; }
@@ -328,7 +328,7 @@ void HackAudio::FlexBox::componentMovedOrResized(juce::Component &component, boo
 
 }
 
-void HackAudio::FlexBox::componentVisibilityChanged(juce::Component &component)
+void HackAudio::FlexBox::componentVisibilityChanged(juce::Component& component)
 {
 
     if (component.isVisible())

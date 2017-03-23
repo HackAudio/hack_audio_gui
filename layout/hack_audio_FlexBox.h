@@ -31,14 +31,14 @@ public:
      
      @paremeter component   the component to add
     */
-    void addComponent(juce::Component* component, int customOrder = 0);
+    void addComponent(juce::Component& component, int customOrder = 0);
 
     /**
      Remove a component from being controlled by the FlexBox
      
      @parameter component   a component currently controlled by the FlexBox
     */
-    void removeComponent(juce::Component* component);
+    void removeComponent(juce::Component& component);
 
     /**
      Specifies how flex items are placed in the flex container, and defines the direction of the main axis
@@ -100,7 +100,7 @@ public:
      
      @parameter component   a component controlled by the FlexBox
     */
-    juce::FlexItem* getItem(juce::Component* component);
+    juce::FlexItem* getItem(juce::Component& component);
 
     /**
      Sets the properties for the FlexItem of the relevant component
@@ -108,7 +108,7 @@ public:
      @parameter component   a component controlled by the FlexBox
      @parameter newFlexProperties   the properties the FlexItem should inherit
     */
-    void setItem(juce::Component* component, juce::FlexItem newFlexProperties);
+    void setItem(juce::Component& component, juce::FlexItem newFlexProperties);
 
     /**
      Sets the flex for all contained items
