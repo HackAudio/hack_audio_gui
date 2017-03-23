@@ -32,7 +32,6 @@ public:
      */
     juce::String getPrefix();
 
-
     /**
      Sets the postfix that should always display after the label text
      

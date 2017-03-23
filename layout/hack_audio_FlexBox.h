@@ -90,7 +90,6 @@ public:
     */
     juce::FlexBox::JustifyContent getJustifyContent();
 
-
     /**
      Returns the FlexItems currently held by the FlexBox
     */
@@ -117,7 +116,6 @@ public:
      Sets the margin for all contained items
     */
     void applyItemMargin(juce::FlexItem::Margin newMargin);
-
 
     /**
      Sets all FlexItem properties to those of newFlexProperties

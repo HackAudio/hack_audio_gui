@@ -55,6 +55,7 @@ void HackAudio::Button::mouseDown(const juce::MouseEvent& e)
     }
     else if (buttonStyle == ButtonStyle::BarToggle)
     {
+        
         startTimerHz(ANIMATION_FPS);
         juce::Button::mouseDown(e);
 
@@ -174,15 +175,20 @@ void HackAudio::Button::timerCallback()
         {
             if (currentColourInterpolation.getTargetValue() == 1.0f && !(juce::Desktop::getInstance().getDraggingMouseSource(0)))
             {
+
                 currentColourInterpolation.setValue(0.0f);
+
             }
             else
             {
+
                 if (currentColourInterpolation.getNextValue() == 0.0f)
                 {
                     stopTimer();
                 }
+
                 return;
+
             }
         }
 
@@ -214,6 +220,7 @@ void HackAudio::Button::timerCallback()
 
         if (thumbArea.getPosition().getDistanceFrom(animationEnd) <= 4 || thumbArea.getX() < 32 || thumbArea.getX() > 64)
         {
+
             animationAcc = 0;
             animationVel = 0;
 
@@ -221,6 +228,7 @@ void HackAudio::Button::timerCallback()
 
             stopTimer();
             repaint();
+
         }
 
     }
@@ -293,6 +301,7 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
 
         g.setColour(HackAudio::Colours::Black);
         g.strokePath(p, juce::PathStrokeType::PathStrokeType(8));
+
     }
 
 }

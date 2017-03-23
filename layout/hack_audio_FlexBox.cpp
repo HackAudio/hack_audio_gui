@@ -25,6 +25,7 @@ HackAudio::FlexBox::~FlexBox()
 
 void HackAudio::FlexBox::setDefaultItem(juce::FlexItem item, bool updateExistingItems)
 {
+
     defaultFlexSettings = item;
 
     if (updateExistingItems)
@@ -54,12 +55,14 @@ void HackAudio::FlexBox::removeComponent(juce::Component* component)
 {
     for (int i = 0; i < items.size(); ++i)
     {
+
         juce::FlexItem& fi = items.getReference(i);
 
         if (fi.associatedComponent == component || !fi.associatedComponent)
         {
             items.remove(i);
         }
+        
     }
 }
 
@@ -129,6 +132,7 @@ void HackAudio::FlexBox::applyItemFlex(float newFlexGrow)
     {
         items.getReference(i).flexGrow = newFlexGrow;
     }
+
     applyLayout();
 }
 
@@ -139,7 +143,9 @@ void HackAudio::FlexBox::applyItemFlex(float newFlexGrow, float newFlexShrink)
         items.getReference(i).flexGrow   = newFlexGrow;
         items.getReference(i).flexShrink = newFlexShrink;
     }
+
     applyLayout();
+
 }
 
 void HackAudio::FlexBox::applyItemFlex(float newFlexGrow, float newFlexShrink, float newFlexBasis)
@@ -150,7 +156,9 @@ void HackAudio::FlexBox::applyItemFlex(float newFlexGrow, float newFlexShrink, f
         items.getReference(i).flexShrink = newFlexShrink;
         items.getReference(i).flexBasis  = newFlexBasis;
     }
+
     applyLayout();
+
 }
 
 void HackAudio::FlexBox::applyItemWidth(float newWidth)
@@ -159,7 +167,9 @@ void HackAudio::FlexBox::applyItemWidth(float newWidth)
     {
         items.getReference(i).width = newWidth;
     }
+
     applyLayout();
+
 }
 
 void HackAudio::FlexBox::applyItemHeight(float newHeight)
@@ -168,7 +178,9 @@ void HackAudio::FlexBox::applyItemHeight(float newHeight)
     {
         items.getReference(i).width = newHeight;
     }
+
     applyLayout();
+
 }
 
 void HackAudio::FlexBox::applyItemMargin(juce::FlexItem::Margin newMargin)
@@ -178,6 +190,7 @@ void HackAudio::FlexBox::applyItemMargin(juce::FlexItem::Margin newMargin)
         items.getReference(i).margin = newMargin;
     }
     applyLayout();
+
 }
 
 void HackAudio::FlexBox::applyGlobalFlexItem(juce::FlexItem newFlexProperties)
@@ -188,14 +201,18 @@ void HackAudio::FlexBox::applyGlobalFlexItem(juce::FlexItem newFlexProperties)
         items[i] = newFlexProperties;
         items.getReference(i).associatedComponent = c;
     }
+
     applyLayout();
+
 }
 
 void HackAudio::FlexBox::applyBounds(juce::Rectangle<int> bounds)
 {
+
     flexBoxBounds = bounds;
     validBounds = true;
     applyLayout();
+
 }
 
 void HackAudio::FlexBox::applyLayout()
@@ -258,8 +275,10 @@ void HackAudio::FlexBox::componentMovedOrResized(juce::Component &component, boo
 
                 if (fi.associatedComponent == &component)
                 {
+
                     fi.width  = component.getWidth();
                     fi.height = component.getHeight();
+
                 }
             }
         }
@@ -274,6 +293,7 @@ void HackAudio::FlexBox::componentVisibilityChanged(juce::Component &component)
 
     if (component.isVisible())
     {
+
         juce::FlexItem fi = defaultFlexSettings;
 
         fi.associatedComponent = &component;
@@ -292,15 +312,18 @@ void HackAudio::FlexBox::componentVisibilityChanged(juce::Component &component)
     {
         for (int i = 0; i < items.size(); ++i)
         {
+
             juce::FlexItem& fi = items.getReference(i);
 
             if (fi.associatedComponent == &component)
             {
+
                 component.getProperties().set(juce::Identifier("flexIndexCache"), juce::var(i));
                 component.getProperties().set(juce::Identifier("flexWidthCache"), juce::var(component.getWidth()));
                 component.getProperties().set(juce::Identifier("flexHeightCache"), juce::var(component.getHeight()));
 
                 items.remove(i);
+
             }
         }
     }

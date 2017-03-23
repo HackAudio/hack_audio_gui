@@ -58,7 +58,6 @@ public:
     */
     juce::Font getFont();
 
-
 private:
 
     void mouseDown(const juce::MouseEvent& e) override;
