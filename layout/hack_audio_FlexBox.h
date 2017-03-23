@@ -114,6 +114,8 @@ private:
 
     bool resizeGuard;
 
+    bool validBounds;
+
     juce::Rectangle<int> flexBoxBounds;
 
     juce::FlexItem defaultFlexSettings;

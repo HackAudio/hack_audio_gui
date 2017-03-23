@@ -11,6 +11,8 @@ HackAudio::FlexBox::FlexBox()
 
     resizeGuard = false;
 
+    validBounds = false;
+
 }
 
 HackAudio::FlexBox::~FlexBox()
@@ -159,11 +161,14 @@ void HackAudio::FlexBox::applyGlobalFlexItem(juce::FlexItem newFlexProperties)
 void HackAudio::FlexBox::applyBounds(juce::Rectangle<int> bounds)
 {
     flexBoxBounds = bounds;
+    validBounds = true;
     applyLayout();
 }
 
 void HackAudio::FlexBox::applyLayout()
 {
+
+    if (!validBounds) { return; }
 
     resizeGuard = true;
     performLayout(flexBoxBounds);
