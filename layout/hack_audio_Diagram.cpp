@@ -18,7 +18,13 @@ void HackAudio::Diagram::connect(juce::Component* source, juce::Component* desti
 
     if(connections.contains(source))
     {
-        connections[source].addIfNotAlreadyThere(destination);
+
+        juce::Array<juce::Component*> newArray = connections[source];
+
+        newArray.addIfNotAlreadyThere(destination);
+
+        connections.set(source, newArray);
+
     }
     else
     {
@@ -28,6 +34,7 @@ void HackAudio::Diagram::connect(juce::Component* source, juce::Component* desti
         newArray.add(destination);
 
         connections.set(source, newArray);
+
     }
 
 }
