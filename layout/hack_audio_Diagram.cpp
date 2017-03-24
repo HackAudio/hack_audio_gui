@@ -18,7 +18,7 @@ void HackAudio::Diagram::connect(juce::Component* source, juce::Component* desti
 
     if(connections.contains(source))
     {
-        connections[source].add(destination);
+        connections[source].addIfNotAlreadyThere(destination);
     }
     else
     {
