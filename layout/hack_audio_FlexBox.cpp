@@ -335,7 +335,7 @@ void HackAudio::FlexBox::setItemMargin(juce::FlexBox &flexbox, juce::FlexItem::M
 
 void HackAudio::FlexBox::applyItemFlex(float newFlexGrow)
 {
-    
+
     for (int i = 0; i < items.size(); ++i)
     {
         items.getReference(i).flexGrow = newFlexGrow;
@@ -473,8 +473,8 @@ void HackAudio::FlexBox::componentMovedOrResized(juce::Component& component, boo
             fi.width  = component.getWidth();
             fi.height = component.getHeight();
 
-            int index = component.getProperties().getWithDefault(juce::Identifier("flexIndexCache"), juce::var(0));
-            items.insert(index, fi);
+            fi.order = component.getProperties().getWithDefault(juce::Identifier("flexIndexCache"), juce::var(0));
+            items.add(fi);
 
             component.getProperties().remove(juce::Identifier("flexIndexCache"));
 
@@ -506,8 +506,8 @@ void HackAudio::FlexBox::componentVisibilityChanged(juce::Component& component)
         fi.width = component.getProperties().getWithDefault(juce::Identifier("flexWidthCache"), juce::var(0));
         fi.height = component.getProperties().getWithDefault(juce::Identifier("flexHeightCache"), juce::var(0));
 
-        int index = component.getProperties().getWithDefault(juce::Identifier("flexIndexCache"), juce::var(0));
-        items.insert(index, fi);
+        fi.order = component.getProperties().getWithDefault(juce::Identifier("flexIndexCache"), juce::var(0));
+        items.add(fi);
 
         component.getProperties().remove(juce::Identifier("flexWidthCache"));
         component.getProperties().remove(juce::Identifier("flexHeightCache"));
