@@ -236,6 +236,132 @@ void HackAudio::FlexBox::setItem(juce::FlexBox& flexbox, juce::FlexItem newFlexP
     
 }
 
+void HackAudio::FlexBox::setItemFlex(juce::Component &component, float newFlexGrow)
+{
+
+    juce::FlexItem* fi = getItem(component);
+    fi->flexGrow   = newFlexGrow;
+
+    applyLayout();
+
+}
+
+void HackAudio::FlexBox::setItemFlex(juce::Component &component, float newFlexGrow, float newFlexShrink)
+{
+
+    juce::FlexItem* fi = getItem(component);
+    fi->flexGrow   = newFlexGrow;
+    fi->flexShrink = newFlexShrink;
+
+    applyLayout();
+    
+}
+
+void HackAudio::FlexBox::setItemFlex(juce::Component &component, float newFlexGrow, float newFlexShrink, float newFlexBasis)
+{
+
+    juce::FlexItem* fi = getItem(component);
+    fi->flexGrow   = newFlexGrow;
+    fi->flexShrink = newFlexShrink;
+    fi->flexBasis  = newFlexBasis;
+
+    applyLayout();
+    
+}
+
+void HackAudio::FlexBox::setItemFlex(juce::FlexBox& flexbox, float newFlexGrow)
+{
+
+    juce::FlexItem* fi = getItem(flexbox);
+    fi->flexGrow   = newFlexGrow;
+
+    applyLayout();
+
+}
+
+void HackAudio::FlexBox::setItemFlex(juce::FlexBox& flexbox, float newFlexGrow, float newFlexShrink)
+{
+
+    juce::FlexItem* fi = getItem(flexbox);
+    fi->flexGrow   = newFlexGrow;
+    fi->flexShrink = newFlexShrink;
+
+    applyLayout();
+
+}
+
+void HackAudio::FlexBox::setItemFlex(juce::FlexBox& flexbox, float newFlexGrow, float newFlexShrink, float newFlexBasis)
+{
+
+    juce::FlexItem* fi = getItem(flexbox);
+    fi->flexGrow   = newFlexGrow;
+    fi->flexShrink = newFlexShrink;
+    fi->flexBasis  = newFlexBasis;
+
+    applyLayout();
+    
+}
+
+void HackAudio::FlexBox::setItemWidth(juce::Component &component, float newWidth)
+{
+
+    juce::FlexItem* fi = getItem(component);
+    fi->width = newWidth;
+
+    applyLayout();
+
+}
+
+void HackAudio::FlexBox::setItemWidth(juce::FlexBox &flexbox, float newWidth)
+{
+
+    juce::FlexItem* fi = getItem(flexbox);
+    fi->width = newWidth;
+
+    applyLayout();
+
+}
+
+void HackAudio::FlexBox::setItemHeight(juce::Component& component, float newHeight)
+{
+
+    juce::FlexItem* fi = getItem(component);
+    fi->height = newHeight;
+
+    applyLayout();
+
+}
+
+void HackAudio::FlexBox::setItemHeight(juce::FlexBox &flexbox, float newHeight)
+{
+
+    juce::FlexItem* fi = getItem(flexbox);
+    fi->height = newHeight;
+
+    applyLayout();
+
+}
+
+void HackAudio::FlexBox::setItemMargin(juce::Component &component, juce::FlexItem::Margin newMargin)
+{
+
+    juce::FlexItem* fi = getItem(component);
+    fi->margin = newMargin;
+
+    applyLayout();
+
+}
+
+void HackAudio::FlexBox::setItemMargin(juce::FlexBox &flexbox, juce::FlexItem::Margin newMargin)
+{
+    
+    juce::FlexItem* fi = getItem(flexbox);
+    fi->margin = newMargin;
+
+    applyLayout();
+
+}
+
 void HackAudio::FlexBox::applyItemFlex(float newFlexGrow)
 {
     for (int i = 0; i < items.size(); ++i)

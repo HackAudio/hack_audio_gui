@@ -136,8 +136,52 @@ public:
     void setItem(juce::FlexBox& flexbox, juce::FlexItem newFlexProperties);
 
     /**
+     Set the flex for a component's FlexItem
+    */
+    void setItemFlex(juce::Component& component, float newFlexGrow);
+    void setItemFlex(juce::Component& component, float newFlexGrow, float newFlexShrink);
+    void setItemFlex(juce::Component& component, float newFlexGrow, float newFlexShrink, float newFlexBasis);
+
+    /**
+     Set the flex for a FlexBox's FlexItem
+    */
+    void setItemFlex(juce::FlexBox& flexbox, float newFlexGrow);
+    void setItemFlex(juce::FlexBox& flexbox, float newFlexGrow, float newFlexShrink);
+    void setItemFlex(juce::FlexBox& flexbox, float newFlexGrow, float newFlexShrink, float newFlexBasis);
+
+    /**
+     Set the width for a component's FlexItem
+    */
+    void setItemWidth(juce::Component& component, float newWidth);
+
+    /**
+     Set the width for a FlexBox's FlexItem
+    */
+    void setItemWidth(juce::FlexBox& flexbox, float newWidth);
+
+    /**
+     Set the flex for a component's FlexItem
+    */
+    void setItemHeight(juce::Component& component, float newHeight);
+
+    /**
+     Set the flex for a FlexBox's FlexItem
+    */
+    void setItemHeight(juce::FlexBox& flexbox, float newHeight);
+
+    /**
+     Set the margin for a component's FlexItem
+    */
+    void setItemMargin(juce::Component& component, juce::FlexItem::Margin newMargin);
+
+    /**
+     Set the margin for a FlexBox's FlexItem
+    */
+    void setItemMargin(juce::FlexBox& flexbox, juce::FlexItem::Margin newMargin);
+
+    /**
      Sets the flex for all contained items
-     */
+    */
     void applyItemFlex(float newFlexGrow);
     void applyItemFlex(float newFlexGrow, float newFlexShrink);
     void applyItemFlex(float newFlexGrow, float newFlexShrink, float newFlexBasis);
