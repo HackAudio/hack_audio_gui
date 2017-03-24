@@ -426,6 +426,29 @@ void HackAudio::FlexBox::applyBounds(juce::Rectangle<int> bounds)
 
     flexBoxBounds = bounds;
     validBounds = true;
+
+    applyLayout();
+
+}
+
+void HackAudio::FlexBox::applyBounds(juce::Rectangle<float> bounds)
+{
+
+    juce::Rectangle<int> r(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+    flexBoxBounds = r;
+    validBounds = true;
+
+    applyLayout();
+
+}
+
+void HackAudio::FlexBox::applyBounds(int x, int y, int width, int height)
+{
+
+    juce::Rectangle<int> r(x, y, width, height);
+    flexBoxBounds = r;
+    validBounds = true;
+
     applyLayout();
 
 }

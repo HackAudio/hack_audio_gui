@@ -212,6 +212,8 @@ public:
      @parameter bounds  the bounds the FlexBox should conform to
     */
     void applyBounds(juce::Rectangle<int> bounds);
+    void applyBounds(juce::Rectangle<float> bounds);
+    void applyBounds(int x, int y, int width, int height);
 
     /**
      Custom API for calling juce::FlexBox::performLayout(...) that handles component resizing callbacks
