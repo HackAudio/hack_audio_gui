@@ -66,6 +66,58 @@ void HackAudio::FlexBox::removeComponent(juce::Component& component)
     }
 }
 
+void HackAudio::FlexBox::addFlexBox(juce::FlexBox& flexbox, int customOrder)
+{
+
+    juce::FlexItem itemToAdd = defaultFlexSettings;
+    itemToAdd.associatedFlexBox = &flexbox;
+    itemToAdd.order = customOrder;
+    items.add(itemToAdd);
+
+    applyLayout();
+    
+}
+
+void HackAudio::FlexBox::addFlexBox(HackAudio::FlexBox& flexbox, int customOrder)
+{
+    juce::FlexItem itemToAdd = defaultFlexSettings;
+    itemToAdd.associatedFlexBox = dynamic_cast<juce::FlexBox*>(&flexbox);
+    itemToAdd.order = customOrder;
+    items.add(itemToAdd);
+
+    applyLayout();
+}
+
+void HackAudio::FlexBox::removeFlexBox(juce::FlexBox& flexbox)
+{
+    for (int i = 0; i < items.size(); ++i)
+    {
+
+        juce::FlexItem& fi = items.getReference(i);
+
+        if (fi.associatedFlexBox == &flexbox)
+        {
+            items.remove(i);
+        }
+
+    }
+}
+
+void HackAudio::FlexBox::removeFlexBox(HackAudio::FlexBox& flexbox)
+{
+    for (int i = 0; i < items.size(); ++i)
+    {
+
+        juce::FlexItem& fi = items.getReference(i);
+
+        if (fi.associatedFlexBox == dynamic_cast<juce::FlexBox*>(&flexbox))
+        {
+            items.remove(i);
+        }
+        
+    }
+}
+
 void HackAudio::FlexBox::setDirection(juce::FlexBox::Direction newDirection)
 {
     flexDirection = newDirection;
