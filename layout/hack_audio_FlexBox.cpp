@@ -54,17 +54,8 @@ void HackAudio::FlexBox::addComponent(juce::Component& component, int customOrde
 void HackAudio::FlexBox::removeComponent(juce::Component& component)
 {
     
-    for (int i = 0; i < items.size(); ++i)
-    {
-
-        juce::FlexItem& fi = items.getReference(i);
-
-        if (fi.associatedComponent == &component)
-        {
-            items.remove(i);
-        }
-        
-    }
+    juce::FlexItem* fi = getItem(component);
+    items.remove(fi);
 
     applyLayout();
 
@@ -85,17 +76,8 @@ void HackAudio::FlexBox::addFlexBox(juce::FlexBox& flexbox, int customOrder)
 void HackAudio::FlexBox::removeFlexBox(juce::FlexBox& flexbox)
 {
 
-    for (int i = 0; i < items.size(); ++i)
-    {
-
-        juce::FlexItem& fi = items.getReference(i);
-
-        if (fi.associatedFlexBox == &flexbox)
-        {
-            items.remove(i);
-        }
-
-    }
+    juce::FlexItem* fi = getItem(flexbox);
+    items.remove(fi);
 
     applyLayout();
 
@@ -204,36 +186,25 @@ juce::FlexItem* HackAudio::FlexBox::getItem(juce::FlexBox& flexbox)
 void HackAudio::FlexBox::setItem(juce::Component& component, juce::FlexItem newFlexProperties)
 {
 
-    for (int i = 0; i < items.size(); ++i)
-    {
+    juce::FlexItem* fi = getItem(component);
 
-        if (items[i].associatedComponent == &component)
-        {
+    newFlexProperties.associatedComponent = &component;
+    newFlexProperties.width  = component.getWidth();
+    newFlexProperties.height = component.getHeight();
 
-            newFlexProperties.associatedComponent = &component;
-            newFlexProperties.width  = component.getWidth();
-            newFlexProperties.height = component.getHeight();
-
-            items[i] = newFlexProperties;
-            
-        }
-    }
+    *fi = newFlexProperties;
 
 }
 
 void HackAudio::FlexBox::setItem(juce::FlexBox& flexbox, juce::FlexItem newFlexProperties)
 {
 
-    for (int i = 0; i < items.size(); ++i)
-    {
+    juce::FlexItem* fi = getItem(flexbox);
 
-        if (items[i].associatedFlexBox == &flexbox)
-        {
-            newFlexProperties.associatedFlexBox = &flexbox;
-            items[i] = newFlexProperties;
-        }
-    }
-    
+    newFlexProperties.associatedFlexBox = &flexbox;
+
+    *fi = newFlexProperties;
+
 }
 
 void HackAudio::FlexBox::setItemFlex(juce::Component &component, float newFlexGrow)
@@ -475,20 +446,12 @@ void HackAudio::FlexBox::componentMovedOrResized(juce::Component& component, boo
     if (component.getWidth() == 0 || component.getHeight() == 0)
     {
 
-        for (int i = 0; i < items.size(); ++i)
-        {
+        juce::FlexItem* fi = getItem(component);
 
-            juce::FlexItem& fi = items.getReference(i);
+        component.getProperties().set(juce::Identifier("flexIndexCache"), juce::var(fi->order));
 
-            if (fi.associatedComponent == &component)
-            {
+        items.remove(fi);
 
-                component.getProperties().set(juce::Identifier("flexIndexCache"), juce::var(i));
-
-                items.remove(i);
-
-            }
-        }
     }
     else
     {
@@ -510,18 +473,12 @@ void HackAudio::FlexBox::componentMovedOrResized(juce::Component& component, boo
         }
         else
         {
-            for (int i = 0; i < items.size(); ++i)
-            {
-                juce::FlexItem& fi = items.getReference(i);
 
-                if (fi.associatedComponent == &component)
-                {
+            juce::FlexItem* fi = getItem(component);
 
-                    fi.width  = component.getWidth();
-                    fi.height = component.getHeight();
+            fi->width  = component.getWidth();
+            fi->height = component.getHeight();
 
-                }
-            }
         }
     }
 
@@ -551,22 +508,15 @@ void HackAudio::FlexBox::componentVisibilityChanged(juce::Component& component)
     }
     else
     {
-        for (int i = 0; i < items.size(); ++i)
-        {
 
-            juce::FlexItem& fi = items.getReference(i);
+        juce::FlexItem* fi = getItem(component);
 
-            if (fi.associatedComponent == &component)
-            {
+        component.getProperties().set(juce::Identifier("flexIndexCache"), juce::var(fi->order));
+        component.getProperties().set(juce::Identifier("flexWidthCache"), juce::var(component.getWidth()));
+        component.getProperties().set(juce::Identifier("flexHeightCache"), juce::var(component.getHeight()));
 
-                component.getProperties().set(juce::Identifier("flexIndexCache"), juce::var(i));
-                component.getProperties().set(juce::Identifier("flexWidthCache"), juce::var(component.getWidth()));
-                component.getProperties().set(juce::Identifier("flexHeightCache"), juce::var(component.getHeight()));
+        items.remove(fi);
 
-                items.remove(i);
-
-            }
-        }
     }
 
     applyLayout();
