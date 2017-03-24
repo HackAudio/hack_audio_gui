@@ -85,7 +85,7 @@ void HackAudio::FlexBox::addFlexBox(juce::FlexBox& flexbox, int customOrder)
 void HackAudio::FlexBox::addFlexBox(HackAudio::FlexBox& flexbox, int customOrder)
 {
     juce::FlexItem itemToAdd = defaultFlexSettings;
-    itemToAdd.associatedFlexBox = dynamic_cast<juce::FlexBox*>(&flexbox);
+    itemToAdd.associatedFlexBox = &flexbox;
     itemToAdd.order = customOrder;
     items.add(itemToAdd);
 
@@ -119,7 +119,7 @@ void HackAudio::FlexBox::removeFlexBox(HackAudio::FlexBox& flexbox)
 
         juce::FlexItem& fi = items.getReference(i);
 
-        if (fi.associatedFlexBox == dynamic_cast<juce::FlexBox*>(&flexbox))
+        if (fi.associatedFlexBox == &flexbox)
         {
             items.remove(i);
         }
@@ -210,6 +210,26 @@ juce::FlexItem* HackAudio::FlexBox::getItem(juce::Component& component)
 
 }
 
+juce::FlexItem* HackAudio::FlexBox::getItem(juce::FlexBox& flexbox)
+{
+
+    for (int i = 0; i < items.size(); ++i)
+    {
+
+        juce::FlexItem& fi = items.getReference(i);
+
+        if (fi.associatedFlexBox == &flexbox)
+        {
+
+            return &fi;
+
+        }
+    }
+    
+    return nullptr;
+
+}
+
 void HackAudio::FlexBox::setItem(juce::Component& component, juce::FlexItem newFlexProperties)
 {
 
@@ -228,6 +248,21 @@ void HackAudio::FlexBox::setItem(juce::Component& component, juce::FlexItem newF
         }
     }
 
+}
+
+void HackAudio::FlexBox::setItem(juce::FlexBox& flexbox, juce::FlexItem newFlexProperties)
+{
+
+    for (int i = 0; i < items.size(); ++i)
+    {
+
+        if (items[i].associatedFlexBox == &flexbox)
+        {
+            newFlexProperties.associatedFlexBox = &flexbox;
+            items[i] = newFlexProperties;
+        }
+    }
+    
 }
 
 void HackAudio::FlexBox::applyItemFlex(float newFlexGrow)

@@ -115,12 +115,27 @@ public:
     juce::FlexItem* getItem(juce::Component& component);
 
     /**
+     Returns the FlexItem associated with the given FlexBox
+
+     @parameter flexbox   a component controlled by this FlexBox
+     */
+    juce::FlexItem* getItem(juce::FlexBox& flexbox);
+
+    /**
      Sets the properties for the FlexItem of the relevant component
      
      @parameter component   a component controlled by the FlexBox
      @parameter newFlexProperties   the properties the FlexItem should inherit
     */
     void setItem(juce::Component& component, juce::FlexItem newFlexProperties);
+
+    /**
+     Sets the properties for the FlexItem of the relevant FlexBox
+
+     @parameter flexbox   a FlexBox controlled by this FlexBox
+     @parameter newFlexProperties   the properties the FlexItem should inherit
+     */
+    void setItem(juce::FlexBox& flexbox, juce::FlexItem newFlexProperties);
 
     /**
      Sets the flex for all contained items
