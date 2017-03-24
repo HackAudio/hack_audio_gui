@@ -44,7 +44,6 @@ void HackAudio::Diagram::paint(juce::Graphics& g)
 
 void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 {
-    // Draw lines, connector nodes
 
     g.setColour(HackAudio::Colours::Cyan);
 
@@ -60,7 +59,17 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
             juce::Component* destination = destinations[i];
 
-            g.drawLine(source->getX(), source->getY(), destination->getX(), destination->getY(), 4);
+            int x1 = source->getWidth();
+            int y1 = source->getY() + source->getHeight() / 2;
+
+            int x2 = destination->getX();
+            int y2 = destination->getY() + destination->getHeight() / 2;
+
+            juce::Path p;
+            p.startNewSubPath(x1, y1);
+            p.cubicTo(x2, y1, x1, y2, x2, y2);
+
+            g.strokePath(p, juce::PathStrokeType(4, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
 
         }
 
