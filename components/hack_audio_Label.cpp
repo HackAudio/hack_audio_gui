@@ -4,6 +4,10 @@ HackAudio::Label::Label()
 {
     setInterceptsMouseClicks(false, false);
 
+    setColour(backgroundColourId, HackAudio::Colours::Black);
+    setColour(textColourId, HackAudio::Colours::White);
+    setColour(textWhenEditingColourId, HackAudio::Colours::Cyan);
+
     currentColourInterpolation.reset(50, 0.5);
 
     animationStatus = true;
@@ -64,6 +68,18 @@ void HackAudio::Label::labelTextChanged(juce::Label* labelThatHasChanged)
     }
 }
 
+void HackAudio::Label::parentHierarchyChanged()
+{
+    if (dynamic_cast<HackAudio::Diagram*>(getParentComponent()))
+    {
+        setColour(backgroundColourId, HackAudio::Colours::Gray);
+    }
+    else
+    {
+        setColour(backgroundColourId, HackAudio::Colours::Black);
+    }
+}
+
 void HackAudio::Label::timerCallback()
 {
 
@@ -101,10 +117,10 @@ void HackAudio::Label::paint(juce::Graphics& g)
 
     juce::Path p;
     p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
-    g.setColour(HackAudio::Colours::Black);
+    g.setColour(findColour(backgroundColourId));
     g.fillPath(p);
 
-    g.setColour(HackAudio::Colours::White.interpolatedWith(HackAudio::Colours::Cyan, currentColourInterpolation.getNextValue()));
+    g.setColour(findColour(textColourId).interpolatedWith(findColour(textWhenEditingColourId), currentColourInterpolation.getNextValue()));
 
     g.setFont(getFont());
     g.drawText(prefix + getText() + postfix, 0, 0, width, height, juce::Justification::centred, 1);

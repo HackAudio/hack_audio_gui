@@ -14,6 +14,9 @@ class Label : public juce::Label,
               private juce::LabelListener,
               private juce::Timer
 {
+
+    class Diagram;
+
 public:
 
     Label();
@@ -55,6 +58,8 @@ public:
 private:
 
     void labelTextChanged(juce::Label* labelThatHasChanged) override;
+
+    void parentHierarchyChanged() override;
 
     void timerCallback() override;
 
