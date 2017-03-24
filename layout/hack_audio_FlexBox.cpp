@@ -53,17 +53,21 @@ void HackAudio::FlexBox::addComponent(juce::Component& component, int customOrde
 
 void HackAudio::FlexBox::removeComponent(juce::Component& component)
 {
+    
     for (int i = 0; i < items.size(); ++i)
     {
 
         juce::FlexItem& fi = items.getReference(i);
 
-        if (fi.associatedComponent == &component || !fi.associatedComponent)
+        if (fi.associatedComponent == &component)
         {
             items.remove(i);
         }
         
     }
+
+    applyLayout();
+
 }
 
 void HackAudio::FlexBox::addFlexBox(juce::FlexBox& flexbox, int customOrder)
@@ -90,6 +94,7 @@ void HackAudio::FlexBox::addFlexBox(HackAudio::FlexBox& flexbox, int customOrder
 
 void HackAudio::FlexBox::removeFlexBox(juce::FlexBox& flexbox)
 {
+
     for (int i = 0; i < items.size(); ++i)
     {
 
@@ -101,10 +106,14 @@ void HackAudio::FlexBox::removeFlexBox(juce::FlexBox& flexbox)
         }
 
     }
+
+    applyLayout();
+
 }
 
 void HackAudio::FlexBox::removeFlexBox(HackAudio::FlexBox& flexbox)
 {
+
     for (int i = 0; i < items.size(); ++i)
     {
 
@@ -116,6 +125,9 @@ void HackAudio::FlexBox::removeFlexBox(HackAudio::FlexBox& flexbox)
         }
         
     }
+
+    applyLayout();
+
 }
 
 void HackAudio::FlexBox::setDirection(juce::FlexBox::Direction newDirection)
@@ -314,7 +326,7 @@ void HackAudio::FlexBox::applyLayout()
 
     for (int i = 0; i < items.size(); ++i)
     {
-        assert(items[i].associatedComponent);
+        assert(items[i].associatedComponent || items[i].associatedFlexBox);
     }
 
     resizeGuard = true;
