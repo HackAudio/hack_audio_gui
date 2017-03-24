@@ -44,13 +44,11 @@ public:
      Add a FlexBox to nest within this one
     */
     void addFlexBox(juce::FlexBox& flexbox, int customOrder = 0);
-    void addFlexBox(HackAudio::FlexBox& flexbox, int customOrder = 0);
 
     /**
      Remove a flexbox from being controlled by this one
     */
     void removeFlexBox(juce::FlexBox& flexbox);
-    void removeFlexBox(HackAudio::FlexBox& flexbox);
 
     /**
      Specifies how flex items are placed in the flex container, and defines the direction of the main axis

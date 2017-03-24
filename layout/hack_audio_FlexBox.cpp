@@ -82,16 +82,6 @@ void HackAudio::FlexBox::addFlexBox(juce::FlexBox& flexbox, int customOrder)
     
 }
 
-void HackAudio::FlexBox::addFlexBox(HackAudio::FlexBox& flexbox, int customOrder)
-{
-    juce::FlexItem itemToAdd = defaultFlexSettings;
-    itemToAdd.associatedFlexBox = &flexbox;
-    itemToAdd.order = customOrder;
-    items.add(itemToAdd);
-
-    applyLayout();
-}
-
 void HackAudio::FlexBox::removeFlexBox(juce::FlexBox& flexbox)
 {
 
@@ -105,25 +95,6 @@ void HackAudio::FlexBox::removeFlexBox(juce::FlexBox& flexbox)
             items.remove(i);
         }
 
-    }
-
-    applyLayout();
-
-}
-
-void HackAudio::FlexBox::removeFlexBox(HackAudio::FlexBox& flexbox)
-{
-
-    for (int i = 0; i < items.size(); ++i)
-    {
-
-        juce::FlexItem& fi = items.getReference(i);
-
-        if (fi.associatedFlexBox == &flexbox)
-        {
-            items.remove(i);
-        }
-        
     }
 
     applyLayout();
