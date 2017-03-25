@@ -4,6 +4,12 @@
 namespace HackAudio
 {
 
+/**
+
+ A class that displays labels as a signal flow diagram
+
+*/
+
 class Diagram : public juce::Component
 {
 public:
@@ -11,6 +17,9 @@ public:
     Diagram();
     ~Diagram();
 
+    /**
+     Draw a connection between two components
+    */
     void connect(juce::Component* source, juce::Component* destination);
 
 private:
