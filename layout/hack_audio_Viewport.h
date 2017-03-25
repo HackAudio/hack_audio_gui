@@ -18,6 +18,8 @@ public:
 
 private:
 
+    void mouseDown(const juce::MouseEvent& e) override;
+    void mouseDrag(const juce::MouseEvent& e) override;
     void mouseUp(const juce::MouseEvent& e) override;
     void mouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& w) override;
 
@@ -26,7 +28,7 @@ private:
     void paint(juce::Graphics& g) override;
     void paintOverChildren(juce::Graphics& g) override;
 
-    bool containsDiagram;
+    juce::ComponentDragger componentDragger;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Viewport)
 

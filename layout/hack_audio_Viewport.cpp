@@ -18,14 +18,29 @@ void HackAudio::Viewport::setViewedComponent(juce::Component *c)
     addAndMakeVisible(c);
 }
 
+void HackAudio::Viewport::mouseDown(const juce::MouseEvent& e)
+{
+    componentDragger.startDraggingComponent(getChildComponent(0), e);
+}
+
+void HackAudio::Viewport::mouseDrag(const juce::MouseEvent& e)
+{
+    componentDragger.dragComponent(getChildComponent(0), e, nullptr);
+    repaint();
+}
+
 void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
 {
+
     if (e.getNumberOfClicks() > 1)
     {
+
         juce::Component* c = getChildComponent(0);
         c->centreWithSize(c->getWidth(), c->getHeight());
-        repaint();
+
     }
+
+    repaint();
 }
 
 void HackAudio::Viewport::mouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& w)
@@ -35,7 +50,6 @@ void HackAudio::Viewport::mouseWheelMove(const juce::MouseEvent& e, const juce::
     pos.x -= w.deltaX * 128;
     pos.y -= w.deltaY * 128;
     getChildComponent(0)->setTopLeftPosition(pos);
-    repaint();
     
 }
 
