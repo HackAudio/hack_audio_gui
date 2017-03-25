@@ -4,6 +4,10 @@
 namespace HackAudio
 {
 
+/**
+ An unbounded, infinitely-scrollable viewport for displaying HackAudio::Diagram components
+*/
+
 class Viewport : public juce::Component
 {
 
@@ -14,6 +18,9 @@ public:
     Viewport();
     ~Viewport();
 
+    /**
+     Sets the currently displayed component, there may only be one at a time
+    */
     void setViewedComponent(juce::Component* c);
 
 private:
