@@ -234,6 +234,8 @@ private:
 
     juce::FlexItem defaultFlexSettings;
 
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FlexBox)
+
 };
 
 }

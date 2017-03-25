@@ -76,6 +76,8 @@ private:
 
     juce::Rectangle<int> textArea;
 
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Label)
+
 };
 
 }
