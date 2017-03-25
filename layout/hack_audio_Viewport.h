@@ -28,6 +28,11 @@ private:
     void paint(juce::Graphics& g) override;
     void paintOverChildren(juce::Graphics& g) override;
 
+    void resized() override;
+
+    bool resizeGuard;
+    juce::Component contentContainer;
+
     juce::ComponentDragger componentDragger;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Viewport)
