@@ -66,7 +66,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
             juce::Component* destination = destinations[i];
 
-            int x1 = source->getWidth();
+            int x1 = source->getX() + source->getWidth();
             int y1 = source->getY() + source->getHeight() / 2;
 
             int x2 = destination->getX();
