@@ -2,6 +2,8 @@ TODO:
 
     - Viewport Mouse Wheel Delta Clipping (-1.0 : 1.0)
 
+    - Have Diagram Resize Itself When Adding Children
+
 BUG:
 
 	- Investigate Juce 30fps Graphics Limitations
