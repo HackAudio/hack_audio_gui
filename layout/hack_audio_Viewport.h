@@ -23,8 +23,6 @@ private:
     void mouseUp(const juce::MouseEvent& e) override;
     void mouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& w) override;
 
-//    void viewedComponentChanged(juce::Component* newComponent) override;
-
     void paint(juce::Graphics& g) override;
     void paintOverChildren(juce::Graphics& g) override;
 
