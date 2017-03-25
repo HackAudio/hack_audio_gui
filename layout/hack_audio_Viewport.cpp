@@ -2,8 +2,6 @@
 
 HackAudio::Viewport::Viewport()
 {
-//    setScrollOnDragEnabled(true);
-//    setScrollBarsShown(false, false, true, true);
     setInterceptsMouseClicks(true, false);
 }
 
