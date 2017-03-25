@@ -2,7 +2,7 @@
 
 HackAudio::Diagram::Diagram()
 {
-
+    setInterceptsMouseClicks(false, false);
 }
 
 HackAudio::Diagram::~Diagram()
@@ -42,11 +42,6 @@ void HackAudio::Diagram::connect(juce::Component* source, juce::Component* desti
 void HackAudio::Diagram::childrenChanged()
 {
     // Delete all connections for removed children
-}
-
-void HackAudio::Diagram::paint(juce::Graphics& g)
-{
-    g.fillAll(HackAudio::Colours::Black);
 }
 
 void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
@@ -96,7 +91,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
     for (int i = 0; i < paths.size(); ++i)
     {
-        g.strokePath(paths[i], juce::PathStrokeType(4, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+        g.strokePath(paths[i], juce::PathStrokeType(4));
     }
 
 }
