@@ -5,6 +5,8 @@ HackAudio::Diagram::Diagram()
 
     setInterceptsMouseClicks(false, false);
 
+    moveGuard = false;
+
 }
 
 HackAudio::Diagram::~Diagram()
@@ -270,6 +272,8 @@ void HackAudio::Diagram::updateSize()
 
     if (!isVisible()) { return; }
 
+    moveGuard = true;
+
     int minX = 0x0FFFFFFF;
     int minY = 0x0FFFFFFF;
     int maxX = 0xF0000000;
@@ -287,7 +291,7 @@ void HackAudio::Diagram::updateSize()
 
     }
 
-    if (minX > 0 || minY > 0)
+    if (minX != 0 || minY != 0)
     {
 
         for (int i = 0; i < getNumChildComponents(); ++i)
@@ -313,6 +317,8 @@ void HackAudio::Diagram::updateSize()
 
     setBounds(getX() + minX, getY() + minY, maxX - minX, maxY - minY);
 
+    moveGuard = false;
+
 }
 
 void HackAudio::Diagram::updateConnections()
@@ -333,6 +339,8 @@ void HackAudio::Diagram::updateConnections()
         if (getIndexOfChildComponent(source) == -1)
         {
 
+            source->removeComponentListener(this);
+
             connections.remove(source);
 
             orphanedConnections = true;
@@ -350,6 +358,8 @@ void HackAudio::Diagram::updateConnections()
 
                 if (getIndexOfChildComponent(c) == -1)
                 {
+
+                    c->removeComponentListener(this);
 
                     destinations.remove(i);
 
@@ -378,8 +388,25 @@ void HackAudio::Diagram::updateConnections()
 void HackAudio::Diagram::childrenChanged()
 {
 
+    for (int i = 0; i < getNumChildComponents(); ++i)
+    {
+        juce::Component* c = getChildComponent(i);
+
+        c->addComponentListener(this);
+    }
+
     updateSize();
     updateConnections();
+
+}
+
+void HackAudio::Diagram::componentMovedOrResized(juce::Component &component, bool wasMoved, bool wasResized)
+{
+
+    if (!moveGuard)
+    {
+        updateSize();
+    }
 
 }
 
