@@ -80,7 +80,13 @@ public:
 
 private:
 
+    void updateSize();
+
+    void updateConnections();
+
     void childrenChanged() override;
+
+    void parentHierarchyChanged() override;
 
     void paintOverChildren(juce::Graphics& g) override;
 

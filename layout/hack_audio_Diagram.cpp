@@ -238,22 +238,20 @@ void HackAudio::Diagram::reroute(juce::Component *source, juce::Component *oldDe
 
 }
 
-void HackAudio::Diagram::childrenChanged()
+void HackAudio::Diagram::updateSize()
 {
 
-    int minX = 0;
-    int minY = 0;
+    if (!isVisible()) { return; }
+
+    int minX = 0x0FFFFFFF;
+    int minY = 0x0FFFFFFF;
     int maxX = 0;
     int maxY = 0;
-
-    bool orphanedConnections = false;
-    bool sizeChanged = false;
 
     for (int i = 0; i < getNumChildComponents(); ++i)
     {
 
         juce::Component* c = getChildComponent(i);
-
         minX = std::min(c->getX(), minX);
         minY = std::min(c->getY(), minY);
 
@@ -262,11 +260,33 @@ void HackAudio::Diagram::childrenChanged()
 
     }
 
+    if (minX > 0 || minY > 0)
+    {
+
+        for (int i = 0; i < getNumChildComponents(); ++i)
+        {
+
+            juce::Component* c = getChildComponent(i);
+
+
+
+            c->setTopLeftPosition(c->getX() - minX, c->getY() - minY);
+
+        }
+
+    }
+
     if (maxX - minX != getWidth() && maxY - minY != getHeight())
     {
-        sizeChanged = true;
         setSize(maxX - minX, maxY - minY);
     }
+
+}
+
+void HackAudio::Diagram::updateConnections()
+{
+
+    bool orphanedConnections = false;
 
     for(juce::HashMap<juce::Component*, juce::Array<juce::Component*>>::Iterator it (connections); it.next();)
     {
@@ -305,18 +325,34 @@ void HackAudio::Diagram::childrenChanged()
             }
 
         }
-
+        
         if (orphanedConnections)
         {
             connections.set(source, destinations);
         }
-
+        
     }
-
-    if (sizeChanged || orphanedConnections)
+    
+    if (orphanedConnections)
     {
         repaint();
     }
+
+}
+
+void HackAudio::Diagram::childrenChanged()
+{
+
+    updateSize();
+    updateConnections();
+
+}
+
+void HackAudio::Diagram::parentHierarchyChanged()
+{
+
+    updateSize();
+    updateConnections();
 
 }
 
