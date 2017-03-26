@@ -19,6 +19,8 @@ public:
 
     /**
      Designates the component that represents the audio input source of the diagram
+     
+     @parameter component   the component to make the input or nullptr to disconnect
     */
     void setInput(juce::Component* component);
 
@@ -26,6 +28,8 @@ public:
 
     /**
      Designates the component that represents the audio output source of the diagram
+     
+     @parameter component   the component to make the output or nullptr to disconnect
     */
     void setOutput(juce::Component* component);
 
