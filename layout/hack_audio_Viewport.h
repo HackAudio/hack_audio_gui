@@ -8,7 +8,8 @@ namespace HackAudio
  An unbounded, infinitely-scrollable viewport for displaying HackAudio::Diagram components
 */
 
-class Viewport : public juce::Component
+class Viewport : public juce::Component,
+                 private juce::ComponentListener
 {
 
     class Diagram;
@@ -29,6 +30,8 @@ private:
     void mouseDrag(const juce::MouseEvent& e) override;
     void mouseUp(const juce::MouseEvent& e) override;
     void mouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& w) override;
+
+    void componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized) override;
 
     void paint(juce::Graphics& g) override;
     void paintOverChildren(juce::Graphics& g) override;

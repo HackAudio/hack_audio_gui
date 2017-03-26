@@ -16,10 +16,19 @@ HackAudio::Viewport::~Viewport()
 
 void HackAudio::Viewport::setViewedComponent(juce::Component *c)
 {
-    contentContainer.removeAllChildren();
+
+    if (contentContainer.getNumChildComponents() > 0)
+    {
+        contentContainer.getChildComponent(0)->removeComponentListener(this);
+        contentContainer.removeAllChildren();
+    }
+
+    c->addComponentListener(this);
     contentContainer.addAndMakeVisible(c);
+
     resized();
     repaint();
+
 }
 
 void HackAudio::Viewport::mouseDown(const juce::MouseEvent& e)
@@ -57,6 +66,16 @@ void HackAudio::Viewport::mouseWheelMove(const juce::MouseEvent& e, const juce::
 
     repaint();
     
+}
+
+void HackAudio::Viewport::componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized)
+{
+
+    if (wasResized)
+    {
+        repaint();
+    }
+
 }
 
 void HackAudio::Viewport::paint(juce::Graphics& g)

@@ -2,7 +2,9 @@
 
 HackAudio::Diagram::Diagram()
 {
+
     setInterceptsMouseClicks(false, false);
+
 }
 
 HackAudio::Diagram::~Diagram()
@@ -239,7 +241,32 @@ void HackAudio::Diagram::reroute(juce::Component *source, juce::Component *oldDe
 void HackAudio::Diagram::childrenChanged()
 {
 
+    int minX = 0;
+    int minY = 0;
+    int maxX = 0;
+    int maxY = 0;
+
     bool orphanedConnections = false;
+    bool sizeChanged = false;
+
+    for (int i = 0; i < getNumChildComponents(); ++i)
+    {
+
+        juce::Component* c = getChildComponent(i);
+
+        minX = std::min(c->getX(), minX);
+        minY = std::min(c->getY(), minY);
+
+        maxX = std::max(c->getRight(), maxX);
+        maxY = std::max(c->getBottom(), maxY);
+
+    }
+
+    if (maxX - minX != getWidth() && maxY - minY != getHeight())
+    {
+        sizeChanged = true;
+        setSize(maxX - minX, maxY - minY);
+    }
 
     for(juce::HashMap<juce::Component*, juce::Array<juce::Component*>>::Iterator it (connections); it.next();)
     {
@@ -286,7 +313,10 @@ void HackAudio::Diagram::childrenChanged()
 
     }
 
-    if (orphanedConnections) { repaint(); }
+    if (sizeChanged || orphanedConnections)
+    {
+        repaint();
+    }
 
 }
 
