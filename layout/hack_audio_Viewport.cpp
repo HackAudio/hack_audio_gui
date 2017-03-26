@@ -92,50 +92,64 @@ void HackAudio::Viewport::paint(juce::Graphics& g)
 void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 {
 
-    juce::Component* contentInput = currentContent->getInput();
-    juce::Component* contentOutput = currentContent->getOutput();
+    juce::Array<juce::Component*> contentInputs = currentContent->getInputs();
+    juce::Array<juce::Component*> contentOutputs = currentContent->getOutputs();
 
     juce::Path p;
 
-    if (contentInput && contentInput->isVisible())
+    for (int i = 0; i < contentInputs.size(); ++i)
     {
 
-        juce::Rectangle<int> contentInputBounds = contentInput->getScreenBounds().translated(-contentContainer.getScreenX(), -contentContainer.getScreenY());
+        juce::Component* contentInput = contentInputs[i];
 
-        int x1 = contentContainer.getX();
-        int y1 = contentContainer.getY() + contentContainer.getHeight() / 2;
+        if (contentInput->isVisible())
+        {
 
-        int x2 = contentInputBounds.getX();
-        int y2 = contentInputBounds.getY() + contentInputBounds.getHeight() / 2;
+            juce::Rectangle<int> contentInputBounds = contentInput->getScreenBounds().translated(-contentContainer.getScreenX(), -contentContainer.getScreenY());
 
-        g.setColour(HackAudio::Colours::Gray);
-        g.fillEllipse(x2, y2 - 8, 16, 16);
-        g.setColour(HackAudio::Colours::Black);
-        g.drawEllipse(x2, y2 - 8, 16, 16, 4);
+            int x1 = contentContainer.getX();
+            int y1 = contentContainer.getY() + contentContainer.getHeight() / 2;
 
-        p.startNewSubPath(x1, y1);
-        p.cubicTo(x2, y1, x1, y2, x2 + 4, y2);
+            int x2 = contentInputBounds.getX();
+            int y2 = contentInputBounds.getY() + contentInputBounds.getHeight() / 2;
+
+            g.setColour(HackAudio::Colours::Gray);
+            g.fillEllipse(x2, y2 - 8, 16, 16);
+            g.setColour(HackAudio::Colours::Black);
+            g.drawEllipse(x2, y2 - 8, 16, 16, 4);
+
+            p.startNewSubPath(x1, y1);
+            p.cubicTo(x2, y1, x1, y2, x2 + 4, y2);
+
+        }
 
     }
 
-    if (contentOutput && contentOutput->isVisible())
+    for (int i = 0; i < contentOutputs.size(); ++i)
     {
 
-        juce::Rectangle<int> contentOutputBounds = contentOutput->getScreenBounds().translated(-contentContainer.getScreenX(), -contentContainer.getScreenY());
+        juce::Component* contentOutput = contentOutputs[i];
 
-        int x3 = contentOutputBounds.getRight();
-        int y3 = contentOutputBounds.getY() + contentOutputBounds.getHeight() / 2;
+        if (contentOutput->isVisible())
+        {
 
-        int x4 = contentContainer.getX() + contentContainer.getWidth();
-        int y4 = contentContainer.getY() + getHeight() / 2;
+            juce::Rectangle<int> contentOutputBounds = contentOutput->getScreenBounds().translated(-contentContainer.getScreenX(), -contentContainer.getScreenY());
 
-        g.setColour(HackAudio::Colours::Gray);
-        g.fillEllipse(x3, y3 - 8, 16, 16);
-        g.setColour(HackAudio::Colours::Black);
-        g.drawEllipse(x3, y3 - 8, 16, 16, 4);
+            int x3 = contentOutputBounds.getRight();
+            int y3 = contentOutputBounds.getY() + contentOutputBounds.getHeight() / 2;
 
-        p.startNewSubPath(x3 + 4, y3);
-        p.cubicTo(x4, y3, x3, y4, x4, y4);
+            int x4 = contentContainer.getX() + contentContainer.getWidth();
+            int y4 = contentContainer.getY() + getHeight() / 2;
+
+            g.setColour(HackAudio::Colours::Gray);
+            g.fillEllipse(x3, y3 - 8, 16, 16);
+            g.setColour(HackAudio::Colours::Black);
+            g.drawEllipse(x3, y3 - 8, 16, 16, 4);
+
+            p.startNewSubPath(x3 + 4, y3);
+            p.cubicTo(x4, y3, x3, y4, x4, y4);
+
+        }
 
     }
 

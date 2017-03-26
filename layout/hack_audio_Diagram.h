@@ -19,22 +19,34 @@ public:
     ~Diagram();
 
     /**
-     Designates the component that represents the audio input source of the diagram
-     
-     @parameter component   the component to make the input or nullptr to disconnect
+     Designates a component that represents an audio input source of the diagram
     */
-    void setInput(juce::Component* component);
-
-    juce::Component* getInput();
+    void addInput(juce::Component* component);
 
     /**
-     Designates the component that represents the audio output source of the diagram
-     
-     @parameter component   the component to make the output or nullptr to disconnect
+     Removes a component previously designated as an input
     */
-    void setOutput(juce::Component* component);
+    void removeInput(juce::Component* component);
 
-    juce::Component* getOutput();
+    /**
+     Returns an array of current input components
+    */
+    juce::Array<juce::Component*> getInputs();
+
+    /**
+     Designates a component that represents an audio output source of the diagram
+    */
+    void addOutput(juce::Component* component);
+
+    /**
+     Removes a component previously designated as an output
+    */
+    void removeOutput(juce::Component* component);
+
+    /**
+     Returns an array of current output components
+    */
+    juce::Array<juce::Component*> getOutputs();
 
     /**
      Adds two components as children and draws a connection between them
@@ -117,8 +129,8 @@ private:
 
     bool moveGuard;
 
-    juce::Component* inputComponent;
-    juce::Component* outputComponent;
+    juce::Array<juce::Component*> inputComponents;
+    juce::Array<juce::Component*> outputComponents;
 
     juce::HashMap<juce::Component*, juce::Array<juce::Component*>> connections;
 

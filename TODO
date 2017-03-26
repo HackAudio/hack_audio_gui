@@ -4,8 +4,6 @@ TODO:
 
     - HackAudio::Diagram Should Implement juce::Component Privately
 
-    - Allow Multi In/Out For HackAudio::Diagram
-
     - Implement HackAudio::Diagram Grid (Only Drawn By HackAudio::ViewPort)
 
 BUG:

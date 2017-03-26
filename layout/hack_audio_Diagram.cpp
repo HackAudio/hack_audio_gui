@@ -14,31 +14,66 @@ HackAudio::Diagram::~Diagram()
 
 }
 
-void HackAudio::Diagram::setInput(juce::Component *component)
+void HackAudio::Diagram::addInput(juce::Component *component)
 {
 
     assert(getIndexOfChildComponent(component) != -1);
 
-    inputComponent = component;
+    inputComponents.addIfNotAlreadyThere(component);
+
+    if (getParentComponent())
+    {
+        getParentComponent()->repaint();
+    }
 
 }
 
-juce::Component* HackAudio::Diagram::getInput()
+void HackAudio::Diagram::removeInput(juce::Component *component)
 {
-    return inputComponent;
+
+    inputComponents.removeFirstMatchingValue(component);
+
+    if (getParentComponent())
+    {
+        getParentComponent()->repaint();
+    }
+
 }
 
-void HackAudio::Diagram::setOutput(juce::Component* component)
+juce::Array<juce::Component*> HackAudio::Diagram::getInputs()
+{
+    return inputComponents;
+}
+
+void HackAudio::Diagram::addOutput(juce::Component* component)
 {
 
     assert(getIndexOfChildComponent(component) != -1);
 
-    outputComponent = component;
+    outputComponents.addIfNotAlreadyThere(component);
+
+    if (getParentComponent())
+    {
+        getParentComponent()->repaint();
+    }
+
 }
 
-juce::Component* HackAudio::Diagram::getOutput()
+void HackAudio::Diagram::removeOutput(juce::Component* component)
 {
-    return outputComponent;
+
+    outputComponents.removeFirstMatchingValue(component);
+
+    if (getParentComponent())
+    {
+        getParentComponent()->repaint();
+    }
+
+}
+
+juce::Array<juce::Component*> HackAudio::Diagram::getOutputs()
+{
+    return outputComponents;
 }
 
 void HackAudio::Diagram::connect(juce::Component* source, juce::Component* destination)
@@ -325,9 +360,6 @@ void HackAudio::Diagram::updateConnections()
 {
 
     bool orphanedConnections = false;
-
-    if (getIndexOfChildComponent(inputComponent)  == -1) { inputComponent = nullptr;  }
-    if (getIndexOfChildComponent(outputComponent) == -1) { outputComponent = nullptr; }
 
     for(juce::HashMap<juce::Component*, juce::Array<juce::Component*>>::Iterator it (connections); it.next();)
     {
