@@ -301,6 +301,16 @@ void HackAudio::Diagram::updateSize()
 
     }
 
+    if (minX == 0x0FFFFFFFF || minY == 0x0FFFFFFFF || maxX == 0xF0000000 || maxY == 0xF0000000)
+    {
+
+        minX = 0;
+        minY = 0;
+        maxX = 0;
+        maxY = 0;
+
+    }
+
     setBounds(getX() + minX, getY() + minY, maxX - minX, maxY - minY);
 
 }
