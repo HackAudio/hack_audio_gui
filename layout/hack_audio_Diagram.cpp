@@ -301,10 +301,7 @@ void HackAudio::Diagram::updateSize()
 
     }
 
-    if (maxX - minX != getWidth() && maxY - minY != getHeight())
-    {
-        setSize(maxX - minX, maxY - minY);
-    }
+    setSize(maxX - minX, maxY - minY);
 
 }
 
