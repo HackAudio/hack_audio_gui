@@ -95,11 +95,9 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
     juce::Component* contentInput = currentContent->getInput();
     juce::Component* contentOutput = currentContent->getOutput();
 
-    if (!contentInput || !contentOutput) { repaint(); }
-
     juce::Path p;
 
-    if (contentInput)
+    if (contentInput && contentInput->isVisible())
     {
 
         juce::Rectangle<int> contentInputBounds = contentInput->getScreenBounds().translated(-contentContainer.getScreenX(), -contentContainer.getScreenY());
@@ -120,7 +118,7 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
     }
 
-    if (contentOutput)
+    if (contentOutput && contentOutput->isVisible())
     {
 
         juce::Rectangle<int> contentOutputBounds = contentOutput->getScreenBounds().translated(-contentContainer.getScreenX(), -contentContainer.getScreenY());
@@ -157,6 +155,8 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
     g.fillEllipse(getWidth() - 16, (getHeight() / 2) - 8, 16, 16);
     g.setColour(HackAudio::Colours::Gray);
     g.drawEllipse(getWidth() - 16, (getHeight() / 2) - 8, 16, 16, 4);
+
+    repaint();
 
 }
 
