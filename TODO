@@ -7,5 +7,3 @@ TODO:
 BUG:
 
 	- Investigate Juce 30fps Graphics Limitations
-
-    - HackAudio::Diagram Redundantly Paints The Connector Circles

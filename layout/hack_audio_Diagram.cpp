@@ -295,6 +295,9 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
     juce::Array<juce::Path> paths;
 
+    juce::Array<juce::Component*> inputConnectedComponents;
+    juce::Array<juce::Component*> outputConnectedComponents;
+
     for(juce::HashMap<juce::Component*, juce::Array<juce::Component*>>::Iterator it (connections); it.next();)
     {
 
@@ -313,21 +316,34 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
             int x2 = destination->getX();
             int y2 = destination->getY() + destination->getHeight() / 2;
 
-            g.setColour(HackAudio::Colours::Gray);
-            g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
-            g.setColour(HackAudio::Colours::Black);
-            g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
+            if (!outputConnectedComponents.contains(source))
+            {
 
-            g.setColour(HackAudio::Colours::Gray);
-            g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
-            g.setColour(HackAudio::Colours::Black);
-            g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
+                g.setColour(HackAudio::Colours::Gray);
+                g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
+                g.setColour(HackAudio::Colours::Black);
+                g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
+
+            }
+
+            if (!inputConnectedComponents.contains(destination))
+            {
+
+                g.setColour(HackAudio::Colours::Gray);
+                g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
+                g.setColour(HackAudio::Colours::Black);
+                g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
+
+            }
 
             juce::Path p;
             p.startNewSubPath(x1, y1);
             p.cubicTo(x2, y1, x1, y2, x2, y2);
 
             paths.add(p);
+
+            outputConnectedComponents.add(source);
+            inputConnectedComponents.add(destination);
 
         }
 
