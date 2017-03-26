@@ -6,6 +6,8 @@ TODO:
 
     - Implement HackAudio::Diagram Grid (Only Drawn By HackAudio::ViewPort)
 
+    - Handle repaint() Calls Between HackAudio::Diagram and HackAudio::Viewport More Effectively
+
 BUG:
 
 	- Investigate Juce 30fps Graphics Limitations
