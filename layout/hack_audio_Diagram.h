@@ -100,6 +100,8 @@ private:
 
     void childrenChanged() override;
 
+    void paint(juce::Graphics& g) override;
+
     void parentHierarchyChanged() override;
 
     void paintOverChildren(juce::Graphics& g) override;

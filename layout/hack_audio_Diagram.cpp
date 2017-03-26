@@ -272,8 +272,8 @@ void HackAudio::Diagram::updateSize()
 
     int minX = 0x0FFFFFFF;
     int minY = 0x0FFFFFFF;
-    int maxX = 0;
-    int maxY = 0;
+    int maxX = 0xF0000000;
+    int maxY = 0xF0000000;
 
     for (int i = 0; i < getNumChildComponents(); ++i)
     {
@@ -294,8 +294,6 @@ void HackAudio::Diagram::updateSize()
         {
 
             juce::Component* c = getChildComponent(i);
-
-
 
             c->setTopLeftPosition(c->getX() - minX, c->getY() - minY);
 
@@ -383,6 +381,15 @@ void HackAudio::Diagram::parentHierarchyChanged()
 
     updateSize();
     updateConnections();
+
+}
+
+void HackAudio::Diagram::paint(juce::Graphics& g)
+{
+
+#ifdef JUCE_DEBUG
+    g.fillAll(juce::Colours::paleturquoise);
+#endif
 
 }
 
