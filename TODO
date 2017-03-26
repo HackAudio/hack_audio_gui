@@ -2,6 +2,8 @@ TODO:
 
     - Viewport Mouse Wheel Delta Clipping (-1.0 : 1.0)
 
+    - HackAudio::Diagram Should Implement juce::Component Privately
+
 BUG:
 
 	- Investigate Juce 30fps Graphics Limitations
