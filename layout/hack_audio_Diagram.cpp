@@ -12,6 +12,33 @@ HackAudio::Diagram::~Diagram()
 
 }
 
+void HackAudio::Diagram::setInput(juce::Component *component)
+{
+
+    assert(getIndexOfChildComponent(component) != -1);
+
+    inputComponent = component;
+
+}
+
+juce::Component* HackAudio::Diagram::getInput()
+{
+    return inputComponent;
+}
+
+void HackAudio::Diagram::setOutput(juce::Component* component)
+{
+
+    assert(getIndexOfChildComponent(component) != -1);
+
+    outputComponent = component;
+}
+
+juce::Component* HackAudio::Diagram::getOutput()
+{
+    return outputComponent;
+}
+
 void HackAudio::Diagram::connect(juce::Component* source, juce::Component* destination)
 {
 
@@ -287,6 +314,9 @@ void HackAudio::Diagram::updateConnections()
 {
 
     bool orphanedConnections = false;
+
+    if (getIndexOfChildComponent(inputComponent)  == -1) { inputComponent = nullptr;  }
+    if (getIndexOfChildComponent(outputComponent) == -1) { outputComponent = nullptr; }
 
     for(juce::HashMap<juce::Component*, juce::Array<juce::Component*>>::Iterator it (connections); it.next();)
     {

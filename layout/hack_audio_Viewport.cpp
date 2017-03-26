@@ -6,6 +6,8 @@ HackAudio::Viewport::Viewport()
     contentContainer.setInterceptsMouseClicks(false, false);
     addAndMakeVisible(contentContainer);
 
+    currentContent = nullptr;
+
     resizeGuard = false;
 }
 
@@ -14,17 +16,19 @@ HackAudio::Viewport::~Viewport()
     
 }
 
-void HackAudio::Viewport::setViewedComponent(juce::Component *c)
+void HackAudio::Viewport::setViewedComponent(HackAudio::Diagram* d)
 {
 
     if (contentContainer.getNumChildComponents() > 0)
     {
-        contentContainer.getChildComponent(0)->removeComponentListener(this);
+        currentContent->removeComponentListener(this);
         contentContainer.removeAllChildren();
     }
 
-    c->addComponentListener(this);
-    contentContainer.addAndMakeVisible(c);
+    currentContent = d;
+
+    currentContent->addComponentListener(this);
+    contentContainer.addAndMakeVisible(currentContent);
 
     resized();
     repaint();
@@ -48,8 +52,7 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
     if (e.getNumberOfClicks() > 1)
     {
 
-        juce::Component* c = contentContainer.getChildComponent(0);
-        c->centreWithSize(c->getWidth(), c->getHeight());
+        currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
 
     }
 
@@ -59,10 +62,10 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
 void HackAudio::Viewport::mouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& w)
 {
 
-    juce::Point<int> pos(contentContainer.getChildComponent(0)->getPosition());
+    juce::Point<int> pos(currentContent->getPosition());
     pos.x -= w.deltaX * 128;
     pos.y -= w.deltaY * 128;
-    contentContainer.getChildComponent(0)->setTopLeftPosition(pos);
+    currentContent->setTopLeftPosition(pos);
 
     repaint();
     
@@ -89,16 +92,22 @@ void HackAudio::Viewport::paint(juce::Graphics& g)
 void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 {
 
-    juce::Component* c = contentContainer.getChildComponent(0);
+    juce::Component* contentInput = currentContent->getInput();
+    juce::Component* contentOutput = currentContent->getOutput();
+
+    if (!contentInput || !contentOutput) { repaint(); return; }
+
+    juce::Rectangle<int> contentInputBounds = contentInput->getScreenBounds().translated(-contentContainer.getScreenX(), -contentContainer.getScreenY());
+    juce::Rectangle<int> contentOutputBounds = contentOutput->getScreenBounds().translated(-contentContainer.getScreenX(), -contentContainer.getScreenY());
 
     int x1 = contentContainer.getX();
     int y1 = contentContainer.getY() + contentContainer.getHeight() / 2;
 
-    int x2 = c->getX();
-    int y2 = c->getY() + c->getHeight() / 2;
+    int x2 = contentInputBounds.getX();
+    int y2 = contentInputBounds.getY() + contentInputBounds.getHeight() / 2;
 
-    int x3 = c->getRight();
-    int y3 = c->getY() + c->getHeight() / 2;
+    int x3 = contentOutputBounds.getRight();
+    int y3 = contentOutputBounds.getY() + contentOutputBounds.getHeight() / 2;
 
     int x4 = contentContainer.getX() + contentContainer.getWidth();
     int y4 = contentContainer.getY() + getHeight() / 2;
@@ -152,9 +161,9 @@ void HackAudio::Viewport::resized()
 
     contentContainer.centreWithSize(width, height);
 
-    if(juce::Component* c = contentContainer.getChildComponent(0))
+    if (currentContent)
     {
-        c->centreWithSize(c->getWidth(), c->getHeight());
+        currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
     }
 
 }

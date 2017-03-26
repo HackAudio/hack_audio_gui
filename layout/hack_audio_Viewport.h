@@ -22,7 +22,7 @@ public:
     /**
      Sets the currently displayed component, there may only be one at a time
     */
-    void setViewedComponent(juce::Component* c);
+    void setViewedComponent(HackAudio::Diagram* d);
 
 private:
 
@@ -40,6 +40,7 @@ private:
 
     bool resizeGuard;
     juce::Component contentContainer;
+    HackAudio::Diagram* currentContent;
 
     juce::ComponentDragger componentDragger;
 

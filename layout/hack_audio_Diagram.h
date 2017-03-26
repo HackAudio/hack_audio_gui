@@ -18,6 +18,20 @@ public:
     ~Diagram();
 
     /**
+     Designates the component that represents the audio input source of the diagram
+    */
+    void setInput(juce::Component* component);
+
+    juce::Component* getInput();
+
+    /**
+     Designates the component that represents the audio output source of the diagram
+    */
+    void setOutput(juce::Component* component);
+
+    juce::Component* getOutput();
+
+    /**
      Adds two components as children and draws a connection between them
      
      @parameter source  the component outputting a connection
@@ -91,6 +105,9 @@ private:
     void paintOverChildren(juce::Graphics& g) override;
 
     void resized() override;
+
+    juce::Component* inputComponent;
+    juce::Component* outputComponent;
 
     juce::HashMap<juce::Component*, juce::Array<juce::Component*>> connections;
 

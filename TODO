@@ -7,3 +7,5 @@ TODO:
 BUG:
 
 	- Investigate Juce 30fps Graphics Limitations
+
+    - HackAudio::Diagram Should Actually Retain Some Relative Position When Automatically Resizing
