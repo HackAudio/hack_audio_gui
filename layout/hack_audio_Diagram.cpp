@@ -143,6 +143,39 @@ void HackAudio::Diagram::disconnectOutputs(juce::Component* component)
 
 }
 
+void HackAudio::Diagram::reroute(juce::Component *source, juce::Component *oldDestination, juce::Component *newDestination)
+{
+
+    if (connections.contains(source))
+    {
+
+        juce::Array<juce::Component*> newArray = connections[source];
+
+        if (newArray.removeAllInstancesOf(oldDestination))
+        {
+
+            newArray.addIfNotAlreadyThere(newDestination);
+
+            connections.set(source, newArray);
+
+            repaint();
+
+        }
+        else
+        {
+            return;
+        }
+
+    }
+    else
+    {
+
+        return;
+
+    }
+
+}
+
 void HackAudio::Diagram::childrenChanged()
 {
     // Delete all connections for removed children

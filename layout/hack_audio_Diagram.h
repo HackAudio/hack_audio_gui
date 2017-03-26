@@ -51,6 +51,15 @@ public:
     */
     void disconnectOutputs(juce::Component* component);
 
+    /**
+     Breaks a connection between two components to route it to a new destination. This method only creates the new connection if the connection between source and oldDestination exists
+     
+     @parameter source  the component outputting a connection
+     @parameter oldDestination  the previous component receiving the connection
+     @parameter newDestination  the component to reroute the connection to
+    */
+    void reroute(juce::Component* source, juce::Component* oldDestination, juce::Component* newDestination);
+
 
 private:
 
