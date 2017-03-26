@@ -399,12 +399,16 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
         juce::Component* source = it.getKey();
 
+        if (!source->isVisible()) { repaint(); continue; }
+
         juce::Array<juce::Component*> destinations = it.getValue();
 
         for (int i = 0; i < destinations.size(); ++i)
         {
 
             juce::Component* destination = destinations[i];
+
+            if (!destination->isVisible()) { repaint(); continue; }
 
             int x1 = source->getX() + source->getWidth();
             int y1 = source->getY() + source->getHeight() / 2;
