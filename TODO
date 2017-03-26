@@ -4,8 +4,8 @@ TODO:
 
     - HackAudio::Diagram Should Implement juce::Component Privately
 
+    - Allow Multi In/Out For HackAudio::Diagram
+
 BUG:
 
 	- Investigate Juce 30fps Graphics Limitations
-
-    - HackAudio::Diagram Should Actually Retain Some Relative Position When Automatically Resizing
