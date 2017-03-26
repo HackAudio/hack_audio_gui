@@ -52,6 +52,23 @@ public:
     void disconnectOutputs(juce::Component* component);
 
     /**
+     Toggles the state of a connection between source and destination
+     
+     @parameter source  the component outputting a connection
+     @parameter destination  the component to break or receive a connection from source
+    */
+    void toggle(juce::Component* source, juce::Component* destination);
+
+    /**
+     Swaps the state of connections between source, a connected component, and a disconnected component. This method does nothing if both destinations are connected to source or disconnected from source.
+     
+     @parameter source  the component outputting a connection
+     @parameter destinationOne  a component to break or receive a connection from source
+     @parameter destinationTwo  a component to break or receive a connection from source
+    */
+    void swap(juce::Component* source, juce::Component* destinationOne, juce::Component* destinationTwo);
+
+    /**
      Breaks a connection between two components to route it to a new destination. This method only creates the new connection if the connection between source and oldDestination exists
      
      @parameter source  the component outputting a connection

@@ -143,6 +143,69 @@ void HackAudio::Diagram::disconnectOutputs(juce::Component* component)
 
 }
 
+void HackAudio::Diagram::toggle(juce::Component *source, juce::Component *destination)
+{
+
+    if (connections.contains(source))
+    {
+
+        juce::Array<juce::Component*> newArray = connections[source];
+
+        (newArray.contains(destination)) ? newArray.removeFirstMatchingValue(destination) : newArray.add(destination);
+
+        connections.set(source, newArray);
+
+        repaint();
+
+    }
+    else
+    {
+
+        return;
+
+    }
+
+}
+
+void HackAudio::Diagram::swap(juce::Component *source, juce::Component *destinationOne, juce::Component *destinationTwo)
+{
+
+    if (connections.contains(source))
+    {
+
+        juce::Array<juce::Component*> newArray = connections[source];
+
+        bool stateOne = newArray.contains(destinationOne);
+        bool stateTwo = newArray.contains(destinationTwo);
+
+        if (stateOne != stateTwo)
+        {
+
+            (stateOne) ? newArray.removeFirstMatchingValue(destinationOne) : newArray.add(destinationOne);
+            (stateTwo) ? newArray.removeFirstMatchingValue(destinationTwo) : newArray.add(destinationTwo);
+
+            connections.set(source, newArray);
+
+            repaint();
+
+        }
+        else
+        {
+
+            return;
+
+        }
+
+    }
+    else
+    {
+
+        return;
+
+    }
+
+}
+
 void HackAudio::Diagram::reroute(juce::Component *source, juce::Component *oldDestination, juce::Component *newDestination)
 {
 
