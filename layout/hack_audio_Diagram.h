@@ -18,7 +18,7 @@ public:
     ~Diagram();
 
     /**
-     Draw a connection between two components
+     Adds two components as children and draws a connection between them
      
      @parameter source  the component outputting a connection
      @parameter destination     the component accepting a connection
@@ -26,7 +26,7 @@ public:
     void connect(juce::Component* source, juce::Component* destination);
 
     /**
-     Draw a connection between the source and all destination components
+     Adds a source and destination components as children and draws connections from source to all destinations
 
      @parameter source  the component outputting connections
      @parameter destinations     the components accepting the connections

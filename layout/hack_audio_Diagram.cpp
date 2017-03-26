@@ -13,8 +13,8 @@ HackAudio::Diagram::~Diagram()
 void HackAudio::Diagram::connect(juce::Component* source, juce::Component* destination)
 {
 
-    assert(getIndexOfChildComponent(source)      != -1);
-    assert(getIndexOfChildComponent(destination) != -1);
+    addAndMakeVisible(source);
+    addAndMakeVisible(destination);
 
     if(connections.contains(source))
     {
@@ -44,12 +44,7 @@ void HackAudio::Diagram::connect(juce::Component* source, juce::Component* desti
 void HackAudio::Diagram::connect(juce::Component* source, juce::Array<juce::Component*> destinations)
 {
 
-    assert(getIndexOfChildComponent(source) != -1);
-
-    for (int i = 0; i < destinations.size(); ++i)
-    {
-        assert(getIndexOfChildComponent(destinations[i]) != -1);
-    }
+    addAndMakeVisible(source);
 
     if (connections.contains(source))
     {
@@ -58,6 +53,8 @@ void HackAudio::Diagram::connect(juce::Component* source, juce::Array<juce::Comp
 
         for (int i = 0; i < destinations.size(); ++i)
         {
+
+            addAndMakeVisible(destinations[i]);
 
             newArray.addIfNotAlreadyThere(destinations[i]);
 
@@ -241,7 +238,56 @@ void HackAudio::Diagram::reroute(juce::Component *source, juce::Component *oldDe
 
 void HackAudio::Diagram::childrenChanged()
 {
-    // Delete all connections for removed children
+
+    bool orphanedConnections = false;
+
+    for(juce::HashMap<juce::Component*, juce::Array<juce::Component*>>::Iterator it (connections); it.next();)
+    {
+
+        juce::Component* source = it.getKey();
+
+        juce::Array<juce::Component*> destinations = it.getValue();
+
+        if (getIndexOfChildComponent(source) == -1)
+        {
+
+            connections.remove(source);
+
+            orphanedConnections = true;
+
+            continue;
+
+        }
+        else
+        {
+
+            for (int i = 0; i < destinations.size(); ++i)
+            {
+
+                juce::Component* c = destinations[i];
+
+                if (getIndexOfChildComponent(c) == -1)
+                {
+
+                    destinations.remove(i);
+
+                    orphanedConnections = true;
+
+                }
+
+            }
+
+        }
+
+        if (orphanedConnections)
+        {
+            connections.set(source, destinations);
+        }
+
+    }
+
+    if (orphanedConnections) { repaint(); }
+
 }
 
 void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
