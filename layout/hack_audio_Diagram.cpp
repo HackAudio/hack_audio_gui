@@ -37,6 +37,110 @@ void HackAudio::Diagram::connect(juce::Component* source, juce::Component* desti
 
     }
 
+    repaint();
+
+}
+
+void HackAudio::Diagram::connect(juce::Component* source, juce::Array<juce::Component*> destinations)
+{
+
+    assert(getIndexOfChildComponent(source) != -1);
+
+    for (int i = 0; i < destinations.size(); ++i)
+    {
+        assert(getIndexOfChildComponent(destinations[i]) != -1);
+    }
+
+    if (connections.contains(source))
+    {
+
+        juce::Array<juce::Component*> newArray = connections[source];
+
+        for (int i = 0; i < destinations.size(); ++i)
+        {
+
+            newArray.addIfNotAlreadyThere(destinations[i]);
+
+        }
+
+        connections.set(source, newArray);
+
+    }
+    else
+    {
+
+        connections.set(source, destinations);
+
+    }
+
+    repaint();
+
+}
+
+void HackAudio::Diagram::disconnect(juce::Component* source, juce::Component* destination)
+{
+
+    if (connections.contains(source))
+    {
+
+        juce::Array<juce::Component*> newArray = connections[source];
+
+        newArray.removeFirstMatchingValue(destination);
+
+        connections.set(source, newArray);
+
+        repaint();
+
+    }
+    else
+    {
+
+        return;
+
+    }
+
+}
+
+void HackAudio::Diagram::disconnectInputs(juce::Component* component)
+{
+
+    for(juce::HashMap<juce::Component*, juce::Array<juce::Component*>>::Iterator it (connections); it.next();)
+    {
+
+        juce::Component* source = it.getKey();
+
+        juce::Array<juce::Component*> newArray = it.getValue();
+
+        if (newArray.removeAllInstancesOf(component))
+        {
+
+            connections.set(source, newArray);
+
+        }
+
+    }
+
+    repaint();
+
+}
+
+void HackAudio::Diagram::disconnectOutputs(juce::Component* component)
+{
+
+    if (connections.contains(component))
+    {
+
+        connections.remove(component);
+        repaint();
+
+    }
+    else
+    {
+
+        return;
+
+    }
+
 }
 
 void HackAudio::Diagram::childrenChanged()

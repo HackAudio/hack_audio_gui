@@ -19,8 +19,38 @@ public:
 
     /**
      Draw a connection between two components
+     
+     @parameter source  the component outputting a connection
+     @parameter destination     the component accepting a connection
     */
     void connect(juce::Component* source, juce::Component* destination);
+
+    /**
+     Draw a connection between the source and all destination components
+
+     @parameter source  the component outputting connections
+     @parameter destinations     the components accepting the connections
+     */
+    void connect(juce::Component* source, juce::Array<juce::Component*> destinations);
+
+    /**
+     Breaks a connection between two components
+
+     @parameter source  the component outputting a connection
+     @parameter destination     the component accepting a connection
+    */
+    void disconnect(juce::Component* source, juce::Component* destination);
+
+    /**
+     Breaks all incoming connections to the component
+    */
+    void disconnectInputs(juce::Component* component);
+
+    /**
+     Breaks all outgoing connections from the component
+    */
+    void disconnectOutputs(juce::Component* component);
+
 
 private:
 
