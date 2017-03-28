@@ -46,6 +46,8 @@ private:
 
     juce::ComponentDragger componentDragger;
 
+    juce::ComponentAnimator componentAnimator;
+
     juce::DropShadowEffect dropShadow;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Viewport)

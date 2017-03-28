@@ -62,10 +62,14 @@ void HackAudio::Viewport::mouseDrag(const juce::MouseEvent& e)
 void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
 {
 
-    if (e.getNumberOfClicks() > 1)
+    if (e.getNumberOfClicks() > 1 && !componentAnimator.isAnimating())
     {
 
-        currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
+        juce::Rectangle<int> finalBounds = currentContent->getBounds();
+
+        finalBounds.setCentre(contentContainer.getWidth()/2, contentContainer.getHeight()/2);
+
+        componentAnimator.animateComponent(currentContent, finalBounds, 1.0, 250, false, 0, 0);
 
     }
 
@@ -87,10 +91,8 @@ void HackAudio::Viewport::mouseWheelMove(const juce::MouseEvent& e, const juce::
 void HackAudio::Viewport::componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized)
 {
 
-    if (wasResized)
-    {
-        repaint();
-    }
+    repaint();
+
 
 }
 
