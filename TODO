@@ -6,6 +6,16 @@ TODO:
 
     - Handle repaint() Calls Between HackAudio::Diagram and HackAudio::Viewport More Effectively
 
+    - Automatically Remove Unconnected Childern In HackAudio::Diagram
+
+    - Directional Graphics For HackAudio::Diagram Connections
+
+    - Name Displays For HackAudio::Diagrams
+
+    - Traversing Through Diagrams/Blocks Using HackAudio::Viewport (Possible Tree Structure)
+
+    - Junction Components For HackAudio::Diagram
+
 BUG:
 
 	- Investigate Juce 30fps Graphics Limitations
