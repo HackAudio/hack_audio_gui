@@ -10,9 +10,12 @@ namespace HackAudio
 
 */
 
-class Diagram : public juce::Component,
+class Diagram : private juce::Component,
                 private juce::ComponentListener
 {
+
+    friend class Viewport;
+
 public:
 
     Diagram();
@@ -118,8 +121,6 @@ private:
     void childrenChanged() override;
 
     void componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized) override;
-
-    void paint(juce::Graphics& g) override;
 
     void parentHierarchyChanged() override;
 

@@ -68,18 +68,6 @@ void HackAudio::Label::labelTextChanged(juce::Label* labelThatHasChanged)
     }
 }
 
-void HackAudio::Label::parentHierarchyChanged()
-{
-    if (dynamic_cast<HackAudio::Diagram*>(getParentComponent()))
-    {
-        setColour(backgroundColourId, HackAudio::Colours::Gray);
-    }
-    else
-    {
-        setColour(backgroundColourId, HackAudio::Colours::Black);
-    }
-}
-
 void HackAudio::Label::timerCallback()
 {
 

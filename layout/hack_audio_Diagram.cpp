@@ -450,15 +450,6 @@ void HackAudio::Diagram::parentHierarchyChanged()
 
 }
 
-void HackAudio::Diagram::paint(juce::Graphics& g)
-{
-
-#ifdef JUCE_DEBUG
-    g.fillAll(juce::Colours::paleturquoise);
-#endif
-
-}
-
 void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 {
 

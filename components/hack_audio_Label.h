@@ -59,8 +59,6 @@ private:
 
     void labelTextChanged(juce::Label* labelThatHasChanged) override;
 
-    void parentHierarchyChanged() override;
-
     void timerCallback() override;
 
     void paint(juce::Graphics& g) override;
