@@ -371,6 +371,9 @@ void HackAudio::Diagram::updateConnections()
         if (getIndexOfChildComponent(source) == -1)
         {
 
+            if (getInputs().contains(source)) { removeInput(source); }
+            if (getOutputs().contains(source)) { removeOutput(source); }
+
             source->removeComponentListener(this);
 
             connections.remove(source);
@@ -390,6 +393,9 @@ void HackAudio::Diagram::updateConnections()
 
                 if (getIndexOfChildComponent(c) == -1)
                 {
+
+                    if (getInputs().contains(c)) { removeInput(c); }
+                    if (getOutputs().contains(c)) { removeOutput(c); }
 
                     c->removeComponentListener(this);
 
