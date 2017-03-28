@@ -424,6 +424,8 @@ void HackAudio::Diagram::childrenChanged()
     {
         juce::Component* c = getChildComponent(i);
 
+        c->setColour(juce::Label::backgroundColourId, HackAudio::Colours::Gray);
+
         c->addComponentListener(this);
     }
 
