@@ -18,6 +18,41 @@ class Diagram : private juce::Component,
 
 public:
 
+    class Junction : private juce::Component
+    {
+    public:
+
+        Junction();
+        ~Junction();
+
+        enum Symbol
+        {
+
+            None,
+            Add,
+            Subtract,
+            Divide,
+            Multiply,
+            Average
+
+        };
+
+        void setSymbol(Symbol s);
+
+        Symbol getSymbol();
+
+    private:
+
+        juce::String currentSymbol;
+
+        void paint(juce::Graphics& g) override;
+
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Junction)
+
+    };
+
+    // ==========================================================
+
     Diagram();
     ~Diagram();
 

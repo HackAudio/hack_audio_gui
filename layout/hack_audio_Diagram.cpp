@@ -1,5 +1,85 @@
 #include "hack_audio_Diagram.h"
 
+HackAudio::Diagram::Junction::Junction()
+{
+
+}
+
+HackAudio::Diagram::Junction::~Junction()
+{
+
+}
+
+void HackAudio::Diagram::Junction::setSymbol(HackAudio::Diagram::Junction::Symbol s)
+{
+    switch (s)
+    {
+        case HackAudio::Diagram::Junction::Symbol::None:
+            currentSymbol = "";
+            break;
+
+        case HackAudio::Diagram::Junction::Symbol::Add:
+            currentSymbol = "+";
+            break;
+
+        case HackAudio::Diagram::Junction::Symbol::Subtract:
+            currentSymbol = "-";
+            break;
+
+        case HackAudio::Diagram::Junction::Symbol::Divide:
+            currentSymbol = "÷";
+            break;
+
+        case HackAudio::Diagram::Junction::Symbol::Multiply:
+            currentSymbol = "×";
+            break;
+
+        case HackAudio::Diagram::Junction::Symbol::Average:
+            currentSymbol = "avg";
+            break;
+
+        default:
+            currentSymbol = "";
+            break;
+    }
+}
+
+HackAudio::Diagram::Junction::Symbol HackAudio::Diagram::Junction::getSymbol()
+{
+
+    if (currentSymbol == "")
+    {
+        return HackAudio::Diagram::Junction::Symbol::None;
+    }
+    else if (currentSymbol == "+")
+    {
+        return HackAudio::Diagram::Junction::Symbol::Add;
+    }
+    else if (currentSymbol == "-")
+    {
+        return HackAudio::Diagram::Junction::Symbol::Subtract;
+    }
+    else if (currentSymbol == "÷")
+    {
+        return HackAudio::Diagram::Junction::Symbol::Divide;
+    }
+    else if (currentSymbol == "×")
+    {
+        return HackAudio::Diagram::Junction::Symbol::Multiply;
+    }
+    else if (currentSymbol == "avg")
+    {
+        return HackAudio::Diagram::Junction::Symbol::Average;
+    }
+    else
+    {
+        return HackAudio::Diagram::Junction::Symbol::None;
+    }
+
+}
+
+// ============================================================
+
 HackAudio::Diagram::Diagram()
 {
 
