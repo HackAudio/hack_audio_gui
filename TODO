@@ -14,6 +14,8 @@ TODO:
 
     - Junction Components For HackAudio::Diagram
 
+    - Incorporate Grid-Aligned Flex For HackAudio::Diagram
+
 BUG:
 
 	- Investigate Juce 30fps Graphics Limitations
