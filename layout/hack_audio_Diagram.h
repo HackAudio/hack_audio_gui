@@ -114,6 +114,14 @@ public:
     */
     void reroute(juce::Component* source, juce::Component* oldDestination, juce::Component* newDestination);
 
+    /**
+     Designates a diagram to be expanded when double-clicking the source component
+     
+     @parameter source  the component to double click to expand the diagram
+     @parameter subDiagram  the diagram to expand
+    */
+    void setSubDiagram(juce::Component* source, HackAudio::Diagram* subDiagram);
+
 
 private:
 
@@ -137,6 +145,8 @@ private:
     juce::Array<juce::Component*> outputComponents;
 
     juce::HashMap<juce::Component*, juce::Array<juce::Component*>> connections;
+
+    juce::HashMap<juce::Component*, HackAudio::Diagram*> subDiagrams;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Diagram)
 

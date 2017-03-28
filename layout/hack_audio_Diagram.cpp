@@ -302,6 +302,15 @@ void HackAudio::Diagram::reroute(juce::Component *source, juce::Component *oldDe
 
 }
 
+void HackAudio::Diagram::setSubDiagram(juce::Component *source, HackAudio::Diagram *subDiagram)
+{
+
+    assert(getIndexOfChildComponent(source) != -1);
+
+    subDiagrams.set(source, subDiagram);
+
+}
+
 void HackAudio::Diagram::updateSize()
 {
 
