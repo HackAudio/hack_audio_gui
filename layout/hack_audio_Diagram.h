@@ -21,6 +21,9 @@ public:
     Diagram();
     ~Diagram();
 
+    using juce::Component::setName;
+    using juce::Component::getName;
+
     /**
      Designates a component that represents an audio input source of the diagram
     */

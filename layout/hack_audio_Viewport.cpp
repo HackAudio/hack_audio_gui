@@ -6,6 +6,17 @@ HackAudio::Viewport::Viewport()
     contentContainer.setInterceptsMouseClicks(false, false);
     addAndMakeVisible(contentContainer);
 
+    diagramName.setColour(juce::Label::textColourId, HackAudio::Colours::White);
+    diagramName.setJustificationType(juce::Justification::centred);
+
+    juce::DropShadow shadow;
+    shadow.radius = 4;
+    shadow.offset.setXY(0, 2);
+    dropShadow.setShadowProperties(shadow);
+    diagramName.setComponentEffect(&dropShadow);
+
+    addAndMakeVisible(diagramName);
+
     currentContent = nullptr;
 
     resizeGuard = false;
@@ -29,6 +40,8 @@ void HackAudio::Viewport::setViewedComponent(HackAudio::Diagram* d)
 
     currentContent->addComponentListener(this);
     contentContainer.addAndMakeVisible(currentContent);
+
+    diagramName.setText(currentContent->getName(), juce::dontSendNotification);
 
     resized();
     repaint();
@@ -185,6 +198,8 @@ void HackAudio::Viewport::resized()
     resizeGuard = true;
     setBounds(getX() - 16, getY(), width + 16, height);
     resizeGuard = false;
+
+    diagramName.setBounds(0, 0, width, 32);
 
     contentContainer.centreWithSize(width, height);
 

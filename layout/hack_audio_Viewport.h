@@ -42,7 +42,11 @@ private:
     juce::Component contentContainer;
     HackAudio::Diagram* currentContent;
 
+    juce::Label diagramName;
+
     juce::ComponentDragger componentDragger;
+
+    juce::DropShadowEffect dropShadow;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Viewport)
 
