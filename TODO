@@ -2,8 +2,6 @@ TODO:
 
     - Viewport Mouse Wheel Delta Clipping (-1.0 : 1.0)
 
-    - HackAudio::Diagram Should Implement juce::Component Privately
-
     - Implement HackAudio::Diagram Grid (Only Drawn By HackAudio::ViewPort)
 
     - Handle repaint() Calls Between HackAudio::Diagram and HackAudio::Viewport More Effectively
