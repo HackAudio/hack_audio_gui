@@ -369,7 +369,7 @@ void HackAudio::Diagram::setSubDiagram(juce::Component *source, HackAudio::Diagr
 
     assert(getIndexOfChildComponent(source) != -1);
 
-    subDiagrams.set(source, subDiagram);
+    submap.set(source, subDiagram);
 
 }
 

@@ -179,7 +179,7 @@ private:
 
     juce::HashMap<juce::Component*, juce::Array<juce::Component*>> connections;
 
-    juce::HashMap<juce::Component*, HackAudio::Diagram*> subDiagrams;
+    juce::HashMap<juce::Component*, HackAudio::Diagram*> submap;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Diagram)
 

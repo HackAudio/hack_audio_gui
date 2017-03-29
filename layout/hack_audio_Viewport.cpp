@@ -41,7 +41,7 @@ void HackAudio::Viewport::setViewedComponent(HackAudio::Diagram* d)
     currentContent->addComponentListener(this);
     contentContainer.addAndMakeVisible(currentContent);
 
-    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->subDiagrams); it.next();)
+    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
     {
         juce::Component* c = it.getKey();
         c->addMouseListener(this, false);
@@ -74,7 +74,7 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
     if (e.getNumberOfClicks() > 1 && !componentAnimator.isAnimating())
     {
 
-        for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->subDiagrams); it.next();)
+        for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
         {
             if (it.getKey()->getScreenBounds().contains(e.getScreenPosition()))
             {
