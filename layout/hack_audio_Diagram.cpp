@@ -586,7 +586,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
             int x2 = destination->getX();
             int y2 = destination->getY() + destination->getHeight() / 2;
 
-            if (!outputConnectedComponents.contains(source))
+            if (!outputConnectedComponents.contains(source) && !dynamic_cast<Junction*>(source))
             {
 
                 g.setColour(HackAudio::Colours::Gray);
@@ -596,7 +596,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
             }
 
-            if (!inputConnectedComponents.contains(destination))
+            if (!inputConnectedComponents.contains(destination) && !dynamic_cast<Junction*>(destination))
             {
 
                 g.setColour(HackAudio::Colours::Gray);

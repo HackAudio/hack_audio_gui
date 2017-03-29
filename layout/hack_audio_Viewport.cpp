@@ -128,10 +128,13 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
             int x2 = contentInputBounds.getX();
             int y2 = contentInputBounds.getY() + contentInputBounds.getHeight() / 2;
 
-            g.setColour(HackAudio::Colours::Gray);
-            g.fillEllipse(x2, y2 - 8, 16, 16);
-            g.setColour(HackAudio::Colours::Black);
-            g.drawEllipse(x2, y2 - 8, 16, 16, 4);
+            if (!dynamic_cast<HackAudio::Diagram::Junction*>(contentInput))
+            {
+                g.setColour(HackAudio::Colours::Gray);
+                g.fillEllipse(x2, y2 - 8, 16, 16);
+                g.setColour(HackAudio::Colours::Black);
+                g.drawEllipse(x2, y2 - 8, 16, 16, 4);
+            }
 
             p.startNewSubPath(x1, y1);
             p.cubicTo(x2, y1, x1, y2, x2 + 4, y2);
@@ -156,10 +159,14 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
             int x4 = contentContainer.getX() + contentContainer.getWidth();
             int y4 = contentContainer.getY() + getHeight() / 2;
 
-            g.setColour(HackAudio::Colours::Gray);
-            g.fillEllipse(x3, y3 - 8, 16, 16);
-            g.setColour(HackAudio::Colours::Black);
-            g.drawEllipse(x3, y3 - 8, 16, 16, 4);
+
+            if (!dynamic_cast<HackAudio::Diagram::Junction*>(contentOutput))
+            {
+                g.setColour(HackAudio::Colours::Gray);
+                g.fillEllipse(x3, y3 - 8, 16, 16);
+                g.setColour(HackAudio::Colours::Black);
+                g.drawEllipse(x3, y3 - 8, 16, 16, 4);
+            }
 
             p.startNewSubPath(x3 + 4, y3);
             p.cubicTo(x4, y3, x3, y4, x4, y4);
