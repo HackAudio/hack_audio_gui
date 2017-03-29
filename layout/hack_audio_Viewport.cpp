@@ -2,8 +2,8 @@
 
 HackAudio::Viewport::Viewport()
 {
-    setInterceptsMouseClicks(true, false);
-    contentContainer.setInterceptsMouseClicks(false, false);
+//    setInterceptsMouseClicks(false, true);
+    contentContainer.setInterceptsMouseClicks(false, true);
     addAndMakeVisible(contentContainer);
 
     diagramName.setColour(juce::Label::textColourId, HackAudio::Colours::White);
@@ -41,16 +41,25 @@ void HackAudio::Viewport::setViewedComponent(HackAudio::Diagram* d)
     currentContent->addComponentListener(this);
     contentContainer.addAndMakeVisible(currentContent);
 
+    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->subDiagrams); it.next();)
+    {
+        juce::Component* c = it.getKey();
+        c->addMouseListener(this, false);
+    }
+
     diagramName.setText(currentContent->getName(), juce::dontSendNotification);
 
-    resized();
+    currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
+
     repaint();
 
 }
 
 void HackAudio::Viewport::mouseDown(const juce::MouseEvent& e)
 {
+
     componentDragger.startDraggingComponent(contentContainer.getChildComponent(0), e);
+
 }
 
 void HackAudio::Viewport::mouseDrag(const juce::MouseEvent& e)
@@ -64,6 +73,15 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
 
     if (e.getNumberOfClicks() > 1 && !componentAnimator.isAnimating())
     {
+
+        for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->subDiagrams); it.next();)
+        {
+            if (it.getKey()->getScreenBounds().contains(e.getScreenPosition()))
+            {
+                setViewedComponent(it.getValue());
+                return;
+            }
+        }
 
         juce::Rectangle<int> finalBounds = currentContent->getBounds();
 
@@ -204,10 +222,5 @@ void HackAudio::Viewport::resized()
     diagramName.setBounds(0, 0, width, 32);
 
     contentContainer.centreWithSize(width, height);
-
-    if (currentContent)
-    {
-        currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
-    }
 
 }
