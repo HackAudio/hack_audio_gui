@@ -78,6 +78,24 @@ HackAudio::Diagram::Junction::Symbol HackAudio::Diagram::Junction::getSymbol()
 
 }
 
+void HackAudio::Diagram::Junction::paint(juce::Graphics& g)
+{
+
+    int width = getWidth() - 8;
+    int height = getHeight() - 8;
+
+    if (width <= 0 || height <= 0) { return; }
+
+    g.setColour(HackAudio::Colours::Black);
+    g.fillEllipse(4, 4, width, height);
+    g.setColour(HackAudio::Colours::Gray);
+    g.drawEllipse(4, 4, width, height, 4);
+
+    g.setColour(HackAudio::Colours::White);
+    g.drawFittedText(currentSymbol, 4, 4, width, height, juce::Justification::centred, 1);
+
+}
+
 // ============================================================
 
 HackAudio::Diagram::Diagram()

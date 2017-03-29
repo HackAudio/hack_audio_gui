@@ -18,7 +18,7 @@ class Diagram : private juce::Component,
 
 public:
 
-    class Junction : private juce::Component
+    class Junction : public juce::Component
     {
     public:
 
