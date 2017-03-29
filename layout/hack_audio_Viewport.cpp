@@ -93,7 +93,6 @@ void HackAudio::Viewport::componentMovedOrResized(juce::Component& component, bo
 
     repaint();
 
-
 }
 
 void HackAudio::Viewport::paint(juce::Graphics& g)
@@ -170,6 +169,55 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
     g.setColour(HackAudio::Colours::Gray);
     g.strokePath(p, juce::PathStrokeType(4));
+
+
+    g.setGradientFill(
+        juce::ColourGradient
+        (
+            HackAudio::Colours::Black.withAlpha(0.75f),
+            0, 0,
+            HackAudio::Colours::Black.withAlpha(0.0f),
+            0, 4,
+            false
+        )
+    );
+    g.fillRect(0, 0, getWidth(), 4);
+
+    g.setGradientFill(
+        juce::ColourGradient
+        (
+            HackAudio::Colours::Black.withAlpha(0.0f),
+            0, getHeight() - 4,
+            HackAudio::Colours::Black.withAlpha(0.75f),
+            0, getHeight(),
+            false
+        )
+    );
+    g.fillRect(0, getHeight() - 4, getWidth(), 4);
+
+    g.setGradientFill(
+        juce::ColourGradient
+        (
+            HackAudio::Colours::Black.withAlpha(0.75f),
+            8, 0,
+            HackAudio::Colours::Black.withAlpha(0.0f),
+            12, 0,
+            false
+        )
+    );
+    g.fillRect(8, 0, 4, getHeight());
+
+    g.setGradientFill(
+        juce::ColourGradient
+        (
+            HackAudio::Colours::Black.withAlpha(0.0f),
+            getWidth() - 12, 0,
+            HackAudio::Colours::Black.withAlpha(0.75f),
+            getWidth() - 8, 0,
+            false
+        )
+    );
+    g.fillRect(getWidth() - 12, 0, 4, getHeight());
 
     g.setColour(HackAudio::Colours::Gray);
     g.fillRect(0, 0, 8, getHeight());
