@@ -12,6 +12,8 @@ TODO:
 
     - Possible Animation Of Connections
 
+    - Delegate Border/Node/Shadow Drawing of HackAudio::Viewport To A Cached juce::Image
+
 BUG:
 
 	- Investigate Juce 30fps Graphics Limitations
