@@ -44,55 +44,19 @@ void HackAudio::Diagram::Junction::setSymbol(HackAudio::Diagram::Junction::Symbo
     }
 }
 
-HackAudio::Diagram::Junction::Symbol HackAudio::Diagram::Junction::getSymbol()
-{
-
-    if (currentSymbol == "")
-    {
-        return HackAudio::Diagram::Junction::Symbol::None;
-    }
-    else if (currentSymbol == "+")
-    {
-        return HackAudio::Diagram::Junction::Symbol::Add;
-    }
-    else if (currentSymbol == "-")
-    {
-        return HackAudio::Diagram::Junction::Symbol::Subtract;
-    }
-    else if (currentSymbol == "÷")
-    {
-        return HackAudio::Diagram::Junction::Symbol::Divide;
-    }
-    else if (currentSymbol == "×")
-    {
-        return HackAudio::Diagram::Junction::Symbol::Multiply;
-    }
-    else if (currentSymbol == "avg")
-    {
-        return HackAudio::Diagram::Junction::Symbol::Average;
-    }
-    else
-    {
-        return HackAudio::Diagram::Junction::Symbol::None;
-    }
-
-}
-
 void HackAudio::Diagram::Junction::paint(juce::Graphics& g)
 {
 
-    int width = getWidth() - 8;
-    int height = getHeight() - 8;
+    int width = getWidth();
+    int height = getHeight();
 
     if (width <= 0 || height <= 0) { return; }
 
-    g.setColour(HackAudio::Colours::Black);
-    g.fillEllipse(4, 4, width, height);
     g.setColour(HackAudio::Colours::Gray);
-    g.drawEllipse(4, 4, width, height, 4);
+    g.fillEllipse(0, 0, width, height);
 
     g.setColour(HackAudio::Colours::White);
-    g.drawFittedText(currentSymbol, 4, 4, width, height, juce::Justification::centred, 1);
+    g.drawFittedText(currentSymbol, 0, 0, width, height, juce::Justification::centred, 1);
 
 }
 

@@ -39,8 +39,6 @@ public:
 
         void setSymbol(Symbol s);
 
-        Symbol getSymbol();
-
     private:
 
         juce::String currentSymbol;
