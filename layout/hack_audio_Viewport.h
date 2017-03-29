@@ -9,7 +9,8 @@ namespace HackAudio
 */
 
 class Viewport : public juce::Component,
-                 private juce::ComponentListener
+                 private juce::ComponentListener,
+                 private juce::ButtonListener
 {
 
     class Diagram;
@@ -20,16 +21,22 @@ public:
     ~Viewport();
 
     /**
-     Sets the currently displayed component, there may only be one at a time
+     Sets the top-level diagram to display
     */
-    void setViewedComponent(HackAudio::Diagram* d);
+    void setDiagram(HackAudio::Diagram* d);
 
 private:
+
+    void traverseDown(HackAudio::Diagram* d);
+    void traverseUp();
+    void traverseTop();
 
     void mouseDown(const juce::MouseEvent& e) override;
     void mouseDrag(const juce::MouseEvent& e) override;
     void mouseUp(const juce::MouseEvent& e) override;
     void mouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& w) override;
+
+    void buttonClicked(juce::Button* b) override;
 
     void componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized) override;
 
@@ -42,10 +49,13 @@ private:
     juce::Component contentContainer;
     HackAudio::Diagram* currentContent;
 
+    juce::Array<HackAudio::Diagram*> parentContent;
+
     juce::Label diagramName;
+    juce::TextButton backButton;
+    juce::TextButton topButton;
 
     juce::ComponentDragger componentDragger;
-
     juce::ComponentAnimator componentAnimator;
 
     juce::DropShadowEffect dropShadow;

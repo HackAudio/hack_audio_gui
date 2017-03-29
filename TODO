@@ -8,8 +8,6 @@ TODO:
 
     - Directional Graphics For HackAudio::Diagram Connections
 
-    - Traversing Through Diagrams/Blocks Using HackAudio::Viewport (Possible Tree Structure)
-
     - Incorporate Grid-Aligned Flex For HackAudio::Diagram
 
     - Possible Animation Of Connections

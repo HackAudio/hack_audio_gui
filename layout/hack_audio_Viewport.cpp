@@ -17,6 +17,15 @@ HackAudio::Viewport::Viewport()
 
     addAndMakeVisible(diagramName);
 
+    backButton.setButtonText("Back");
+    topButton.setButtonText("To Top");
+
+    backButton.addListener(this);
+    topButton.addListener(this);
+
+    addAndMakeVisible(backButton);
+    addAndMakeVisible(topButton);
+
     currentContent = nullptr;
 
     resizeGuard = false;
@@ -27,7 +36,7 @@ HackAudio::Viewport::~Viewport()
     
 }
 
-void HackAudio::Viewport::setViewedComponent(HackAudio::Diagram* d)
+void HackAudio::Viewport::setDiagram(HackAudio::Diagram* d)
 {
 
     if (contentContainer.getNumChildComponents() > 0)
@@ -55,6 +64,119 @@ void HackAudio::Viewport::setViewedComponent(HackAudio::Diagram* d)
 
 }
 
+void HackAudio::Viewport::traverseDown(HackAudio::Diagram *d)
+{
+
+    assert(contentContainer.getNumChildComponents() > 0);
+
+    parentContent.add(currentContent);
+
+    currentContent->removeComponentListener(this);
+
+    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
+    {
+        juce::Component* c = it.getKey();
+        c->removeMouseListener(this);
+    }
+
+    contentContainer.removeAllChildren();
+
+
+
+    currentContent = d;
+
+    currentContent->addComponentListener(this);
+    contentContainer.addAndMakeVisible(currentContent);
+
+    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
+    {
+        juce::Component* c = it.getKey();
+        c->addMouseListener(this, false);
+    }
+
+    diagramName.setText(currentContent->getName(), juce::dontSendNotification);
+
+    currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
+
+    repaint();
+
+}
+
+void HackAudio::Viewport::traverseUp()
+{
+
+    assert(contentContainer.getNumChildComponents() > 0);
+    assert(parentContent.size() > 0);
+
+    currentContent->removeComponentListener(this);
+
+    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
+    {
+        juce::Component* c = it.getKey();
+        c->removeMouseListener(this);
+    }
+
+    contentContainer.removeAllChildren();
+
+
+    
+    currentContent = parentContent.removeAndReturn(parentContent.size() - 1);
+
+    currentContent->addComponentListener(this);
+    contentContainer.addAndMakeVisible(currentContent);
+
+    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
+    {
+        juce::Component* c = it.getKey();
+        c->addMouseListener(this, false);
+    }
+
+    diagramName.setText(currentContent->getName(), juce::dontSendNotification);
+
+    currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
+    
+    repaint();
+
+}
+
+void HackAudio::Viewport::traverseTop()
+{
+
+    assert(contentContainer.getNumChildComponents() > 0);
+    assert(parentContent.size() > 0);
+
+    currentContent->removeComponentListener(this);
+
+    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
+    {
+        juce::Component* c = it.getKey();
+        c->removeMouseListener(this);
+    }
+
+    contentContainer.removeAllChildren();
+
+
+
+    currentContent = parentContent.removeAndReturn(0);
+    parentContent.clear();
+
+    currentContent->addComponentListener(this);
+    contentContainer.addAndMakeVisible(currentContent);
+
+    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
+    {
+        juce::Component* c = it.getKey();
+        c->addMouseListener(this, false);
+    }
+
+    diagramName.setText(currentContent->getName(), juce::dontSendNotification);
+
+    currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
+    
+    repaint();
+
+}
+
 void HackAudio::Viewport::mouseDown(const juce::MouseEvent& e)
 {
 
@@ -78,7 +200,7 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
         {
             if (it.getKey()->getScreenBounds().contains(e.getScreenPosition()))
             {
-                setViewedComponent(it.getValue());
+                traverseDown(it.getValue());
                 return;
             }
         }
@@ -104,6 +226,21 @@ void HackAudio::Viewport::mouseWheelMove(const juce::MouseEvent& e, const juce::
 
     repaint();
     
+}
+
+void HackAudio::Viewport::buttonClicked(juce::Button *b)
+{
+
+    if (b == &backButton)
+    {
+        traverseUp();
+    }
+
+    if (b == &topButton)
+    {
+        traverseTop();
+    }
+
 }
 
 void HackAudio::Viewport::componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized)
@@ -277,5 +414,8 @@ void HackAudio::Viewport::resized()
     diagramName.setBounds(0, 0, width, 32);
 
     contentContainer.centreWithSize(width, height);
+
+    backButton.setBounds(contentContainer.getX(), 0, 32, 16);
+    topButton.setBounds(contentContainer.getRight() - 32, 0, 32, 16);
 
 }
