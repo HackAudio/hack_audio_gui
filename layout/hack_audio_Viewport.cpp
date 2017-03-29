@@ -111,7 +111,6 @@ void HackAudio::Viewport::componentMovedOrResized(juce::Component& component, bo
 
     repaint();
 
-
 }
 
 void HackAudio::Viewport::paint(juce::Graphics& g)
@@ -146,10 +145,13 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
             int x2 = contentInputBounds.getX();
             int y2 = contentInputBounds.getY() + contentInputBounds.getHeight() / 2;
 
-            g.setColour(HackAudio::Colours::Gray);
-            g.fillEllipse(x2, y2 - 8, 16, 16);
-            g.setColour(HackAudio::Colours::Black);
-            g.drawEllipse(x2, y2 - 8, 16, 16, 4);
+            if (!dynamic_cast<HackAudio::Diagram::Junction*>(contentInput))
+            {
+                g.setColour(HackAudio::Colours::Gray);
+                g.fillEllipse(x2, y2 - 8, 16, 16);
+                g.setColour(HackAudio::Colours::Black);
+                g.drawEllipse(x2, y2 - 8, 16, 16, 4);
+            }
 
             p.startNewSubPath(x1, y1);
             p.cubicTo(x2, y1, x1, y2, x2 + 4, y2);
@@ -174,10 +176,14 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
             int x4 = contentContainer.getX() + contentContainer.getWidth();
             int y4 = contentContainer.getY() + getHeight() / 2;
 
-            g.setColour(HackAudio::Colours::Gray);
-            g.fillEllipse(x3, y3 - 8, 16, 16);
-            g.setColour(HackAudio::Colours::Black);
-            g.drawEllipse(x3, y3 - 8, 16, 16, 4);
+
+            if (!dynamic_cast<HackAudio::Diagram::Junction*>(contentOutput))
+            {
+                g.setColour(HackAudio::Colours::Gray);
+                g.fillEllipse(x3, y3 - 8, 16, 16);
+                g.setColour(HackAudio::Colours::Black);
+                g.drawEllipse(x3, y3 - 8, 16, 16, 4);
+            }
 
             p.startNewSubPath(x3 + 4, y3);
             p.cubicTo(x4, y3, x3, y4, x4, y4);
@@ -188,6 +194,55 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
     g.setColour(HackAudio::Colours::Gray);
     g.strokePath(p, juce::PathStrokeType(4));
+
+
+    g.setGradientFill(
+        juce::ColourGradient
+        (
+            HackAudio::Colours::Black.withAlpha(0.75f),
+            0, 0,
+            HackAudio::Colours::Black.withAlpha(0.0f),
+            0, 4,
+            false
+        )
+    );
+    g.fillRect(0, 0, getWidth(), 4);
+
+    g.setGradientFill(
+        juce::ColourGradient
+        (
+            HackAudio::Colours::Black.withAlpha(0.0f),
+            0, getHeight() - 4,
+            HackAudio::Colours::Black.withAlpha(0.75f),
+            0, getHeight(),
+            false
+        )
+    );
+    g.fillRect(0, getHeight() - 4, getWidth(), 4);
+
+    g.setGradientFill(
+        juce::ColourGradient
+        (
+            HackAudio::Colours::Black.withAlpha(0.75f),
+            8, 0,
+            HackAudio::Colours::Black.withAlpha(0.0f),
+            12, 0,
+            false
+        )
+    );
+    g.fillRect(8, 0, 4, getHeight());
+
+    g.setGradientFill(
+        juce::ColourGradient
+        (
+            HackAudio::Colours::Black.withAlpha(0.0f),
+            getWidth() - 12, 0,
+            HackAudio::Colours::Black.withAlpha(0.75f),
+            getWidth() - 8, 0,
+            false
+        )
+    );
+    g.fillRect(getWidth() - 12, 0, 4, getHeight());
 
     g.setColour(HackAudio::Colours::Gray);
     g.fillRect(0, 0, 8, getHeight());

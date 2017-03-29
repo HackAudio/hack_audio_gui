@@ -1,5 +1,67 @@
 #include "hack_audio_Diagram.h"
 
+HackAudio::Diagram::Junction::Junction()
+{
+
+}
+
+HackAudio::Diagram::Junction::~Junction()
+{
+
+}
+
+void HackAudio::Diagram::Junction::setSymbol(HackAudio::Diagram::Junction::Symbol s)
+{
+    switch (s)
+    {
+        case HackAudio::Diagram::Junction::Symbol::None:
+            currentSymbol = "";
+            break;
+
+        case HackAudio::Diagram::Junction::Symbol::Add:
+            currentSymbol = "+";
+            break;
+
+        case HackAudio::Diagram::Junction::Symbol::Subtract:
+            currentSymbol = "-";
+            break;
+
+        case HackAudio::Diagram::Junction::Symbol::Divide:
+            currentSymbol = "÷";
+            break;
+
+        case HackAudio::Diagram::Junction::Symbol::Multiply:
+            currentSymbol = "×";
+            break;
+
+        case HackAudio::Diagram::Junction::Symbol::Average:
+            currentSymbol = "avg";
+            break;
+
+        default:
+            currentSymbol = "";
+            break;
+    }
+}
+
+void HackAudio::Diagram::Junction::paint(juce::Graphics& g)
+{
+
+    int width = getWidth();
+    int height = getHeight();
+
+    if (width <= 0 || height <= 0) { return; }
+
+    g.setColour(HackAudio::Colours::Gray);
+    g.fillEllipse(0, 0, width, height);
+
+    g.setColour(HackAudio::Colours::White);
+    g.drawFittedText(currentSymbol, 0, 0, width, height, juce::Justification::centred, 1);
+
+}
+
+// ============================================================
+
 HackAudio::Diagram::Diagram()
 {
 
@@ -497,7 +559,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
             int x2 = destination->getX();
             int y2 = destination->getY() + destination->getHeight() / 2;
 
-            if (!outputConnectedComponents.contains(source))
+            if (!outputConnectedComponents.contains(source) && !dynamic_cast<Junction*>(source))
             {
 
                 g.setColour(HackAudio::Colours::Gray);
@@ -507,7 +569,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
             }
 
-            if (!inputConnectedComponents.contains(destination))
+            if (!inputConnectedComponents.contains(destination) && !dynamic_cast<Junction*>(destination))
             {
 
                 g.setColour(HackAudio::Colours::Gray);
