@@ -16,7 +16,6 @@ HackAudio::Viewport::Viewport()
     shadow.offset.setXY(0, 2);
     dropShadow.setShadowProperties(shadow);
     diagramName.setComponentEffect(&dropShadow);
-
     addAndMakeVisible(diagramName);
 
     backButton.setButtonText("Back");
@@ -132,6 +131,23 @@ void HackAudio::Viewport::traverseTop()
 
 }
 
+void HackAudio::Viewport::mouseMove(const juce::MouseEvent& e)
+{
+
+    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
+    {
+        if (it.getKey()->getScreenBounds().contains(e.getScreenPosition()))
+        {
+            it.getKey()->setColour(juce::Label::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.25f));
+        }
+        else
+        {
+            it.getKey()->setColour(juce::Label::backgroundColourId, HackAudio::Colours::Gray);
+        }
+    }
+
+}
+
 void HackAudio::Viewport::mouseDown(const juce::MouseEvent& e)
 {
 
@@ -155,8 +171,10 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
 
         for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
         {
+
             if (it.getKey()->isVisible() && it.getKey()->getScreenBounds().contains(e.getScreenPosition()))
             {
+                it.getKey()->setColour(juce::Label::backgroundColourId, HackAudio::Colours::Gray);
                 traverseDown(it.getValue());
                 return;
             }
