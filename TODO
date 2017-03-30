@@ -1,7 +1,5 @@
 TODO:
 
-    - Handle repaint() Calls Between HackAudio::Diagram and HackAudio::Viewport More Effectively
-
     - Automatically Remove Unconnected Childern In HackAudio::Diagram
 
     - Directional Graphics For HackAudio::Diagram Connections
@@ -10,10 +8,6 @@ TODO:
 
     - Possible Animation Of Connections
 
-    - Delegate Border/Node/Shadow Drawing of HackAudio::Viewport To A Cached juce::Image
-
 BUG:
-
-	- Investigate Juce 30fps Graphics Limitations
 
     - If All Children Are Removed From HackAudio::Diagram And Then Added In Again, They Will Appear In Incorrect Locations. This is due to updateSize() Being Called For Each Child Added, Rather Than Being Called After Adding All Applicable Children
