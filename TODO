@@ -9,5 +9,3 @@ TODO:
     - Possible Animation Of Connections
 
 BUG:
-
-    - If All Children Are Removed From HackAudio::Diagram And Then Added In Again, They Will Appear In Incorrect Locations. This is due to updateSize() Being Called For Each Child Added, Rather Than Being Called After Adding All Applicable Children

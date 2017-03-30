@@ -162,6 +162,8 @@ private:
 
     void updateConnections();
 
+    void updateChildren();
+
     void childrenChanged() override;
 
     void parentHierarchyChanged() override;
