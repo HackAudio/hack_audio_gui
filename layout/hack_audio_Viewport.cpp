@@ -220,8 +220,9 @@ void HackAudio::Viewport::mouseWheelMove(const juce::MouseEvent& e, const juce::
 {
 
     juce::Point<int> pos(currentContent->getPosition());
-    pos.x -= w.deltaX * 128;
-    pos.y -= w.deltaY * 128;
+
+    pos.x -= w.deltaX * MOUSEWHEEL_SENSITIVITY;
+    pos.y -= w.deltaY * MOUSEWHEEL_SENSITIVITY;
     currentContent->setTopLeftPosition(pos);
 
     repaint();

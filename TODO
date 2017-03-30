@@ -1,7 +1,5 @@
 TODO:
 
-    - Viewport Mouse Wheel Delta Clipping (-1.0 : 1.0)
-
     - Handle repaint() Calls Between HackAudio::Diagram and HackAudio::Viewport More Effectively
 
     - Automatically Remove Unconnected Childern In HackAudio::Diagram
