@@ -14,6 +14,7 @@ HackAudio::Slider::Slider()
 
     setSliderSnapsToMousePosition(false);
     setDoubleClickReturnValue(false, 0);
+    setRepaintsOnMouseActivity(false);
 
     pipLocations.resize(10);
 

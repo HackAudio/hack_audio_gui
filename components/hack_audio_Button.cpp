@@ -12,6 +12,7 @@ HackAudio::Button::Button() : juce::Button("")
 
 	setClickingTogglesState(true);
 	setTriggeredOnMouseDown(false);
+    setRepaintsOnMouseActivity(false);
 
 	resizeGuard = false;
 
