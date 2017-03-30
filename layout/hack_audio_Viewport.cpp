@@ -155,7 +155,7 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
 
         for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
         {
-            if (it.getKey()->getScreenBounds().contains(e.getScreenPosition()))
+            if (it.getKey()->isVisible() && it.getKey()->getScreenBounds().contains(e.getScreenPosition()))
             {
                 traverseDown(it.getValue());
                 return;
