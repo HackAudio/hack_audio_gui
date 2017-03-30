@@ -27,6 +27,12 @@ public:
 
 private:
 
+    struct TraversalButton : public juce::Button
+    {
+        TraversalButton() : juce::Button("") {}
+        void paintButton(juce::Graphics& g, bool isMouseOverButton, bool isButtonDown) override {};
+    };
+
     void traverseDown(HackAudio::Diagram* d);
     void traverseUp();
     void traverseTop();
@@ -53,8 +59,8 @@ private:
     juce::Array<HackAudio::Diagram*> parentContent;
 
     juce::Label diagramName;
-    juce::TextButton backButton;
-    juce::TextButton topButton;
+    TraversalButton backButton;
+    TraversalButton topButton;
 
     juce::ComponentDragger componentDragger;
     juce::ComponentAnimator componentAnimator;

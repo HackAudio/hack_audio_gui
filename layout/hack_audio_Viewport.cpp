@@ -18,9 +18,6 @@ HackAudio::Viewport::Viewport()
     diagramName.setComponentEffect(&dropShadow);
     addAndMakeVisible(diagramName);
 
-    backButton.setButtonText("Back");
-    topButton.setButtonText("To Top");
-
     backButton.addListener(this);
     topButton.addListener(this);
 
@@ -386,6 +383,64 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
     g.setColour(HackAudio::Colours::Gray);
     g.drawEllipse(getWidth() - 16, (getHeight() / 2) - 8, 16, 16, 4);
 
+
+    if (backButton.isVisible())
+    {
+
+        int width  = backButton.getWidth();
+        int height = backButton.getHeight();
+
+        int x = backButton.getX();
+        int y = backButton.getY();
+
+        juce::Button::ButtonState state = backButton.getState();
+
+        if (state == juce::Button::ButtonState::buttonOver && state != juce::Button::ButtonState::buttonDown)
+        {
+            g.setColour(HackAudio::Colours::Gray);
+        }
+        else if (state == juce::Button::ButtonState::buttonOver && state == juce::Button::ButtonState::buttonDown)
+        {
+            g.setColour(HackAudio::Colours::Black);
+        }
+        else
+        {
+            g.setColour(HackAudio::Colours::White);
+        }
+
+        g.drawLine(x + (width/4), y + (height/2), x + (width - width/4), y + (height/16), 2);
+        g.drawLine(x + (width/4), y + (height/2), x + (width - width/4), y + (height - height/16), 2);
+
+    }
+
+    if (topButton.isVisible())
+    {
+
+        int width  = topButton.getWidth();
+        int height = topButton.getHeight();
+
+        int x = topButton.getX();
+        int y = topButton.getY();
+
+        juce::Button::ButtonState state = topButton.getState();
+
+        if (state == juce::Button::ButtonState::buttonOver && state != juce::Button::ButtonState::buttonDown)
+        {
+            g.setColour(HackAudio::Colours::Gray);
+        }
+        else if (state == juce::Button::ButtonState::buttonOver && state == juce::Button::ButtonState::buttonDown)
+        {
+            g.setColour(HackAudio::Colours::Black);
+        }
+        else
+        {
+            g.setColour(HackAudio::Colours::White);
+        }
+
+        g.drawLine(x + (width/16), y + (height - height/4), x + (width/2), y + (height/4), 2);
+        g.drawLine(x + (width/2), y + (height/4), x + (width - width/16), y + (height - height/4), 2);
+    }
+
     repaint();
 
 }
@@ -406,7 +461,7 @@ void HackAudio::Viewport::resized()
 
     contentContainer.centreWithSize(width, height);
 
-    backButton.setBounds(contentContainer.getX(), 0, 32, 16);
-    topButton.setBounds(contentContainer.getRight() - 32, 0, 32, 16);
+    backButton.setBounds(contentContainer.getX() + 16, 8, 16, 16);
+    topButton.setBounds(contentContainer.getRight() - 32, 8, 16, 16);
 
 }
