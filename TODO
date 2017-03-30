@@ -6,6 +6,4 @@ TODO:
 
     - Possible Animation Of Connections
 
-    - Correct HackAudio::Viewport Dimensions (see hack_audio_Viewport.cpp line 360)
-
 BUG:
