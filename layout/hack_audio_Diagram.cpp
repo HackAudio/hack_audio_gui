@@ -79,7 +79,7 @@ HackAudio::Diagram::~Diagram()
 void HackAudio::Diagram::addInput(juce::Component *component)
 {
 
-    assert(getIndexOfChildComponent(component) != -1);
+    addAndMakeVisible(component);
 
     inputComponents.addIfNotAlreadyThere(component);
 
@@ -110,7 +110,7 @@ juce::Array<juce::Component*> HackAudio::Diagram::getInputs()
 void HackAudio::Diagram::addOutput(juce::Component* component)
 {
 
-    assert(getIndexOfChildComponent(component) != -1);
+    addAndMakeVisible(component);
 
     outputComponents.addIfNotAlreadyThere(component);
 
