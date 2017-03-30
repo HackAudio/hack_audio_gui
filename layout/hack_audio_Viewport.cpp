@@ -7,17 +7,6 @@ HackAudio::Viewport::Viewport()
     contentContainer.setInterceptsMouseClicks(false, false);
     addAndMakeVisible(contentContainer);
 
-    diagramName.setInterceptsMouseClicks(false, false);
-    diagramName.setColour(juce::Label::textColourId, HackAudio::Colours::White);
-    diagramName.setJustificationType(juce::Justification::centred);
-
-    juce::DropShadow shadow;
-    shadow.radius = 4;
-    shadow.offset.setXY(0, 2);
-    dropShadow.setShadowProperties(shadow);
-    diagramName.setComponentEffect(&dropShadow);
-    addAndMakeVisible(diagramName);
-
     backButton.addListener(this);
     topButton.addListener(this);
 
@@ -52,8 +41,6 @@ void HackAudio::Viewport::setDiagram(HackAudio::Diagram* d)
     currentContent->addComponentListener(this);
     contentContainer.addAndMakeVisible(currentContent);
 
-    diagramName.setText(currentContent->getName(), juce::dontSendNotification);
-
     currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
 
     repaint();
@@ -79,8 +66,6 @@ void HackAudio::Viewport::traverseDown(HackAudio::Diagram *d)
     currentContent->addComponentListener(this);
     contentContainer.addAndMakeVisible(currentContent);
 
-    diagramName.setText(currentContent->getName(), juce::dontSendNotification);
-
     currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
 
     repaint();
@@ -101,8 +86,6 @@ void HackAudio::Viewport::traverseUp()
 
     currentContent->addComponentListener(this);
     contentContainer.addAndMakeVisible(currentContent);
-
-    diagramName.setText(currentContent->getName(), juce::dontSendNotification);
 
     currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
 
@@ -134,8 +117,6 @@ void HackAudio::Viewport::traverseTop()
 
     currentContent->addComponentListener(this);
     contentContainer.addAndMakeVisible(currentContent);
-
-    diagramName.setText(currentContent->getName(), juce::dontSendNotification);
 
     currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
     
@@ -447,6 +428,11 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
         g.drawLine(x + (width/2), y + (height/4), x + (width - width/16), y + (height - height/4), 2);
     }
 
+    g.setColour(HackAudio::Colours::Black.withAlpha(0.75f));
+    g.drawFittedText(currentContent->getName(), 0, 2, getWidth(), 32, juce::Justification::centred, 1);
+    g.setColour(HackAudio::Colours::White);
+    g.drawFittedText(currentContent->getName(), 0, 0, getWidth(), 32, juce::Justification::centred, 1);
+
 }
 
 void HackAudio::Viewport::resized()
@@ -461,11 +447,9 @@ void HackAudio::Viewport::resized()
     setBounds(getX() - 16, getY(), width + 16, height);
     resizeGuard = false;
 
-    diagramName.setBounds(0, 0, width, 32);
-
     contentContainer.centreWithSize(width, height);
 
-    backButton.setBounds(contentContainer.getX() + 16, 8, 16, 16);
+    backButton.setBounds(contentContainer.getX() + 12, 8, 16, 16);
     topButton.setBounds(contentContainer.getRight() - 32, 8, 16, 16);
 
 }

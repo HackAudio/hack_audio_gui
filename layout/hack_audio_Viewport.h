@@ -58,14 +58,11 @@ private:
 
     juce::Array<HackAudio::Diagram*> parentContent;
 
-    juce::Label diagramName;
     TraversalButton backButton;
     TraversalButton topButton;
 
     juce::ComponentDragger componentDragger;
     juce::ComponentAnimator componentAnimator;
-
-    juce::DropShadowEffect dropShadow;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Viewport)
 
