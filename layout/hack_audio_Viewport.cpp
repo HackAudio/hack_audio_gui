@@ -41,6 +41,9 @@ HackAudio::Viewport::~Viewport()
 void HackAudio::Viewport::setDiagram(HackAudio::Diagram* d)
 {
 
+    backButton.setVisible(false);
+    topButton.setVisible(false);
+
     if (contentContainer.getNumChildComponents() > 0)
     {
         currentContent->removeComponentListener(this);
@@ -64,6 +67,9 @@ void HackAudio::Viewport::traverseDown(HackAudio::Diagram *d)
 {
 
     assert(contentContainer.getNumChildComponents() > 0);
+
+    backButton.setVisible(true);
+    topButton.setVisible(true);
 
     parentContent.add(currentContent);
 
@@ -102,6 +108,12 @@ void HackAudio::Viewport::traverseUp()
     diagramName.setText(currentContent->getName(), juce::dontSendNotification);
 
     currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
+
+    if (parentContent.size() == 0)
+    {
+        backButton.setVisible(false);
+        topButton.setVisible(false);
+    }
     
     repaint();
 
@@ -112,6 +124,9 @@ void HackAudio::Viewport::traverseTop()
 
     assert(contentContainer.getNumChildComponents() > 0);
     assert(parentContent.size() > 0);
+
+    backButton.setVisible(false);
+    topButton.setVisible(false);
 
     currentContent->removeComponentListener(this);
 
