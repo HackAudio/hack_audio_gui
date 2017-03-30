@@ -604,10 +604,10 @@ void HackAudio::Diagram::componentMovedOrResized(juce::Component &component, boo
 void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 {
 
-    juce::Path p;
-
     for(juce::HashMap<juce::Component*, juce::Array<juce::Component*>>::Iterator it (connections); it.next();)
     {
+
+        juce::Path p;
 
         juce::Component* source = it.getKey();
 
@@ -624,8 +624,6 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
             int x1, y1, x2, y2;
 
-            bool inverseIO = false;
-
             if (source->getX() < destination->getX())
             {
 
@@ -639,8 +637,6 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
             else
             {
 
-                inverseIO = true;
-
                 x1 = source->getX();
                 y1 = source->getY() + source->getHeight() / 2;
 
@@ -649,53 +645,35 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
             }
 
-            juce::Colour colourOne = (inverseIO) ? HackAudio::Colours::Black : HackAudio::Colours::Gray;
-            juce::Colour colourTwo = (inverseIO) ? HackAudio::Colours::Gray : HackAudio::Colours::Black;
-
-            if (inverseIO)
-            {
-
-                juce::Path temp;
-                temp.startNewSubPath(x1, y1);
-                temp.cubicTo(x2, y1, x1, y2, x2, y2);
-                g.setColour(HackAudio::Colours::Gray);
-                g.strokePath(temp, juce::PathStrokeType(4));
-                
-            }
-
-            if (!dynamic_cast<Junction*>(source))
-            {
-
-                g.setColour(colourOne);
-                g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
-                g.setColour(colourTwo);
-                g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
-
-            }
-
             if (!dynamic_cast<Junction*>(destination))
             {
 
-                g.setColour(colourOne);
+                g.setColour(HackAudio::Colours::Gray);
                 g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
-                g.setColour(colourTwo);
+                g.setColour(HackAudio::Colours::Black);
                 g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
 
             }
 
-            if (!inverseIO)
+            p.startNewSubPath(x1, y1);
+            p.cubicTo(x2, y1, x1, y2, x2, y2);
+
+            g.setColour(HackAudio::Colours::Gray);
+            g.strokePath(p, juce::PathStrokeType(4));
+
+            if (!dynamic_cast<Junction*>(source))
             {
-                p.startNewSubPath(x1, y1);
-                p.cubicTo(x2, y1, x1, y2, x2, y2);
+
+                g.setColour(HackAudio::Colours::Black);
+                g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
+                g.setColour(HackAudio::Colours::Gray);
+                g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
+
             }
 
         }
 
     }
-
-    g.setColour(HackAudio::Colours::Gray);
-
-    g.strokePath(p, juce::PathStrokeType(4));
 
 }
 
