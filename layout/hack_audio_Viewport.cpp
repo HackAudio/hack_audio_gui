@@ -357,30 +357,28 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
             juce::Rectangle<int> contentOutputBounds = contentOutput->getScreenBounds().translated(-contentContainer.getScreenX(), -contentContainer.getScreenY());
 
-            int x3 = contentOutputBounds.getRight();
+            int x3 = contentOutputBounds.getRight() + 8; // +8 offsets are incorrect, check contentContainer is being resized properly
             int y3 = contentOutputBounds.getY() + contentOutputBounds.getHeight() / 2;
 
             int x4 = contentContainer.getX() + contentContainer.getWidth();
             int y4 = contentContainer.getY() + getHeight() / 2;
 
+            p.startNewSubPath(x3 + 4, y3);
+            p.cubicTo(x4, y3, x3, y4, x4, y4);
+            g.setColour(HackAudio::Colours::Gray);
+            g.strokePath(p, juce::PathStrokeType(4));
 
             if (!dynamic_cast<HackAudio::Diagram::Junction*>(contentOutput))
             {
-                g.setColour(HackAudio::Colours::Gray);
-                g.fillEllipse(x3, y3 - 8, 16, 16);
                 g.setColour(HackAudio::Colours::Black);
+                g.fillEllipse(x3, y3 - 8, 16, 16);
+                g.setColour(HackAudio::Colours::Gray);
                 g.drawEllipse(x3, y3 - 8, 16, 16, 4);
             }
             else
             {
                 x3 += 8;
             }
-
-            p.startNewSubPath(x3 + 4, y3);
-            p.cubicTo(x4, y3, x3, y4, x4, y4);
-
-            g.setColour(HackAudio::Colours::Gray);
-            g.strokePath(p, juce::PathStrokeType(4));
             
         }
         
