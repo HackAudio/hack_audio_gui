@@ -69,6 +69,8 @@ HackAudio::Diagram::Diagram()
 
     moveGuard = false;
 
+    setBufferedToImage(true);
+
 }
 
 HackAudio::Diagram::~Diagram()
