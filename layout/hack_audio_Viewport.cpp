@@ -3,9 +3,10 @@
 HackAudio::Viewport::Viewport()
 {
     setInterceptsMouseClicks(true, false);
-    contentContainer.setInterceptsMouseClicks(false, true);
+    contentContainer.setInterceptsMouseClicks(false, false);
     addAndMakeVisible(contentContainer);
 
+    diagramName.setInterceptsMouseClicks(false, false);
     diagramName.setColour(juce::Label::textColourId, HackAudio::Colours::White);
     diagramName.setJustificationType(juce::Justification::centred);
 
