@@ -606,9 +606,6 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
     juce::Array<juce::Path> paths;
 
-    juce::Array<juce::Component*> inputConnectedComponents;
-    juce::Array<juce::Component*> outputConnectedComponents;
-
     for(juce::HashMap<juce::Component*, juce::Array<juce::Component*>>::Iterator it (connections); it.next();)
     {
 
@@ -652,7 +649,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
             }
 
-            if (!outputConnectedComponents.contains(source) && !dynamic_cast<Junction*>(source))
+            if (!dynamic_cast<Junction*>(source))
             {
 
                 g.setColour(HackAudio::Colours::Gray);
@@ -662,7 +659,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
             }
 
-            if (!inputConnectedComponents.contains(destination) && !dynamic_cast<Junction*>(destination))
+            if (!dynamic_cast<Junction*>(destination))
             {
 
                 g.setColour(HackAudio::Colours::Gray);
@@ -675,18 +672,23 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
             juce::Path p;
             p.startNewSubPath(x1, y1);
             p.cubicTo(x2, y1, x1, y2, x2, y2);
-            paths.add(p);
 
-            if (!inverseIO)
+            if (inverseIO)
             {
-                outputConnectedComponents.add(source);
-                inputConnectedComponents.add(destination);
+
+                p.startNewSubPath(x2, y2);
+                p.addTriangle(x2 + 4, y2, x2 + 8, y2 - 4, x2 + 8, y2 + 4);
+
             }
             else
             {
-                outputConnectedComponents.add(destination);
-                inputConnectedComponents.add(source);
+                
+                p.startNewSubPath(x2, y2);
+                p.addTriangle(x2 - 4, y2, x2 - 8, y2 - 4, x2 - 8, y2 + 4);
+
             }
+
+            paths.add(p);
 
         }
 
