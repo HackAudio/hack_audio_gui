@@ -649,12 +649,26 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
             }
 
+            juce::Colour colourOne = (inverseIO) ? HackAudio::Colours::Black : HackAudio::Colours::Gray;
+            juce::Colour colourTwo = (inverseIO) ? HackAudio::Colours::Gray : HackAudio::Colours::Black;
+
+            if (inverseIO)
+            {
+
+                juce::Path temp;
+                temp.startNewSubPath(x1, y1);
+                temp.cubicTo(x2, y1, x1, y2, x2, y2);
+                g.setColour(HackAudio::Colours::Gray);
+                g.strokePath(temp, juce::PathStrokeType(4));
+                
+            }
+
             if (!dynamic_cast<Junction*>(source))
             {
 
-                g.setColour(HackAudio::Colours::Gray);
+                g.setColour(colourOne);
                 g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
-                g.setColour(HackAudio::Colours::Black);
+                g.setColour(colourTwo);
                 g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
 
             }
@@ -662,29 +676,17 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
             if (!dynamic_cast<Junction*>(destination))
             {
 
-                g.setColour(HackAudio::Colours::Gray);
+                g.setColour(colourOne);
                 g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
-                g.setColour(HackAudio::Colours::Black);
+                g.setColour(colourTwo);
                 g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
 
             }
 
-            p.startNewSubPath(x1, y1);
-            p.cubicTo(x2, y1, x1, y2, x2, y2);
-
-            if (inverseIO)
+            if (!inverseIO)
             {
-
-                p.startNewSubPath(x2, y2);
-                p.addTriangle(x2 + 4, y2, x2 + 8, y2 - 4, x2 + 8, y2 + 4);
-
-            }
-            else
-            {
-                
-                p.startNewSubPath(x2, y2);
-                p.addTriangle(x2 - 4, y2, x2 - 8, y2 - 4, x2 - 8, y2 + 4);
-
+                p.startNewSubPath(x1, y1);
+                p.cubicTo(x2, y1, x1, y2, x2, y2);
             }
 
         }
