@@ -2,7 +2,7 @@
 
 HackAudio::Label::Label()
 {
-//    setInterceptsMouseClicks(false, false);
+    setInterceptsMouseClicks(false, false);
 
     setColour(backgroundColourId, HackAudio::Colours::Black);
     setColour(textColourId, HackAudio::Colours::White);

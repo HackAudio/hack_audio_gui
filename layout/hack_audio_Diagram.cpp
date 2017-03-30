@@ -65,8 +65,6 @@ void HackAudio::Diagram::Junction::paint(juce::Graphics& g)
 HackAudio::Diagram::Diagram()
 {
 
-    setInterceptsMouseClicks(false, false);
-
     moveGuard = false;
 
 }

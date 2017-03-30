@@ -2,7 +2,7 @@
 
 HackAudio::Viewport::Viewport()
 {
-//    setInterceptsMouseClicks(false, true);
+    setInterceptsMouseClicks(true, false);
     contentContainer.setInterceptsMouseClicks(false, true);
     addAndMakeVisible(contentContainer);
 
@@ -50,12 +50,6 @@ void HackAudio::Viewport::setDiagram(HackAudio::Diagram* d)
     currentContent->addComponentListener(this);
     contentContainer.addAndMakeVisible(currentContent);
 
-    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
-    {
-        juce::Component* c = it.getKey();
-        c->addMouseListener(this, false);
-    }
-
     diagramName.setText(currentContent->getName(), juce::dontSendNotification);
 
     currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
@@ -73,26 +67,12 @@ void HackAudio::Viewport::traverseDown(HackAudio::Diagram *d)
 
     currentContent->removeComponentListener(this);
 
-    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
-    {
-        juce::Component* c = it.getKey();
-        c->removeMouseListener(this);
-    }
-
     contentContainer.removeAllChildren();
-
-
 
     currentContent = d;
 
     currentContent->addComponentListener(this);
     contentContainer.addAndMakeVisible(currentContent);
-
-    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
-    {
-        juce::Component* c = it.getKey();
-        c->addMouseListener(this, false);
-    }
 
     diagramName.setText(currentContent->getName(), juce::dontSendNotification);
 
@@ -110,26 +90,12 @@ void HackAudio::Viewport::traverseUp()
 
     currentContent->removeComponentListener(this);
 
-    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
-    {
-        juce::Component* c = it.getKey();
-        c->removeMouseListener(this);
-    }
-
     contentContainer.removeAllChildren();
-
-
     
     currentContent = parentContent.removeAndReturn(parentContent.size() - 1);
 
     currentContent->addComponentListener(this);
     contentContainer.addAndMakeVisible(currentContent);
-
-    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
-    {
-        juce::Component* c = it.getKey();
-        c->addMouseListener(this, false);
-    }
 
     diagramName.setText(currentContent->getName(), juce::dontSendNotification);
 
@@ -147,27 +113,13 @@ void HackAudio::Viewport::traverseTop()
 
     currentContent->removeComponentListener(this);
 
-    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
-    {
-        juce::Component* c = it.getKey();
-        c->removeMouseListener(this);
-    }
-
     contentContainer.removeAllChildren();
-
-
 
     currentContent = parentContent.removeAndReturn(0);
     parentContent.clear();
 
     currentContent->addComponentListener(this);
     contentContainer.addAndMakeVisible(currentContent);
-
-    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
-    {
-        juce::Component* c = it.getKey();
-        c->addMouseListener(this, false);
-    }
 
     diagramName.setText(currentContent->getName(), juce::dontSendNotification);
 
