@@ -527,6 +527,11 @@ void HackAudio::Diagram::updateChildren()
 
         bool childHasConnections = false;
 
+        if (inputComponents.contains(c) || outputComponents.contains(c))
+        {
+            childHasConnections = true;
+        }
+
         if (connections.contains(c))
         {
             childHasConnections = true;
