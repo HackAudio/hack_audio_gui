@@ -604,7 +604,7 @@ void HackAudio::Diagram::componentMovedOrResized(juce::Component &component, boo
 void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 {
 
-    juce::Array<juce::Path> paths;
+    juce::Path p;
 
     for(juce::HashMap<juce::Component*, juce::Array<juce::Component*>>::Iterator it (connections); it.next();)
     {
@@ -669,7 +669,6 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
             }
 
-            juce::Path p;
             p.startNewSubPath(x1, y1);
             p.cubicTo(x2, y1, x1, y2, x2, y2);
 
@@ -688,18 +687,13 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
             }
 
-            paths.add(p);
-
         }
 
     }
 
     g.setColour(HackAudio::Colours::Gray);
 
-    for (int i = 0; i < paths.size(); ++i)
-    {
-        g.strokePath(paths[i], juce::PathStrokeType(4));
-    }
+    g.strokePath(p, juce::PathStrokeType(4));
 
 }
 
