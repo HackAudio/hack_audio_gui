@@ -4,6 +4,8 @@ HackAudio::Viewport::Viewport()
 {
 
     setInterceptsMouseClicks(true, false);
+    setRepaintsOnMouseActivity(false);
+
     contentContainer.setInterceptsMouseClicks(false, false);
     addAndMakeVisible(contentContainer);
 
@@ -152,7 +154,6 @@ void HackAudio::Viewport::mouseDrag(const juce::MouseEvent& e)
 {
 
     componentDragger.dragComponent(contentContainer.getChildComponent(0), e, nullptr);
-    repaint();
 
 }
 
@@ -179,9 +180,10 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
 
         componentAnimator.animateComponent(currentContent, finalBounds, 1.0, 250, false, 0, 0);
 
+        repaint();
+
     }
 
-    repaint();
 }
 
 void HackAudio::Viewport::mouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& w)
@@ -193,8 +195,6 @@ void HackAudio::Viewport::mouseWheelMove(const juce::MouseEvent& e, const juce::
     pos.y -= w.deltaY * MOUSEWHEEL_SENSITIVITY;
     currentContent->setTopLeftPosition(pos);
 
-    repaint();
-    
 }
 
 void HackAudio::Viewport::buttonClicked(juce::Button *b)
@@ -313,6 +313,7 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
             false
         )
     );
+
     g.fillRect(0, 0, getWidth(), 4);
 
     g.setGradientFill(
@@ -325,6 +326,7 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
             false
         )
     );
+
     g.fillRect(0, getHeight() - 4, getWidth(), 4);
 
     g.setGradientFill(
@@ -337,6 +339,7 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
             false
         )
     );
+
     g.fillRect(8, 0, 4, getHeight());
 
     g.setGradientFill(
@@ -349,6 +352,7 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
             false
         )
     );
+
     g.fillRect(getWidth() - 12, 0, 4, getHeight());
 
 
