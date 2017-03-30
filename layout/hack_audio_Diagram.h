@@ -164,9 +164,9 @@ private:
 
     void childrenChanged() override;
 
-    void componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized) override;
-
     void parentHierarchyChanged() override;
+
+    void componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized) override;
 
     void paintOverChildren(juce::Graphics& g) override;
 

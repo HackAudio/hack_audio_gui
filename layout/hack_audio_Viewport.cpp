@@ -2,6 +2,7 @@
 
 HackAudio::Viewport::Viewport()
 {
+
     setInterceptsMouseClicks(true, false);
     contentContainer.setInterceptsMouseClicks(false, false);
     addAndMakeVisible(contentContainer);
@@ -30,6 +31,7 @@ HackAudio::Viewport::Viewport()
     currentContent = nullptr;
 
     resizeGuard = false;
+
 }
 
 HackAudio::Viewport::~Viewport()
@@ -139,8 +141,10 @@ void HackAudio::Viewport::mouseDown(const juce::MouseEvent& e)
 
 void HackAudio::Viewport::mouseDrag(const juce::MouseEvent& e)
 {
+
     componentDragger.dragComponent(contentContainer.getChildComponent(0), e, nullptr);
     repaint();
+
 }
 
 void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)

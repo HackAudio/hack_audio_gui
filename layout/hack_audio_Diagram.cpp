@@ -12,6 +12,7 @@ HackAudio::Diagram::Junction::~Junction()
 
 void HackAudio::Diagram::Junction::setSymbol(HackAudio::Diagram::Junction::Symbol s)
 {
+
     switch (s)
     {
         case HackAudio::Diagram::Junction::Symbol::None:
@@ -42,6 +43,7 @@ void HackAudio::Diagram::Junction::setSymbol(HackAudio::Diagram::Junction::Symbo
             currentSymbol = "";
             break;
     }
+
 }
 
 void HackAudio::Diagram::Junction::paint(juce::Graphics& g)
@@ -102,7 +104,9 @@ void HackAudio::Diagram::removeDiagramInput(juce::Component *component)
 
 juce::Array<juce::Component*> HackAudio::Diagram::getDiagramInputs()
 {
+
     return inputComponents;
+
 }
 
 void HackAudio::Diagram::addDiagramOutput(juce::Component* component)
@@ -133,7 +137,9 @@ void HackAudio::Diagram::removeDiagramOutput(juce::Component* component)
 
 juce::Array<juce::Component*> HackAudio::Diagram::getDiagramOutputs()
 {
+
     return outputComponents;
+    
 }
 
 void HackAudio::Diagram::connect(juce::Component* source, juce::Component* destination)
@@ -513,6 +519,14 @@ void HackAudio::Diagram::childrenChanged()
 
 }
 
+void HackAudio::Diagram::parentHierarchyChanged()
+{
+
+    updateSize();
+    updateConnections();
+
+}
+
 void HackAudio::Diagram::componentMovedOrResized(juce::Component &component, bool wasMoved, bool wasResized)
 {
 
@@ -520,15 +534,7 @@ void HackAudio::Diagram::componentMovedOrResized(juce::Component &component, boo
     {
         updateSize();
     }
-
-}
-
-void HackAudio::Diagram::parentHierarchyChanged()
-{
-
-    updateSize();
-    updateConnections();
-
+    
 }
 
 void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)

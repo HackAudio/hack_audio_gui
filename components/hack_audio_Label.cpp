@@ -2,6 +2,7 @@
 
 HackAudio::Label::Label()
 {
+
     setInterceptsMouseClicks(false, false);
 
     setColour(backgroundColourId, HackAudio::Colours::Black);
@@ -13,6 +14,7 @@ HackAudio::Label::Label()
     animationStatus = true;
 
     addListener(this);
+
 }
 
 HackAudio::Label::~Label()
@@ -22,11 +24,14 @@ HackAudio::Label::~Label()
 
 juce::String HackAudio::Label::getPrefix()
 {
+
     return prefix;
+
 }
 
 void HackAudio::Label::setPrefix(juce::String preText, juce::NotificationType notificationType)
 {
+
     prefix = preText;
 
     if (notificationType == juce::sendNotification)
@@ -35,15 +40,19 @@ void HackAudio::Label::setPrefix(juce::String preText, juce::NotificationType no
     }
 
     repaint();
+
 }
 
 juce::String HackAudio::Label::getPostfix()
 {
+
     return postfix;
+
 }
 
 void HackAudio::Label::setPostfix(juce::String postText, juce::NotificationType notificationType)
 {
+
     postfix = postText;
 
     if (notificationType == juce::sendNotification)
@@ -52,20 +61,25 @@ void HackAudio::Label::setPostfix(juce::String postText, juce::NotificationType 
     }
 
     repaint();
+
 }
 
 void HackAudio::Label::setAnimationStatus(bool shouldAnimate)
 {
+
     animationStatus = shouldAnimate;
+
 }
 
 void HackAudio::Label::labelTextChanged(juce::Label* labelThatHasChanged)
 {
+
     if (animationStatus)
     {
         currentColourInterpolation.setValue(1.0f);
         startTimerHz(ANIMATION_FPS);
     }
+
 }
 
 void HackAudio::Label::timerCallback()
@@ -73,28 +87,35 @@ void HackAudio::Label::timerCallback()
 
     if (currentColourInterpolation.isSmoothing())
     {
+        
         repaint();
 
         if (std::abs(currentColourInterpolation.getTargetValue() - currentColourInterpolation.getNextValue()) < 0.0001)
         {
             currentColourInterpolation.setValue(currentColourInterpolation.getTargetValue());
         }
+
     }
     else
     {
+
         if (currentColourInterpolation.getTargetValue() == 1.0f)
         {
             currentColourInterpolation.setValue(0.0f);
         }
         else
         {
+
             if (currentColourInterpolation.getNextValue() == 0.0f)
             {
                 stopTimer();
             }
             return;
+
         }
+
     }
+
 }
 
 void HackAudio::Label::paint(juce::Graphics& g)

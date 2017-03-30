@@ -40,56 +40,71 @@ HackAudio::Slider::~Slider()
 
 void HackAudio::Slider::setDefaultValue(bool shouldHaveDefault, double defaultValue)
 {
+
     hasDefault = shouldHaveDefault;
     sliderDefault = defaultValue;
+
 }
 
 void HackAudio::Slider::setPipState(bool shouldBeShown)
 {
+
     pipsShown = shouldBeShown;
     resized();
     repaint();
+
 }
 
 bool HackAudio::Slider::getPipState()
 {
+
     return pipsShown;
+
 }
 
 void HackAudio::Slider::setPipCount(int count)
 {
+
     count = std::max(2, count);
     pipLocations.resize(count);
     setPipScale();
     resized();
     repaint();
+
 }
 
 int HackAudio::Slider::getPipCount()
 {
+
     return pipLocations.size();
+
 }
 
 void HackAudio::Slider::setPipSize(int minSize, int maxSize)
 {
+
     minPipSize = minSize;
     maxPipSize = maxSize;
     setPipScale();
     resized();
     repaint();
+
 }
 
 void HackAudio::Slider::resetPipSize()
 {
+
     minPipSize = DEFAULT_PIPMIN;
     maxPipSize = DEFAULT_PIPMAX;
     setPipScale();
     resized();
     repaint();
+
 }
 
 void HackAudio::Slider::setPipScale()
 {
+
     int pipSizeCheck;
 
     if (!isRotary())
@@ -136,12 +151,13 @@ void HackAudio::Slider::setPipScale()
 
     }
 
-
 }
 
 void HackAudio::Slider::setSymmetricSize(int size)
 {
+
     setSize(size, size);
+
 }
 
 void HackAudio::Slider::mouseDown(const juce::MouseEvent &e)
@@ -181,10 +197,12 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent &e)
         return;
 
     }
+
 }
 
 void HackAudio::Slider::mouseDrag(const juce::MouseEvent& e)
 {
+
     if (isDraggable)
     {
         juce::Slider::mouseDrag(e);
@@ -193,6 +211,7 @@ void HackAudio::Slider::mouseDrag(const juce::MouseEvent& e)
     {
         return;
     }
+
 }
 
 void HackAudio::Slider::mouseUp(const juce::MouseEvent& e)
@@ -254,10 +273,12 @@ void HackAudio::Slider::mouseUp(const juce::MouseEvent& e)
             startTimerHz(ANIMATION_FPS);
         }
     }
+
 }
 
 void HackAudio::Slider::timerCallback()
 {
+
     if (isVertical())
     {
 
@@ -350,6 +371,7 @@ void HackAudio::Slider::timerCallback()
     }
 
     repaint();
+
 }
 
 void HackAudio::Slider::sliderValueChanged(juce::Slider*)
@@ -385,24 +407,30 @@ void HackAudio::Slider::sliderValueChanged(juce::Slider*)
 
         }
     }
+
 }
 
 void HackAudio::Slider::parentHierarchyChanged()
 {
+
     resized();
     sliderValueChanged(this);
+
 }
 
 void HackAudio::Slider::stopAnimation()
 {
+
     isAnimating = false;
     animationAcc = 0;
     animationVel = 0;
     stopTimer();
+
 }
 
 void HackAudio::Slider::paint(juce::Graphics& g)
 {
+
     int width = getWidth();
     int height = getHeight();
 
@@ -556,6 +584,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
 
         g.fillEllipse(p.getX() - pipSize/2, p.getY() - pipSize/2, pipSize, pipSize);
     }
+
 }
 
 void HackAudio::Slider::resized()
@@ -672,4 +701,3 @@ void HackAudio::Slider::resized()
     resizeGuard = false;
 
 }
-

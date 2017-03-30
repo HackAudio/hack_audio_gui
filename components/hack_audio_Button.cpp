@@ -2,6 +2,7 @@
 
 HackAudio::Button::Button() : juce::Button("")
 {
+
 	setButtonText("");
 
 	setClickingTogglesState(true);
@@ -10,6 +11,7 @@ HackAudio::Button::Button() : juce::Button("")
 	resizeGuard = false;
 
     currentColourInterpolation.reset(30, 0.45);
+
 }
 
 HackAudio::Button::~Button()
@@ -19,26 +21,34 @@ HackAudio::Button::~Button()
 
 void HackAudio::Button::setButtonStyle(HackAudio::Button::ButtonStyle style)
 {
+
     buttonStyle = style;
     resized();
     repaint();
+
 }
 
 HackAudio::Button::ButtonStyle HackAudio::Button::getButtonStyle()
 {
+
     return buttonStyle;
+
 }
 
 void HackAudio::Button::setFont(juce::Font font)
 {
+
     buttonFont = font;
     resized();
     repaint();
+
 }
 
 juce::Font HackAudio::Button::getFont()
 {
+
     return buttonFont;
+
 }
 
 void HackAudio::Button::mouseDown(const juce::MouseEvent& e)
@@ -239,6 +249,7 @@ void HackAudio::Button::timerCallback()
 
 void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, bool isButtonDown)
 {
+
     int width  = getWidth();
     int height = getHeight();
 
@@ -308,6 +319,7 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
 
 void HackAudio::Button::resized()
 {
+
 	if (resizeGuard) { return; }
 
     int width  = getWidth();
@@ -353,4 +365,5 @@ void HackAudio::Button::resized()
     }
 
 	resizeGuard = false;
+    
 }
