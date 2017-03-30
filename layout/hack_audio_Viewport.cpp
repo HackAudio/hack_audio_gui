@@ -321,6 +321,7 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
     g.strokePath(p, juce::PathStrokeType(4));
 
 
+
     g.setGradientFill(
         juce::ColourGradient
         (
@@ -369,9 +370,13 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
     );
     g.fillRect(getWidth() - 12, 0, 4, getHeight());
 
+
+
     g.setColour(HackAudio::Colours::Gray);
     g.fillRect(0, 0, 8, getHeight());
     g.fillRect(getWidth() - 8, 0, 8, getHeight());
+
+
 
     g.setColour(HackAudio::Colours::Black);
     g.fillEllipse(0, (getHeight() / 2) - 8, 16, 16);
@@ -382,6 +387,7 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
     g.fillEllipse(getWidth() - 16, (getHeight() / 2) - 8, 16, 16);
     g.setColour(HackAudio::Colours::Gray);
     g.drawEllipse(getWidth() - 16, (getHeight() / 2) - 8, 16, 16, 4);
+
 
 
     if (backButton.isVisible())
@@ -440,8 +446,6 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
         g.drawLine(x + (width/16), y + (height - height/4), x + (width/2), y + (height/4), 2);
         g.drawLine(x + (width/2), y + (height/4), x + (width - width/16), y + (height - height/4), 2);
     }
-
-    repaint();
 
 }
 
