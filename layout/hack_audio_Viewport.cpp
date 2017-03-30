@@ -214,8 +214,8 @@ void HackAudio::Viewport::paint(juce::Graphics& g)
 void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 {
 
-    juce::Array<juce::Component*> contentInputs = currentContent->getInputs();
-    juce::Array<juce::Component*> contentOutputs = currentContent->getOutputs();
+    juce::Array<juce::Component*> contentInputs = currentContent->getDiagramInputs();
+    juce::Array<juce::Component*> contentOutputs = currentContent->getDiagramOutputs();
 
     juce::Path p;
 

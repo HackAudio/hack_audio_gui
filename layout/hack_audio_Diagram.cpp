@@ -74,7 +74,7 @@ HackAudio::Diagram::~Diagram()
 
 }
 
-void HackAudio::Diagram::addInput(juce::Component *component)
+void HackAudio::Diagram::addDiagramInput(juce::Component *component)
 {
 
     addAndMakeVisible(component);
@@ -88,7 +88,7 @@ void HackAudio::Diagram::addInput(juce::Component *component)
 
 }
 
-void HackAudio::Diagram::removeInput(juce::Component *component)
+void HackAudio::Diagram::removeDiagramInput(juce::Component *component)
 {
 
     inputComponents.removeFirstMatchingValue(component);
@@ -100,12 +100,12 @@ void HackAudio::Diagram::removeInput(juce::Component *component)
 
 }
 
-juce::Array<juce::Component*> HackAudio::Diagram::getInputs()
+juce::Array<juce::Component*> HackAudio::Diagram::getDiagramInputs()
 {
     return inputComponents;
 }
 
-void HackAudio::Diagram::addOutput(juce::Component* component)
+void HackAudio::Diagram::addDiagramOutput(juce::Component* component)
 {
 
     addAndMakeVisible(component);
@@ -119,7 +119,7 @@ void HackAudio::Diagram::addOutput(juce::Component* component)
 
 }
 
-void HackAudio::Diagram::removeOutput(juce::Component* component)
+void HackAudio::Diagram::removeDiagramOutput(juce::Component* component)
 {
 
     outputComponents.removeFirstMatchingValue(component);
@@ -131,7 +131,7 @@ void HackAudio::Diagram::removeOutput(juce::Component* component)
 
 }
 
-juce::Array<juce::Component*> HackAudio::Diagram::getOutputs()
+juce::Array<juce::Component*> HackAudio::Diagram::getDiagramOutputs()
 {
     return outputComponents;
 }
@@ -243,12 +243,16 @@ void HackAudio::Diagram::disconnectInputs(juce::Component* component)
 
     }
 
+    inputComponents.removeFirstMatchingValue(component);
+
     repaint();
 
 }
 
 void HackAudio::Diagram::disconnectOutputs(juce::Component* component)
 {
+
+    outputComponents.removeFirstMatchingValue(component);
 
     if (connections.contains(component))
     {
@@ -440,8 +444,8 @@ void HackAudio::Diagram::updateConnections()
         if (getIndexOfChildComponent(source) == -1)
         {
 
-            if (getInputs().contains(source)) { removeInput(source); }
-            if (getOutputs().contains(source)) { removeOutput(source); }
+            if (getDiagramInputs().contains(source)) { removeDiagramInput(source); }
+            if (getDiagramOutputs().contains(source)) { removeDiagramOutput(source); }
 
             source->removeComponentListener(this);
 
@@ -463,8 +467,8 @@ void HackAudio::Diagram::updateConnections()
                 if (getIndexOfChildComponent(c) == -1)
                 {
 
-                    if (getInputs().contains(c)) { removeInput(c); }
-                    if (getOutputs().contains(c)) { removeOutput(c); }
+                    if (getDiagramInputs().contains(c)) { removeDiagramInput(c); }
+                    if (getDiagramOutputs().contains(c)) { removeDiagramOutput(c); }
 
                     c->removeComponentListener(this);
 

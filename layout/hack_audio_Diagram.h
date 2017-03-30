@@ -60,32 +60,32 @@ public:
     /**
      Designates a component that represents an audio input source of the diagram
     */
-    void addInput(juce::Component* component);
+    void addDiagramInput(juce::Component* component);
 
     /**
      Removes a component previously designated as an input
     */
-    void removeInput(juce::Component* component);
+    void removeDiagramInput(juce::Component* component);
 
     /**
      Returns an array of current input components
     */
-    juce::Array<juce::Component*> getInputs();
+    juce::Array<juce::Component*> getDiagramInputs();
 
     /**
      Designates a component that represents an audio output source of the diagram
     */
-    void addOutput(juce::Component* component);
+    void addDiagramOutput(juce::Component* component);
 
     /**
      Removes a component previously designated as an output
     */
-    void removeOutput(juce::Component* component);
+    void removeDiagramOutput(juce::Component* component);
 
     /**
      Returns an array of current output components
     */
-    juce::Array<juce::Component*> getOutputs();
+    juce::Array<juce::Component*> getDiagramOutputs();
 
     /**
      Adds two components as children and draws a connection between them
