@@ -1,7 +1,5 @@
 TODO:
 
-    - Automatically Remove Unconnected Childern In HackAudio::Diagram
-
     - Directional Graphics For HackAudio::Diagram Connections
 
     - Incorporate Grid-Aligned Flex For HackAudio::Diagram
