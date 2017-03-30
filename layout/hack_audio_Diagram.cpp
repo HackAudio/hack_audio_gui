@@ -625,11 +625,32 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
             if (!destination->isVisible()) { repaint(); continue; }
 
-            int x1 = source->getX() + source->getWidth();
-            int y1 = source->getY() + source->getHeight() / 2;
+            int x1, y1, x2, y2;
 
-            int x2 = destination->getX();
-            int y2 = destination->getY() + destination->getHeight() / 2;
+            bool inverseIO = false;
+
+            if (source->getX() < destination->getX())
+            {
+
+                x1 = source->getX() + source->getWidth();
+                y1 = source->getY() + source->getHeight() / 2;
+
+                x2 = destination->getX();
+                y2 = destination->getY() + destination->getHeight() / 2;
+
+            }
+            else
+            {
+
+                inverseIO = true;
+
+                x1 = source->getX();
+                y1 = source->getY() + source->getHeight() / 2;
+
+                x2 = destination->getX() + destination->getWidth();
+                y2 = destination->getY() + destination->getHeight() / 2;
+
+            }
 
             if (!outputConnectedComponents.contains(source) && !dynamic_cast<Junction*>(source))
             {
@@ -654,11 +675,18 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
             juce::Path p;
             p.startNewSubPath(x1, y1);
             p.cubicTo(x2, y1, x1, y2, x2, y2);
-
             paths.add(p);
 
-            outputConnectedComponents.add(source);
-            inputConnectedComponents.add(destination);
+            if (!inverseIO)
+            {
+                outputConnectedComponents.add(source);
+                inputConnectedComponents.add(destination);
+            }
+            else
+            {
+                outputConnectedComponents.add(destination);
+                inputConnectedComponents.add(source);
+            }
 
         }
 
