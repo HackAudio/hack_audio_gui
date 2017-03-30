@@ -49,6 +49,16 @@ namespace HackAudio
 
     };
 
+    enum ColourIds
+    {
+
+        backgroundColourId,
+        midgroundColourId,
+        foregroundColourId,
+        highlightColourId
+
+    };
+
 }
 
 #include "components/hack_audio_Slider.h"

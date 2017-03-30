@@ -3,6 +3,11 @@
 HackAudio::Slider::Slider()
 {
 
+    setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Black);
+    setColour(HackAudio::ColourIds::midgroundColourId,  HackAudio::Colours::Gray);
+    setColour(HackAudio::ColourIds::foregroundColourId, HackAudio::Colours::White);
+    setColour(HackAudio::ColourIds::highlightColourId,  HackAudio::Colours::Cyan);
+
     resizeGuard = true;
     setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     resizeGuard = false;
@@ -437,35 +442,35 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     // Draw Background
     juce::Path p;
     p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
-    g.setColour(HackAudio::Colours::Black);
+    g.setColour(findColour(HackAudio::ColourIds::backgroundColourId));
     g.fillPath(p);
 
     // Draw Slider Track And Indicator
     if (isVertical() || isHorizontal())
     {
-        g.setColour(HackAudio::Colours::Gray);
+        g.setColour(findColour(HackAudio::ColourIds::midgroundColourId));
         g.fillRoundedRectangle(trackArea.getX(), trackArea.getY(), trackArea.getWidth(), trackArea.getHeight(), 8);
 
-        g.setColour(HackAudio::Colours::Cyan);
+        g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
         g.fillRoundedRectangle(indicatorArea.getX(), indicatorArea.getY(), indicatorArea.getWidth(), indicatorArea.getHeight(), 8);
 
     }
 
     // Draw Thumb Area And Indicator
-    g.setColour(HackAudio::Colours::White);
+    g.setColour(findColour(HackAudio::ColourIds::foregroundColourId));
     g.fillEllipse(thumbArea.getX(), thumbArea.getY(), thumbArea.getWidth(), thumbArea.getHeight());
 
     if (!isRotary())
     {
 
-        g.setColour(HackAudio::Colours::Black);
+        g.setColour(findColour(HackAudio::ColourIds::backgroundColourId));
         g.drawEllipse(thumbArea.getX(), thumbArea.getY(), thumbArea.getWidth(), thumbArea.getHeight(), 8);
 
     }
     else
     {
 
-        g.setColour(HackAudio::Colours::Gray);
+        g.setColour(findColour(HackAudio::ColourIds::midgroundColourId));
         g.fillEllipse(indicatorArea.getX(), indicatorArea.getY(), indicatorArea.getWidth(), indicatorArea.getHeight());
 
     }
@@ -482,14 +487,14 @@ void HackAudio::Slider::paint(juce::Graphics& g)
             if (thumbArea.getY() > pipLocations[i].getY())
             {
 
-                g.setColour(HackAudio::Colours::Gray);
+                g.setColour(findColour(HackAudio::ColourIds::midgroundColourId));
                 pipSize = currentMinPipSize;
 
             }
             else
             {
 
-                g.setColour(HackAudio::Colours::Cyan);
+                g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
 
                 int diff = ((pipLocations[i].getY() - thumbArea.getY()));
 
@@ -511,14 +516,14 @@ void HackAudio::Slider::paint(juce::Graphics& g)
             if (thumbArea.getX() + thumbArea.getWidth() < pipLocations[i].getX())
             {
 
-                g.setColour(HackAudio::Colours::Gray);
+                g.setColour(findColour(HackAudio::ColourIds::midgroundColourId));
                 pipSize = currentMinPipSize;
 
             }
             else
             {
 
-                g.setColour(HackAudio::Colours::Cyan);
+                g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
 
                 float diff = ((thumbArea.getX() + thumbArea.getWidth() - pipLocations[i].getX()));
 
@@ -543,7 +548,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
             if (angle >= indicatorAngle || (!isAnimating && getValue() == getMinimum()))
             {
 
-                g.setColour(HackAudio::Colours::Gray);
+                g.setColour(findColour(HackAudio::ColourIds::midgroundColourId));
                 pipSize = currentMinPipSize;
 
             }
@@ -554,12 +559,12 @@ void HackAudio::Slider::paint(juce::Graphics& g)
 
                 if (diff <= 0 && diff > -0.4)
                 {
-                    g.setColour(HackAudio::Colours::Cyan);
+                    g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
                     pipSize = currentMaxPipSize * (-diff + 0.2);
                 }
                 else
                 {
-                    g.setColour(HackAudio::Colours::Cyan);
+                    g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
                     pipSize = currentMaxPipSize;
                 }
 
@@ -567,13 +572,13 @@ void HackAudio::Slider::paint(juce::Graphics& g)
 
             if (i == 0)
             {
-                g.setColour(HackAudio::Colours::Cyan);
+                g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
                 pipSize = currentMaxPipSize;
             }
 
             if (!isAnimating && getValue() == getMaximum())
             {
-                g.setColour(HackAudio::Colours::Cyan);
+                g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
                 pipSize = currentMaxPipSize;
             }
 

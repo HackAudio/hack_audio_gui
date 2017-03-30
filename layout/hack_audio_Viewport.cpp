@@ -153,11 +153,11 @@ void HackAudio::Viewport::mouseMove(const juce::MouseEvent& e)
     {
         if (it.getKey()->getScreenBounds().contains(e.getScreenPosition()))
         {
-            it.getKey()->setColour(juce::Label::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.25f));
+            it.getKey()->setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.25f));
         }
         else
         {
-            it.getKey()->setColour(juce::Label::backgroundColourId, HackAudio::Colours::Gray);
+            it.getKey()->setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Gray);
         }
     }
 
@@ -189,7 +189,7 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
 
             if (it.getKey()->isVisible() && it.getKey()->getScreenBounds().contains(e.getScreenPosition()))
             {
-                it.getKey()->setColour(juce::Label::backgroundColourId, HackAudio::Colours::Gray);
+                it.getKey()->setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Gray);
                 traverseDown(it.getValue());
                 return;
             }

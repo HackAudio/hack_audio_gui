@@ -5,9 +5,9 @@ HackAudio::Label::Label()
 
     setInterceptsMouseClicks(false, false);
 
-    setColour(backgroundColourId, HackAudio::Colours::Black);
-    setColour(textColourId, HackAudio::Colours::White);
-    setColour(textWhenEditingColourId, HackAudio::Colours::Cyan);
+    setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Black);
+    setColour(HackAudio::ColourIds::foregroundColourId, HackAudio::Colours::White);
+    setColour(HackAudio::ColourIds::highlightColourId, HackAudio::Colours::Cyan);
 
     currentColourInterpolation.reset(50, 0.5);
 
@@ -126,10 +126,13 @@ void HackAudio::Label::paint(juce::Graphics& g)
 
     juce::Path p;
     p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
-    g.setColour(findColour(backgroundColourId));
+    g.setColour(findColour(HackAudio::ColourIds::backgroundColourId));
     g.fillPath(p);
 
-    g.setColour(findColour(textColourId).interpolatedWith(findColour(textWhenEditingColourId), currentColourInterpolation.getNextValue()));
+    juce::Colour foreground = findColour(HackAudio::ColourIds::foregroundColourId);
+    juce::Colour highlight  = findColour(HackAudio::ColourIds::highlightColourId);
+
+    g.setColour(foreground.interpolatedWith(highlight, currentColourInterpolation.getNextValue()));
 
     g.setFont(getFont());
     g.drawText(prefix + getText() + postfix, 0, 0, width, height, juce::Justification::centred, 1);
