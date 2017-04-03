@@ -272,60 +272,6 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
     }
 
-    // Viewport Shadows
-    // =========================================================================================
-    g.setGradientFill(
-                      juce::ColourGradient
-                      (
-                       HackAudio::Colours::Black.withAlpha(0.75f),
-                       0, 0,
-                       HackAudio::Colours::Black.withAlpha(0.0f),
-                       0, 4,
-                       false
-                       )
-                      );
-
-    g.fillRect(0, 0, getWidth(), 4);
-
-    g.setGradientFill(
-                      juce::ColourGradient
-                      (
-                       HackAudio::Colours::Black.withAlpha(0.0f),
-                       0, getHeight() - 4,
-                       HackAudio::Colours::Black.withAlpha(0.75f),
-                       0, getHeight(),
-                       false
-                       )
-                      );
-
-    g.fillRect(0, getHeight() - 4, getWidth(), 4);
-
-    g.setGradientFill(
-                      juce::ColourGradient
-                      (
-                       HackAudio::Colours::Black.withAlpha(0.75f),
-                       8, 0,
-                       HackAudio::Colours::Black.withAlpha(0.0f),
-                       12, 0,
-                       false
-                       )
-                      );
-
-    g.fillRect(8, 0, 4, getHeight());
-
-    g.setGradientFill(
-                      juce::ColourGradient
-                      (
-                       HackAudio::Colours::Black.withAlpha(0.0f),
-                       getWidth() - 12, 0,
-                       HackAudio::Colours::Black.withAlpha(0.75f),
-                       getWidth() - 8, 0,
-                       false
-                       )
-                      );
-    
-    g.fillRect(getWidth() - 12, 0, 4, getHeight());
-
 
 
     // Output Nodes
@@ -364,6 +310,62 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
         }
         
     }
+
+
+
+    // Viewport Shadows (Top, Bottom, Left, Right)
+    // =========================================================================================
+    g.setGradientFill(
+                      juce::ColourGradient
+                      (
+                       HackAudio::Colours::Black.withAlpha(0.75f),
+                       contentContainer.getX(), contentContainer.getY(),
+                       HackAudio::Colours::Black.withAlpha(0.0f),
+                       contentContainer.getX(), contentContainer.getY() + 4,
+                       false
+                       )
+                      );
+
+    g.fillRect(contentContainer.getX(), contentContainer.getY(), contentContainer.getWidth(), 4);
+
+    g.setGradientFill(
+                      juce::ColourGradient
+                      (
+                       HackAudio::Colours::Black.withAlpha(0.0f),
+                       contentContainer.getX(), contentContainer.getBottom() - 4,
+                       HackAudio::Colours::Black.withAlpha(0.75f),
+                       contentContainer.getX(), contentContainer.getBottom(),
+                       false
+                       )
+                      );
+
+    g.fillRect(contentContainer.getX(), contentContainer.getBottom() - 4, contentContainer.getWidth(), 4);
+
+    g.setGradientFill(
+                      juce::ColourGradient
+                      (
+                       HackAudio::Colours::Black.withAlpha(0.75f),
+                       contentContainer.getX(), contentContainer.getY(),
+                       HackAudio::Colours::Black.withAlpha(0.0f),
+                       contentContainer.getX() + 4, contentContainer.getY(),
+                       false
+                       )
+                      );
+
+    g.fillRect(contentContainer.getX(), contentContainer.getY(), 4, contentContainer.getHeight());
+    
+    g.setGradientFill(
+                      juce::ColourGradient
+                      (
+                       HackAudio::Colours::Black.withAlpha(0.0f),
+                       contentContainer.getRight() - 4, contentContainer.getY(),
+                       HackAudio::Colours::Black.withAlpha(0.75f),
+                       contentContainer.getRight(), contentContainer.getY(),
+                       false
+                       )
+                      );
+    
+    g.fillRect(contentContainer.getRight() - 4, contentContainer.getY(), 4, contentContainer.getHeight());
 
 
 
