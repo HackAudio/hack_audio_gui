@@ -666,7 +666,17 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
                 g.setColour(HackAudio::Colours::Black);
                 g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
-                g.setColour(HackAudio::Colours::Gray);
+
+                if (source->getScreenBounds().contains(juce::Desktop::getMousePosition()))
+                {
+                    g.setColour(HackAudio::Colours::Gray.withMultipliedBrightness(1.25f));
+                }
+                else
+                {
+                    g.setColour(HackAudio::Colours::Gray);
+                }
+
+
                 g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
 
             }
