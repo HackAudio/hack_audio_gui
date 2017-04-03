@@ -2,8 +2,6 @@ TODO:
 
     - Possible Animation Of Connections
 
-    - Order of Drawing For HackAudio::Viewport Output Node + Rectangle is Incorrect
-
 BUG:
 
     - Output Nodes Don't Highlight With Label At mouseOver

@@ -320,25 +320,9 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
                       );
     
     g.fillRect(getWidth() - 12, 0, 4, getHeight());
-    
-    
-    
-    g.setColour(HackAudio::Colours::Gray);
-    g.fillRect(0, 0, contentContainer.getX(), getHeight());
 
 
-
-    g.setColour(HackAudio::Colours::Black);
-    g.fillEllipse(contentContainer.getX() - 8, (getHeight() / 2) - 8, 16, 16);
-    g.setColour(HackAudio::Colours::Gray);
-    g.drawEllipse(contentContainer.getX() - 8, (getHeight() / 2) - 8, 16, 16, 4);
-
-    g.setColour(HackAudio::Colours::Gray);
-    g.fillEllipse(contentContainer.getRight() - 8, (getHeight() / 2) - 8, 16, 16);
-    g.setColour(HackAudio::Colours::Black);
-    g.drawEllipse(contentContainer.getRight() - 8, (getHeight() / 2) - 8, 16, 16, 4);
-
-    
+    juce::Path outputConnections;
 
     for (int i = 0; i < contentOutputs.size(); ++i)
     {
@@ -358,10 +342,8 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
             int x4 = contentContainer.getX() + contentContainer.getWidth();
             int y4 = contentContainer.getY() + getHeight() / 2;
 
-            p.startNewSubPath(x3 + 4, y3);
-            p.cubicTo(x4, y3, x3, y4, x4, y4);
-            g.setColour(HackAudio::Colours::Gray);
-            g.strokePath(p, juce::PathStrokeType(4));
+            outputConnections.startNewSubPath(x3 + 6, y3);
+            outputConnections.cubicTo(x4, y3, x3, y4, x4, y4);
 
             if (!dynamic_cast<HackAudio::Diagram::Junction*>(contentOutput))
             {
@@ -375,10 +357,25 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
         
     }
 
-
-
     g.setColour(HackAudio::Colours::Gray);
     g.fillRect(getWidth() - contentContainer.getX(), 0, contentContainer.getX(), getHeight());
+
+    g.setColour(HackAudio::Colours::Gray);
+    g.fillEllipse(contentContainer.getRight() - 8, (getHeight() / 2) - 8, 16, 16);
+    g.setColour(HackAudio::Colours::Black);
+    g.drawEllipse(contentContainer.getRight() - 8, (getHeight() / 2) - 8, 16, 16, 4);
+
+    g.setColour(HackAudio::Colours::Gray);
+    g.strokePath(outputConnections, juce::PathStrokeType(4));
+
+    g.setColour(HackAudio::Colours::Gray);
+    g.fillRect(0, 0, contentContainer.getX(), getHeight());
+
+    g.setColour(HackAudio::Colours::Black);
+    g.fillEllipse(contentContainer.getX() - 8, (getHeight() / 2) - 8, 16, 16);
+    g.setColour(HackAudio::Colours::Gray);
+    g.drawEllipse(contentContainer.getX() - 8, (getHeight() / 2) - 8, 16, 16, 4);
+
 
 
 
