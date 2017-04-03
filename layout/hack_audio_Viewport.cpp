@@ -233,6 +233,9 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
     juce::Array<juce::Component*> contentInputs = currentContent->getDiagramInputs();
     juce::Array<juce::Component*> contentOutputs = currentContent->getDiagramOutputs();
 
+
+    // Input Nodes
+    // =========================================================================================
     for (int i = 0; i < contentInputs.size(); ++i)
     {
 
@@ -269,6 +272,8 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
     }
 
+    // Viewport Shadows
+    // =========================================================================================
     g.setGradientFill(
                       juce::ColourGradient
                       (
@@ -322,6 +327,9 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
     g.fillRect(getWidth() - 12, 0, 4, getHeight());
 
 
+
+    // Output Nodes
+    // =========================================================================================
     juce::Path outputConnections;
 
     for (int i = 0; i < contentOutputs.size(); ++i)
@@ -357,6 +365,10 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
         
     }
 
+
+
+    // Output Connector
+    // =========================================================================================
     g.setColour(HackAudio::Colours::Gray);
     g.fillRect(getWidth() - contentContainer.getX(), 0, contentContainer.getX(), getHeight());
 
@@ -368,6 +380,10 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
     g.setColour(HackAudio::Colours::Gray);
     g.strokePath(outputConnections, juce::PathStrokeType(4));
 
+
+
+    // Input Connector
+    // =========================================================================================
     g.setColour(HackAudio::Colours::Gray);
     g.fillRect(0, 0, contentContainer.getX(), getHeight());
 
@@ -378,7 +394,8 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
 
 
-
+    // Navigation Buttons
+    // =========================================================================================
     if (backButton.isVisible())
     {
 
@@ -436,10 +453,16 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
         g.drawLine(x + (width/2), y + (height/4), x + (width - width/16), y + (height - height/4), 2);
     }
 
+
+
+    // Navigation Title
+    // =========================================================================================
     g.setColour(HackAudio::Colours::Black.withAlpha(0.75f));
     g.drawFittedText(currentContent->getName(), 0, 2, getWidth(), 32, juce::Justification::centred, 1);
     g.setColour(HackAudio::Colours::White);
     g.drawFittedText(currentContent->getName(), 0, 0, getWidth(), 32, juce::Justification::centred, 1);
+
+
 
 }
 
