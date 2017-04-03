@@ -1,9 +1,9 @@
 TODO:
 
-    - Directional Graphics For HackAudio::Diagram Connections
-
-    - Incorporate Grid-Aligned Flex For HackAudio::Diagram
-
     - Possible Animation Of Connections
 
+    - Order of Drawing For HackAudio::Viewport Output Node + Rectangle is Incorrect
+
 BUG:
+
+    - Output Nodes Don't Highlight With Label At mouseOver
