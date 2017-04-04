@@ -129,6 +129,8 @@ void HackAudio::Viewport::traverseTop()
 void HackAudio::Viewport::mouseMove(const juce::MouseEvent& e)
 {
 
+    if (!currentContent) { return; }
+
     for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
     {
         if (it.getKey()->getScreenBounds().contains(e.getScreenPosition()))
@@ -146,6 +148,8 @@ void HackAudio::Viewport::mouseMove(const juce::MouseEvent& e)
 void HackAudio::Viewport::mouseDown(const juce::MouseEvent& e)
 {
 
+    if (!currentContent) { return; }
+
     componentDragger.startDraggingComponent(contentContainer.getChildComponent(0), e);
 
 }
@@ -153,12 +157,16 @@ void HackAudio::Viewport::mouseDown(const juce::MouseEvent& e)
 void HackAudio::Viewport::mouseDrag(const juce::MouseEvent& e)
 {
 
+    if (!currentContent) { return; }
+
     componentDragger.dragComponent(contentContainer.getChildComponent(0), e, nullptr);
 
 }
 
 void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
 {
+
+    if (!currentContent) { return; }
 
     if (e.getNumberOfClicks() > 1 && !componentAnimator.isAnimating())
     {
@@ -188,6 +196,8 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
 
 void HackAudio::Viewport::mouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& w)
 {
+
+    if (!currentContent) { return; }
 
     juce::Point<int> pos(currentContent->getPosition());
 
@@ -229,6 +239,8 @@ void HackAudio::Viewport::paint(juce::Graphics& g)
 
 void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 {
+
+    if (!currentContent) { return; }
 
     juce::Array<juce::Component*> contentInputs = currentContent->getDiagramInputs();
     juce::Array<juce::Component*> contentOutputs = currentContent->getDiagramOutputs();
