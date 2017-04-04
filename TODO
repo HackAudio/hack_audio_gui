@@ -17,3 +17,5 @@ TODO:
 BUG:
 
     - Indicator And Pip Sizes Don't Change With Slider Resizing
+
+    - Occasionally Labels Animate Upon Opening The Editor In A Plugin
