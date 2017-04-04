@@ -35,6 +35,10 @@ void HackAudio::Diagram::Junction::setSymbol(HackAudio::Diagram::Junction::Symbo
             currentSymbol = "×";
             break;
 
+        case HackAudio::Diagram::Junction::Symbol::Power:
+            currentSymbol = "^";
+            break;
+
         case HackAudio::Diagram::Junction::Symbol::Average:
             currentSymbol = "avg";
             break;

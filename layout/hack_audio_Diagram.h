@@ -33,6 +33,7 @@ public:
             Subtract,
             Divide,
             Multiply,
+            Power,
             Average
 
         };
