@@ -307,7 +307,9 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
             int x4 = contentContainer.getX() + contentContainer.getWidth();
             int y4 = contentContainer.getY() + getHeight() / 2;
 
-            outputConnections.startNewSubPath(x3 + 6, y3);
+            int offset = (dynamic_cast<HackAudio::Diagram::Junction*>(contentOutput)) ? 0 : 6;
+
+            outputConnections.startNewSubPath(x3 + offset, y3);
             outputConnections.cubicTo(x4, y3, x3, y4, x4, y4);
 
             if (!dynamic_cast<HackAudio::Diagram::Junction*>(contentOutput))
