@@ -12,6 +12,9 @@ HackAudio::Label::Label()
     currentColourInterpolation.reset(50, 0.5);
 
     animationStatus = true;
+    placeholderStatus = false;
+
+    timeout = 0;
 
     addListener(this);
 
@@ -64,6 +67,24 @@ void HackAudio::Label::setPostfix(juce::String postText, juce::NotificationType 
 
 }
 
+void HackAudio::Label::setPlaceholder(juce::String placeholderText)
+{
+    placeholder = placeholderText;
+    placeholderStatus = true;
+    repaint();
+}
+
+void HackAudio::Label::setPlaceholderStatus(bool shouldShowPlaceholder)
+{
+    placeholderStatus = shouldShowPlaceholder;
+    repaint();
+}
+
+juce::String HackAudio::Label::getPlaceholder()
+{
+    return placeholder;
+}
+
 void HackAudio::Label::setAnimationStatus(bool shouldAnimate)
 {
 
@@ -76,6 +97,7 @@ void HackAudio::Label::labelTextChanged(juce::Label* labelThatHasChanged)
 
     if (animationStatus)
     {
+        timeout = 75;
         currentColourInterpolation.setValue(1.0f);
         startTimerHz(ANIMATION_FPS);
     }
@@ -106,11 +128,16 @@ void HackAudio::Label::timerCallback()
         else
         {
 
-            if (currentColourInterpolation.getNextValue() == 0.0f)
+            if (timeout > 0)
             {
+                timeout--;
+
+            }
+            else
+            {
+                repaint();
                 stopTimer();
             }
-            return;
 
         }
 
@@ -135,7 +162,12 @@ void HackAudio::Label::paint(juce::Graphics& g)
     g.setColour(foreground.interpolatedWith(highlight, currentColourInterpolation.getNextValue()));
 
     g.setFont(getFont());
-    g.drawText(prefix + getText() + postfix, 0, 0, width, height, juce::Justification::centred, 1);
+
+    juce::String textToDisplay;
+
+    textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : getText();
+
+    g.drawText(prefix + textToDisplay + postfix, 0, 0, width, height, juce::Justification::centred, 1);
 
 }
 

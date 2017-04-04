@@ -49,6 +49,24 @@ public:
     juce::String getPostfix();
 
     /**
+     Sets the text that displays automatically. When setting new text with animation enabled, the new text will display during the animation and then revert to the placeholder text after the animation completes
+     
+     @parameter placeholderText the text to show before and after animation
+     @parameter notificationType whether to send a change message to any Label::Listener objects
+    */
+    void setPlaceholder(juce::String placeholderText);
+
+    /**
+     Turns the placeholder text feature on or off. This is set to true whenever setPlaceholder() is called
+    */
+    void setPlaceholderStatus(bool shouldShowPlaceholder);
+
+    /**
+     Returns the current placeholder text that the label shows before and after animations. Note that the actual current text is still accessible via getText()
+    */
+    juce::String getPlaceholder();
+
+    /**
      Toggles whether the label should animate when its text changes
      
      @parameter shouldAnimate   determines whether to animate when setting the text, prefix, or postfix
@@ -67,8 +85,12 @@ private:
 
     juce::String prefix;
     juce::String postfix;
+    juce::String placeholder;
 
     bool animationStatus;
+    bool placeholderStatus;
+
+    int timeout;
 
     juce::LinearSmoothedValue<float> currentColourInterpolation;
 
