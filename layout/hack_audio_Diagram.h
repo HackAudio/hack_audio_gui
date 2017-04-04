@@ -34,6 +34,7 @@ public:
             Divide,
             Multiply,
             Power,
+            Sqrt,
             Average
 
         };

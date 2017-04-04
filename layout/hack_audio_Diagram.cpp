@@ -39,6 +39,10 @@ void HackAudio::Diagram::Junction::setSymbol(HackAudio::Diagram::Junction::Symbo
             currentSymbol = "^";
             break;
 
+        case HackAudio::Diagram::Junction::Symbol::Sqrt:
+            currentSymbol = juce::String::CharPointerType::CharPointer_UTF8("√");
+            break;
+
         case HackAudio::Diagram::Junction::Symbol::Average:
             currentSymbol = "avg";
             break;
