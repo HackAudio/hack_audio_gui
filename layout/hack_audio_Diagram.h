@@ -60,12 +60,12 @@ public:
     /**
      Designates a component that represents an audio input source of the diagram
     */
-    void addDiagramInput(juce::Component* component);
+    void addDiagramInput(juce::Component& component);
 
     /**
      Removes a component previously designated as an input
     */
-    void removeDiagramInput(juce::Component* component);
+    void removeDiagramInput(juce::Component& component);
 
     /**
      Returns an array of current input components
@@ -75,12 +75,12 @@ public:
     /**
      Designates a component that represents an audio output source of the diagram
     */
-    void addDiagramOutput(juce::Component* component);
+    void addDiagramOutput(juce::Component& component);
 
     /**
      Removes a component previously designated as an output
     */
-    void removeDiagramOutput(juce::Component* component);
+    void removeDiagramOutput(juce::Component& component);
 
     /**
      Returns an array of current output components
@@ -93,15 +93,7 @@ public:
      @parameter source  the component outputting a connection
      @parameter destination     the component accepting a connection
     */
-    void connect(juce::Component* source, juce::Component* destination);
-
-    /**
-     Adds a source and destination components as children and draws connections from source to all destinations
-
-     @parameter source  the component outputting connections
-     @parameter destinations     the components accepting the connections
-     */
-    void connect(juce::Component* source, juce::Array<juce::Component*> destinations);
+    void connect(juce::Component& source, juce::Component& destination);
 
     /**
      Breaks a connection between two components
@@ -109,17 +101,17 @@ public:
      @parameter source  the component outputting a connection
      @parameter destination     the component accepting a connection
     */
-    void disconnect(juce::Component* source, juce::Component* destination);
+    void disconnect(juce::Component& source, juce::Component& destination);
 
     /**
      Breaks all incoming connections to the component
     */
-    void disconnectInputs(juce::Component* component);
+    void disconnectInputs(juce::Component& component);
 
     /**
      Breaks all outgoing connections from the component
     */
-    void disconnectOutputs(juce::Component* component);
+    void disconnectOutputs(juce::Component& component);
 
     /**
      Toggles the state of a connection between source and destination
@@ -127,7 +119,7 @@ public:
      @parameter source  the component outputting a connection
      @parameter destination  the component to break or receive a connection from source
     */
-    void toggle(juce::Component* source, juce::Component* destination);
+    void toggle(juce::Component& source, juce::Component& destination);
 
     /**
      Swaps the state of connections between source, a connected component, and a disconnected component. This method does nothing if both destinations are connected to source or disconnected from source.
@@ -136,7 +128,7 @@ public:
      @parameter destinationOne  a component to break or receive a connection from source
      @parameter destinationTwo  a component to break or receive a connection from source
     */
-    void swap(juce::Component* source, juce::Component* destinationOne, juce::Component* destinationTwo);
+    void swap(juce::Component& source, juce::Component& destinationOne, juce::Component& destinationTwo);
 
     /**
      Breaks a connection between two components to route it to a new destination. This method only creates the new connection if the connection between source and oldDestination exists
@@ -145,7 +137,7 @@ public:
      @parameter oldDestination  the previous component receiving the connection
      @parameter newDestination  the component to reroute the connection to
     */
-    void reroute(juce::Component* source, juce::Component* oldDestination, juce::Component* newDestination);
+    void reroute(juce::Component& source, juce::Component& oldDestination, juce::Component& newDestination);
 
     /**
      Designates a diagram to be expanded when double-clicking the source component
@@ -153,7 +145,7 @@ public:
      @parameter source  the component to double click to expand the diagram
      @parameter subDiagram  the diagram to expand
     */
-    void setSubDiagram(juce::Component* source, HackAudio::Diagram* subDiagram);
+    void setSubDiagram(juce::Component& source, HackAudio::Diagram& subDiagram);
 
 
 private:

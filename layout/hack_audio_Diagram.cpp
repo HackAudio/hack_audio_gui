@@ -78,12 +78,12 @@ HackAudio::Diagram::~Diagram()
 
 }
 
-void HackAudio::Diagram::addDiagramInput(juce::Component *component)
+void HackAudio::Diagram::addDiagramInput(juce::Component& component)
 {
 
     addAndMakeVisible(component);
 
-    inputComponents.addIfNotAlreadyThere(component);
+    inputComponents.addIfNotAlreadyThere(&component);
 
     updateChildren();
 
@@ -94,10 +94,10 @@ void HackAudio::Diagram::addDiagramInput(juce::Component *component)
 
 }
 
-void HackAudio::Diagram::removeDiagramInput(juce::Component *component)
+void HackAudio::Diagram::removeDiagramInput(juce::Component& component)
 {
 
-    inputComponents.removeFirstMatchingValue(component);
+    inputComponents.removeFirstMatchingValue(&component);
 
     updateChildren();
 
@@ -115,12 +115,12 @@ juce::Array<juce::Component*> HackAudio::Diagram::getDiagramInputs()
 
 }
 
-void HackAudio::Diagram::addDiagramOutput(juce::Component* component)
+void HackAudio::Diagram::addDiagramOutput(juce::Component& component)
 {
 
     addAndMakeVisible(component);
 
-    outputComponents.addIfNotAlreadyThere(component);
+    outputComponents.addIfNotAlreadyThere(&component);
 
     updateChildren();
 
@@ -131,10 +131,10 @@ void HackAudio::Diagram::addDiagramOutput(juce::Component* component)
 
 }
 
-void HackAudio::Diagram::removeDiagramOutput(juce::Component* component)
+void HackAudio::Diagram::removeDiagramOutput(juce::Component& component)
 {
 
-    outputComponents.removeFirstMatchingValue(component);
+    outputComponents.removeFirstMatchingValue(&component);
 
     updateChildren();
 
@@ -152,20 +152,20 @@ juce::Array<juce::Component*> HackAudio::Diagram::getDiagramOutputs()
     
 }
 
-void HackAudio::Diagram::connect(juce::Component* source, juce::Component* destination)
+void HackAudio::Diagram::connect(juce::Component& source, juce::Component& destination)
 {
 
     addAndMakeVisible(source);
     addAndMakeVisible(destination);
 
-    if(connections.contains(source))
+    if(connections.contains(&source))
     {
 
-        juce::Array<juce::Component*> newArray = connections[source];
+        juce::Array<juce::Component*> newArray = connections[&source];
 
-        newArray.addIfNotAlreadyThere(destination);
+        newArray.addIfNotAlreadyThere(&destination);
 
-        connections.set(source, newArray);
+        connections.set(&source, newArray);
 
     }
     else
@@ -173,42 +173,9 @@ void HackAudio::Diagram::connect(juce::Component* source, juce::Component* desti
 
         juce::Array<juce::Component*> newArray;
 
-        newArray.add(destination);
+        newArray.add(&destination);
 
-        connections.set(source, newArray);
-
-    }
-
-    updateChildren();
-
-}
-
-void HackAudio::Diagram::connect(juce::Component* source, juce::Array<juce::Component*> destinations)
-{
-
-    addAndMakeVisible(source);
-
-    if (connections.contains(source))
-    {
-
-        juce::Array<juce::Component*> newArray = connections[source];
-
-        for (int i = 0; i < destinations.size(); ++i)
-        {
-
-            addAndMakeVisible(destinations[i]);
-
-            newArray.addIfNotAlreadyThere(destinations[i]);
-
-        }
-
-        connections.set(source, newArray);
-
-    }
-    else
-    {
-
-        connections.set(source, destinations);
+        connections.set(&source, newArray);
 
     }
 
@@ -216,17 +183,17 @@ void HackAudio::Diagram::connect(juce::Component* source, juce::Array<juce::Comp
 
 }
 
-void HackAudio::Diagram::disconnect(juce::Component* source, juce::Component* destination)
+void HackAudio::Diagram::disconnect(juce::Component& source, juce::Component& destination)
 {
 
-    if (connections.contains(source))
+    if (connections.contains(&source))
     {
 
-        juce::Array<juce::Component*> newArray = connections[source];
+        juce::Array<juce::Component*> newArray = connections[&source];
 
-        newArray.removeFirstMatchingValue(destination);
+        newArray.removeFirstMatchingValue(&destination);
 
-        connections.set(source, newArray);
+        connections.set(&source, newArray);
 
         updateChildren();
 
@@ -240,7 +207,7 @@ void HackAudio::Diagram::disconnect(juce::Component* source, juce::Component* de
 
 }
 
-void HackAudio::Diagram::disconnectInputs(juce::Component* component)
+void HackAudio::Diagram::disconnectInputs(juce::Component& component)
 {
 
     for(juce::HashMap<juce::Component*, juce::Array<juce::Component*>>::Iterator it (connections); it.next();)
@@ -250,7 +217,7 @@ void HackAudio::Diagram::disconnectInputs(juce::Component* component)
 
         juce::Array<juce::Component*> newArray = it.getValue();
 
-        if (newArray.removeAllInstancesOf(component))
+        if (newArray.removeAllInstancesOf(&component))
         {
 
             connections.set(source, newArray);
@@ -259,21 +226,21 @@ void HackAudio::Diagram::disconnectInputs(juce::Component* component)
 
     }
 
-    inputComponents.removeFirstMatchingValue(component);
+    inputComponents.removeFirstMatchingValue(&component);
 
     updateChildren();
 
 }
 
-void HackAudio::Diagram::disconnectOutputs(juce::Component* component)
+void HackAudio::Diagram::disconnectOutputs(juce::Component& component)
 {
 
-    outputComponents.removeFirstMatchingValue(component);
+    outputComponents.removeFirstMatchingValue(&component);
 
-    if (connections.contains(component))
+    if (connections.contains(&component))
     {
 
-        connections.remove(component);
+        connections.remove(&component);
 
         updateChildren();
 
@@ -287,17 +254,17 @@ void HackAudio::Diagram::disconnectOutputs(juce::Component* component)
 
 }
 
-void HackAudio::Diagram::toggle(juce::Component *source, juce::Component *destination)
+void HackAudio::Diagram::toggle(juce::Component& source, juce::Component& destination)
 {
 
-    if (connections.contains(source))
+    if (connections.contains(&source))
     {
 
-        juce::Array<juce::Component*> newArray = connections[source];
+        juce::Array<juce::Component*> newArray = connections[&source];
 
-        (newArray.contains(destination)) ? newArray.removeFirstMatchingValue(destination) : newArray.add(destination);
+        (newArray.contains(&destination)) ? newArray.removeFirstMatchingValue(&destination) : newArray.add(&destination);
 
-        connections.set(source, newArray);
+        connections.set(&source, newArray);
 
         updateChildren();
 
@@ -311,24 +278,24 @@ void HackAudio::Diagram::toggle(juce::Component *source, juce::Component *destin
 
 }
 
-void HackAudio::Diagram::swap(juce::Component *source, juce::Component *destinationOne, juce::Component *destinationTwo)
+void HackAudio::Diagram::swap(juce::Component& source, juce::Component& destinationOne, juce::Component& destinationTwo)
 {
 
-    if (connections.contains(source))
+    if (connections.contains(&source))
     {
 
-        juce::Array<juce::Component*> newArray = connections[source];
+        juce::Array<juce::Component*> newArray = connections[&source];
 
-        bool stateOne = newArray.contains(destinationOne);
-        bool stateTwo = newArray.contains(destinationTwo);
+        bool stateOne = newArray.contains(&destinationOne);
+        bool stateTwo = newArray.contains(&destinationTwo);
 
         if (stateOne != stateTwo)
         {
 
-            (stateOne) ? newArray.removeFirstMatchingValue(destinationOne) : newArray.add(destinationOne);
-            (stateTwo) ? newArray.removeFirstMatchingValue(destinationTwo) : newArray.add(destinationTwo);
+            (stateOne) ? newArray.removeFirstMatchingValue(&destinationOne) : newArray.add(&destinationOne);
+            (stateTwo) ? newArray.removeFirstMatchingValue(&destinationTwo) : newArray.add(&destinationTwo);
 
-            connections.set(source, newArray);
+            connections.set(&source, newArray);
 
             repaint();
 
@@ -350,20 +317,20 @@ void HackAudio::Diagram::swap(juce::Component *source, juce::Component *destinat
 
 }
 
-void HackAudio::Diagram::reroute(juce::Component *source, juce::Component *oldDestination, juce::Component *newDestination)
+void HackAudio::Diagram::reroute(juce::Component& source, juce::Component& oldDestination, juce::Component& newDestination)
 {
 
-    if (connections.contains(source))
+    if (connections.contains(&source))
     {
 
-        juce::Array<juce::Component*> newArray = connections[source];
+        juce::Array<juce::Component*> newArray = connections[&source];
 
-        if (newArray.removeAllInstancesOf(oldDestination))
+        if (newArray.removeAllInstancesOf(&oldDestination))
         {
 
-            newArray.addIfNotAlreadyThere(newDestination);
+            newArray.addIfNotAlreadyThere(&newDestination);
 
-            connections.set(source, newArray);
+            connections.set(&source, newArray);
 
             repaint();
 
@@ -383,12 +350,12 @@ void HackAudio::Diagram::reroute(juce::Component *source, juce::Component *oldDe
 
 }
 
-void HackAudio::Diagram::setSubDiagram(juce::Component *source, HackAudio::Diagram *subDiagram)
+void HackAudio::Diagram::setSubDiagram(juce::Component& source, HackAudio::Diagram& subDiagram)
 {
 
-    assert(getIndexOfChildComponent(source) != -1);
+    assert(getIndexOfChildComponent(&source) != -1);
 
-    submap.set(source, subDiagram);
+    submap.set(&source, &subDiagram);
 
 }
 
@@ -467,8 +434,8 @@ void HackAudio::Diagram::updateConnections()
         if (getIndexOfChildComponent(source) == -1)
         {
 
-            if (getDiagramInputs().contains(source)) { removeDiagramInput(source); }
-            if (getDiagramOutputs().contains(source)) { removeDiagramOutput(source); }
+            if (getDiagramInputs().contains(source)) { removeDiagramInput(*source); }
+            if (getDiagramOutputs().contains(source)) { removeDiagramOutput(*source); }
 
             source->removeComponentListener(this);
 
@@ -490,8 +457,8 @@ void HackAudio::Diagram::updateConnections()
                 if (getIndexOfChildComponent(c) == -1)
                 {
 
-                    if (getDiagramInputs().contains(c)) { removeDiagramInput(c); }
-                    if (getDiagramOutputs().contains(c)) { removeDiagramOutput(c); }
+                    if (getDiagramInputs().contains(c)) { removeDiagramInput(*c); }
+                    if (getDiagramOutputs().contains(c)) { removeDiagramOutput(*c); }
 
                     c->removeComponentListener(this);
 

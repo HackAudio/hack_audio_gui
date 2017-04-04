@@ -23,7 +23,7 @@ public:
     /**
      Sets the top-level diagram to display
     */
-    void setDiagram(HackAudio::Diagram* d);
+    void setDiagram(HackAudio::Diagram& d);
 
 private:
 

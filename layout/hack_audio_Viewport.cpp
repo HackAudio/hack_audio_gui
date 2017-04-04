@@ -26,7 +26,7 @@ HackAudio::Viewport::~Viewport()
     
 }
 
-void HackAudio::Viewport::setDiagram(HackAudio::Diagram* d)
+void HackAudio::Viewport::setDiagram(HackAudio::Diagram& d)
 {
 
     backButton.setVisible(false);
@@ -38,7 +38,7 @@ void HackAudio::Viewport::setDiagram(HackAudio::Diagram* d)
         contentContainer.removeAllChildren();
     }
 
-    currentContent = d;
+    currentContent = &d;
 
     currentContent->addComponentListener(this);
     contentContainer.addAndMakeVisible(currentContent);
