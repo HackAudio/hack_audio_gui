@@ -268,10 +268,18 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
         juce::Colour background;
         juce::Colour foreground;
 
-        if (getToggleState() &&  buttonStyle != ButtonStyle::BarSingleton)
+        if (buttonStyle != ButtonStyle::BarSingleton)
         {
-            background = findColour(HackAudio::ColourIds::backgroundColourId);
-            foreground = findColour(HackAudio::ColourIds::foregroundColourId);
+            if (getToggleState())
+            {
+                background = findColour(HackAudio::ColourIds::highlightColourId);
+                foreground = findColour(HackAudio::ColourIds::midgroundColourId);
+            }
+            else
+            {
+                background = findColour(HackAudio::ColourIds::foregroundColourId);
+                foreground = findColour(HackAudio::ColourIds::midgroundColourId);
+            }
         }
         else
         {
