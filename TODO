@@ -10,4 +10,10 @@ TODO:
 
     - Right Click Menus?
 
+    - HackAudio::Diagram::Junction Symbols
+
 BUG:
+
+    - Indicator And Pip Sizes Too Large For Rotary Knobs (75, 75)
+
+    - HackAudio::Viewport Crashes Without Diagram Added
