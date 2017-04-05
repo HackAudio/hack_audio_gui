@@ -602,6 +602,21 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
             x1 = source->getX() + source->getWidth();
             y1 = source->getY() + source->getHeight() / 2;
 
+            if (source->getX() < destination->getX())
+            {
+
+                x2 = destination->getX();
+                y2 = destination->getY() + destination->getHeight() / 2;
+
+            }
+            else
+            {
+
+                x2 = destination->getX() + destination->getWidth();
+                y2 = destination->getY() + destination->getHeight() / 2;
+
+            }
+
             if (dynamic_cast<Junction*>(destination))
             {
 
@@ -663,28 +678,28 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
             else
             {
 
-                if (source->getX() < destination->getX())
-                {
-
-                    x2 = destination->getX();
-                    y2 = destination->getY() + destination->getHeight() / 2;
-
-                }
-                else
-                {
-
-                    x2 = destination->getX() + destination->getWidth();
-                    y2 = destination->getY() + destination->getHeight() / 2;
-
-                }
-
                 g.setColour(HackAudio::Colours::Gray);
                 g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
                 g.setColour(HackAudio::Colours::Black);
                 g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
 
                 p.startNewSubPath(x1, y1);
-                p.cubicTo(x2, y1, x1, y2, x2, y2);
+
+                if (abs(source->getY() - destination->getY()) < 64)
+                {
+
+                    p.cubicTo(x2, y1, x1, y2, x2, y2);
+
+                }
+                else
+                {
+
+                    p.cubicTo(x1 + 64, y1, x1, y2, x1 + 64, y2);
+                    p.startNewSubPath(x1 + 64, y2);
+                    p.cubicTo(x1 + 64, y2, x2, y2, x2, y2);
+
+                }
+
                 g.setColour(HackAudio::Colours::Gray);
                 g.strokePath(p, juce::PathStrokeType(4));
 
