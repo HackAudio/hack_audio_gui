@@ -273,8 +273,23 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
                 g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
             }
 
+
             p.startNewSubPath(x1, y1);
-            p.cubicTo(x2, y1, x1, y2, x2 + 4, y2);
+
+            if (x2 - x1 < 64)
+            {
+
+                p.cubicTo(x2, y1, x1, y2, x2 + 4, y2);
+
+            }
+            else
+            {
+
+                p.cubicTo(x1 + 64, y1, x1, y2, x1 + 64, y2);
+                p.startNewSubPath(x1 + 64, y2);
+                p.cubicTo(x1 + 64, y2, x2, y2, x2, y2);
+
+            }
 
             g.setColour(HackAudio::Colours::Gray);
             g.strokePath(p, juce::PathStrokeType(4));
@@ -309,8 +324,22 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
             int offset = (dynamic_cast<HackAudio::Diagram::Junction*>(contentOutput)) ? 0 : 6;
 
-            outputConnections.startNewSubPath(x3 + offset, y3);
-            outputConnections.cubicTo(x4, y3, x3, y4, x4, y4);
+            if (x4 - x3 < 64)
+            {
+
+                outputConnections.startNewSubPath(x3 + offset, y3);
+                outputConnections.cubicTo(x4, y3, x3, y4, x4 + 4, y4);
+
+            }
+            else
+            {
+
+                outputConnections.startNewSubPath(x3 + offset, y3);
+                outputConnections.lineTo(x4 - 64, y3);
+                outputConnections.startNewSubPath(x4 - 64, y3);
+                outputConnections.cubicTo(x4, y3, x4 - 64, y4, x4, y4);
+                
+            }
 
             if (!dynamic_cast<HackAudio::Diagram::Junction*>(contentOutput))
             {
