@@ -49,19 +49,6 @@ public:
     int  getPipCount();
 
     /**
-        Sets the size range slider pips will be drawn at
-     
-        @parameter minSize  the size of inactive pips (pip < sliderValue)
-        @parameter maxSize  the size of active pips (pip > sliderValue)
-    */
-    void setPipSize(int minSize, int maxSize);
-
-    /**
-     Resets the pip size to its default minimum and maximum
-    */
-    void resetPipSize();
-
-    /**
      Sets the size of the slider with a 1:1 aspect ratio. Useful for rotary sliders
 
      @paremeter size     the size that both the width and height will be set to

@@ -88,28 +88,6 @@ int HackAudio::Slider::getPipCount()
 
 }
 
-void HackAudio::Slider::setPipSize(int minSize, int maxSize)
-{
-
-    minPipSize = minSize;
-    maxPipSize = maxSize;
-    setPipScale(false);
-    resized();
-    repaint();
-
-}
-
-void HackAudio::Slider::resetPipSize()
-{
-
-    minPipSize = DEFAULT_PIPMIN;
-    maxPipSize = DEFAULT_PIPMAX;
-    setPipScale(false);
-    resized();
-    repaint();
-
-}
-
 void HackAudio::Slider::setPipScale(bool wasResized)
 {
 
