@@ -5,7 +5,7 @@
 #include "hack_audio.h"
 
 const juce::Colour HackAudio::Colours::Black (0xFF010D14);
-const juce::Colour HackAudio::Colours::Gray  (0xFF262C2D);
+const juce::Colour HackAudio::Colours::Gray  (0xFF343D3E);
 const juce::Colour HackAudio::Colours::White (0xFFCAD8DE);
 const juce::Colour HackAudio::Colours::Cyan  (0xFF60CAC8);
 
