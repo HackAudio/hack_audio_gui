@@ -57,7 +57,7 @@ public:
 
 private:
 
-    void setPipScale(bool wasResized);
+    void setPipScale();
 
     void mouseDown(const juce::MouseEvent& e) override;
     void mouseDrag(const juce::MouseEvent& e) override;
