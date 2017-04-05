@@ -599,45 +599,94 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
             int x1, y1, x2, y2;
 
-            if (source->getX() < destination->getX())
+            x1 = source->getX() + source->getWidth();
+            y1 = source->getY() + source->getHeight() / 2;
+
+            if (dynamic_cast<Junction*>(destination))
             {
 
-                x1 = source->getX() + source->getWidth();
-                y1 = source->getY() + source->getHeight() / 2;
+                if (abs(source->getY() - destination->getY()) >= 64)
+                {
 
-                x2 = destination->getX();
-                y2 = destination->getY() + destination->getHeight() / 2;
+                    if (source->getY() < destination->getY())
+                    {
+
+                        x2 = destination->getX() + destination->getWidth()/2;
+                        y2 = destination->getY();
+
+                    }
+                    else
+                    {
+
+                        x2 = destination->getX() + destination->getWidth()/2;
+                        y2 = destination->getY() + destination->getHeight();
+
+                    }
+
+                    p.startNewSubPath(x1, y1);
+                    p.cubicTo(x2, y1, x2, y1, x2, y2);
+                    g.setColour(HackAudio::Colours::Gray);
+                    g.strokePath(p, juce::PathStrokeType(4));
+
+                }
+                else
+                {
+
+                    if (source->getX() < destination->getX())
+                    {
+
+                        x2 = destination->getX();
+                        y2 = destination->getY() + destination->getHeight() / 2;
+
+                    }
+                    else
+                    {
+
+                        x2 = destination->getX() + destination->getWidth();
+                        y2 = destination->getY() + destination->getHeight() / 2;
+                        
+                    }
+
+                    p.startNewSubPath(x1, y1);
+                    p.cubicTo(x2, y1, x1, y2, x2, y2);
+                    g.setColour(HackAudio::Colours::Gray);
+                    g.strokePath(p, juce::PathStrokeType(4));
+
+                }
+
+                g.setColour(HackAudio::Colours::Black);
+                g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
+                g.setColour(HackAudio::Colours::Gray);
+                g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
 
             }
             else
             {
 
-                x1 = source->getX();
-                y1 = source->getY() + source->getHeight() / 2;
+                if (source->getX() < destination->getX())
+                {
 
-                x2 = destination->getX() + destination->getWidth();
-                y2 = destination->getY() + destination->getHeight() / 2;
+                    x2 = destination->getX();
+                    y2 = destination->getY() + destination->getHeight() / 2;
 
-            }
+                }
+                else
+                {
 
-            if (!dynamic_cast<Junction*>(destination))
-            {
+                    x2 = destination->getX() + destination->getWidth();
+                    y2 = destination->getY() + destination->getHeight() / 2;
+
+                }
 
                 g.setColour(HackAudio::Colours::Gray);
                 g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
                 g.setColour(HackAudio::Colours::Black);
                 g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
 
-            }
-
-            p.startNewSubPath(x1, y1);
-            p.cubicTo(x2, y1, x1, y2, x2, y2);
-
-            g.setColour(HackAudio::Colours::Gray);
-            g.strokePath(p, juce::PathStrokeType(4));
-
-            if (!dynamic_cast<Junction*>(source))
-            {
+                p.startNewSubPath(x1, y1);
+                p.cubicTo(x2, y1, x1, y2, x2, y2);
+                g.setColour(HackAudio::Colours::Gray);
+                g.strokePath(p, juce::PathStrokeType(4));
 
                 g.setColour(HackAudio::Colours::Black);
                 g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
@@ -650,7 +699,6 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                 {
                     g.setColour(HackAudio::Colours::Gray);
                 }
-
 
                 g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
 
