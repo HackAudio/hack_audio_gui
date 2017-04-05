@@ -599,26 +599,11 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
             int x1, y1, x2, y2;
 
-            x1 = source->getX() + source->getWidth();
-            y1 = source->getY() + source->getHeight() / 2;
-
-            if (source->getX() < destination->getX())
-            {
-
-                x2 = destination->getX();
-                y2 = destination->getY() + destination->getHeight() / 2;
-
-            }
-            else
-            {
-
-                x2 = destination->getX() + destination->getWidth();
-                y2 = destination->getY() + destination->getHeight() / 2;
-
-            }
-
             if (dynamic_cast<Junction*>(destination))
             {
+
+                x1 = source->getX() + source->getWidth();
+                y1 = source->getY() + source->getHeight() / 2;
 
                 if (abs(source->getY() - destination->getY()) >= 64)
                 {
@@ -677,6 +662,24 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
             }
             else
             {
+
+                x1 = source->getX() + source->getWidth();
+                y1 = source->getY() + source->getHeight() / 2;
+
+                if (source->getX() < destination->getX())
+                {
+
+                    x2 = destination->getX();
+                    y2 = destination->getY() + destination->getHeight() / 2;
+
+                }
+                else
+                {
+
+                    x2 = destination->getX() + destination->getWidth();
+                    y2 = destination->getY() + destination->getHeight() / 2;
+                    
+                }
 
                 g.setColour(HackAudio::Colours::Gray);
                 g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
