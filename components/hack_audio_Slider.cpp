@@ -73,8 +73,10 @@ void HackAudio::Slider::setPipCount(int count)
 
     count = std::max(2, count);
     pipLocations.resize(count);
-    setPipScale();
+    setPipScale(false);
+    pipGuard = true;
     resized();
+    pipGuard = false;
     repaint();
 
 }
@@ -91,7 +93,7 @@ void HackAudio::Slider::setPipSize(int minSize, int maxSize)
 
     minPipSize = minSize;
     maxPipSize = maxSize;
-    setPipScale();
+    setPipScale(false);
     resized();
     repaint();
 
@@ -102,13 +104,13 @@ void HackAudio::Slider::resetPipSize()
 
     minPipSize = DEFAULT_PIPMIN;
     maxPipSize = DEFAULT_PIPMAX;
-    setPipScale();
+    setPipScale(false);
     resized();
     repaint();
 
 }
 
-void HackAudio::Slider::setPipScale()
+void HackAudio::Slider::setPipScale(bool wasResized)
 {
 
     int pipSizeCheck;
@@ -132,6 +134,9 @@ void HackAudio::Slider::setPipScale()
     }
     else
     {
+
+        maxPipSize = thumbArea.getWidth() / 8;
+        minPipSize = currentMaxPipSize * 0.75f;
 
         int radius = sqrt (pow(thumbArea.getWidth() / 2, 2) * 2);
 
@@ -669,7 +674,7 @@ void HackAudio::Slider::resized()
 
         thumbArea.setBounds(width / 4, height / 4, width / 2, height / 2);
 
-        int indicatorSize = std::min(thumbArea.getWidth() / (DEFAULT_PIPMAX / 2), DEFAULT_PIPMAX);
+        int indicatorSize = thumbArea.getWidth() / DEFAULT_PIPMAX;
         indicatorArea.setSize(indicatorSize, indicatorSize);
 
         for (int i = 0; i < pipLocations.size(); ++i)
@@ -701,7 +706,7 @@ void HackAudio::Slider::resized()
 
     }
 
-    setPipScale();
+    setPipScale(true);
     sliderValueChanged(this);
 
     resizeGuard = false;

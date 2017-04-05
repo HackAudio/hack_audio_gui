@@ -70,7 +70,7 @@ public:
 
 private:
 
-    void setPipScale();
+    void setPipScale(bool wasResized);
 
     void mouseDown(const juce::MouseEvent& e) override;
     void mouseDrag(const juce::MouseEvent& e) override;
@@ -94,6 +94,7 @@ private:
     juce::Point<int> animationEnd;
 
     bool resizeGuard;
+    bool pipGuard;
 
     bool pipsShown;
     int pipSize;
