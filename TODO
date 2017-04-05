@@ -6,8 +6,6 @@ TODO:
 
     - Drop-down Menus
 
-    - HackAudio::Diagram::Junction Symbols
-
     - HackAudio::Viewport Possible Custom Scrollbars
 
     - Correct Diagram/Viewport Connection Bezier Distance (Should Draw Two Lines If Component Too Far, With The Second Being Straight)
