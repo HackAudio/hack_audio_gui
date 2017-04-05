@@ -355,7 +355,7 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
 
 
-    // Viewport Shadows (Top, Bottom, Left, Right)
+    // Viewport Shadows (Top, Bottom, Left, Right, Input, Output)
     // =========================================================================================
     g.setGradientFill(
       juce::ColourGradient
@@ -408,6 +408,32 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
     );
     
     g.fillRect(contentContainer.getRight() - 4, contentContainer.getY(), 4, contentContainer.getHeight());
+
+    g.setGradientFill(
+      juce::ColourGradient
+      (
+       HackAudio::Colours::Black.withAlpha(1.0f),
+       contentContainer.getX(), getHeight() / 2,
+       HackAudio::Colours::Black.withAlpha(0.0f),
+       contentContainer.getX() + 16, (getHeight() / 2),
+       true
+      )
+    );
+
+    g.fillEllipse(contentContainer.getX() - 12, (getHeight() / 2) - 12, 24, 24);
+
+    g.setGradientFill(
+      juce::ColourGradient
+      (
+       HackAudio::Colours::Black.withAlpha(1.0f),
+       contentContainer.getRight(), getHeight() / 2,
+       HackAudio::Colours::Black.withAlpha(0.0f),
+       contentContainer.getRight() - 16, (getHeight() / 2),
+       true
+      )
+    );
+
+    g.fillEllipse(contentContainer.getRight() - 12, (getHeight() / 2) - 12, 24, 24);
 
 
 
