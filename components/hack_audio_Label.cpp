@@ -5,6 +5,8 @@ HackAudio::Label::Label()
 
     setInterceptsMouseClicks(false, false);
 
+    setJustificationType(juce::Justification::centred);
+
     setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Black);
     setColour(HackAudio::ColourIds::foregroundColourId, HackAudio::Colours::White);
     setColour(HackAudio::ColourIds::highlightColourId, HackAudio::Colours::Cyan);
@@ -167,7 +169,7 @@ void HackAudio::Label::paint(juce::Graphics& g)
 
     textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
 
-    g.drawText(textToDisplay, 0, 0, width, height, juce::Justification::centred, 1);
+    g.drawText(textToDisplay, 0, 0, width, height, getJustificationType(), 1);
 
 }
 
