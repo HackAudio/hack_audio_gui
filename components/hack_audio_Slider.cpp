@@ -686,7 +686,7 @@ void HackAudio::Slider::resized()
 
         thumbArea.setBounds(width / 4, height / 4, width / 2, height / 2);
 
-        int indicatorSize = thumbArea.getWidth() / DEFAULT_PIPMAX;
+        int indicatorSize = thumbArea.getWidth() / (DEFAULT_PIPMAX * 0.85f);
         indicatorArea.setSize(indicatorSize, indicatorSize);
 
         for (int i = 0; i < pipLocations.size(); ++i)
