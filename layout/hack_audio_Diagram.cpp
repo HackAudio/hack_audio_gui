@@ -28,11 +28,11 @@ void HackAudio::Diagram::Junction::setSymbol(HackAudio::Diagram::Junction::Symbo
             break;
 
         case HackAudio::Diagram::Junction::Symbol::Divide:
-            currentSymbol = "÷";
+            currentSymbol = juce::String::CharPointerType::CharPointer_UTF8("÷");
             break;
 
         case HackAudio::Diagram::Junction::Symbol::Multiply:
-            currentSymbol = "×";
+            currentSymbol = juce::String::CharPointerType::CharPointer_UTF8("×");
             break;
 
         case HackAudio::Diagram::Junction::Symbol::Power:
