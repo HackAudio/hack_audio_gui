@@ -165,9 +165,9 @@ void HackAudio::Label::paint(juce::Graphics& g)
 
     juce::String textToDisplay;
 
-    textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : getText();
+    textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
 
-    g.drawText(prefix + textToDisplay + postfix, 0, 0, width, height, juce::Justification::centred, 1);
+    g.drawText(textToDisplay, 0, 0, width, height, juce::Justification::centred, 1);
 
 }
 
