@@ -166,8 +166,6 @@ private:
 
     void paintOverChildren(juce::Graphics& g) override;
 
-    void resized() override;
-
     bool moveGuard;
 
     juce::Array<juce::Component*> inputComponents;

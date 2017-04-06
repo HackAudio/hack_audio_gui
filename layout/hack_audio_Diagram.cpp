@@ -727,8 +727,3 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
     }
 
 }
-
-void HackAudio::Diagram::resized()
-{
-
-}
