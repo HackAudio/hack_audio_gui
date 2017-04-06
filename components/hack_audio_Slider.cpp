@@ -228,7 +228,7 @@ void HackAudio::Slider::mouseUp(const juce::MouseEvent& e)
 
     for (int i = 0; i <= pipLocations.size(); ++i)
     {
-        if (pipLocations[i].getDistanceFrom(e.getPosition()) <= maxPipSize * 0.75f)
+        if (pipLocations[i].getDistanceFrom(e.getPosition()) <= currentMaxPipSize)
         {
 
             if (std::abs((i / (float)(pipLocations.size() - 1.0f) * (getMaximum() - getMinimum()) + getMinimum()) - getValue()) > 0.01f)
