@@ -618,7 +618,6 @@ void HackAudio::Slider::resized()
 
         thumbArea.setSize((float)trackArea.getWidth() * (2.0f + 2.0f/3.0f), (float)trackArea.getWidth() * (2.0f + 2.0f/3.0f));
 
-//        thumbArea.setCentre(trackArea.getCentreX(), trackArea.getY());
         thumbArea.setX(trackArea.getCentreX() - thumbArea.getWidth() / 2);
         thumbSpan.setBounds(trackArea.getX(), trackArea.getBottom() - thumbArea.getHeight() / 2, trackArea.getWidth(), trackArea.getHeight());
 
