@@ -4,22 +4,20 @@
 struct Gain : public HackAudio::Diagram
 {
 
-    HackAudio::Label testOne;
-    HackAudio::Label testTwo;
+    HackAudio::Label dBGain;
+    HackAudio::Label linearGain;
 
     Gain()
     {
 
-        testOne.setBounds(0, 0, 64, 64);
-        testTwo.setBounds(128, 0, 64, 64);
+        dBGain.setBounds(0, 0, 64, 64);
+        linearGain.setBounds(128, 0, 64, 64);
 
-        addDiagramInput(testOne);
-        connect(testOne, testTwo);
-        addDiagramOutput(testTwo);
+        addDiagramInput(dBGain);
+        connect(dBGain, linearGain);
+        addDiagramOutput(dBGain);
 
     }
-
-    ~Gain() {}
 
 };
 

@@ -6,14 +6,12 @@
 namespace HackAudio
 {
 
-class Diagrams
+namespace Diagrams
 {
 
-public:
-    HackAudio::Diagram Gain;
+    #include "utils/hack_audio_Gain.h"
 
-private:
-    Diagrams();
+    #include "filters/hack_audio_CombFilter.h"
 
 };
 
