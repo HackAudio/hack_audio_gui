@@ -693,7 +693,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
                 p.startNewSubPath(x1, y1);
 
-                if (abs(source->getY() - destination->getY()) < 64)
+                if (abs(source->getX() - destination->getX()) <= 64)
                 {
 
                     p.cubicTo(x2, y1, x1, y2, x2, y2);
