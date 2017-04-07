@@ -162,6 +162,8 @@ void HackAudio::Slider::setSymmetricSize(int size)
 void HackAudio::Slider::mouseDown(const juce::MouseEvent &e)
 {
 
+    pipClicked = -1;
+
     if (trackArea.contains(e.getPosition()) || thumbArea.contains(e.getPosition()))
     {
 
@@ -187,6 +189,9 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent &e)
         {
             if (pipLocations[i].getDistanceFrom(e.getPosition()) <= maxPipSize * 0.75f)
             {
+
+                pipClicked = i;
+
                 stopAnimation();
                 isSettable = true;
             }
@@ -230,6 +235,8 @@ void HackAudio::Slider::mouseUp(const juce::MouseEvent& e)
     {
         if (pipLocations[i].getDistanceFrom(e.getPosition()) <= currentMaxPipSize)
         {
+
+            if (i != pipClicked) { return; }
 
             if (std::abs((i / (float)(pipLocations.size() - 1.0f) * (getMaximum() - getMinimum()) + getMinimum()) - getValue()) > 0.01f)
             {

@@ -89,6 +89,7 @@ private:
     int maxPipSize;
     int currentMinPipSize;
     int currentMaxPipSize;
+    int pipClicked;
 
     juce::Array<juce::Point<int>> pipLocations;
     juce::Rectangle<int> trackArea;
