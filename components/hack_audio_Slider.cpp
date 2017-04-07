@@ -192,7 +192,6 @@ void HackAudio::Slider::mouseDown(const juce::MouseEvent &e)
 
                 pipClicked = i;
 
-                stopAnimation();
                 isSettable = true;
             }
         }
