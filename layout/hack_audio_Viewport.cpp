@@ -265,6 +265,8 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
             int x2 = contentInputBounds.getX();
             int y2 = contentInputBounds.getY() + contentInputBounds.getHeight() / 2;
 
+            if (x2 < x1) { continue; }
+
             if (!dynamic_cast<HackAudio::Diagram::Junction*>(contentInput))
             {
                 g.setColour(HackAudio::Colours::Gray);
@@ -321,6 +323,8 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
             int x4 = contentContainer.getX() + contentContainer.getWidth();
             int y4 = contentContainer.getY() + getHeight() / 2;
+
+            if (x3 > x4) { continue; }
 
             int offset = (dynamic_cast<HackAudio::Diagram::Junction*>(contentOutput)) ? 0 : 6;
 
