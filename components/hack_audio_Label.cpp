@@ -161,15 +161,13 @@ void HackAudio::Label::paint(juce::Graphics& g)
     juce::Colour foreground = findColour(HackAudio::ColourIds::foregroundColourId);
     juce::Colour highlight  = findColour(HackAudio::ColourIds::highlightColourId);
 
+    juce::String textToDisplay;
+    textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
+
     g.setColour(foreground.interpolatedWith(highlight, currentColourInterpolation.getNextValue()));
 
     g.setFont(getFont());
-
-    juce::String textToDisplay;
-
-    textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
-
-    g.drawText(textToDisplay, 0, 0, width, height, getJustificationType(), 1);
+    g.drawText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 0);
 
 }
 
