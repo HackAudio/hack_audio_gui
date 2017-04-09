@@ -167,7 +167,7 @@ void HackAudio::Label::paint(juce::Graphics& g)
     g.setColour(foreground.interpolatedWith(highlight, currentColourInterpolation.getNextValue()));
 
     g.setFont(getFont());
-    g.drawText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 0);
+    g.drawFittedText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 8);
 
 }
 
