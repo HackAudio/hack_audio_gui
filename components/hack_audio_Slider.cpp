@@ -29,7 +29,6 @@ HackAudio::Slider::Slider()
     isSettable    = false;
     
     pipsShown     = true;
-    pipSize       = 0;
     minPipSize    = DEFAULT_PIPMIN;
     maxPipSize    = DEFAULT_PIPMAX;
 
@@ -479,7 +478,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     for (int i = 0; i < pipLocations.size() && pipsShown; ++i)
     {
 
-        pipSize = minPipSize;
+        int pipSize = minPipSize;
 
         if (isVertical())
         {

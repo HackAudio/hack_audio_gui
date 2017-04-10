@@ -84,7 +84,6 @@ private:
     bool pipGuard;
 
     bool pipsShown;
-    int pipSize;
     int minPipSize;
     int maxPipSize;
     int currentMinPipSize;
