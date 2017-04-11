@@ -636,7 +636,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                     {
 
                         p.startNewSubPath(x1, y1);
-                        p.cubicTo(x2, y1, x2, y1, x2, y2);
+                        p.cubicTo(x1, y2, x1, y2, x2, y2);
                         g.setColour(HackAudio::Colours::Gray);
                         g.strokePath(p, juce::PathStrokeType(4));
 
