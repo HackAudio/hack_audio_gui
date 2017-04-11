@@ -19,6 +19,8 @@ HackAudio::Meter::Meter()
     meterPeakStatus = false;
     currentPeakPos = 0.0;
 
+    meterStyle = LinearVertical;
+
     meterRise = 0;
     meterOvershoot = 0.0f;
     meterFall = 0;
@@ -282,8 +284,22 @@ void HackAudio::Meter::paint(juce::Graphics& g)
     double nextVal = currentValue.getNextValue();
 
     juce::Path p;
-    p.startNewSubPath(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal));
-    p.addRoundedRectangle(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), indicatorArea.getWidth(), indicatorArea.getHeight() * nextVal, CORNER_RADIUS, CORNER_CONFIG);
+
+    if (meterStyle == LinearVertical)
+    {
+
+        p.startNewSubPath(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal));
+        p.addRoundedRectangle(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), indicatorArea.getWidth(), indicatorArea.getHeight() * nextVal, CORNER_RADIUS, CORNER_CONFIG);
+
+    }
+    else
+    {
+
+        p.startNewSubPath(indicatorArea.getX(), indicatorArea.getY());
+        p.addRoundedRectangle(indicatorArea.getX(), indicatorArea.getY(), indicatorArea.getWidth() * nextVal, indicatorArea.getHeight(), CORNER_RADIUS, CORNER_CONFIG);
+
+    }
+
     g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
     g.fillPath(p);
 
@@ -310,7 +326,15 @@ void HackAudio::Meter::resized()
     {
 
         juce::Point<int>& p = pipLocations.getReference(i);
-        p.setXY(width / 2, (pipSize * 2) + ((indicatorArea.getHeight() - pipSize * 4) / (float)(pipLocations.size() - 1) * i));
+
+        if (meterStyle == LinearVertical)
+        {
+            p.setXY(width / 2, (pipSize * 2) + ((indicatorArea.getHeight() - pipSize * 4) / (float)(pipLocations.size() - 1) * i));
+        }
+        else
+        {
+            p.setXY((pipSize * 2) + ((indicatorArea.getWidth() - pipSize * 4) / (float)(pipLocations.size() - 1) * i), height / 2);
+        }
 
     }
 
