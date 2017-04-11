@@ -600,12 +600,18 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
             Junction* sourceIsJunction = (dynamic_cast<Junction*>(source));
             Junction* destinationIsJunction = (dynamic_cast<Junction*>(destination));
 
+            int sourceX = source->getX() + source->getWidth() / 2;
+            int sourceY = source->getY() + source->getHeight() / 2;
+
+            int destinationX = destination->getX() + destination->getWidth() / 2;
+            int destinationY = destination->getY() + destination->getHeight() / 2;
+
             int x1, y1, x2, y2;
 
-            if (source->getY() < destination->getY())
+            if (sourceY < destinationY)
             {
 
-                if (source->getX() < destination->getX())
+                if (sourceX < destinationX)
                 {
 
                     x1 = source->getX() + source->getWidth();
@@ -775,10 +781,10 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                 }
 
             }
-            else if (source->getY() > destination->getY())
+            else if (sourceY > destinationY)
             {
 
-                if (source->getX() < destination->getX())
+                if (sourceX < destinationX)
                 {
 
                     if (sourceIsJunction)
