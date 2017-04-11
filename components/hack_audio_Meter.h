@@ -12,8 +12,7 @@ public:
     enum MeterStyle
     {
         LinearVertical,
-        LinearHorizontal,
-        Pointer
+        LinearHorizontal
     };
 
     enum MeterCalibration
