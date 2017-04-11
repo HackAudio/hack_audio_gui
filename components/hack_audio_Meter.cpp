@@ -10,6 +10,10 @@ HackAudio::Meter::Meter()
 
     pipsShown = true;
 
+    pipSize = 8;
+
+    pipLocations.resize(10);
+
     meterSkewFactor = 0.0;
 
     meterPeakStatus = false;
@@ -263,19 +267,17 @@ void HackAudio::Meter::paint(juce::Graphics& g)
     g.setColour(findColour(HackAudio::ColourIds::backgroundColourId));
     g.fillPath(p);
 
-    g.setColour(findColour(HackAudio::ColourIds::midgroundColourId));
+    g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
+    g.fillRect(4, (height - 4) - ((height - 4) * currentValue.getNextValue()), width - 8, (height - 4) * currentValue.getNextValue());
 
+    g.setColour(findColour(HackAudio::ColourIds::midgroundColourId));
     for (int i = 0; i < pipLocations.size(); ++i)
     {
 
         juce::Point<int>& pip = pipLocations.getReference(i);
-
         g.fillEllipse(pip.x - pipSize/2, pip.y - pipSize/2, pipSize, pipSize);
 
     }
-
-    g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
-    g.fillRect(0, height - (height * currentValue.getNextValue()), width, height * currentValue.getNextValue());
 
     p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
     g.setColour(findColour(HackAudio::ColourIds::backgroundColourId));
@@ -293,7 +295,6 @@ void HackAudio::Meter::resized()
     {
 
         juce::Point<int>& p = pipLocations.getReference(i);
-
         p.setXY(width / 2, height - ((float)height / (float)(pipLocations.size() - 1) * i));
 
     }
