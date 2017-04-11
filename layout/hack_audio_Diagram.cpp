@@ -796,8 +796,20 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
                     }
 
-                    x2 = destination->getX();
-                    y2 = destination->getY() + destination->getHeight() / 2;
+                    if (sourceIsJunction)
+                    {
+                        
+                        x2 = destination->getX();
+                        y2 = destination->getY() + destination->getHeight() / 2;
+
+                    }
+                    else
+                    {
+
+                        x2 = destination->getX() + destination->getWidth() / 2;
+                        y2 = destination->getY() + destination->getHeight();
+
+                    }
 
                     if (sourceIsJunction && destinationIsJunction)
                     {
