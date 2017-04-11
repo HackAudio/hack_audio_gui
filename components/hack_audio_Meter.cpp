@@ -262,13 +262,18 @@ void HackAudio::Meter::paint(juce::Graphics& g)
     int width  = getWidth();
     int height = getHeight();
 
-    juce::Path p;
-    p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
+    juce::Path b;
+    b.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
     g.setColour(findColour(HackAudio::ColourIds::backgroundColourId));
-    g.fillPath(p);
+    g.fillPath(b);
 
+    double nextVal = currentValue.getNextValue();
+
+    juce::Path p;
+    p.startNewSubPath(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal));
+    p.addRoundedRectangle(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), indicatorArea.getWidth(), indicatorArea.getHeight() * nextVal, CORNER_RADIUS, CORNER_CONFIG);
     g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
-    g.fillRect(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * currentValue.getNextValue()), indicatorArea.getWidth(), indicatorArea.getHeight() * currentValue.getNextValue());
+    g.fillPath(p);
 
     g.setColour(findColour(HackAudio::ColourIds::midgroundColourId));
     for (int i = 0; i < pipLocations.size(); ++i)
@@ -278,10 +283,6 @@ void HackAudio::Meter::paint(juce::Graphics& g)
         g.fillEllipse(pip.x - pipSize/2, pip.y - pipSize/2, pipSize, pipSize);
 
     }
-
-    p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
-    g.setColour(findColour(HackAudio::ColourIds::backgroundColourId));
-    g.strokePath(p, juce::PathStrokeType(8));
 
 }
 
