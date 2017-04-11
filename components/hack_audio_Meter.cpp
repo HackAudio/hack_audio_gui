@@ -25,7 +25,7 @@ HackAudio::Meter::Meter()
     meterOvershoot = 0.0f;
     meterFall = 0;
 
-    currentValue.reset(10, 0.01);
+    currentValue.reset(1000, 0.01);
 
 }
 
@@ -291,6 +291,17 @@ void HackAudio::Meter::paint(juce::Graphics& g)
         p.startNewSubPath(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal));
         p.addRoundedRectangle(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), indicatorArea.getWidth(), indicatorArea.getHeight() * nextVal, CORNER_RADIUS, CORNER_CONFIG);
 
+        g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
+        g.fillPath(p);
+
+        if (meterPeakStatus)
+        {
+
+            g.setColour(findColour(HackAudio::ColourIds::foregroundColourId));
+            g.drawLine(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), indicatorArea.getRight(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), 2);
+            
+        }
+
     }
     else
     {
@@ -298,10 +309,18 @@ void HackAudio::Meter::paint(juce::Graphics& g)
         p.startNewSubPath(indicatorArea.getX(), indicatorArea.getY());
         p.addRoundedRectangle(indicatorArea.getX(), indicatorArea.getY(), indicatorArea.getWidth() * nextVal, indicatorArea.getHeight(), CORNER_RADIUS, CORNER_CONFIG);
 
-    }
+        g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
+        g.fillPath(p);
 
-    g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
-    g.fillPath(p);
+        if (meterPeakStatus)
+        {
+
+            g.setColour(findColour(HackAudio::ColourIds::foregroundColourId));
+            g.drawLine(indicatorArea.getWidth() * nextVal, indicatorArea.getY(), indicatorArea.getWidth() * nextVal, indicatorArea.getBottom(), 2);
+
+        }
+
+    }
 
     g.setColour(findColour(HackAudio::ColourIds::midgroundColourId));
     for (int i = 0; i < pipLocations.size(); ++i)
