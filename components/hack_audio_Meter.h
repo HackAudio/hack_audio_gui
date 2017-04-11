@@ -161,7 +161,8 @@ private:
 
     juce::LinearSmoothedValue<double> currentValue;
 
-    double* valueSource;
+    float*  floatValueSource;
+    double* doubleValueSource;
 
     MeterStyle       meterStyle;
     MeterCalibration meterCalibration;
