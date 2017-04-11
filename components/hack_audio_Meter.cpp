@@ -292,15 +292,15 @@ void HackAudio::Meter::resized()
     int width  = getWidth();
     int height = getHeight();
 
+    indicatorArea.setBounds(4, 4, width - 8, height - 8);
+
     for (int i = 0; i < pipLocations.size(); ++i)
     {
 
         juce::Point<int>& p = pipLocations.getReference(i);
-        p.setXY(width / 2, height - ((float)height / (float)(pipLocations.size() - 1) * i));
+        p.setXY(width / 2, (pipSize * 2) + ((indicatorArea.getHeight() - pipSize * 4) / (float)(pipLocations.size() - 1) * i));
 
     }
-
-    indicatorArea.setBounds(4, 4, width - 8, height - 8);
 
 }
 
