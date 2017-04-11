@@ -183,7 +183,7 @@ bool HackAudio::Meter::getPeakStatus()
 void HackAudio::Meter::setRiseTime(int riseMs)
 {
 
-    assert(riseMs > 0);
+    assert(riseMs >= 0);
 
     meterRise = riseMs;
 
@@ -201,7 +201,7 @@ int HackAudio::Meter::getRiseTime()
 void HackAudio::Meter::setOvershoot(float overshoot)
 {
 
-    assert(overshoot > 0.0f);
+    assert(overshoot >= 0.0f);
 
     meterOvershoot = overshoot;
 
@@ -219,7 +219,7 @@ float HackAudio::Meter::getOvershoot()
 void HackAudio::Meter::setFallTime(int fallMs)
 {
 
-    assert(fallMs > 0);
+    assert(fallMs >= 0);
 
     meterFall = fallMs;
 
