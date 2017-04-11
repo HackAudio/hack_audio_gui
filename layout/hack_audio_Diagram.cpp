@@ -972,7 +972,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                 y2 = destination->getY() + destination->getHeight() / 2;
 
 
-                if (!sourceIsJunction)
+                if (!destinationIsJunction)
                 {
 
                     g.setColour(HackAudio::Colours::Gray);
@@ -987,7 +987,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                 g.setColour(HackAudio::Colours::Gray);
                 g.strokePath(p, juce::PathStrokeType(4));
 
-                if (!destinationIsJunction)
+                if (!sourceIsJunction)
                 {
 
                     g.setColour(HackAudio::Colours::Black);
