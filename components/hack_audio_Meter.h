@@ -150,6 +150,8 @@ private:
     double meterSkewFactor;
     juce::Array<juce::Point<int>> pipLocations;
 
+    juce::Rectangle<int> indicatorArea;
+
     bool meterPeakStatus;
     double currentPeakPos;
 

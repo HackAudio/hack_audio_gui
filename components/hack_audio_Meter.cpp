@@ -268,7 +268,7 @@ void HackAudio::Meter::paint(juce::Graphics& g)
     g.fillPath(p);
 
     g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
-    g.fillRect(4, (height - 4) - ((height - 4) * currentValue.getNextValue()), width - 8, (height - 4) * currentValue.getNextValue());
+    g.fillRect(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * currentValue.getNextValue()), indicatorArea.getWidth(), indicatorArea.getHeight() * currentValue.getNextValue());
 
     g.setColour(findColour(HackAudio::ColourIds::midgroundColourId));
     for (int i = 0; i < pipLocations.size(); ++i)
@@ -298,6 +298,8 @@ void HackAudio::Meter::resized()
         p.setXY(width / 2, height - ((float)height / (float)(pipLocations.size() - 1) * i));
 
     }
+
+    indicatorArea.setBounds(4, 4, width - 8, height - 8);
 
 }
 
