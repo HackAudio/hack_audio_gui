@@ -289,7 +289,7 @@ void HackAudio::Meter::paint(juce::Graphics& g)
     {
 
         p.startNewSubPath(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal));
-        p.addRoundedRectangle(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), indicatorArea.getWidth(), indicatorArea.getHeight() * nextVal, CORNER_RADIUS, CORNER_CONFIG);
+        p.addRoundedRectangle(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), indicatorArea.getWidth(), indicatorArea.getHeight() * nextVal, CORNER_RADIUS, false, false, true, false);
 
         g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
         g.fillPath(p);
@@ -307,7 +307,7 @@ void HackAudio::Meter::paint(juce::Graphics& g)
     {
 
         p.startNewSubPath(indicatorArea.getX(), indicatorArea.getY());
-        p.addRoundedRectangle(indicatorArea.getX(), indicatorArea.getY(), indicatorArea.getWidth() * nextVal, indicatorArea.getHeight(), CORNER_RADIUS, CORNER_CONFIG);
+        p.addRoundedRectangle(indicatorArea.getX(), indicatorArea.getY(), indicatorArea.getWidth() * nextVal, indicatorArea.getHeight(), CORNER_RADIUS, false, false, true, false);
 
         g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
         g.fillPath(p);
