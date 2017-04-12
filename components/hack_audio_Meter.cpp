@@ -91,21 +91,7 @@ void HackAudio::Meter::setSource(float* const source)
 
     clearSource();
 
-    floatValueSource = source;
-
-    if (!isTimerRunning())
-    {
-        startTimerHz(ANIMATION_FPS);
-    }
-
-}
-
-void HackAudio::Meter::setSource(double* const source)
-{
-
-    clearSource();
-
-    doubleValueSource = source;
+    valueSource = source;
 
     if (!isTimerRunning())
     {
@@ -117,8 +103,7 @@ void HackAudio::Meter::setSource(double* const source)
 void HackAudio::Meter::clearSource()
 {
 
-    floatValueSource = nullptr;
-    doubleValueSource = nullptr;
+    valueSource = nullptr;
     currentValue.setValue(0.0);
     stopTimer();
 
@@ -277,16 +262,9 @@ void HackAudio::Meter::mouseUp(const juce::MouseEvent& e)
 void HackAudio::Meter::timerCallback()
 {
 
-    assert(floatValueSource || doubleValueSource);
+    assert(valueSource);
 
-    if (floatValueSource && !doubleValueSource)
-    {
-        currentValue.setValue(*floatValueSource);
-    }
-    else
-    {
-        currentValue.setValue(*doubleValueSource);
-    }
+    currentValue.setValue(*valueSource);
 
     repaint();
 

@@ -52,7 +52,6 @@ public:
      @parameter source  a value ranging from 0.0 to 1.0
     */
     void setSource(float* const source);
-    void setSource(double* const source);
 
     /**
      Stops the meter from listening to a source
@@ -163,8 +162,7 @@ private:
 
     juce::LinearSmoothedValue<double> currentValue;
 
-    float*  floatValueSource;
-    double* doubleValueSource;
+    float*  valueSource;
 
     MeterStyle       meterStyle;
     MeterCalibration meterCalibration;
