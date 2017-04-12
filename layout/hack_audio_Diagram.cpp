@@ -179,6 +179,8 @@ juce::Array<juce::Component*> HackAudio::Diagram::getDiagramOutputs()
 void HackAudio::Diagram::connect(juce::Component& source, juce::Component& destination)
 {
 
+    assert(&source != &destination);
+
     addAndMakeVisible(source);
     addAndMakeVisible(destination);
 
@@ -209,6 +211,8 @@ void HackAudio::Diagram::connect(juce::Component& source, juce::Component& desti
 
 void HackAudio::Diagram::connect(HackAudio::Diagram::Junction& source, juce::Component& destination, Junction::Direction directionFromSource)
 {
+
+    assert(&source != &destination);
 
     addAndMakeVisible(source);
     addAndMakeVisible(destination);
