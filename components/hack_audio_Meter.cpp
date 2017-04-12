@@ -283,16 +283,11 @@ void HackAudio::Meter::paint(juce::Graphics& g)
 
     double nextVal = currentValue.getNextValue();
 
-    juce::Path p;
-
     if (meterStyle == Vertical)
     {
 
-        p.startNewSubPath(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal));
-        p.addRoundedRectangle(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), indicatorArea.getWidth(), indicatorArea.getHeight() * nextVal, CORNER_RADIUS, false, false, true, false);
-
         g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
-        g.fillPath(p);
+        g.fillRect(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), indicatorArea.getWidth(), indicatorArea.getHeight() * nextVal);
 
         if (meterPeakStatus)
         {
@@ -306,17 +301,14 @@ void HackAudio::Meter::paint(juce::Graphics& g)
     else
     {
 
-        p.startNewSubPath(indicatorArea.getX(), indicatorArea.getY());
-        p.addRoundedRectangle(indicatorArea.getX(), indicatorArea.getY(), indicatorArea.getWidth() * nextVal, indicatorArea.getHeight(), CORNER_RADIUS, false, false, true, false);
-
         g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
-        g.fillPath(p);
+        g.fillRect(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), indicatorArea.getWidth(), indicatorArea.getHeight() * nextVal);
 
         if (meterPeakStatus)
         {
 
             g.setColour(findColour(HackAudio::ColourIds::foregroundColourId));
-            g.drawLine(indicatorArea.getWidth() * nextVal, indicatorArea.getY(), indicatorArea.getWidth() * nextVal, indicatorArea.getBottom(), 2);
+            g.drawLine(indicatorArea.getX() + (indicatorArea.getWidth() * nextVal), indicatorArea.getY(), indicatorArea.getX() + (indicatorArea.getWidth() * nextVal), indicatorArea.getBottom(), 2);
 
         }
 
@@ -331,6 +323,11 @@ void HackAudio::Meter::paint(juce::Graphics& g)
 
     }
 
+    juce::Path p;
+    p.addRoundedRectangle(4, 4, width - 8, height - 8, CORNER_RADIUS, CORNER_CONFIG);
+    g.setColour(findColour(HackAudio::backgroundColourId));
+    g.strokePath(p, juce::PathStrokeType(8));
+
 }
 
 void HackAudio::Meter::resized()
@@ -339,7 +336,7 @@ void HackAudio::Meter::resized()
     int width  = getWidth();
     int height = getHeight();
 
-    indicatorArea.setBounds(4, 4, width - 8, height - 8);
+    indicatorArea.setBounds(8, 8, width - 16, height - 16);
 
     for (int i = 0; i < pipLocations.size(); ++i)
     {
