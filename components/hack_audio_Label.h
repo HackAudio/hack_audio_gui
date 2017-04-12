@@ -10,7 +10,7 @@ namespace HackAudio
  
  */
 
-class Label : public juce::Label,
+class Label : public  juce::Label,
               private juce::LabelListener,
               private juce::Timer
 {
