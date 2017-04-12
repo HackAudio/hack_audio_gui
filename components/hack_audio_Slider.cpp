@@ -72,10 +72,7 @@ void HackAudio::Slider::setPipCount(int count)
 
     count = std::max(2, count);
     pipLocations.resize(count);
-    setPipScale();
-    pipGuard = true;
     resized();
-    pipGuard = false;
     repaint();
 
 }
