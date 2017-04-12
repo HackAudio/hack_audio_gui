@@ -345,11 +345,11 @@ void HackAudio::Meter::resized()
 
         if (meterStyle == Vertical)
         {
-            p.setXY(width / 2, (pipSize * 2) + ((indicatorArea.getHeight() - pipSize * 4) / (float)(pipLocations.size() - 1) * i));
+            p.setXY(width / 2, (pipSize * 2) + ((indicatorArea.getHeight() - pipSize * 2) / (float)(pipLocations.size() - 1) * i));
         }
         else
         {
-            p.setXY((pipSize * 2) + ((indicatorArea.getWidth() - pipSize * 4) / (float)(pipLocations.size() - 1) * i), height / 2);
+            p.setXY((pipSize * 2) + ((indicatorArea.getWidth() - pipSize * 2) / (float)(pipLocations.size() - 1) * i), height / 2);
         }
 
     }
