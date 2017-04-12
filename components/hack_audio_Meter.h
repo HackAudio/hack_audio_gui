@@ -11,8 +11,8 @@ public:
 
     enum MeterStyle
     {
-        LinearVertical,
-        LinearHorizontal
+        Vertical,
+        Horizontal
     };
 
     enum MeterCalibration
@@ -137,6 +137,8 @@ public:
     int getFallTime();
 
 private:
+
+    void setPipScale();
 
     void mouseUp(const juce::MouseEvent& e) override;
 

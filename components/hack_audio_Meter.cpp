@@ -19,7 +19,7 @@ HackAudio::Meter::Meter()
     meterPeakStatus = false;
     currentPeakPos = 0.0;
 
-    meterStyle = LinearVertical;
+    meterStyle = Vertical;
 
     meterRise = 0;
     meterOvershoot = 0.0f;
@@ -245,6 +245,28 @@ int HackAudio::Meter::getFallTime()
 
 }
 
+void HackAudio::Meter::setPipScale()
+{
+
+    int pipSizeCheck;
+
+    if (meterStyle == Vertical)
+    {
+
+        pipSizeCheck = (indicatorArea.getHeight() - pipSize * 4) / (float)(pipLocations.size() - 1);
+
+    }
+    else
+    {
+
+        pipSizeCheck = (indicatorArea.getWidth() - pipSize * 4) / (float)(pipLocations.size() - 1);
+
+    }
+
+    pipSize = std::min(pipSizeCheck, 8);
+
+}
+
 void HackAudio::Meter::mouseUp(const juce::MouseEvent& e)
 {
 
@@ -285,7 +307,7 @@ void HackAudio::Meter::paint(juce::Graphics& g)
 
     juce::Path p;
 
-    if (meterStyle == LinearVertical)
+    if (meterStyle == Vertical)
     {
 
         p.startNewSubPath(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal));
@@ -346,7 +368,7 @@ void HackAudio::Meter::resized()
 
         juce::Point<int>& p = pipLocations.getReference(i);
 
-        if (meterStyle == LinearVertical)
+        if (meterStyle == Vertical)
         {
             p.setXY(width / 2, (pipSize * 2) + ((indicatorArea.getHeight() - pipSize * 4) / (float)(pipLocations.size() - 1) * i));
         }
@@ -356,6 +378,8 @@ void HackAudio::Meter::resized()
         }
 
     }
+
+    setPipScale();
 
 }
 
