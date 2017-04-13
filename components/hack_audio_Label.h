@@ -93,7 +93,6 @@ private:
 
     bool animationStatus;
     bool placeholderStatus;
-    bool wasClicked;
 
     int timeout;
 

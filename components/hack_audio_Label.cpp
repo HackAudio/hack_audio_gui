@@ -15,7 +15,6 @@ HackAudio::Label::Label()
 
     animationStatus = true;
     placeholderStatus = false;
-    wasClicked = false;
 
     timeout = 0;
 
@@ -135,7 +134,6 @@ void HackAudio::Label::mouseUp(const juce::MouseEvent& e)
     if (placeholderStatus && !e.mouseWasDraggedSinceMouseDown())
     {
 
-        wasClicked = true;
         labelTextChanged(this);
 
     }
@@ -153,8 +151,6 @@ void HackAudio::Label::labelTextChanged(juce::Label* labelThatHasChanged)
         startTimerHz(ANIMATION_FPS);
 
     }
-
-    wasClicked = false;
 
 }
 
