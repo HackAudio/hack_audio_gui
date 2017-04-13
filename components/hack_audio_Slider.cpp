@@ -500,7 +500,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
                 }
                 else
                 {
-                    pipSize = diff;
+                    pipSize = std::max(currentMinPipSize / 3, diff);
                 }
 
             }
@@ -521,7 +521,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
 
                 g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
 
-                float diff = ((thumbArea.getX() + thumbArea.getWidth() - pipLocations[i].getX()));
+                int diff = ((thumbArea.getX() + thumbArea.getWidth() - pipLocations[i].getX()));
 
                 if (diff > currentMaxPipSize && diff > 0)
                 {
@@ -529,7 +529,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
                 }
                 else
                 {
-                    pipSize = diff;
+                    pipSize = std::max(currentMinPipSize / 3, diff);
                 }
 
             }
@@ -556,7 +556,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
                 if (diff <= 0 && diff > -0.4)
                 {
                     g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
-                    pipSize = currentMaxPipSize * (-diff + 0.2);
+                    pipSize = std::max(currentMaxPipSize / 3.0, currentMaxPipSize * (-diff + 0.2));
                 }
                 else
                 {
