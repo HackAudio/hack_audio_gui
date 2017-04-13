@@ -1,6 +1,8 @@
 #ifndef HACK_AUDIO_VIEWPORT_H
 #define HACK_AUDIO_VIEWPORT_H
 
+#include "../utils/hack_audio_NavigationButton.h"
+
 namespace HackAudio
 {
 
@@ -27,12 +29,6 @@ public:
 
 private:
 
-    struct TraversalButton : public juce::Button
-    {
-        TraversalButton() : juce::Button("") {}
-        void paintButton(juce::Graphics& g, bool isMouseOverButton, bool isButtonDown) override {};
-    };
-
     void traverseDown(HackAudio::Diagram* d);
     void traverseUp();
     void traverseTop();
@@ -58,8 +54,8 @@ private:
 
     juce::Array<HackAudio::Diagram*> parentContent;
 
-    TraversalButton backButton;
-    TraversalButton topButton;
+    NavigationButton backButton;
+    NavigationButton topButton;
 
     juce::ComponentDragger componentDragger;
     juce::ComponentAnimator componentAnimator;
