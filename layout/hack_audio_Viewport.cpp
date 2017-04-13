@@ -33,16 +33,12 @@ HackAudio::Viewport::~Viewport()
 void HackAudio::Viewport::setDiagram(HackAudio::Diagram& d)
 {
 
-    backButton.setVisible(false);
-    topButton.setVisible(false);
-
-    parentContent.clear();
-
-    if (contentContainer.getNumChildComponents() > 0)
+    if (currentContent)
     {
         currentContent->removeComponentListener(this);
-        contentContainer.removeAllChildren();
     }
+
+    contentContainer.removeAllChildren();
 
     currentContent = &d;
 
@@ -50,6 +46,12 @@ void HackAudio::Viewport::setDiagram(HackAudio::Diagram& d)
     contentContainer.addAndMakeVisible(currentContent);
 
     currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
+
+    if (parentContent.size() == 0)
+    {
+        backButton.setVisible(false);
+        topButton.setVisible(false);
+    }
 
     repaint();
 
@@ -65,18 +67,10 @@ void HackAudio::Viewport::traverseDown(HackAudio::Diagram *d)
 
     parentContent.add(currentContent);
 
-    currentContent->removeComponentListener(this);
+    setDiagram(*d);
 
-    contentContainer.removeAllChildren();
-
-    currentContent = d;
-
-    currentContent->addComponentListener(this);
-    contentContainer.addAndMakeVisible(currentContent);
-
-    currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
-
-    repaint();
+    backButton.setVisible(true);
+    topButton.setVisible(true);
 
 }
 
@@ -85,25 +79,10 @@ void HackAudio::Viewport::traverseUp()
 
     assert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
     assert(parentContent.size() > 0);                       /* Warning: Viewport Is Already On Top-Level Diagram */
-
-    currentContent->removeComponentListener(this);
-
-    contentContainer.removeAllChildren();
     
-    currentContent = parentContent.removeAndReturn(parentContent.size() - 1);
+    HackAudio::Diagram* d = parentContent.removeAndReturn(parentContent.size() - 1);
 
-    currentContent->addComponentListener(this);
-    contentContainer.addAndMakeVisible(currentContent);
-
-    currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
-
-    if (parentContent.size() == 0)
-    {
-        backButton.setVisible(false);
-        topButton.setVisible(false);
-    }
-    
-    repaint();
+    setDiagram(*d);
 
 }
 
@@ -113,22 +92,10 @@ void HackAudio::Viewport::traverseTop()
     assert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
     assert(parentContent.size() > 0);                       /* Warning: Viewport Is Already On Top-Level Diagram */
 
-    backButton.setVisible(false);
-    topButton.setVisible(false);
-
-    currentContent->removeComponentListener(this);
-
-    contentContainer.removeAllChildren();
-
-    currentContent = parentContent.removeAndReturn(0);
+    HackAudio::Diagram* d = parentContent.removeAndReturn(0);
     parentContent.clear();
 
-    currentContent->addComponentListener(this);
-    contentContainer.addAndMakeVisible(currentContent);
-
-    currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
-    
-    repaint();
+    setDiagram(*d);
 
 }
 
