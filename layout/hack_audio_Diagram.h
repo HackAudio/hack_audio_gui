@@ -20,6 +20,9 @@ public:
 
     class Junction : public juce::Component
     {
+
+        friend Diagram;
+
     public:
 
         Junction();
@@ -39,11 +42,21 @@ public:
 
         };
 
+        enum Direction
+        {
+            Null,
+            Auto,
+            Vertical,
+            Horizontal
+        };
+
         void setSymbol(Symbol s);
 
     private:
 
         juce::String currentSymbol;
+
+        juce::HashMap<juce::Component*, Direction> outputDirections;
 
         void paint(juce::Graphics& g) override;
 
@@ -96,6 +109,15 @@ public:
      @parameter destination     the component accepting a connection
     */
     void connect(juce::Component& source, juce::Component& destination);
+
+    /**
+     Adds a junction and component as children and draws a connection between them
+
+     @parameter source  the component outputting a connection
+     @parameter destination     the component accepting a connection
+     @parameter directionFromSource     this is a specific argument to determine which axis the connection should be drawn from when the source is a HackAudio::Diagram::Junction
+     */
+    void connect(Junction& source, juce::Component& destination, Junction::Direction directionFromSource = Junction::Direction::Auto);
 
     /**
      Breaks a connection between two components

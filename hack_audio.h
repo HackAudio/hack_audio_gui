@@ -61,9 +61,11 @@ namespace HackAudio
 
 }
 
+#include "components/hack_audio_Selector.h"
 #include "components/hack_audio_Slider.h"
 #include "components/hack_audio_Button.h"
 #include "components/hack_audio_Label.h"
+#include "components/hack_audio_Meter.h"
 
 #include "layout/hack_audio_Diagram.h"
 #include "layout/hack_audio_Viewport.h"

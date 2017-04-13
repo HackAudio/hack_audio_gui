@@ -1,6 +1,8 @@
 #ifndef HACK_AUDIO_VIEWPORT_H
 #define HACK_AUDIO_VIEWPORT_H
 
+#include "../utils/hack_audio_NavigationButton.h"
+
 namespace HackAudio
 {
 
@@ -27,20 +29,16 @@ public:
 
 private:
 
-    struct TraversalButton : public juce::Button
-    {
-        TraversalButton() : juce::Button("") {}
-        void paintButton(juce::Graphics& g, bool isMouseOverButton, bool isButtonDown) override {};
-    };
-
     void traverseDown(HackAudio::Diagram* d);
     void traverseUp();
     void traverseTop();
 
-    void mouseMove(const juce::MouseEvent& e) override;
-    void mouseDown(const juce::MouseEvent& e) override;
-    void mouseDrag(const juce::MouseEvent& e) override;
-    void mouseUp(const juce::MouseEvent& e) override;
+    void mouseEnter    (const juce::MouseEvent& e) override;
+    void mouseExit     (const juce::MouseEvent& e) override;
+    void mouseMove     (const juce::MouseEvent& e) override;
+    void mouseDown     (const juce::MouseEvent& e) override;
+    void mouseDrag     (const juce::MouseEvent& e) override;
+    void mouseUp       (const juce::MouseEvent& e) override;
     void mouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& w) override;
 
     void buttonClicked(juce::Button* b) override;
@@ -58,8 +56,8 @@ private:
 
     juce::Array<HackAudio::Diagram*> parentContent;
 
-    TraversalButton backButton;
-    TraversalButton topButton;
+    NavigationButton backButton;
+    NavigationButton topButton;
 
     juce::ComponentDragger componentDragger;
     juce::ComponentAnimator componentAnimator;

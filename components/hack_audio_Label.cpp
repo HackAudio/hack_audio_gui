@@ -3,15 +3,15 @@
 HackAudio::Label::Label()
 {
 
-    setInterceptsMouseClicks(false, false);
+    setInterceptsMouseClicks(true, false);
 
     setJustificationType(juce::Justification::centred);
 
-    setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Black);
-    setColour(HackAudio::ColourIds::foregroundColourId, HackAudio::Colours::White);
-    setColour(HackAudio::ColourIds::highlightColourId, HackAudio::Colours::Cyan);
+    setColour(HackAudio::backgroundColourId, HackAudio::Colours::Black);
+    setColour(HackAudio::foregroundColourId, HackAudio::Colours::White);
+    setColour(HackAudio::highlightColourId, HackAudio::Colours::Cyan);
 
-    currentColourInterpolation.reset(50, 0.5);
+    colourInterpolation.reset(50, 0.5);
 
     animationStatus = true;
     placeholderStatus = false;
@@ -94,14 +94,62 @@ void HackAudio::Label::setAnimationStatus(bool shouldAnimate)
 
 }
 
+void HackAudio::Label::mouseEnter(const juce::MouseEvent& e)
+{
+
+    if (placeholderStatus)
+    {
+
+        if (findColour(HackAudio::backgroundColourId) == HackAudio::Colours::Gray)
+        {
+
+            setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.25f));
+
+        }
+
+    }
+
+}
+
+void HackAudio::Label::mouseExit(const juce::MouseEvent& e)
+{
+
+    if (placeholderStatus)
+    {
+
+        if (findColour(HackAudio::backgroundColourId) == HackAudio::Colours::Gray.withMultipliedBrightness(1.25f))
+        {
+
+            setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray);
+
+        }
+
+    }
+
+}
+
+void HackAudio::Label::mouseUp(const juce::MouseEvent& e)
+{
+
+    if (placeholderStatus && !e.mouseWasDraggedSinceMouseDown())
+    {
+
+        labelTextChanged(this);
+
+    }
+    
+}
+
 void HackAudio::Label::labelTextChanged(juce::Label* labelThatHasChanged)
 {
 
     if (animationStatus)
     {
+
         timeout = 75;
-        currentColourInterpolation.setValue(1.0f);
+        colourInterpolation.setValue(1.0f);
         startTimerHz(ANIMATION_FPS);
+
     }
 
 }
@@ -109,23 +157,23 @@ void HackAudio::Label::labelTextChanged(juce::Label* labelThatHasChanged)
 void HackAudio::Label::timerCallback()
 {
 
-    if (currentColourInterpolation.isSmoothing())
+    if (colourInterpolation.isSmoothing())
     {
         
         repaint();
 
-        if (std::abs(currentColourInterpolation.getTargetValue() - currentColourInterpolation.getNextValue()) < 0.0001)
+        if (std::abs(colourInterpolation.getTargetValue() - colourInterpolation.getNextValue()) < 0.0001)
         {
-            currentColourInterpolation.setValue(currentColourInterpolation.getTargetValue());
+            colourInterpolation.setValue(colourInterpolation.getTargetValue());
         }
 
     }
     else
     {
 
-        if (currentColourInterpolation.getTargetValue() == 1.0f)
+        if (colourInterpolation.getTargetValue() == 1.0f)
         {
-            currentColourInterpolation.setValue(0.0f);
+            colourInterpolation.setValue(0.0f);
         }
         else
         {
@@ -155,19 +203,19 @@ void HackAudio::Label::paint(juce::Graphics& g)
 
     juce::Path p;
     p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
-    g.setColour(findColour(HackAudio::ColourIds::backgroundColourId));
+    g.setColour(findColour(HackAudio::backgroundColourId));
     g.fillPath(p);
 
-    juce::Colour foreground = findColour(HackAudio::ColourIds::foregroundColourId);
-    juce::Colour highlight  = findColour(HackAudio::ColourIds::highlightColourId);
+    juce::Colour foreground = findColour(HackAudio::foregroundColourId);
+    juce::Colour highlight  = findColour(HackAudio::highlightColourId);
 
     juce::String textToDisplay;
     textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
 
-    g.setColour(foreground.interpolatedWith(highlight, currentColourInterpolation.getNextValue()));
+    g.setColour(foreground.interpolatedWith(highlight, colourInterpolation.getNextValue()));
 
     g.setFont(getFont());
-    g.drawText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 0);
+    g.drawFittedText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 8);
 
 }
 

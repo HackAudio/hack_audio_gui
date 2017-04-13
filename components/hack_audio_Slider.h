@@ -81,10 +81,8 @@ private:
     juce::Point<int> animationEnd;
 
     bool resizeGuard;
-    bool pipGuard;
 
     bool pipsShown;
-    int pipSize;
     int minPipSize;
     int maxPipSize;
     int currentMinPipSize;

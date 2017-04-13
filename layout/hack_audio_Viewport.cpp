@@ -3,11 +3,15 @@
 HackAudio::Viewport::Viewport()
 {
 
-    setInterceptsMouseClicks(true, false);
+    setInterceptsMouseClicks(true, true);
     setRepaintsOnMouseActivity(false);
 
-    contentContainer.setInterceptsMouseClicks(false, false);
+    contentContainer.setInterceptsMouseClicks(false, true);
     addAndMakeVisible(contentContainer);
+
+
+    backButton.buttonDirection = HackAudio::NavigationButton::Left;
+    topButton.buttonDirection = HackAudio::NavigationButton::Up;
 
     backButton.addListener(this);
     topButton.addListener(this);
@@ -29,62 +33,25 @@ HackAudio::Viewport::~Viewport()
 void HackAudio::Viewport::setDiagram(HackAudio::Diagram& d)
 {
 
-    backButton.setVisible(false);
-    topButton.setVisible(false);
-
-    if (contentContainer.getNumChildComponents() > 0)
+    if (currentContent)
     {
         currentContent->removeComponentListener(this);
-        contentContainer.removeAllChildren();
+
+        for (int child = 0; child < currentContent->getNumChildComponents(); ++child)
+        {
+            currentContent->getChildComponent(child)->removeMouseListener(this);
+        }
+
     }
+
+    contentContainer.removeAllChildren();
 
     currentContent = &d;
 
-    currentContent->addComponentListener(this);
-    contentContainer.addAndMakeVisible(currentContent);
-
-    currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
-
-    repaint();
-
-}
-
-void HackAudio::Viewport::traverseDown(HackAudio::Diagram *d)
-{
-
-    assert(contentContainer.getNumChildComponents() > 0);
-
-    backButton.setVisible(true);
-    topButton.setVisible(true);
-
-    parentContent.add(currentContent);
-
-    currentContent->removeComponentListener(this);
-
-    contentContainer.removeAllChildren();
-
-    currentContent = d;
-
-    currentContent->addComponentListener(this);
-    contentContainer.addAndMakeVisible(currentContent);
-
-    currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
-
-    repaint();
-
-}
-
-void HackAudio::Viewport::traverseUp()
-{
-
-    assert(contentContainer.getNumChildComponents() > 0);
-    assert(parentContent.size() > 0);
-
-    currentContent->removeComponentListener(this);
-
-    contentContainer.removeAllChildren();
-    
-    currentContent = parentContent.removeAndReturn(parentContent.size() - 1);
+    for (int child = 0; child < currentContent->getNumChildComponents(); ++child)
+    {
+        currentContent->getChildComponent(child)->addMouseListener(this, false);
+    }
 
     currentContent->addComponentListener(this);
     contentContainer.addAndMakeVisible(currentContent);
@@ -96,33 +63,70 @@ void HackAudio::Viewport::traverseUp()
         backButton.setVisible(false);
         topButton.setVisible(false);
     }
-    
+
     repaint();
+
+}
+
+void HackAudio::Viewport::traverseDown(HackAudio::Diagram *d)
+{
+
+    assert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
+
+    backButton.setVisible(true);
+    topButton.setVisible(true);
+
+    parentContent.add(currentContent);
+
+    setDiagram(*d);
+
+    backButton.setVisible(true);
+    topButton.setVisible(true);
+
+}
+
+void HackAudio::Viewport::traverseUp()
+{
+
+    assert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
+    assert(parentContent.size() > 0);                       /* Warning: Viewport Is Already On Top-Level Diagram */
+    
+    HackAudio::Diagram* d = parentContent.removeAndReturn(parentContent.size() - 1);
+
+    setDiagram(*d);
 
 }
 
 void HackAudio::Viewport::traverseTop()
 {
 
-    assert(contentContainer.getNumChildComponents() > 0);
-    assert(parentContent.size() > 0);
+    assert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
+    assert(parentContent.size() > 0);                       /* Warning: Viewport Is Already On Top-Level Diagram */
 
-    backButton.setVisible(false);
-    topButton.setVisible(false);
-
-    currentContent->removeComponentListener(this);
-
-    contentContainer.removeAllChildren();
-
-    currentContent = parentContent.removeAndReturn(0);
+    HackAudio::Diagram* d = parentContent.removeAndReturn(0);
     parentContent.clear();
 
-    currentContent->addComponentListener(this);
-    contentContainer.addAndMakeVisible(currentContent);
+    setDiagram(*d);
 
-    currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
-    
-    repaint();
+}
+
+void HackAudio::Viewport::mouseEnter(const juce::MouseEvent& e)
+{
+
+    if (e.eventComponent != this)
+    {
+        e.eventComponent->mouseEnter(e);
+    }
+
+}
+
+void HackAudio::Viewport::mouseExit(const juce::MouseEvent& e)
+{
+
+    if (e.eventComponent != this)
+    {
+        e.eventComponent->mouseExit(e);
+    }
 
 }
 
@@ -135,11 +139,11 @@ void HackAudio::Viewport::mouseMove(const juce::MouseEvent& e)
     {
         if (it.getKey()->getScreenBounds().contains(e.getScreenPosition()))
         {
-            it.getKey()->setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.25f));
+            it.getKey()->setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.25f));
         }
         else
         {
-            it.getKey()->setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Gray);
+            it.getKey()->setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray);
         }
     }
 
@@ -176,7 +180,7 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
 
             if (it.getKey()->isVisible() && it.getKey()->getScreenBounds().contains(e.getScreenPosition()))
             {
-                it.getKey()->setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Gray);
+                it.getKey()->setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray);
                 traverseDown(it.getValue());
                 return;
             }
@@ -189,6 +193,15 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
         componentAnimator.animateComponent(currentContent, finalBounds, 1.0, 250, false, 0, 0);
 
         repaint();
+
+    }
+    else if (!e.mouseWasDraggedSinceMouseDown())
+    {
+
+        if (e.eventComponent != this)
+        {
+            e.eventComponent->mouseUp(e);
+        }
 
     }
 
@@ -265,6 +278,8 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
             int x2 = contentInputBounds.getX();
             int y2 = contentInputBounds.getY() + contentInputBounds.getHeight() / 2;
 
+            if (x2 < x1) { continue; }
+
             if (!dynamic_cast<HackAudio::Diagram::Junction*>(contentInput))
             {
                 g.setColour(HackAudio::Colours::Gray);
@@ -321,6 +336,8 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
             int x4 = contentContainer.getX() + contentContainer.getWidth();
             int y4 = contentContainer.getY() + getHeight() / 2;
+
+            if (x3 > x4) { continue; }
 
             int offset = (dynamic_cast<HackAudio::Diagram::Junction*>(contentOutput)) ? 0 : 6;
 
@@ -461,67 +478,6 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
     g.fillEllipse(contentContainer.getX() - 8, (getHeight() / 2) - 8, 16, 16);
     g.setColour(HackAudio::Colours::Gray);
     g.drawEllipse(contentContainer.getX() - 8, (getHeight() / 2) - 8, 16, 16, 4);
-
-
-
-    // Navigation Buttons
-    // =========================================================================================
-    if (backButton.isVisible())
-    {
-
-        int width  = backButton.getWidth();
-        int height = backButton.getHeight();
-
-        int x = backButton.getX();
-        int y = backButton.getY();
-
-        juce::Button::ButtonState state = backButton.getState();
-
-        if (state == juce::Button::ButtonState::buttonOver && state != juce::Button::ButtonState::buttonDown)
-        {
-            g.setColour(HackAudio::Colours::Gray);
-        }
-        else if (state == juce::Button::ButtonState::buttonOver && state == juce::Button::ButtonState::buttonDown)
-        {
-            g.setColour(HackAudio::Colours::Black);
-        }
-        else
-        {
-            g.setColour(HackAudio::Colours::White);
-        }
-
-        g.drawLine(x + (width/4), y + (height/2), x + (width - width/4), y + (height/16), 2);
-        g.drawLine(x + (width/4), y + (height/2), x + (width - width/4), y + (height - height/16), 2);
-
-    }
-
-    if (topButton.isVisible())
-    {
-
-        int width  = topButton.getWidth();
-        int height = topButton.getHeight();
-
-        int x = topButton.getX();
-        int y = topButton.getY();
-
-        juce::Button::ButtonState state = topButton.getState();
-
-        if (state == juce::Button::ButtonState::buttonOver && state != juce::Button::ButtonState::buttonDown)
-        {
-            g.setColour(HackAudio::Colours::Gray);
-        }
-        else if (state == juce::Button::ButtonState::buttonOver && state == juce::Button::ButtonState::buttonDown)
-        {
-            g.setColour(HackAudio::Colours::Black);
-        }
-        else
-        {
-            g.setColour(HackAudio::Colours::White);
-        }
-
-        g.drawLine(x + (width/16), y + (height - height/4), x + (width/2), y + (height/4), 2);
-        g.drawLine(x + (width/2), y + (height/4), x + (width - width/16), y + (height - height/4), 2);
-    }
 
 
 

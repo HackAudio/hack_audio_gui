@@ -10,7 +10,7 @@ namespace HackAudio
  
  */
 
-class Label : public juce::Label,
+class Label : public  juce::Label,
               private juce::LabelListener,
               private juce::Timer
 {
@@ -75,6 +75,10 @@ public:
 
 private:
 
+    void mouseEnter(const juce::MouseEvent& e) override;
+    void mouseExit (const juce::MouseEvent& e) override;
+    void mouseUp   (const juce::MouseEvent& e) override;
+
     void labelTextChanged(juce::Label* labelThatHasChanged) override;
 
     void timerCallback() override;
@@ -92,7 +96,7 @@ private:
 
     int timeout;
 
-    juce::LinearSmoothedValue<float> currentColourInterpolation;
+    juce::LinearSmoothedValue<float> colourInterpolation;
 
     juce::Rectangle<int> textArea;
 
