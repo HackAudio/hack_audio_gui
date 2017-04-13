@@ -164,7 +164,7 @@ void HackAudio::Selector::mouseUp(const juce::MouseEvent& e)
     else if (e.eventComponent == &selectRight)
     {
 
-        currentIndex += (currentIndex < selectorItems.size()) ? 1 : 0;
+        currentIndex += (currentIndex < selectorItems.size() - 1) ? 1 : 0;
         colourInterpolation.setValue(1.0f);
         startTimerHz(ANIMATION_FPS);
 
