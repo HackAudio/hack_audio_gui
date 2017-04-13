@@ -16,7 +16,7 @@ HackAudio::Button::Button() : juce::Button("")
 
 	resizeGuard = false;
 
-    currentColourInterpolation.reset(30, 0.45);
+    currentColourInterpolation.reset(50, 0.35);
 
 }
 
