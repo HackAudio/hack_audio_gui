@@ -295,7 +295,7 @@ void HackAudio::Meter::paint(juce::Graphics& g)
 
             double nextVal = *meterSources[channel];
 
-            g.setColour(juce::Colour(60 * channel, 90 * channel, 60 * channel));
+            g.setColour(findColour(HackAudio::highlightColourId));
 
             g.fillRect
             (
@@ -334,7 +334,7 @@ void HackAudio::Meter::paint(juce::Graphics& g)
 
             double nextVal = *meterSources[channel];
 
-            g.setColour(juce::Colour(60 * channel, 90 * channel, 60 * channel));
+            g.setColour(findColour(HackAudio::highlightColourId));
 
             g.fillRect
             (
