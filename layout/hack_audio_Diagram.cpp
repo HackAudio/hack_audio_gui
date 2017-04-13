@@ -179,7 +179,7 @@ juce::Array<juce::Component*> HackAudio::Diagram::getDiagramOutputs()
 void HackAudio::Diagram::connect(juce::Component& source, juce::Component& destination)
 {
 
-    assert(&source != &destination);
+    assert(&source != &destination);    /* Warning: Can't Connect Components To Themselves */
 
     addAndMakeVisible(source);
     addAndMakeVisible(destination);
@@ -212,7 +212,7 @@ void HackAudio::Diagram::connect(juce::Component& source, juce::Component& desti
 void HackAudio::Diagram::connect(HackAudio::Diagram::Junction& source, juce::Component& destination, Junction::Direction directionFromSource)
 {
 
-    assert(&source != &destination);
+    assert(&source != &destination);    /* Warning: Can't Connect Components To Themselves */
 
     addAndMakeVisible(source);
     addAndMakeVisible(destination);
@@ -414,7 +414,7 @@ void HackAudio::Diagram::reroute(juce::Component& source, juce::Component& oldDe
 void HackAudio::Diagram::setSubDiagram(juce::Component& source, HackAudio::Diagram& subDiagram)
 {
 
-    assert(getIndexOfChildComponent(&source) != -1);
+    assert(getIndexOfChildComponent(&source) != -1);    /* Warning: Subdiagram Trigger Component Must Be A Child Of Your Diagram */
 
     submap.set(&source, &subDiagram);
 

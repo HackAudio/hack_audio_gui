@@ -58,7 +58,7 @@ void HackAudio::Viewport::setDiagram(HackAudio::Diagram& d)
 void HackAudio::Viewport::traverseDown(HackAudio::Diagram *d)
 {
 
-    assert(contentContainer.getNumChildComponents() > 0);
+    assert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
 
     backButton.setVisible(true);
     topButton.setVisible(true);
@@ -83,8 +83,8 @@ void HackAudio::Viewport::traverseDown(HackAudio::Diagram *d)
 void HackAudio::Viewport::traverseUp()
 {
 
-    assert(contentContainer.getNumChildComponents() > 0);
-    assert(parentContent.size() > 0);
+    assert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
+    assert(parentContent.size() > 0);                       /* Warning: Viewport Is Already On Top-Level Diagram */
 
     currentContent->removeComponentListener(this);
 
@@ -110,8 +110,8 @@ void HackAudio::Viewport::traverseUp()
 void HackAudio::Viewport::traverseTop()
 {
 
-    assert(contentContainer.getNumChildComponents() > 0);
-    assert(parentContent.size() > 0);
+    assert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
+    assert(parentContent.size() > 0);                       /* Warning: Viewport Is Already On Top-Level Diagram */
 
     backButton.setVisible(false);
     topButton.setVisible(false);
