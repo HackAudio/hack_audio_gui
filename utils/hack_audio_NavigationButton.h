@@ -63,8 +63,8 @@ private:
         else if (buttonDirection == Down)
         {
 
-//            g.drawLine((width/16), (height - height/4), (width/2), (height/4), 2);
-//            g.drawLine((width/2), (height/4), (width - width/16), (height - height/4), 2);
+            g.drawLine((width/16), (height/4), (width/2), (height - height/4), 2);
+            g.drawLine((width/2), (height - height/4), (width - width/16), (height/4), 2);
 
         }
         else if (buttonDirection == Left)
@@ -77,8 +77,8 @@ private:
         else if (buttonDirection == Right)
         {
 
-//            g.drawLine((width/16), (height - height/4), (width/2), (height/4), 2);
-//            g.drawLine((width/2), (height/4), (width - width/16), (height - height/4), 2);
+            g.drawLine((width - width/4), (height/2), (width/4), (height/16), 2);
+            g.drawLine((width - width/4), (height/2), (width/4), (height - height/16), 2);
 
         }
 
