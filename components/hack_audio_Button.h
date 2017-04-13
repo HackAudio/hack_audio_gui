@@ -79,7 +79,7 @@ private:
 	juce::Point<int> animationStart;
 	juce::Point<int> animationEnd;
 
-    juce::LinearSmoothedValue<float> currentColourInterpolation;
+    juce::LinearSmoothedValue<float> colourInterpolation;
 
 	bool resizeGuard;
     juce::Rectangle<int> thumbArea;

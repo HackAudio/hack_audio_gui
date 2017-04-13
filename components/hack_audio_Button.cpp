@@ -16,7 +16,7 @@ HackAudio::Button::Button() : juce::Button("")
 
 	resizeGuard = false;
 
-    currentColourInterpolation.reset(50, 0.35);
+    colourInterpolation.reset(50, 0.35);
 
 }
 
@@ -60,7 +60,7 @@ juce::Font HackAudio::Button::getFont()
 void HackAudio::Button::mouseDown(const juce::MouseEvent& e)
 {
 
-    currentColourInterpolation.setValue(1.0f);
+    colourInterpolation.setValue(1.0f);
 
     if (buttonStyle == ButtonStyle::BarSingleton)
     {
@@ -177,28 +177,28 @@ void HackAudio::Button::timerCallback()
     if (buttonStyle != ButtonStyle::SlidingToggle)
     {
 
-        if (currentColourInterpolation.isSmoothing())
+        if (colourInterpolation.isSmoothing())
         {
             repaint();
 
-            if (std::abs(currentColourInterpolation.getTargetValue() - currentColourInterpolation.getNextValue()) < 0.0001)
+            if (std::abs(colourInterpolation.getTargetValue() - colourInterpolation.getNextValue()) < 0.0001)
             {
-                currentColourInterpolation.setValue(currentColourInterpolation.getTargetValue());
+                colourInterpolation.setValue(colourInterpolation.getTargetValue());
             }
 
         }
         else
         {
-            if (currentColourInterpolation.getTargetValue() == 1.0f && !(juce::Desktop::getInstance().getDraggingMouseSource(0)))
+            if (colourInterpolation.getTargetValue() == 1.0f && !(juce::Desktop::getInstance().getDraggingMouseSource(0)))
             {
 
-                currentColourInterpolation.setValue(0.0f);
+                colourInterpolation.setValue(0.0f);
 
             }
             else
             {
 
-                if (currentColourInterpolation.getNextValue() == 0.0f)
+                if (colourInterpolation.getNextValue() == 0.0f)
                 {
                     stopTimer();
                 }
@@ -287,12 +287,12 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
             foreground = findColour(HackAudio::ColourIds::midgroundColourId);
         }
 
-        g.setColour(background.interpolatedWith(findColour(HackAudio::ColourIds::backgroundColourId), currentColourInterpolation.getNextValue()));
+        g.setColour(background.interpolatedWith(findColour(HackAudio::ColourIds::backgroundColourId), colourInterpolation.getNextValue()));
 
         g.fillPath(p);
         p.clear();
 
-        g.setColour(foreground.interpolatedWith(findColour(HackAudio::ColourIds::midgroundColourId), currentColourInterpolation.getNextValue()));
+        g.setColour(foreground.interpolatedWith(findColour(HackAudio::ColourIds::midgroundColourId), colourInterpolation.getNextValue()));
 
         g.setFont(buttonFont);
         g.drawText(getButtonText(), 0, 0, width, height, juce::Justification::centred, 1);

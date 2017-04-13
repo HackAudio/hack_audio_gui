@@ -11,7 +11,7 @@ HackAudio::Label::Label()
     setColour(HackAudio::ColourIds::foregroundColourId, HackAudio::Colours::White);
     setColour(HackAudio::ColourIds::highlightColourId, HackAudio::Colours::Cyan);
 
-    currentColourInterpolation.reset(50, 0.5);
+    colourInterpolation.reset(50, 0.5);
 
     animationStatus = true;
     placeholderStatus = false;
@@ -100,7 +100,7 @@ void HackAudio::Label::labelTextChanged(juce::Label* labelThatHasChanged)
     if (animationStatus)
     {
         timeout = 75;
-        currentColourInterpolation.setValue(1.0f);
+        colourInterpolation.setValue(1.0f);
         startTimerHz(ANIMATION_FPS);
     }
 
@@ -109,23 +109,23 @@ void HackAudio::Label::labelTextChanged(juce::Label* labelThatHasChanged)
 void HackAudio::Label::timerCallback()
 {
 
-    if (currentColourInterpolation.isSmoothing())
+    if (colourInterpolation.isSmoothing())
     {
         
         repaint();
 
-        if (std::abs(currentColourInterpolation.getTargetValue() - currentColourInterpolation.getNextValue()) < 0.0001)
+        if (std::abs(colourInterpolation.getTargetValue() - colourInterpolation.getNextValue()) < 0.0001)
         {
-            currentColourInterpolation.setValue(currentColourInterpolation.getTargetValue());
+            colourInterpolation.setValue(colourInterpolation.getTargetValue());
         }
 
     }
     else
     {
 
-        if (currentColourInterpolation.getTargetValue() == 1.0f)
+        if (colourInterpolation.getTargetValue() == 1.0f)
         {
-            currentColourInterpolation.setValue(0.0f);
+            colourInterpolation.setValue(0.0f);
         }
         else
         {
@@ -164,7 +164,7 @@ void HackAudio::Label::paint(juce::Graphics& g)
     juce::String textToDisplay;
     textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
 
-    g.setColour(foreground.interpolatedWith(highlight, currentColourInterpolation.getNextValue()));
+    g.setColour(foreground.interpolatedWith(highlight, colourInterpolation.getNextValue()));
 
     g.setFont(getFont());
     g.drawFittedText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 8);

@@ -92,7 +92,7 @@ private:
 
     int timeout;
 
-    juce::LinearSmoothedValue<float> currentColourInterpolation;
+    juce::LinearSmoothedValue<float> colourInterpolation;
 
     juce::Rectangle<int> textArea;
 
