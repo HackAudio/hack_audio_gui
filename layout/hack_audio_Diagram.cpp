@@ -3,8 +3,6 @@
 HackAudio::Diagram::Junction::Junction()
 {
 
-    outputDirection = Auto;
-
 }
 
 HackAudio::Diagram::Junction::~Junction()
@@ -53,20 +51,6 @@ void HackAudio::Diagram::Junction::setSymbol(HackAudio::Diagram::Junction::Symbo
             currentSymbol = "";
             break;
     }
-
-}
-
-void HackAudio::Diagram::Junction::setDirection(HackAudio::Diagram::Junction::Direction d)
-{
-
-    outputDirection = d;
-
-}
-
-HackAudio::Diagram::Junction::Direction HackAudio::Diagram::Junction::getDirection()
-{
-
-    return outputDirection;
 
 }
 
@@ -219,7 +203,7 @@ void HackAudio::Diagram::connect(HackAudio::Diagram::Junction& source, juce::Com
     addAndMakeVisible(source);
     addAndMakeVisible(destination);
 
-    source.setDirection(directionFromSource);
+    source.outputDirections.set(&destination, directionFromSource);
 
     if(connections.contains(&source))
     {
@@ -660,7 +644,10 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
             if (sourceIsJunction)
             {
 
-                sourceDirection = sourceIsJunction->getDirection();
+                if (sourceIsJunction->outputDirections.contains(destination))
+                {
+                    sourceDirection = sourceIsJunction->outputDirections[destination];
+                }
 
             }
 

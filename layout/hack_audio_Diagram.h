@@ -20,6 +20,9 @@ public:
 
     class Junction : public juce::Component
     {
+
+        friend Diagram;
+
     public:
 
         Junction();
@@ -49,15 +52,11 @@ public:
 
         void setSymbol(Symbol s);
 
-        void setDirection(Direction d);
-
-        Direction getDirection();
-
     private:
 
         juce::String currentSymbol;
 
-        Direction outputDirection;
+        juce::HashMap<juce::Component*, Direction> outputDirections;
 
         void paint(juce::Graphics& g) override;
 
