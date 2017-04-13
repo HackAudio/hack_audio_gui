@@ -13,7 +13,7 @@ HackAudio::Selector::Selector() : selectorJustification(juce::Justification::cen
     colourInterpolation.reset(50, 0.5);
 
     selectLeft.buttonDirection  = HackAudio::NavigationButton::Left;
-    selectRight.buttonDirection = HackAudio::NavigationButton::Left;
+    selectRight.buttonDirection = HackAudio::NavigationButton::Right;
 
     addAndMakeVisible(selectLeft);
     addAndMakeVisible(selectRight);
