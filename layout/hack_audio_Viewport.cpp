@@ -36,6 +36,8 @@ void HackAudio::Viewport::setDiagram(HackAudio::Diagram& d)
     backButton.setVisible(false);
     topButton.setVisible(false);
 
+    parentContent.clear();
+
     if (contentContainer.getNumChildComponents() > 0)
     {
         currentContent->removeComponentListener(this);
