@@ -364,14 +364,14 @@ void HackAudio::Meter::paint(juce::Graphics& g)
 
     }
 
-//    g.setColour(findColour(HackAudio::ColourIds::midgroundColourId));
-//    for (int i = 0; i < pipLocations.size(); ++i)
-//    {
-//
-//        juce::Point<int>& pip = pipLocations.getReference(i);
-//        g.fillEllipse(pip.x - pipSize/2, pip.y - pipSize/2, pipSize, pipSize);
-//
-//    }
+    g.setColour(findColour(HackAudio::ColourIds::midgroundColourId));
+    for (int i = 0; i < pipLocations.size(); ++i)
+    {
+
+        juce::Point<int>& pip = pipLocations.getReference(i);
+        g.fillEllipse(pip.x - pipSize/2, pip.y - pipSize/2, pipSize, pipSize);
+
+    }
 
     juce::Path p;
     p.addRoundedRectangle(4, 4, width - 8, height - 8, CORNER_RADIUS, CORNER_CONFIG);
