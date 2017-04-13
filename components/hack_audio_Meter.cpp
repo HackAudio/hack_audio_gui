@@ -3,10 +3,10 @@
 HackAudio::Meter::Meter()
 {
 
-    setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Black);
-    setColour(HackAudio::ColourIds::midgroundColourId, HackAudio::Colours::Gray);
-    setColour(HackAudio::ColourIds::foregroundColourId, HackAudio::Colours::White);
-    setColour(HackAudio::ColourIds::highlightColourId, HackAudio::Colours::Cyan);
+    setColour(HackAudio::backgroundColourId, HackAudio::Colours::Black);
+    setColour(HackAudio::midgroundColourId, HackAudio::Colours::Gray);
+    setColour(HackAudio::foregroundColourId, HackAudio::Colours::White);
+    setColour(HackAudio::highlightColourId, HackAudio::Colours::Cyan);
 
     pipsShown = true;
 
@@ -282,7 +282,7 @@ void HackAudio::Meter::paint(juce::Graphics& g)
 
     juce::Path b;
     b.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
-    g.setColour(findColour(HackAudio::ColourIds::backgroundColourId));
+    g.setColour(findColour(HackAudio::backgroundColourId));
     g.fillPath(b);
 
     if (meterStyle == Vertical)
@@ -308,7 +308,7 @@ void HackAudio::Meter::paint(juce::Graphics& g)
             if (meterPeakStatus)
             {
 
-                g.setColour(findColour(HackAudio::ColourIds::foregroundColourId));
+                g.setColour(findColour(HackAudio::foregroundColourId));
 
                 g.drawLine
                 (
@@ -357,7 +357,7 @@ void HackAudio::Meter::paint(juce::Graphics& g)
             if (meterPeakStatus)
             {
 
-                g.setColour(findColour(HackAudio::ColourIds::foregroundColourId));
+                g.setColour(findColour(HackAudio::foregroundColourId));
 
                 g.drawLine
                 (
@@ -384,7 +384,7 @@ void HackAudio::Meter::paint(juce::Graphics& g)
 
     }
 
-    g.setColour(findColour(HackAudio::ColourIds::midgroundColourId));
+    g.setColour(findColour(HackAudio::midgroundColourId));
     for (int i = 0; i < pipLocations.size(); ++i)
     {
 

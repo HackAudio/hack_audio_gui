@@ -240,8 +240,8 @@ void HackAudio::Selector::paint(juce::Graphics& g)
     g.setColour(findColour(HackAudio::backgroundColourId));
     g.fillPath(p);
 
-    juce::Colour foreground = findColour(HackAudio::ColourIds::foregroundColourId);
-    juce::Colour highlight  = findColour(HackAudio::ColourIds::highlightColourId);
+    juce::Colour foreground = findColour(HackAudio::foregroundColourId);
+    juce::Colour highlight  = findColour(HackAudio::highlightColourId);
 
     g.setColour(foreground.interpolatedWith(highlight, colourInterpolation.getNextValue()));
     g.drawFittedText(selectorItems[currentIndex], 0, 0, width, height, selectorJustification.getFlags(), 1);

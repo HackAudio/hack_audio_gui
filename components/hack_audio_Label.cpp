@@ -7,9 +7,9 @@ HackAudio::Label::Label()
 
     setJustificationType(juce::Justification::centred);
 
-    setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Black);
-    setColour(HackAudio::ColourIds::foregroundColourId, HackAudio::Colours::White);
-    setColour(HackAudio::ColourIds::highlightColourId, HackAudio::Colours::Cyan);
+    setColour(HackAudio::backgroundColourId, HackAudio::Colours::Black);
+    setColour(HackAudio::foregroundColourId, HackAudio::Colours::White);
+    setColour(HackAudio::highlightColourId, HackAudio::Colours::Cyan);
 
     colourInterpolation.reset(50, 0.5);
 
@@ -101,7 +101,7 @@ void HackAudio::Label::mouseEnter(const juce::MouseEvent& e)
     if (placeholderStatus)
     {
 
-        setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.25f));
+        setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.25f));
 
     }
 
@@ -113,7 +113,7 @@ void HackAudio::Label::mouseExit(const juce::MouseEvent& e)
     if (placeholderStatus)
     {
 
-        setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Gray);
+        setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray);
 
     }
 
@@ -197,11 +197,11 @@ void HackAudio::Label::paint(juce::Graphics& g)
 
     juce::Path p;
     p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
-    g.setColour(findColour(HackAudio::ColourIds::backgroundColourId));
+    g.setColour(findColour(HackAudio::backgroundColourId));
     g.fillPath(p);
 
-    juce::Colour foreground = findColour(HackAudio::ColourIds::foregroundColourId);
-    juce::Colour highlight  = findColour(HackAudio::ColourIds::highlightColourId);
+    juce::Colour foreground = findColour(HackAudio::foregroundColourId);
+    juce::Colour highlight  = findColour(HackAudio::highlightColourId);
 
     juce::String textToDisplay;
     textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;

@@ -587,7 +587,7 @@ void HackAudio::Diagram::childrenChanged()
     {
         juce::Component* c = getChildComponent(i);
 
-        c->setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Gray);
+        c->setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray);
 
         c->addComponentListener(this);
     }
