@@ -33,10 +33,12 @@ private:
     void traverseUp();
     void traverseTop();
 
-    void mouseMove(const juce::MouseEvent& e) override;
-    void mouseDown(const juce::MouseEvent& e) override;
-    void mouseDrag(const juce::MouseEvent& e) override;
-    void mouseUp(const juce::MouseEvent& e) override;
+    void mouseEnter    (const juce::MouseEvent& e) override;
+    void mouseExit     (const juce::MouseEvent& e) override;
+    void mouseMove     (const juce::MouseEvent& e) override;
+    void mouseDown     (const juce::MouseEvent& e) override;
+    void mouseDrag     (const juce::MouseEvent& e) override;
+    void mouseUp       (const juce::MouseEvent& e) override;
     void mouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& w) override;
 
     void buttonClicked(juce::Button* b) override;

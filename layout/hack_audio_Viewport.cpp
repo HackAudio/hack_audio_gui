@@ -110,6 +110,26 @@ void HackAudio::Viewport::traverseTop()
 
 }
 
+void HackAudio::Viewport::mouseEnter(const juce::MouseEvent& e)
+{
+
+    if (e.eventComponent != this)
+    {
+        e.eventComponent->mouseEnter(e);
+    }
+
+}
+
+void HackAudio::Viewport::mouseExit(const juce::MouseEvent& e)
+{
+
+    if (e.eventComponent != this)
+    {
+        e.eventComponent->mouseExit(e);
+    }
+
+}
+
 void HackAudio::Viewport::mouseMove(const juce::MouseEvent& e)
 {
 

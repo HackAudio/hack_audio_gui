@@ -95,6 +95,30 @@ void HackAudio::Label::setAnimationStatus(bool shouldAnimate)
 
 }
 
+void HackAudio::Label::mouseEnter(const juce::MouseEvent& e)
+{
+
+    if (placeholderStatus)
+    {
+
+        setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.25f));
+
+    }
+
+}
+
+void HackAudio::Label::mouseExit(const juce::MouseEvent& e)
+{
+
+    if (placeholderStatus)
+    {
+
+        setColour(HackAudio::ColourIds::backgroundColourId, HackAudio::Colours::Gray);
+
+    }
+
+}
+
 void HackAudio::Label::mouseUp(const juce::MouseEvent& e)
 {
 

@@ -75,7 +75,9 @@ public:
 
 private:
 
-    void mouseUp(const juce::MouseEvent& e) override;
+    void mouseEnter(const juce::MouseEvent& e) override;
+    void mouseExit (const juce::MouseEvent& e) override;
+    void mouseUp   (const juce::MouseEvent& e) override;
 
     void labelTextChanged(juce::Label* labelThatHasChanged) override;
 
