@@ -321,6 +321,16 @@ void HackAudio::Meter::paint(juce::Graphics& g)
                 
             }
 
+            g.setColour(findColour(HackAudio::backgroundColourId));
+            g.drawLine
+            (
+                (indicatorArea.getX() + channelWidth * channel) + channelWidth,
+                indicatorArea.getY(),
+                (indicatorArea.getX() + channelWidth * channel) + channelWidth,
+                indicatorArea.getBottom(),
+                2
+            );
+
         }
 
     }
@@ -359,6 +369,16 @@ void HackAudio::Meter::paint(juce::Graphics& g)
                 );
 
             }
+
+            g.setColour(findColour(HackAudio::backgroundColourId));
+            g.drawLine
+            (
+                indicatorArea.getX(),
+                (indicatorArea.getY() + channelHeight * channel) + channelHeight,
+                indicatorArea.getRight(),
+                (indicatorArea.getY() + channelHeight * channel) + channelHeight,
+                2
+            );
 
         }
 
