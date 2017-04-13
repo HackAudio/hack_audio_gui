@@ -75,6 +75,8 @@ public:
 
 private:
 
+    void mouseUp(const juce::MouseEvent& e) override;
+
     void labelTextChanged(juce::Label* labelThatHasChanged) override;
 
     void timerCallback() override;
@@ -89,6 +91,7 @@ private:
 
     bool animationStatus;
     bool placeholderStatus;
+    bool wasClicked;
 
     int timeout;
 

@@ -3,7 +3,7 @@
 HackAudio::Label::Label()
 {
 
-    setInterceptsMouseClicks(false, false);
+    setInterceptsMouseClicks(true, false);
 
     setJustificationType(juce::Justification::centred);
 
@@ -15,6 +15,7 @@ HackAudio::Label::Label()
 
     animationStatus = true;
     placeholderStatus = false;
+    wasClicked = false;
 
     timeout = 0;
 
@@ -94,15 +95,32 @@ void HackAudio::Label::setAnimationStatus(bool shouldAnimate)
 
 }
 
+void HackAudio::Label::mouseUp(const juce::MouseEvent& e)
+{
+
+    if (placeholderStatus)
+    {
+
+        wasClicked = true;
+        labelTextChanged(this);
+
+    }
+    
+}
+
 void HackAudio::Label::labelTextChanged(juce::Label* labelThatHasChanged)
 {
 
     if (animationStatus)
     {
+
         timeout = 75;
         colourInterpolation.setValue(1.0f);
         startTimerHz(ANIMATION_FPS);
+
     }
+
+    wasClicked = false;
 
 }
 
