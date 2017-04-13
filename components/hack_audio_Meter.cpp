@@ -25,8 +25,6 @@ HackAudio::Meter::Meter()
     meterOvershoot = 0.0f;
     meterFall = 0;
 
-    currentValue.reset(1000, 0.01);
-
 }
 
 HackAudio::Meter::~Meter()
@@ -86,12 +84,10 @@ HackAudio::Meter::MeterCalibration HackAudio::Meter::getMeterCalibration()
 
 }
 
-void HackAudio::Meter::setSource(float* const source)
+void HackAudio::Meter::setSource(int channel, float* const source)
 {
 
-    clearSource();
-
-    valueSource = source;
+    meterSources.set(channel, source);
 
     if (!isTimerRunning())
     {
@@ -100,13 +96,20 @@ void HackAudio::Meter::setSource(float* const source)
 
 }
 
-void HackAudio::Meter::clearSource()
+void HackAudio::Meter::clearSource(int channel)
 {
 
-    valueSource = nullptr;
-    currentValue.setValue(0.0);
-    stopTimer();
 
+    meterSources.set(channel, nullptr);
+
+}
+
+void HackAudio::Meter::clearSources()
+{
+
+    meterSources.clear();
+    stopTimer();
+    
 }
 
 void HackAudio::Meter::setSkewFactor(double factor, bool symmetricSkew)
@@ -262,9 +265,10 @@ void HackAudio::Meter::mouseUp(const juce::MouseEvent& e)
 void HackAudio::Meter::timerCallback()
 {
 
-    assert(valueSource);
-
-    currentValue.setValue(*valueSource);
+    if (meterSources.size() == 0)
+    {
+        stopTimer();
+    }
 
     repaint();
 
@@ -281,47 +285,77 @@ void HackAudio::Meter::paint(juce::Graphics& g)
     g.setColour(findColour(HackAudio::ColourIds::backgroundColourId));
     g.fillPath(b);
 
-    double nextVal = currentValue.getNextValue();
-
     if (meterStyle == Vertical)
     {
 
-        g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
-        g.fillRect(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), indicatorArea.getWidth(), indicatorArea.getHeight() * nextVal);
+        int channelWidth = indicatorArea.getWidth() / (meterSources.size());
 
-        if (meterPeakStatus)
+        for (int channel = 0; channel < meterSources.size(); ++channel)
         {
 
-            g.setColour(findColour(HackAudio::ColourIds::foregroundColourId));
-            g.drawLine(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), indicatorArea.getRight(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), 2);
-            
+            double nextVal = *meterSources[channel];
+
+            g.setColour(juce::Colour(60 * channel, 90 * channel, 60 * channel));
+
+            g.fillRect
+            (
+               indicatorArea.getX() + channelWidth * channel,
+               indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal),
+               channelWidth,
+               indicatorArea.getHeight() * nextVal
+            );
+
+            if (meterPeakStatus)
+            {
+
+                g.setColour(findColour(HackAudio::ColourIds::foregroundColourId));
+
+                g.drawLine
+                (
+                    indicatorArea.getX() + channelWidth * channel,
+                    indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal),
+                    (indicatorArea.getX() + (channelWidth * channel)) + channelWidth,
+                    indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal),
+                    2
+                );
+                
+            }
+
         }
 
     }
     else
     {
 
-        g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
-        g.fillRect(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), indicatorArea.getWidth(), indicatorArea.getHeight() * nextVal);
-
-        if (meterPeakStatus)
+        for (int channel = 0; channel < meterSources.size(); ++channel)
         {
 
-            g.setColour(findColour(HackAudio::ColourIds::foregroundColourId));
-            g.drawLine(indicatorArea.getX() + (indicatorArea.getWidth() * nextVal), indicatorArea.getY(), indicatorArea.getX() + (indicatorArea.getWidth() * nextVal), indicatorArea.getBottom(), 2);
+            double nextVal = *meterSources[channel];
+
+            g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
+
+            g.fillRect(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), indicatorArea.getWidth(), indicatorArea.getHeight() * nextVal);
+
+            if (meterPeakStatus)
+            {
+
+                g.setColour(findColour(HackAudio::ColourIds::foregroundColourId));
+                g.drawLine(indicatorArea.getX() + (indicatorArea.getWidth() * nextVal), indicatorArea.getY(), indicatorArea.getX() + (indicatorArea.getWidth() * nextVal), indicatorArea.getBottom(), 2);
+
+            }
 
         }
 
     }
 
-    g.setColour(findColour(HackAudio::ColourIds::midgroundColourId));
-    for (int i = 0; i < pipLocations.size(); ++i)
-    {
-
-        juce::Point<int>& pip = pipLocations.getReference(i);
-        g.fillEllipse(pip.x - pipSize/2, pip.y - pipSize/2, pipSize, pipSize);
-
-    }
+//    g.setColour(findColour(HackAudio::ColourIds::midgroundColourId));
+//    for (int i = 0; i < pipLocations.size(); ++i)
+//    {
+//
+//        juce::Point<int>& pip = pipLocations.getReference(i);
+//        g.fillEllipse(pip.x - pipSize/2, pip.y - pipSize/2, pipSize, pipSize);
+//
+//    }
 
     juce::Path p;
     p.addRoundedRectangle(4, 4, width - 8, height - 8, CORNER_RADIUS, CORNER_CONFIG);

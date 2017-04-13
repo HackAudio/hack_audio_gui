@@ -51,12 +51,17 @@ public:
      
      @parameter source  a value ranging from 0.0 to 1.0
     */
-    void setSource(float* const source);
+    void setSource(int channel, float* const source);
 
     /**
      Stops the meter from listening to a source
     */
-    void clearSource();
+    void clearSource(int channel);
+
+    /**
+     Stops the meter from listening to all sources
+    */
+    void clearSources();
 
     /**
      Sets up a skew factor to alter the way values are distributed
@@ -160,9 +165,7 @@ private:
     float meterOvershoot;
     int   meterFall;
 
-    juce::LinearSmoothedValue<double> currentValue;
-
-    float*  valueSource;
+    juce::Array<float*> meterSources;
 
     MeterStyle       meterStyle;
     MeterCalibration meterCalibration;
