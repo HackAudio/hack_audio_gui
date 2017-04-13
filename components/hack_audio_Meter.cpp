@@ -288,7 +288,7 @@ void HackAudio::Meter::paint(juce::Graphics& g)
     if (meterStyle == Vertical)
     {
 
-        int channelWidth = indicatorArea.getWidth() / (meterSources.size());
+        int channelWidth = indicatorArea.getWidth() / meterSources.size();
 
         for (int channel = 0; channel < meterSources.size(); ++channel)
         {
@@ -324,23 +324,39 @@ void HackAudio::Meter::paint(juce::Graphics& g)
         }
 
     }
-    else
+    else if (meterStyle == Horizontal)
     {
+
+        int channelHeight = indicatorArea.getHeight() / meterSources.size();
 
         for (int channel = 0; channel < meterSources.size(); ++channel)
         {
 
             double nextVal = *meterSources[channel];
 
-            g.setColour(findColour(HackAudio::ColourIds::highlightColourId));
+            g.setColour(juce::Colour(60 * channel, 90 * channel, 60 * channel));
 
-            g.fillRect(indicatorArea.getX(), indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal), indicatorArea.getWidth(), indicatorArea.getHeight() * nextVal);
+            g.fillRect
+            (
+                indicatorArea.getX(),
+                indicatorArea.getY() + channelHeight * channel,
+                indicatorArea.getWidth() * nextVal,
+                channelHeight
+            );
 
             if (meterPeakStatus)
             {
 
                 g.setColour(findColour(HackAudio::ColourIds::foregroundColourId));
-                g.drawLine(indicatorArea.getX() + (indicatorArea.getWidth() * nextVal), indicatorArea.getY(), indicatorArea.getX() + (indicatorArea.getWidth() * nextVal), indicatorArea.getBottom(), 2);
+
+                g.drawLine
+                (
+                    indicatorArea.getX() + indicatorArea.getWidth() * nextVal,
+                    indicatorArea.getY() + channelHeight * channel,
+                    indicatorArea.getX() + indicatorArea.getWidth() * nextVal,
+                    (indicatorArea.getY() + channelHeight * channel) + channelHeight,
+                    2
+                );
 
             }
 
