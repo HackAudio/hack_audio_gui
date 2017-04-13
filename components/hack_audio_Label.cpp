@@ -98,7 +98,7 @@ void HackAudio::Label::setAnimationStatus(bool shouldAnimate)
 void HackAudio::Label::mouseUp(const juce::MouseEvent& e)
 {
 
-    if (placeholderStatus)
+    if (placeholderStatus && !e.mouseWasDraggedSinceMouseDown())
     {
 
         wasClicked = true;

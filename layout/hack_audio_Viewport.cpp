@@ -3,10 +3,10 @@
 HackAudio::Viewport::Viewport()
 {
 
-    setInterceptsMouseClicks(true, false);
+    setInterceptsMouseClicks(true, true);
     setRepaintsOnMouseActivity(false);
 
-    contentContainer.setInterceptsMouseClicks(false, false);
+    contentContainer.setInterceptsMouseClicks(false, true);
     addAndMakeVisible(contentContainer);
 
 
@@ -36,11 +36,22 @@ void HackAudio::Viewport::setDiagram(HackAudio::Diagram& d)
     if (currentContent)
     {
         currentContent->removeComponentListener(this);
+
+        for (int child = 0; child < currentContent->getNumChildComponents(); ++child)
+        {
+            currentContent->getChildComponent(child)->removeMouseListener(this);
+        }
+
     }
 
     contentContainer.removeAllChildren();
 
     currentContent = &d;
+
+    for (int child = 0; child < currentContent->getNumChildComponents(); ++child)
+    {
+        currentContent->getChildComponent(child)->addMouseListener(this, false);
+    }
 
     currentContent->addComponentListener(this);
     contentContainer.addAndMakeVisible(currentContent);
@@ -162,6 +173,15 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
         componentAnimator.animateComponent(currentContent, finalBounds, 1.0, 250, false, 0, 0);
 
         repaint();
+
+    }
+    else if (!e.mouseWasDraggedSinceMouseDown())
+    {
+
+        if (e.eventComponent != this)
+        {
+            e.eventComponent->mouseUp(e);
+        }
 
     }
 

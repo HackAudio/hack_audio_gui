@@ -93,6 +93,8 @@ HackAudio::Diagram::Diagram()
 
     moveGuard = false;
 
+    setInterceptsMouseClicks(false, true);
+
     setBufferedToImage(true);
 
 }
