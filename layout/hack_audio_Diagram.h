@@ -54,11 +54,13 @@ public:
 
     private:
 
+        void parentHierarchyChanged() override;
+
+        void paint(juce::Graphics& g) override;
+
         juce::String currentSymbol;
 
         juce::HashMap<juce::Component*, Direction> outputDirections;
-
-        void paint(juce::Graphics& g) override;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Junction)
 

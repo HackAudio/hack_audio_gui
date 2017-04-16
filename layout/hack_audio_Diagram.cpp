@@ -3,6 +3,11 @@
 HackAudio::Diagram::Junction::Junction()
 {
 
+    setColour(HackAudio::backgroundColourId, HackAudio::Colours::Black);
+    setColour(HackAudio::midgroundColourId,  HackAudio::Colours::Gray);
+    setColour(HackAudio::foregroundColourId, HackAudio::Colours::White);
+    setColour(HackAudio::highlightColourId,  HackAudio::Colours::Cyan);
+
 }
 
 HackAudio::Diagram::Junction::~Junction()
@@ -54,6 +59,13 @@ void HackAudio::Diagram::Junction::setSymbol(HackAudio::Diagram::Junction::Symbo
 
 }
 
+void HackAudio::Diagram::Junction::parentHierarchyChanged()
+{
+
+    assert(dynamic_cast<HackAudio::Diagram*>(getParentComponent())); /* Warning: Junctions Should Only Be Used Within HackAudio::Diagrams */
+
+}
+
 void HackAudio::Diagram::Junction::paint(juce::Graphics& g)
 {
 
@@ -62,10 +74,20 @@ void HackAudio::Diagram::Junction::paint(juce::Graphics& g)
 
     if (width <= 0 || height <= 0) { return; }
 
-    g.setColour(HackAudio::Colours::Gray);
+    juce::Component* parent = getParentComponent();
+
+    juce::Colour background = (parent && dynamic_cast<HackAudio::Diagram*>(parent))
+                                ? parent->findColour(HackAudio::midgroundColourId)
+                                : findColour(HackAudio::backgroundColourId);
+
+    juce::Colour foreground = (parent && dynamic_cast<HackAudio::Diagram*>(parent))
+                                ? parent->findColour(HackAudio::foregroundColourId)
+                                : findColour(HackAudio::foregroundColourId);
+
+    g.setColour(background);
     g.fillEllipse(0, 0, width, height);
 
-    g.setColour(HackAudio::Colours::White);
+    g.setColour(foreground);
     g.drawFittedText(currentSymbol, 0, 0, width, height, juce::Justification::centred, 1);
 
 }
@@ -74,6 +96,11 @@ void HackAudio::Diagram::Junction::paint(juce::Graphics& g)
 
 HackAudio::Diagram::Diagram()
 {
+
+    setColour(HackAudio::backgroundColourId, HackAudio::Colours::Black);
+    setColour(HackAudio::midgroundColourId,  HackAudio::Colours::Gray);
+    setColour(HackAudio::foregroundColourId, HackAudio::Colours::White);
+    setColour(HackAudio::highlightColourId,  HackAudio::Colours::Cyan);
 
     moveGuard = false;
 
@@ -726,9 +753,9 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         if (!destinationIsJunction)
                         {
 
-                            g.setColour(HackAudio::Colours::Gray);
+                            g.setColour(findColour(HackAudio::midgroundColourId));
                             g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
-                            g.setColour(HackAudio::Colours::Black);
+                            g.setColour(findColour(HackAudio::backgroundColourId));
                             g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
 
                         }
@@ -749,15 +776,15 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         }
 
 
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.strokePath(p, juce::PathStrokeType(4));
 
                         if (!sourceIsJunction)
                         {
 
-                            g.setColour(HackAudio::Colours::Black);
+                            g.setColour(findColour(HackAudio::backgroundColourId));
                             g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
-                            g.setColour(HackAudio::Colours::Gray);
+                            g.setColour(findColour(HackAudio::midgroundColourId));
                             g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
                             
                         }
@@ -766,21 +793,21 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                     else
                     {
 
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
-                        g.setColour(HackAudio::Colours::Black);
+                        g.setColour(findColour(HackAudio::backgroundColourId));
                         g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
 
                         p.startNewSubPath(x1, y1);
                         p.cubicTo(x1 + 64, y1, x1, y2, x1 + 64, y2);
                         p.startNewSubPath(x1 + 64, y2);
                         p.cubicTo(x1 + 64, y2, x2, y2, x2, y2);
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.strokePath(p, juce::PathStrokeType(4));
 
-                        g.setColour(HackAudio::Colours::Black);
+                        g.setColour(findColour(HackAudio::backgroundColourId));
                         g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
                         
                     }
@@ -851,9 +878,9 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         if (!destinationIsJunction)
                         {
 
-                            g.setColour(HackAudio::Colours::Gray);
+                            g.setColour(findColour(HackAudio::midgroundColourId));
                             g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
-                            g.setColour(HackAudio::Colours::Black);
+                            g.setColour(findColour(HackAudio::backgroundColourId));
                             g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
 
                         }
@@ -874,15 +901,15 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         }
 
 
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.strokePath(p, juce::PathStrokeType(4));
 
                         if (!sourceIsJunction)
                         {
 
-                            g.setColour(HackAudio::Colours::Black);
+                            g.setColour(findColour(HackAudio::backgroundColourId));
                             g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
-                            g.setColour(HackAudio::Colours::Gray);
+                            g.setColour(findColour(HackAudio::midgroundColourId));
                             g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
 
                         }
@@ -891,21 +918,21 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                     else
                     {
 
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
-                        g.setColour(HackAudio::Colours::Black);
+                        g.setColour(findColour(HackAudio::backgroundColourId));
                         g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
 
                         p.startNewSubPath(x1, y1);
                         p.cubicTo(x1 - 64, y1, x1, y2, x1 - 64, y2);
                         p.startNewSubPath(x1 - 64, y2);
                         p.cubicTo(x1 - 64, y2, x2, y2, x2, y2);
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.strokePath(p, juce::PathStrokeType(4));
 
-                        g.setColour(HackAudio::Colours::Black);
+                        g.setColour(findColour(HackAudio::backgroundColourId));
                         g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
                         
                     }
@@ -943,7 +970,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
                         p.startNewSubPath(x1, y1);
                         p.lineTo(x2, y2);
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.strokePath(p, juce::PathStrokeType(4));
 
                     }
@@ -955,9 +982,9 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 //                        if (!destinationIsJunction)
 //                        {
 //
-//                            g.setColour(HackAudio::Colours::Gray);
+//                            g.setColour(findColour(HackAudio::midgroundColourId));
 //                            g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
-//                            g.setColour(HackAudio::Colours::Black);
+//                            g.setColour(findColour(HackAudio::backgroundColourId));
 //                            g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
 //
 //                        }
@@ -966,15 +993,15 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 //                        p.cubicTo(x1 + 64, y1, x1, y2, x1 + 64, y2);
 //                        p.startNewSubPath(x1 + 64, y2);
 //                        p.cubicTo(x1 + 64, y2, x2, y2, x2, y2);
-//                        g.setColour(HackAudio::Colours::Gray);
+//                        g.setColour(findColour(HackAudio::midgroundColourId));
 //                        g.strokePath(p, juce::PathStrokeType(4));
 //
 //                        if (!sourceIsJunction)
 //                        {
 //
-//                            g.setColour(HackAudio::Colours::Black);
+//                            g.setColour(findColour(HackAudio::backgroundColourId));
 //                            g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
-//                            g.setColour(HackAudio::Colours::Gray);
+//                            g.setColour(findColour(HackAudio::midgroundColourId));
 //                            g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
 //                            
 //                        }
@@ -1050,9 +1077,9 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         if (!destinationIsJunction)
                         {
 
-                            g.setColour(HackAudio::Colours::Gray);
+                            g.setColour(findColour(HackAudio::midgroundColourId));
                             g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
-                            g.setColour(HackAudio::Colours::Black);
+                            g.setColour(findColour(HackAudio::backgroundColourId));
                             g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
 
                         }
@@ -1072,15 +1099,15 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
                         }
 
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.strokePath(p, juce::PathStrokeType(4));
 
                         if (!sourceIsJunction)
                         {
 
-                            g.setColour(HackAudio::Colours::Black);
+                            g.setColour(findColour(HackAudio::backgroundColourId));
                             g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
-                            g.setColour(HackAudio::Colours::Gray);
+                            g.setColour(findColour(HackAudio::midgroundColourId));
                             g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
 
                         }
@@ -1089,21 +1116,21 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                     else
                     {
 
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
-                        g.setColour(HackAudio::Colours::Black);
+                        g.setColour(findColour(HackAudio::backgroundColourId));
                         g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
 
                         p.startNewSubPath(x1, y1);
                         p.cubicTo(x1 + 64, y1, x1, y2, x1 + 64, y2);
                         p.startNewSubPath(x1 + 64, y2);
                         p.cubicTo(x1 + 64, y2, x2, y2, x2, y2);
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.strokePath(p, juce::PathStrokeType(4));
 
-                        g.setColour(HackAudio::Colours::Black);
+                        g.setColour(findColour(HackAudio::backgroundColourId));
                         g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
                         
                     }
@@ -1172,9 +1199,9 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         if (!destinationIsJunction)
                         {
 
-                            g.setColour(HackAudio::Colours::Gray);
+                            g.setColour(findColour(HackAudio::midgroundColourId));
                             g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
-                            g.setColour(HackAudio::Colours::Black);
+                            g.setColour(findColour(HackAudio::backgroundColourId));
                             g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
 
                         }
@@ -1195,15 +1222,15 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         }
 
 
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.strokePath(p, juce::PathStrokeType(4));
 
                         if (!sourceIsJunction)
                         {
 
-                            g.setColour(HackAudio::Colours::Black);
+                            g.setColour(findColour(HackAudio::backgroundColourId));
                             g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
-                            g.setColour(HackAudio::Colours::Gray);
+                            g.setColour(findColour(HackAudio::midgroundColourId));
                             g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
                             
                         }
@@ -1212,21 +1239,21 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                     else
                     {
 
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
-                        g.setColour(HackAudio::Colours::Black);
+                        g.setColour(findColour(HackAudio::backgroundColourId));
                         g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
 
                         p.startNewSubPath(x1, y1);
                         p.cubicTo(x1 - 64, y1, x1, y2, x1 - 64, y2);
                         p.startNewSubPath(x1 - 64, y2);
                         p.cubicTo(x1 - 64, y2, x2, y2, x2, y2);
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.strokePath(p, juce::PathStrokeType(4));
 
-                        g.setColour(HackAudio::Colours::Black);
+                        g.setColour(findColour(HackAudio::backgroundColourId));
                         g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
                         
                     }
@@ -1264,7 +1291,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
                         p.startNewSubPath(x1, y1);
                         p.lineTo(x2, y2);
-                        g.setColour(HackAudio::Colours::Gray);
+                        g.setColour(findColour(HackAudio::midgroundColourId));
                         g.strokePath(p, juce::PathStrokeType(4));
 
                     }
@@ -1276,9 +1303,9 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 //                        if (!destinationIsJunction)
 //                        {
 //
-//                            g.setColour(HackAudio::Colours::Gray);
+//                            g.setColour(findColour(HackAudio::midgroundColourId));
 //                            g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
-//                            g.setColour(HackAudio::Colours::Black);
+//                            g.setColour(findColour(HackAudio::backgroundColourId));
 //                            g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
 //
 //                        }
@@ -1287,15 +1314,15 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 //                        p.cubicTo(x1 + 64, y1, x1, y2, x1 + 64, y2);
 //                        p.startNewSubPath(x1 + 64, y2);
 //                        p.cubicTo(x1 + 64, y2, x2, y2, x2, y2);
-//                        g.setColour(HackAudio::Colours::Gray);
+//                        g.setColour(findColour(HackAudio::midgroundColourId));
 //                        g.strokePath(p, juce::PathStrokeType(4));
 //
 //                        if (!sourceIsJunction)
 //                        {
 //
-//                            g.setColour(HackAudio::Colours::Black);
+//                            g.setColour(findColour(HackAudio::backgroundColourId));
 //                            g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
-//                            g.setColour(HackAudio::Colours::Gray);
+//                            g.setColour(findColour(HackAudio::midgroundColourId));
 //                            g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
 //
 //                        }
@@ -1335,24 +1362,24 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                 if (!destinationIsJunction)
                 {
 
-                    g.setColour(HackAudio::Colours::Gray);
+                    g.setColour(findColour(HackAudio::midgroundColourId));
                     g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
-                    g.setColour(HackAudio::Colours::Black);
+                    g.setColour(findColour(HackAudio::backgroundColourId));
                     g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
 
                 }
 
                 p.startNewSubPath(x1, y1);
                 p.lineTo(x2, y2);
-                g.setColour(HackAudio::Colours::Gray);
+                g.setColour(findColour(HackAudio::midgroundColourId));
                 g.strokePath(p, juce::PathStrokeType(4));
 
                 if (!sourceIsJunction)
                 {
 
-                    g.setColour(HackAudio::Colours::Black);
+                    g.setColour(findColour(HackAudio::backgroundColourId));
                     g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
-                    g.setColour(HackAudio::Colours::Gray);
+                    g.setColour(findColour(HackAudio::midgroundColourId));
                     g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
 
                 }
