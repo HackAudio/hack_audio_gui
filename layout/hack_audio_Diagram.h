@@ -54,8 +54,6 @@ public:
 
     private:
 
-        void parentHierarchyChanged() override;
-
         void paint(juce::Graphics& g) override;
 
         juce::String currentSymbol;

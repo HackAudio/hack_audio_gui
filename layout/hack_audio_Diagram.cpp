@@ -59,13 +59,6 @@ void HackAudio::Diagram::Junction::setSymbol(HackAudio::Diagram::Junction::Symbo
 
 }
 
-void HackAudio::Diagram::Junction::parentHierarchyChanged()
-{
-
-    assert(dynamic_cast<HackAudio::Diagram*>(getParentComponent())); /* Warning: Junctions Should Only Be Used Within HackAudio::Diagrams */
-
-}
-
 void HackAudio::Diagram::Junction::paint(juce::Graphics& g)
 {
 
