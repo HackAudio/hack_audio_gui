@@ -67,20 +67,10 @@ void HackAudio::Diagram::Junction::paint(juce::Graphics& g)
 
     if (width <= 0 || height <= 0) { return; }
 
-    juce::Component* parent = getParentComponent();
-
-    juce::Colour background = (parent && dynamic_cast<HackAudio::Diagram*>(parent))
-                                ? parent->findColour(HackAudio::midgroundColourId)
-                                : findColour(HackAudio::backgroundColourId);
-
-    juce::Colour foreground = (parent && dynamic_cast<HackAudio::Diagram*>(parent))
-                                ? parent->findColour(HackAudio::foregroundColourId)
-                                : findColour(HackAudio::foregroundColourId);
-
-    g.setColour(background);
+    g.setColour(findColour(HackAudio::backgroundColourId));
     g.fillEllipse(0, 0, width, height);
 
-    g.setColour(foreground);
+    g.setColour(findColour(HackAudio::foregroundColourId));
     g.drawFittedText(currentSymbol, 0, 0, width, height, juce::Justification::centred, 1);
 
 }
