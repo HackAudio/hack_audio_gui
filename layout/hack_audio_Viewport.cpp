@@ -3,6 +3,11 @@
 HackAudio::Viewport::Viewport()
 {
 
+    setColour(HackAudio::backgroundColourId, HackAudio::Colours::Black);
+    setColour(HackAudio::midgroundColourId,  HackAudio::Colours::Gray);
+    setColour(HackAudio::foregroundColourId, HackAudio::Colours::White);
+    setColour(HackAudio::highlightColourId,  HackAudio::Colours::Cyan);
+
     setInterceptsMouseClicks(true, true);
     setRepaintsOnMouseActivity(false);
 
@@ -245,7 +250,7 @@ void HackAudio::Viewport::componentMovedOrResized(juce::Component& component, bo
 void HackAudio::Viewport::paint(juce::Graphics& g)
 {
 
-    g.setColour(HackAudio::Colours::Black);
+    g.setColour(findColour(HackAudio::backgroundColourId));
     g.fillRect(contentContainer.getBounds());
 
 }
@@ -282,9 +287,9 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
             if (!dynamic_cast<HackAudio::Diagram::Junction*>(contentInput))
             {
-                g.setColour(HackAudio::Colours::Gray);
+                g.setColour(findColour(HackAudio::midgroundColourId));
                 g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
-                g.setColour(HackAudio::Colours::Black);
+                g.setColour(findColour(HackAudio::backgroundColourId));
                 g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
             }
 
@@ -306,7 +311,7 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
             }
 
-            g.setColour(HackAudio::Colours::Gray);
+            g.setColour(findColour(HackAudio::midgroundColourId));
             g.strokePath(p, juce::PathStrokeType(4));
 
         }
@@ -360,9 +365,9 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
             if (!dynamic_cast<HackAudio::Diagram::Junction*>(contentOutput))
             {
-                g.setColour(HackAudio::Colours::Black);
+                g.setColour(findColour(HackAudio::backgroundColourId));
                 g.fillEllipse(x3 - 8, y3 - 8, 16, 16);
-                g.setColour(HackAudio::Colours::Gray);
+                g.setColour(findColour(HackAudio::midgroundColourId));
                 g.drawEllipse(x3 - 8, y3 - 8, 16, 16, 4);
             }
             
@@ -456,36 +461,36 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
     // Output Connector
     // =========================================================================================
-    g.setColour(HackAudio::Colours::Gray);
+    g.setColour(findColour(HackAudio::midgroundColourId));
     g.fillRect(getWidth() - contentContainer.getX(), 0, contentContainer.getX(), getHeight());
 
-    g.setColour(HackAudio::Colours::Gray);
+    g.setColour(findColour(HackAudio::midgroundColourId));
     g.fillEllipse(contentContainer.getRight() - 8, (getHeight() / 2) - 8, 16, 16);
-    g.setColour(HackAudio::Colours::Black);
+    g.setColour(findColour(HackAudio::backgroundColourId));
     g.drawEllipse(contentContainer.getRight() - 8, (getHeight() / 2) - 8, 16, 16, 4);
 
-    g.setColour(HackAudio::Colours::Gray);
+    g.setColour(findColour(HackAudio::midgroundColourId));
     g.strokePath(outputConnections, juce::PathStrokeType(4));
 
 
 
     // Input Connector
     // =========================================================================================
-    g.setColour(HackAudio::Colours::Gray);
+    g.setColour(findColour(HackAudio::midgroundColourId));
     g.fillRect(0, 0, contentContainer.getX(), getHeight());
 
-    g.setColour(HackAudio::Colours::Black);
+    g.setColour(findColour(HackAudio::backgroundColourId));
     g.fillEllipse(contentContainer.getX() - 8, (getHeight() / 2) - 8, 16, 16);
-    g.setColour(HackAudio::Colours::Gray);
+    g.setColour(findColour(HackAudio::midgroundColourId));
     g.drawEllipse(contentContainer.getX() - 8, (getHeight() / 2) - 8, 16, 16, 4);
 
 
 
     // Navigation Title
     // =========================================================================================
-    g.setColour(HackAudio::Colours::Black.withAlpha(0.75f));
+    g.setColour(findColour(HackAudio::backgroundColourId).withAlpha(0.75f));
     g.drawFittedText(currentContent->getName(), 0, 2, getWidth(), 32, juce::Justification::centred, 1);
-    g.setColour(HackAudio::Colours::White);
+    g.setColour(findColour(HackAudio::foregroundColourId));
     g.drawFittedText(currentContent->getName(), 0, 0, getWidth(), 32, juce::Justification::centred, 1);
 
 }
