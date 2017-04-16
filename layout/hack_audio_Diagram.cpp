@@ -911,6 +911,77 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                     }
 
                 }
+                else if (sourceX == destinationX)
+                {
+
+                    assert(sourceDirection != Junction::Horizontal); /* Notice: Horizontal Connections Not Applicable For Vertically Stacked Components */
+
+                    if (sourceIsJunction)
+                    {
+                        x1 = source->getX() + source->getWidth() / 2;
+                        y1 = source->getY() + source->getHeight();
+                    }
+                    else
+                    {
+                        x1 = source->getX() + source->getWidth();
+                        y1 = source->getY() + source->getHeight() / 2;
+                    }
+
+                    if (destinationIsJunction)
+                    {
+                        x2 = destination->getX() + destination->getWidth() / 2;
+                        y2 = destination->getY();
+                    }
+                    else
+                    {
+                        x2 = destination->getX() + destination->getWidth();
+                        y2 = destination->getY() + destination->getHeight() / 2;
+                    }
+
+                    if (sourceIsJunction && destinationIsJunction)
+                    {
+
+                        p.startNewSubPath(x1, y1);
+                        p.lineTo(x2, y2);
+                        g.setColour(HackAudio::Colours::Gray);
+                        g.strokePath(p, juce::PathStrokeType(4));
+
+                    }
+                    else
+                    {
+
+                        abort();  /* Warning: Vertically Stacked Connections Are Not Yet Supported */
+
+//                        if (!destinationIsJunction)
+//                        {
+//
+//                            g.setColour(HackAudio::Colours::Gray);
+//                            g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
+//                            g.setColour(HackAudio::Colours::Black);
+//                            g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
+//
+//                        }
+//
+//                        p.startNewSubPath(x1, y1);
+//                        p.cubicTo(x1 + 64, y1, x1, y2, x1 + 64, y2);
+//                        p.startNewSubPath(x1 + 64, y2);
+//                        p.cubicTo(x1 + 64, y2, x2, y2, x2, y2);
+//                        g.setColour(HackAudio::Colours::Gray);
+//                        g.strokePath(p, juce::PathStrokeType(4));
+//
+//                        if (!sourceIsJunction)
+//                        {
+//
+//                            g.setColour(HackAudio::Colours::Black);
+//                            g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
+//                            g.setColour(HackAudio::Colours::Gray);
+//                            g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
+//                            
+//                        }
+
+                    }
+                    
+                }
 
             }
             else if (sourceY > destinationY)
@@ -1161,11 +1232,83 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                     }
                     
                 }
+                else if (sourceX == destinationX)
+                {
+
+                    assert(sourceDirection != Junction::Horizontal); /* Notice: Horizontal Connections Not Applicable For Vertically Stacked Components */
+
+                    if (sourceIsJunction && destinationIsJunction)
+                    {
+                        x1 = source->getX() + source->getWidth() / 2;
+                        y1 = source->getY();
+                    }
+                    else
+                    {
+                        x1 = source->getX() + source->getWidth();
+                        y1 = source->getY() + source->getHeight() / 2;
+                    }
+
+                    if (destinationIsJunction && sourceIsJunction)
+                    {
+                        x2 = destination->getX() + destination->getWidth() / 2;
+                        y2 = destination->getY() + destination->getHeight();
+                    }
+                    else
+                    {
+                        x2 = destination->getX() + destination->getWidth();
+                        y2 = destination->getY() + destination->getHeight() / 2;
+                    }
+
+                    if (sourceIsJunction && destinationIsJunction)
+                    {
+
+                        p.startNewSubPath(x1, y1);
+                        p.lineTo(x2, y2);
+                        g.setColour(HackAudio::Colours::Gray);
+                        g.strokePath(p, juce::PathStrokeType(4));
+
+                    }
+                    else
+                    {
+
+                        abort();  /* Warning: Vertically Stacked Connections Are Not Yet Supported */
+
+//                        if (!destinationIsJunction)
+//                        {
+//
+//                            g.setColour(HackAudio::Colours::Gray);
+//                            g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
+//                            g.setColour(HackAudio::Colours::Black);
+//                            g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
+//
+//                        }
+//
+//                        p.startNewSubPath(x1, y1);
+//                        p.cubicTo(x1 + 64, y1, x1, y2, x1 + 64, y2);
+//                        p.startNewSubPath(x1 + 64, y2);
+//                        p.cubicTo(x1 + 64, y2, x2, y2, x2, y2);
+//                        g.setColour(HackAudio::Colours::Gray);
+//                        g.strokePath(p, juce::PathStrokeType(4));
+//
+//                        if (!sourceIsJunction)
+//                        {
+//
+//                            g.setColour(HackAudio::Colours::Black);
+//                            g.fillEllipse(x1 - 8, y1 - 8, 16, 16);
+//                            g.setColour(HackAudio::Colours::Gray);
+//                            g.drawEllipse(x1 - 8, y1 - 8, 16, 16, 4);
+//
+//                        }
+
+                    }
+
+                }
 
             }
-            else
+            else if (sourceY == destinationY)
             {
 
+                assert(sourceX != destinationY);    /* Warning: Components Are Placed Directly On Top Of Each Other */
 
                 if (sourceX < destinationX)
                 {
@@ -1177,7 +1320,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                     y2 = destination->getY() + destination->getHeight() / 2;
 
                 }
-                else
+                else if (sourceX > destinationX)
                 {
 
                     x1 = source->getX();
