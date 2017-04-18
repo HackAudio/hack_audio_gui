@@ -504,7 +504,7 @@ void HackAudio::Viewport::resized()
     int height = getHeight();
 
     resizeGuard = true;
-    setBounds(getX() - 24, getY(), width + 24, height);
+    setBounds(getX() - 12, getY(), width + 24, height);
     resizeGuard = false;
 
     contentContainer.centreWithSize(width - 24, height);
