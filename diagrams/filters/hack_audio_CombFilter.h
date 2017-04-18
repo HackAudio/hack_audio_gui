@@ -4,34 +4,38 @@
 struct CombFilter : public HackAudio::Diagram
 {
 
-    HackAudio::Label delay;
-    HackAudio::Label gain;
+    HackAudio::Label main_delay;
+    HackAudio::Diagram::Junction main_sum;
+    HackAudio::Diagram::Junction main_mult;
 
-    HackAudio::Diagram::Junction delayLine;
-    HackAudio::Diagram::Junction sumJunction;
+    HackAudio::Label fb_gain;
+    HackAudio::Diagram::Junction fb_node;
 
     CombFilter()
     {
 
-        delayLine.setBounds(0, 0, 24, 24);
-        delay.setBounds(64, -96, 64, 64);
-        gain.setBounds(192, -96, 64, 64);
-        sumJunction.setBounds(320, 0, 24, 24);
+        main_sum.setSymbol(HackAudio::Diagram::Junction::Add);
+        main_sum.setBounds(250, 0, 30, 30);
+        main_mult.setSymbol(HackAudio::Diagram::Junction::Multiply);
+        main_mult.setBounds(300, -64, 30, 30);
+        main_delay.setPlaceholder("Delay");
+        main_delay.setBounds(400, -7.5, 96, 64);
 
-        delay.setText("Delay", juce::dontSendNotification);
+        fb_gain.setPlaceholder("Gain");
+        fb_gain.setBounds(350, -128, 64, 48);
+        fb_node.setSymbol(HackAudio::Diagram::Junction::None);
+        fb_node.setBounds(550, 17, 15, 15);
 
-        gain.setPlaceholder("Gain");
+        addDiagramInput(main_sum);
 
-        sumJunction.setSymbol(HackAudio::Diagram::Junction::Add);
+        connect(main_sum, main_delay);
+        connect(fb_node, main_mult);
+        connect(fb_gain, main_mult);
+        connect(main_mult, main_sum);
 
-        addDiagramInput(delayLine);
+        addDiagramOutput(main_delay);
 
-        connect(delayLine, delay);
-        connect(delayLine, sumJunction);
-        connect(delay, gain);
-        connect(gain, sumJunction);
-
-        addDiagramOutput(sumJunction);
+        setName("Feed-Back Comb Filter");
 
     }
 
