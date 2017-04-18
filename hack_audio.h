@@ -71,4 +71,6 @@ namespace HackAudio
 #include "layout/hack_audio_Viewport.h"
 #include "layout/hack_audio_FlexBox.h"
 
+#include "diagrams/hack_audio_Diagrams.h"
+
 #endif
