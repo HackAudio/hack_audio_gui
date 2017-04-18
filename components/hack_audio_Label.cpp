@@ -134,7 +134,7 @@ void HackAudio::Label::mouseUp(const juce::MouseEvent& e)
     if (placeholderStatus && !e.mouseWasDraggedSinceMouseDown())
     {
 
-        if (!getText().isEmpty())
+        if (getText().isNotEmpty())
         {
 
             labelTextChanged(this);
