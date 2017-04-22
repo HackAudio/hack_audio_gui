@@ -1318,7 +1318,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
             else if (sourceY == destinationY)
             {
 
-                assert(sourceX != destinationY);    /* Warning: Components Are Placed Directly On Top Of Each Other */
+                assert(sourceX != destinationX);    /* Warning: Components Are Placed Directly On Top Of Each Other */
 
                 if (sourceX < destinationX)
                 {
