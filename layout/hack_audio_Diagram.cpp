@@ -486,10 +486,7 @@ void HackAudio::Diagram::updateSize()
 
     if (newBounds != getBounds())
     {
-
         setBounds(newBounds);
-        repaint();
-
     }
 
     moveGuard = false;
