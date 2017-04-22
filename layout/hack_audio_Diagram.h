@@ -175,13 +175,10 @@ public:
 private:
 
     void updateSize();
-
     void updateConnections();
-
     void updateChildren();
 
     void childrenChanged() override;
-
     void parentHierarchyChanged() override;
 
     void componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized) override;
@@ -193,6 +190,7 @@ private:
     juce::Array<juce::Component*> inputComponents;
     juce::Array<juce::Component*> outputComponents;
 
+    juce::Path connectionPaths;
     juce::HashMap<juce::Component*, juce::Array<juce::Component*>> connections;
 
     juce::HashMap<juce::Component*, HackAudio::Diagram*> submap;
