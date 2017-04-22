@@ -69,7 +69,7 @@ void HackAudio::Viewport::setDiagram(HackAudio::Diagram& d)
         topButton.setVisible(false);
     }
 
-    repaint();
+    startTimerHz(10);
 
 }
 
@@ -245,6 +245,12 @@ void HackAudio::Viewport::componentMovedOrResized(juce::Component& component, bo
 
     repaint();
 
+}
+
+void HackAudio::Viewport::timerCallback()
+{
+    repaint();
+    stopTimer();
 }
 
 void HackAudio::Viewport::paint(juce::Graphics& g)
