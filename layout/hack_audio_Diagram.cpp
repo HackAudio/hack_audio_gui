@@ -446,6 +446,18 @@ void HackAudio::Diagram::updateSize()
 
     }
 
+    if (!connectionPaths.isEmpty())
+    {
+        juce::Rectangle<float> p = connectionPaths.getBounds();
+
+        minX = std::min((int)p.getX(), minX); // Argh, juce::Rectangle<float> -> juce::Rectangle<int> casting
+        minY = std::min((int)p.getY(), minY);
+
+        maxX = std::max((int)p.getRight() + 2, maxX);
+        maxY = std::max((int)p.getBottom() + 2, maxY);  /* +2 to account for path stroke size */
+
+    }
+
     if (minX != 0 || minY != 0)
     {
 
@@ -470,7 +482,15 @@ void HackAudio::Diagram::updateSize()
 
     }
 
-    setBounds(getX() + minX, getY() + minY, maxX - minX, maxY - minY);
+    juce::Rectangle<int> newBounds = juce::Rectangle<int>(getX() + minX, getY() + minY, maxX - minX, maxY - minY);
+
+    if (newBounds != getBounds())
+    {
+
+        setBounds(newBounds);
+        repaint();
+
+    }
 
     moveGuard = false;
 
@@ -540,6 +560,8 @@ void HackAudio::Diagram::updateConnections()
     {
         repaint();
     }
+
+    updateSize();
 
 }
 
@@ -739,7 +761,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         if (sourceDirection == Junction::Null || sourceDirection == Junction::Horizontal)
                         {
 
-                            connectionPaths.cubicTo(x2, y1, x2, y1, x2, y2);
+                            connectionPaths.cubicTo(x2, y1, x1, y2, x2, y2);
 
                         }
                         else if (sourceDirection == Junction::Auto || sourceDirection == Junction::Vertical)
@@ -828,7 +850,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         if (sourceDirection == Junction::Null || sourceDirection == Junction::Horizontal)
                         {
 
-                            connectionPaths.cubicTo(x2, y1, x2, y1, x2, y2);
+                            connectionPaths.cubicTo(x2, y1, x1, y2, x2, y2);
 
                         }
                         else if (sourceDirection == Junction::Auto || sourceDirection == Junction::Vertical)
@@ -853,29 +875,11 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                 else if (sourceX == destinationX)
                 {
 
-                    assert(sourceDirection != Junction::Horizontal); /* Notice: Horizontal Connections Not Applicable For Vertically Stacked Components */
+                    x1 = source->getX() + source->getWidth();
+                    y1 = source->getY() + source->getHeight() / 2;  /* Possibly handle Junction directions? */
 
-                    if (sourceIsJunction)
-                    {
-                        x1 = source->getX() + source->getWidth() / 2;
-                        y1 = source->getY() + source->getHeight();
-                    }
-                    else
-                    {
-                        x1 = source->getX() + source->getWidth();
-                        y1 = source->getY() + source->getHeight() / 2;
-                    }
-
-                    if (destinationIsJunction)
-                    {
-                        x2 = destination->getX() + destination->getWidth() / 2;
-                        y2 = destination->getY();
-                    }
-                    else
-                    {
-                        x2 = destination->getX() + destination->getWidth();
-                        y2 = destination->getY() + destination->getHeight() / 2;
-                    }
+                    x2 = destination->getX() + destination->getWidth();
+                    y2 = destination->getY() + destination->getHeight() / 2;
 
                     if (sourceIsJunction && destinationIsJunction)
                     {
@@ -887,7 +891,12 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                     else
                     {
 
-                        abort();  /* Warning: Vertically Stacked Connections Are Not Yet Supported */
+                        int midY = (y1 + y2) / 2;
+
+                        connectionPaths.startNewSubPath(x1, y1);
+                        connectionPaths.cubicTo(x1 + 64, y1, x1 + 64, y1, x1 + 64, midY);
+                        connectionPaths.startNewSubPath(x1 + 64, midY);
+                        connectionPaths.cubicTo(x1 + 64, y2, x1 + 64, y2, x2, y2);
 
                     }
                     
@@ -962,7 +971,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         if (sourceDirection == Junction::Null || sourceDirection == Junction::Horizontal)
                         {
 
-                            connectionPaths.cubicTo(x2, y1, x2, y1, x2, y2);
+                            connectionPaths.cubicTo(x2, y1, x1, y2, x2, y2);
 
                         }
                         else if (sourceDirection == Junction::Auto || sourceDirection == Junction::Vertical)
@@ -1049,7 +1058,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         if (sourceDirection == Junction::Null || sourceDirection == Junction::Horizontal)
                         {
 
-                            connectionPaths.cubicTo(x2, y1, x2, y1, x2, y2);
+                            connectionPaths.cubicTo(x2, y1, x1, y2, x2, y2);
 
                         }
                         else if (sourceDirection == Junction::Auto || sourceDirection == Junction::Vertical)
@@ -1073,8 +1082,6 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                 }
                 else if (sourceX == destinationX)
                 {
-
-                    assert(sourceDirection != Junction::Horizontal); /* Notice: Horizontal Connections Not Applicable For Vertically Stacked Components */
 
                     if (sourceIsJunction && destinationIsJunction)
                     {
@@ -1108,7 +1115,12 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                     else
                     {
 
-                        abort();  /* Warning: Vertically Stacked Connections Are Not Yet Supported */
+                        int midY = (y1 + y2) / 2;
+
+                        connectionPaths.startNewSubPath(x1, y1);
+                        connectionPaths.cubicTo(x1 + 64, y1, x1 + 64, y1, x1 + 64, midY);
+                        connectionPaths.startNewSubPath(x1 + 64, midY);
+                        connectionPaths.cubicTo(x1 + 64, y2, x1 + 64, y2, x2, y2);
 
                     }
 
@@ -1185,5 +1197,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
         g.drawEllipse(p.x - 8, p.y - 8, 16, 16, 4);
 
     }
+
+    updateSize();
 
 }
