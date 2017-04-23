@@ -1,5 +1,7 @@
 #include "hack_audio_Label.h"
 
+#include <regex>
+
 HackAudio::Label::Label()
 {
 
@@ -214,13 +216,50 @@ void HackAudio::Label::paint(juce::Graphics& g)
     juce::Colour foreground = findColour(HackAudio::foregroundColourId);
     juce::Colour highlight  = findColour(HackAudio::highlightColourId);
 
-    juce::String textToDisplay;
-    textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
+
+
+    std::regex r("([\\^~][\\w\\d\\s]*)[\\w\\d\\s]*");
+
+    juce::Font currentFont = getFont();
+    int currentHeight = currentFont.getHeight();
+
+    juce::GlyphArrangement glyphs;
+
+    if (!isTimerRunning() && placeholderStatus)
+    {
+
+        int offset = 0;
+
+        // Use the text that doesn't match
+
+        const std::string s(placeholder.toUTF8());
+        for (std::sregex_iterator i = std::sregex_iterator(s.begin(), s.end(), r); i != std::sregex_iterator(); ++i)
+        {
+
+            juce::String jstring = juce::String(i->str());
+
+            int baseline = (jstring.startsWith("^")) ? -1 : (jstring.startsWith("~")) ? 1 : 0;
+            jstring = (baseline != 0) ? jstring.substring(1) : jstring;
+
+            glyphs.addLineOfText(currentFont.withHeight(currentHeight - abs(baseline * 2)), jstring, 0, 0);
+            glyphs.moveRangeOfGlyphs(offset, jstring.length(), 0, baseline * 6);
+
+            offset += jstring.length();
+
+        }
+
+        glyphs.justifyGlyphs(0, offset, 12, 12, width - 24, height - 24, getJustificationType());
+
+    }
+    else
+    {
+
+        // Text
+
+    }
 
     g.setColour(foreground.interpolatedWith(highlight, colourInterpolation.getNextValue()));
-
-    g.setFont(getFont());
-    g.drawFittedText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 8);
+    glyphs.draw(g);
 
 }
 
