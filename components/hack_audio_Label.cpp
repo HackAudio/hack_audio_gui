@@ -232,19 +232,28 @@ void HackAudio::Label::paint(juce::Graphics& g)
 
         // Use the text that doesn't match
 
+        bool initial = false;
+
         const std::string s(placeholder.toUTF8());
         for (std::sregex_iterator i = std::sregex_iterator(s.begin(), s.end(), r); i != std::sregex_iterator(); ++i)
         {
 
             juce::String jstring = juce::String(i->str());
 
+            if (!initial)
+            {
+                juce::String temp = placeholder.upToFirstOccurrenceOf(jstring, false, false);
+                glyphs.addLineOfText(currentFont, temp, 24, 64);
+                offset += (int)glyphs.getBoundingBox(0, temp.length(), true).getWidth();
+                initial = true;
+            }
+
             int baseline = (jstring.startsWith("^")) ? -1 : (jstring.startsWith("~")) ? 1 : 0;
             jstring = (baseline != 0) ? jstring.substring(1) : jstring;
 
-            glyphs.addLineOfText(currentFont.withHeight(currentHeight - abs(baseline * 2)), jstring, 0, 0);
-            glyphs.moveRangeOfGlyphs(offset, jstring.length(), 0, baseline * 6);
+            glyphs.addLineOfText(currentFont.withHeight(currentHeight - abs(baseline * 2)), jstring, offset + 24, 64 + (baseline * 8));
 
-            offset += jstring.length();
+            offset += (int)glyphs.getBoundingBox(0, offset, true).getWidth();
 
         }
 
