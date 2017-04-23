@@ -230,8 +230,6 @@ void HackAudio::Label::paint(juce::Graphics& g)
 
         int offset = 0;
 
-        // Use the text that doesn't match
-
         bool initial = false;
 
         const std::string s(placeholder.toUTF8());
@@ -243,21 +241,21 @@ void HackAudio::Label::paint(juce::Graphics& g)
             if (!initial)
             {
                 juce::String temp = placeholder.upToFirstOccurrenceOf(jstring, false, false);
-                glyphs.addLineOfText(currentFont, temp, 24, 64);
-                offset += (int)glyphs.getBoundingBox(0, temp.length(), true).getWidth();
+                glyphs.addLineOfText(currentFont, temp, 0, 0);
+                offset = (int)glyphs.getBoundingBox(0, temp.length(), true).getWidth();
                 initial = true;
             }
 
             int baseline = (jstring.startsWith("^")) ? -1 : (jstring.startsWith("~")) ? 1 : 0;
             jstring = (baseline != 0) ? jstring.substring(1) : jstring;
 
-            glyphs.addLineOfText(currentFont.withHeight(currentHeight - abs(baseline * 2)), jstring, offset + 24, 64 + (baseline * 8));
+            glyphs.addLineOfText(currentFont.withHeight(currentHeight - abs(baseline * 2)), jstring, offset, baseline * 8);
 
-            offset += (int)glyphs.getBoundingBox(0, offset, true).getWidth();
+            offset = (int)glyphs.getBoundingBox(0, glyphs.getNumGlyphs(), true).getWidth();
 
         }
 
-        glyphs.justifyGlyphs(0, offset, 12, 12, width - 24, height - 24, getJustificationType());
+        glyphs.justifyGlyphs(0, glyphs.getNumGlyphs(), 12, 12, width - 24, height - 24, getJustificationType());
 
     }
     else
