@@ -255,7 +255,7 @@ void HackAudio::Label::paint(juce::Graphics& g)
 
         }
 
-        glyphs.justifyGlyphs(0, glyphs.getNumGlyphs(), 12, 12, width - 24, height - 24, getJustificationType());
+        glyphs.justifyGlyphs(0, glyphs.getNumGlyphs(), 12, 12 + 4, width - 24, height - 24, getJustificationType());
 
     }
     else
