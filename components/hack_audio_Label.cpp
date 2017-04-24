@@ -246,7 +246,7 @@ void HackAudio::Label::paint(juce::Graphics& g)
 
         juce::GlyphArrangement glyphs;
 
-        std::regex r("([\\^~!][\\w\\d\\s]*)[\\w\\d\\s]*"); // Needs to support instances such as y = x^2!*3, the * doesn't get picked up so the whole *3 is discarded
+        std::regex r("(^[\\w\\d\\s]+|[\\^~!][\\w\\d\\s]*)[^\\^~!]+"); // Needs to support instances such as y = x^2!*3, the * doesn't get picked up so the whole *3 is discarded
 
         juce::Font font = getFont();
         int fontHeight = font.getHeight();
@@ -258,21 +258,11 @@ void HackAudio::Label::paint(juce::Graphics& g)
         if (!isTimerRunning() && placeholderStatus)
         {
 
-            bool initial = false;
-
             const std::string s(placeholder.toUTF8());
             for (std::sregex_iterator i = std::sregex_iterator(s.begin(), s.end(), r); i != std::sregex_iterator(); ++i)
             {
 
                 juce::String jstring = juce::String(i->str());
-
-                if (!initial)
-                {
-                    juce::String temp = placeholder.upToFirstOccurrenceOf(jstring, false, false);
-                    glyphs.addLineOfText(font, temp, 0, 0);
-                    offset = (int)glyphs.getBoundingBox(0, temp.length(), true).getWidth();
-                    initial = true;
-                }
 
                 if (jstring.startsWith("^"))
                 {
