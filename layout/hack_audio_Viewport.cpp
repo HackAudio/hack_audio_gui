@@ -69,6 +69,7 @@ void HackAudio::Viewport::setDiagram(HackAudio::Diagram& d)
         topButton.setVisible(false);
     }
 
+    repaint();
     startTimerHz(10);
 
 }
