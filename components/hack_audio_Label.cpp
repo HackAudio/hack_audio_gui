@@ -233,7 +233,7 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
 
     juce::GlyphArrangement glyphs;
 
-    std::regex r("(^[^\\^_!]+|[\\^_!][^\\^_!]*)");
+    std::regex r("(^[^\\^_!]+|[\\^_!][^\\s\\^_!]*|\\s[^\\^_!]*)");
 
     juce::Font font = getFont();
     int fontHeight = font.getHeight();
@@ -294,6 +294,13 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
             baseline = 0;
             currentHeight = fontHeight;
             jstring = jstring.substring(1);
+
+        }
+        else if (jstring.startsWith(" "))
+        {
+
+            baseline = 0;
+            currentHeight = fontHeight;
 
         }
         else
