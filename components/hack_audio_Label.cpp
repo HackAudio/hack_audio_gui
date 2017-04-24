@@ -17,6 +17,7 @@ HackAudio::Label::Label()
 
     animationStatus = true;
     placeholderStatus = false;
+    formattingStatus = false;
 
     timeout = 0;
 
@@ -93,6 +94,28 @@ void HackAudio::Label::setAnimationStatus(bool shouldAnimate)
 {
 
     animationStatus = shouldAnimate;
+
+}
+
+bool HackAudio::Label::getAnimationStatus()
+{
+
+    return animationStatus;
+
+}
+
+void HackAudio::Label::setFormattingStatus(bool shouldFormatText)
+{
+
+    formattingStatus = shouldFormatText;
+    repaint();
+
+}
+
+bool HackAudio::Label::getFormattingStatus()
+{
+
+    return formattingStatus;
 
 }
 
@@ -217,56 +240,76 @@ void HackAudio::Label::paint(juce::Graphics& g)
     juce::Colour highlight  = findColour(HackAudio::highlightColourId);
 
 
+    g.setColour(foreground.interpolatedWith(highlight, colourInterpolation.getNextValue()));
 
-    std::regex r("([\\^~][\\w\\d\\s]*)[\\w\\d\\s]*");
 
-    juce::Font currentFont = getFont();
-    int currentHeight = currentFont.getHeight();
-
-    juce::GlyphArrangement glyphs;
-
-    if (!isTimerRunning() && placeholderStatus)
+    if (formattingStatus)
     {
 
-        int offset = 0;
 
-        bool initial = false;
+        std::regex r("([\\^~][\\w\\d\\s]*)[\\w\\d\\s]*");
 
-        const std::string s(placeholder.toUTF8());
-        for (std::sregex_iterator i = std::sregex_iterator(s.begin(), s.end(), r); i != std::sregex_iterator(); ++i)
+        juce::Font currentFont = getFont();
+        int currentHeight = currentFont.getHeight();
+
+        juce::GlyphArrangement glyphs;
+
+        if (!isTimerRunning() && placeholderStatus)
         {
 
-            juce::String jstring = juce::String(i->str());
+            int offset = 0;
 
-            if (!initial)
+            bool initial = false;
+
+            const std::string s(placeholder.toUTF8());
+            for (std::sregex_iterator i = std::sregex_iterator(s.begin(), s.end(), r); i != std::sregex_iterator(); ++i)
             {
-                juce::String temp = placeholder.upToFirstOccurrenceOf(jstring, false, false);
-                glyphs.addLineOfText(currentFont, temp, 0, 0);
-                offset = (int)glyphs.getBoundingBox(0, temp.length(), true).getWidth();
-                initial = true;
+
+                juce::String jstring = juce::String(i->str());
+
+                if (!initial)
+                {
+                    juce::String temp = placeholder.upToFirstOccurrenceOf(jstring, false, false);
+                    glyphs.addLineOfText(currentFont, temp, 0, 0);
+                    offset = (int)glyphs.getBoundingBox(0, temp.length(), true).getWidth();
+                    initial = true;
+                }
+
+                int baseline = (jstring.startsWith("^")) ? -1 : (jstring.startsWith("~")) ? 1 : 0;
+                jstring = (baseline != 0) ? jstring.substring(1) : jstring;
+
+                glyphs.addLineOfText(currentFont.withHeight(currentHeight - abs(baseline * 2)), jstring, offset, baseline * 8);
+
+                offset = (int)glyphs.getBoundingBox(0, glyphs.getNumGlyphs(), true).getWidth();
+
             }
 
-            int baseline = (jstring.startsWith("^")) ? -1 : (jstring.startsWith("~")) ? 1 : 0;
-            jstring = (baseline != 0) ? jstring.substring(1) : jstring;
+            glyphs.justifyGlyphs(0, glyphs.getNumGlyphs(), 12, 12 + 4, width - 24, height - 24, getJustificationType());
 
-            glyphs.addLineOfText(currentFont.withHeight(currentHeight - abs(baseline * 2)), jstring, offset, baseline * 8);
+        }
+        else
+        {
 
-            offset = (int)glyphs.getBoundingBox(0, glyphs.getNumGlyphs(), true).getWidth();
+            // Text
 
         }
 
-        glyphs.justifyGlyphs(0, glyphs.getNumGlyphs(), 12, 12 + 4, width - 24, height - 24, getJustificationType());
+
+        glyphs.draw(g);
 
     }
-    else
+    else if (!formattingStatus)
     {
 
-        // Text
+        g.setFont(getFont());
+
+        juce::String textToDisplay;
+
+        textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
+
+        g.drawText(textToDisplay, 0, 0, width, height, juce::Justification::centred, 1);
 
     }
-
-    g.setColour(foreground.interpolatedWith(highlight, colourInterpolation.getNextValue()));
-    glyphs.draw(g);
 
 }
 

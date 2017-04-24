@@ -73,6 +73,12 @@ public:
     */
     void setAnimationStatus(bool shouldAnimate);
 
+    bool getAnimationStatus();
+
+    void setFormattingStatus(bool shouldFormatText);
+
+    bool getFormattingStatus();
+
 private:
 
     void mouseEnter(const juce::MouseEvent& e) override;
@@ -93,6 +99,7 @@ private:
 
     bool animationStatus;
     bool placeholderStatus;
+    bool formattingStatus;
 
     int timeout;
 
