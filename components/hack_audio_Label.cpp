@@ -234,7 +234,7 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
     juce::GlyphArrangement glyphs;
 
     /* Needs to support instances such as y = x^2!*3, the * doesn't get picked up so the whole *3 is discarded */
-    std::regex r("(^[\\w\\d\\s]+|[\\^~!][\\w\\d\\s]*)[^\\^~!]+");
+    std::regex r("(^[A-Za-z0-9\\s]+|[\\^_!][A-Za-z0-9\\s]*)[^\\^_!]+");
 
     juce::Font font = getFont();
     int fontHeight = font.getHeight();
@@ -269,7 +269,7 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
             jstring = jstring.substring(1);
 
         }
-        else if (jstring.startsWith("~"))
+        else if (jstring.startsWith("_"))
         {
 
             if (baseline > 0)
