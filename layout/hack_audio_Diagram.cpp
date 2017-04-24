@@ -758,14 +758,14 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         if (sourceDirection == Junction::Null || sourceDirection == Junction::Horizontal)
                         {
 
-                            connectionPaths.cubicTo(x2, y1, x1, y2, x2, y2);
+                            connectionPaths.cubicTo(x2, y1, x2, y1, x2, y2);
 
                         }
                         else if (sourceDirection == Junction::Auto || sourceDirection == Junction::Vertical)
                         {
 
                             connectionPaths.cubicTo(x1, y2, x1, y2, x2, y2);
-
+                            
                         }
                         
                     }
@@ -847,7 +847,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         if (sourceDirection == Junction::Null || sourceDirection == Junction::Horizontal)
                         {
 
-                            connectionPaths.cubicTo(x2, y1, x1, y2, x2, y2);
+                            connectionPaths.cubicTo(x2, y1, x2, y1, x2, y2);
 
                         }
                         else if (sourceDirection == Junction::Auto || sourceDirection == Junction::Vertical)
@@ -968,14 +968,14 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         if (sourceDirection == Junction::Null || sourceDirection == Junction::Horizontal)
                         {
 
-                            connectionPaths.cubicTo(x2, y1, x1, y2, x2, y2);
+                            connectionPaths.cubicTo(x2, y1, x2, y1, x2, y2);
 
                         }
                         else if (sourceDirection == Junction::Auto || sourceDirection == Junction::Vertical)
                         {
 
                             connectionPaths.cubicTo(x1, y2, x1, y2, x2, y2);
-
+                            
                         }
 
                     }
@@ -1055,14 +1055,14 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         if (sourceDirection == Junction::Null || sourceDirection == Junction::Horizontal)
                         {
 
-                            connectionPaths.cubicTo(x2, y1, x1, y2, x2, y2);
+                            connectionPaths.cubicTo(x2, y1, x2, y1, x2, y2);
 
                         }
                         else if (sourceDirection == Junction::Auto || sourceDirection == Junction::Vertical)
                         {
 
                             connectionPaths.cubicTo(x1, y2, x1, y2, x2, y2);
-
+                            
                         }
 
                     }
