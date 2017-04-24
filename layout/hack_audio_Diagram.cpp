@@ -729,15 +729,15 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         if (sourceDirection == Junction::Null || sourceDirection == Junction::Horizontal)
                         {
 
-                            x2 = destination->getX() + destination->getWidth() / 2;
-                            y2 = destination->getY();
+                            x2 = destination->getX();
+                            y2 = destination->getY() + destination->getHeight() / 2;
 
                         }
                         else if (sourceDirection == Junction::Auto || sourceDirection == Junction::Vertical)
                         {
 
-                            x2 = destination->getX();
-                            y2 = destination->getY() + destination->getHeight() / 2;
+                            x2 = destination->getX() + destination->getWidth() / 2;
+                            y2 = destination->getY();
 
                         }
 
@@ -939,15 +939,15 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         if (sourceDirection == Junction::Null || sourceDirection == Junction::Horizontal)
                         {
 
-                            x2 = destination->getX() + destination->getWidth() / 2;
-                            y2 = destination->getY() + destination->getHeight();
+                            x2 = destination->getX();
+                            y2 = destination->getY() + destination->getHeight() / 2;
 
                         }
                         else if (sourceDirection == Junction::Auto || sourceDirection == Junction::Vertical)
                         {
 
-                            x2 = destination->getX();
-                            y2 = destination->getY() + destination->getHeight() / 2;
+                            x2 = destination->getX() + destination->getWidth() / 2;
+                            y2 = destination->getY() + destination->getHeight();
 
                         }
 
