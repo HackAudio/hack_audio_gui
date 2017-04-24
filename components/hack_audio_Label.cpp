@@ -239,13 +239,10 @@ void HackAudio::Label::paint(juce::Graphics& g)
     juce::Colour foreground = findColour(HackAudio::foregroundColourId);
     juce::Colour highlight  = findColour(HackAudio::highlightColourId);
 
-
     g.setColour(foreground.interpolatedWith(highlight, colourInterpolation.getNextValue()));
-
 
     if (formattingStatus)
     {
-
 
         std::regex r("([\\^~][\\w\\d\\s]*)[\\w\\d\\s]*");
 
@@ -304,10 +301,9 @@ void HackAudio::Label::paint(juce::Graphics& g)
         g.setFont(getFont());
 
         juce::String textToDisplay;
-
         textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
 
-        g.drawText(textToDisplay, 0, 0, width, height, juce::Justification::centred, 1);
+        g.drawText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 1);
 
     }
 
