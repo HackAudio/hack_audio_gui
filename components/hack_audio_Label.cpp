@@ -225,6 +225,97 @@ void HackAudio::Label::timerCallback()
 
 }
 
+juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
+{
+
+    int width  = getWidth();
+    int height = getHeight();
+
+    juce::GlyphArrangement glyphs;
+
+    /* Needs to support instances such as y = x^2!*3, the * doesn't get picked up so the whole *3 is discarded */
+    std::regex r("(^[\\w\\d\\s]+|[\\^~!][\\w\\d\\s]*)[^\\^~!]+");
+
+    juce::Font font = getFont();
+    int fontHeight = font.getHeight();
+    int currentHeight = fontHeight;
+
+    int offset = 0;
+    int baseline = 0;
+
+    std::string s(stringToFormat.toUTF8());
+    for (std::sregex_iterator i = std::sregex_iterator(s.begin(), s.end(), r); i != std::sregex_iterator(); ++i)
+    {
+
+        juce::String jstring = juce::String(i->str());
+
+        if (jstring.startsWith("^"))
+        {
+
+            if (baseline > 0)
+            {
+                baseline -= baseline / 2;
+            }
+            else if (baseline < 0)
+            {
+                baseline += baseline / 4;
+            }
+            else
+            {
+                baseline -= 8;
+            }
+
+            currentHeight -= 2;
+            jstring = jstring.substring(1);
+
+        }
+        else if (jstring.startsWith("~"))
+        {
+
+            if (baseline > 0)
+            {
+                baseline += baseline / 4;
+            }
+            else if (baseline < 0)
+            {
+                baseline += baseline / 2;
+            }
+            else
+            {
+                baseline += 8;
+            }
+
+            currentHeight -= 2;
+            jstring = jstring.substring(1);
+
+        }
+        else if (jstring.startsWith("!"))
+        {
+
+            baseline = 0;
+            currentHeight = fontHeight;
+            jstring = jstring.substring(1);
+
+        }
+        else
+        {
+
+            baseline = 0;
+
+        }
+
+        glyphs.addLineOfText(font.withHeight(currentHeight), jstring, offset, baseline);
+
+        offset = (int)glyphs.getBoundingBox(0, glyphs.getNumGlyphs(), true).getWidth();
+
+    }
+
+    glyphs.justifyGlyphs(0, glyphs.getNumGlyphs(), 12, 12 + 4, width - 24, height - 24, getJustificationType());
+
+    return glyphs;
+
+}
+
 void HackAudio::Label::paint(juce::Graphics& g)
 {
 
@@ -244,102 +335,21 @@ void HackAudio::Label::paint(juce::Graphics& g)
     if (formattingStatus)
     {
 
-        juce::GlyphArrangement glyphs;
-
-        std::regex r("(^[\\w\\d\\s]+|[\\^~!][\\w\\d\\s]*)[^\\^~!]+"); // Needs to support instances such as y = x^2!*3, the * doesn't get picked up so the whole *3 is discarded
-
-        juce::Font font = getFont();
-        int fontHeight = font.getHeight();
-        int currentHeight = fontHeight;
-
-        int offset = 0;
-        int baseline = 0;
-
         if (!isTimerRunning() && placeholderStatus)
         {
 
-            const std::string s(placeholder.toUTF8());
-            for (std::sregex_iterator i = std::sregex_iterator(s.begin(), s.end(), r); i != std::sregex_iterator(); ++i)
-            {
-
-                juce::String jstring = juce::String(i->str());
-
-                if (jstring.startsWith("^"))
-                {
-
-                    if (baseline > 0)
-                    {
-                        baseline -= baseline / 2;
-                    }
-                    else if (baseline < 0)
-                    {
-                        baseline += baseline / 4;
-                    }
-                    else
-                    {
-                        baseline -= 8;
-                    }
-
-                    currentHeight -= 2;
-                    jstring = jstring.substring(1);
-
-                }
-                else if (jstring.startsWith("~"))
-                {
-
-                    if (baseline > 0)
-                    {
-                        baseline += baseline / 4;
-                    }
-                    else if (baseline < 0)
-                    {
-                        baseline += baseline / 2;
-                    }
-                    else
-                    {
-                        baseline += 8;
-                    }
-
-                    currentHeight -= 2;
-                    jstring = jstring.substring(1);
-
-                }
-                else if (jstring.startsWith("!"))
-                {
-
-                    baseline = 0;
-                    currentHeight = fontHeight;
-                    jstring = jstring.substring(1);
-
-                }
-                else
-                {
-
-                    baseline = 0;
-
-                }
-
-                glyphs.addLineOfText(font.withHeight(currentHeight), jstring, offset, baseline);
-
-                offset = (int)glyphs.getBoundingBox(0, glyphs.getNumGlyphs(), true).getWidth();
-
-            }
-
-            glyphs.justifyGlyphs(0, glyphs.getNumGlyphs(), 12, 12 + 4, width - 24, height - 24, getJustificationType());
+            formatText(placeholder).draw(g);
 
         }
         else
         {
 
-            // Text
+            formatText(getText()).draw(g);
 
         }
 
-
-        glyphs.draw(g);
-
     }
-    else if (!formattingStatus)
+    else
     {
 
         g.setFont(getFont());

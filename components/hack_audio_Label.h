@@ -89,6 +89,8 @@ private:
 
     void timerCallback() override;
 
+    juce::GlyphArrangement formatText(juce::String stringToFormat);
+
     void paint(juce::Graphics& g) override;
 
     void resized() override;
