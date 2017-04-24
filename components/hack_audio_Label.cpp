@@ -278,7 +278,7 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
             }
             else if (baseline < 0)
             {
-                baseline += baseline / 2;
+                baseline -= baseline / 2;
             }
             else
             {
