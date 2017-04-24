@@ -244,17 +244,19 @@ void HackAudio::Label::paint(juce::Graphics& g)
     if (formattingStatus)
     {
 
-        std::regex r("([\\^~][\\w\\d\\s]*)[\\w\\d\\s]*");
-
-        juce::Font currentFont = getFont();
-        int currentHeight = currentFont.getHeight();
-
         juce::GlyphArrangement glyphs;
+
+        std::regex r("([\\^~!][\\w\\d\\s]*)[\\w\\d\\s]*"); // Needs to support instances such as y = x^2!*3, the * doesn't get picked up so the whole *3 is discarded
+
+        juce::Font font = getFont();
+        int fontHeight = font.getHeight();
+        int currentHeight = fontHeight;
+
+        int offset = 0;
+        int baseline = 0;
 
         if (!isTimerRunning() && placeholderStatus)
         {
-
-            int offset = 0;
 
             bool initial = false;
 
@@ -267,15 +269,67 @@ void HackAudio::Label::paint(juce::Graphics& g)
                 if (!initial)
                 {
                     juce::String temp = placeholder.upToFirstOccurrenceOf(jstring, false, false);
-                    glyphs.addLineOfText(currentFont, temp, 0, 0);
+                    glyphs.addLineOfText(font, temp, 0, 0);
                     offset = (int)glyphs.getBoundingBox(0, temp.length(), true).getWidth();
                     initial = true;
                 }
 
-                int baseline = (jstring.startsWith("^")) ? -1 : (jstring.startsWith("~")) ? 1 : 0;
-                jstring = (baseline != 0) ? jstring.substring(1) : jstring;
+                if (jstring.startsWith("^"))
+                {
 
-                glyphs.addLineOfText(currentFont.withHeight(currentHeight - abs(baseline * 2)), jstring, offset, baseline * 8);
+                    if (baseline > 0)
+                    {
+                        baseline -= baseline / 2;
+                    }
+                    else if (baseline < 0)
+                    {
+                        baseline += baseline / 4;
+                    }
+                    else
+                    {
+                        baseline -= 8;
+                    }
+
+                    currentHeight -= 2;
+                    jstring = jstring.substring(1);
+
+                }
+                else if (jstring.startsWith("~"))
+                {
+
+                    if (baseline > 0)
+                    {
+                        baseline += baseline / 4;
+                    }
+                    else if (baseline < 0)
+                    {
+                        baseline += baseline / 2;
+                    }
+                    else
+                    {
+                        baseline += 8;
+                    }
+
+                    currentHeight -= 2;
+                    jstring = jstring.substring(1);
+
+                }
+                else if (jstring.startsWith("!"))
+                {
+
+                    baseline = 0;
+                    currentHeight = fontHeight;
+                    jstring = jstring.substring(1);
+
+                }
+                else
+                {
+
+                    baseline = 0;
+
+                }
+
+                glyphs.addLineOfText(font.withHeight(currentHeight), jstring, offset, baseline);
 
                 offset = (int)glyphs.getBoundingBox(0, glyphs.getNumGlyphs(), true).getWidth();
 
