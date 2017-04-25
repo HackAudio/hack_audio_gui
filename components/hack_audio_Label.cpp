@@ -1,5 +1,7 @@
 #include "hack_audio_Label.h"
 
+#include <regex>
+
 HackAudio::Label::Label()
 {
 
@@ -15,6 +17,7 @@ HackAudio::Label::Label()
 
     animationStatus = true;
     placeholderStatus = false;
+    formattingStatus = false;
 
     timeout = 0;
 
@@ -91,6 +94,28 @@ void HackAudio::Label::setAnimationStatus(bool shouldAnimate)
 {
 
     animationStatus = shouldAnimate;
+
+}
+
+bool HackAudio::Label::getAnimationStatus()
+{
+
+    return animationStatus;
+
+}
+
+void HackAudio::Label::setFormattingStatus(bool shouldFormatText)
+{
+
+    formattingStatus = shouldFormatText;
+    repaint();
+
+}
+
+bool HackAudio::Label::getFormattingStatus()
+{
+
+    return formattingStatus;
 
 }
 
@@ -200,6 +225,186 @@ void HackAudio::Label::timerCallback()
 
 }
 
+juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
+{
+
+    int width  = getWidth();
+    int height = getHeight();
+
+    juce::GlyphArrangement glyphs;
+
+    std::regex r
+    (
+        "([^\\^_]+|([\\^_][^\\s\\^_]){2}|[\\^_]\\{[^\\}]+\\}|[\\^_][^\\s\\^_]?)"
+    );
+
+    juce::Font font = getFont();
+    int fontHeight = font.getHeight();
+    int currentHeight = fontHeight;
+
+    int offset = 0;
+    int baseline = 0;
+
+    std::string s(stringToFormat.toUTF8());
+    for (std::sregex_iterator i = std::sregex_iterator(s.begin(), s.end(), r); i != std::sregex_iterator(); ++i)
+    {
+
+        juce::String jstring = juce::String(i->str());
+
+        if (jstring.startsWith("^"))
+        {
+
+            if (baseline > 0)
+            {
+                baseline -= baseline / 2;
+            }
+            else if (baseline < 0)
+            {
+                baseline += baseline / 4;
+            }
+            else
+            {
+                baseline -= currentHeight / 2;
+            }
+
+            currentHeight -= currentHeight / 4;
+
+            if (jstring.startsWith("^{"))
+            {
+
+                jstring = jstring.substring(2);
+                jstring = jstring.upToFirstOccurrenceOf("}", false, false);
+
+                glyphs.addLineOfText
+                (
+                    font.withHeight(currentHeight),
+                    jstring,
+                    offset,
+                    baseline
+                );
+
+            }
+            else if (jstring.matchesWildcard("^*_*", true))
+            {
+
+                glyphs.addLineOfText
+                (
+                    font.withHeight(currentHeight),
+                    jstring.substring(1,2),
+                    offset,
+                    baseline
+                );
+
+                glyphs.addLineOfText
+                (
+                    font.withHeight(currentHeight),
+                    jstring.substring(3, 4),
+                    offset,
+                    baseline + baseline * -2
+                );
+
+            }
+            else
+            {
+
+                glyphs.addLineOfText
+                (
+                    font.withHeight(currentHeight),
+                    jstring.substring(1),
+                    offset,
+                    baseline
+                );
+
+            }
+
+        }
+        else if (jstring.startsWith("_"))
+        {
+
+            if (baseline > 0)
+            {
+                baseline += baseline / 4;
+            }
+            else if (baseline < 0)
+            {
+                baseline -= baseline / 2;
+            }
+            else
+            {
+                baseline += currentHeight / 2;
+            }
+
+            currentHeight -= currentHeight / 4;
+
+            if (jstring.startsWith("_{"))
+            {
+
+                jstring = jstring.substring(2);
+                jstring = jstring.upToFirstOccurrenceOf("}", false, false);
+
+                glyphs.addLineOfText
+                (
+                    font.withHeight(currentHeight),
+                    jstring,
+                    offset,
+                    baseline
+                );
+                
+            }
+            else if (jstring.matchesWildcard("_*^*", true))
+            {
+
+                glyphs.addLineOfText
+                (
+                 font.withHeight(currentHeight),
+                 jstring.substring(1,2),
+                 offset,
+                 baseline
+                 );
+
+                glyphs.addLineOfText
+                (
+                 font.withHeight(currentHeight),
+                 jstring.substring(3, 4),
+                 offset,
+                 baseline + baseline * -2
+                 );
+                
+            }
+            else
+            {
+
+                glyphs.addLineOfText
+                (
+                 font.withHeight(currentHeight),
+                 jstring.substring(1),
+                 offset,
+                 baseline
+                );
+
+            }
+
+        }
+        else
+        {
+
+            baseline = 0;
+            currentHeight = fontHeight;
+
+            glyphs.addLineOfText(font.withHeight(currentHeight), jstring, offset, baseline);
+
+        }
+
+        offset = (int)glyphs.getBoundingBox(0, glyphs.getNumGlyphs(), true).getWidth();
+
+    }
+
+    glyphs.justifyGlyphs(0, glyphs.getNumGlyphs(), 12, 12 + 4, width - 24, height - 24, getJustificationType());
+
+    return glyphs;
+
+}
+
 void HackAudio::Label::paint(juce::Graphics& g)
 {
 
@@ -214,13 +419,36 @@ void HackAudio::Label::paint(juce::Graphics& g)
     juce::Colour foreground = findColour(HackAudio::foregroundColourId);
     juce::Colour highlight  = findColour(HackAudio::highlightColourId);
 
-    juce::String textToDisplay;
-    textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
-
     g.setColour(foreground.interpolatedWith(highlight, colourInterpolation.getNextValue()));
 
-    g.setFont(getFont());
-    g.drawFittedText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 8);
+    if (formattingStatus)
+    {
+
+        if (!isTimerRunning() && placeholderStatus)
+        {
+
+            formatText(placeholder).draw(g);
+
+        }
+        else
+        {
+
+            formatText(getText()).draw(g);
+
+        }
+
+    }
+    else
+    {
+
+        g.setFont(getFont());
+
+        juce::String textToDisplay;
+        textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
+
+        g.drawText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 1);
+
+    }
 
 }
 
