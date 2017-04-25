@@ -238,11 +238,11 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
         "([^\\^_]+|([\\^_][^\\s\\^_]){2}|[\\^_]\\{[^\\}]+\\}|[\\^_][^\\s\\^_]?)"
     );
 
-    juce::Font font = getFont();
-    int fontHeight = font.getHeight();
+    juce::Font font   = getFont();
+    int fontHeight    = font.getHeight();
     int currentHeight = fontHeight;
 
-    int offset = 0;
+    int offset   = 0;
     int baseline = 0;
 
     std::string s(stringToFormat.toUTF8());
