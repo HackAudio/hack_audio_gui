@@ -1,5 +1,7 @@
 #include "hack_audio_Label.h"
 
+#include "../utils/hack_audio_TextFormatting.h"
+
 #include <regex>
 
 HackAudio::Label::Label()
@@ -225,238 +227,6 @@ void HackAudio::Label::timerCallback()
 
 }
 
-juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
-{
-
-    int width  = getWidth();
-    int height = getHeight();
-
-    juce::GlyphArrangement glyphs;
-
-    std::string search = "([^\\^_]+|";
-
-    std::string scripts = "([\\^_][^\\s\\^_]){2}|[\\^_]\\{[^\\}]+\\}|[\\^_][^\\s\\^_]?|";
-
-    std::string arrays  = "\\\\begin\\{array\\}.+\\\\end\\{array\\})";
-
-    search = search.append(scripts).append(arrays);
-
-    std::regex r(search);
-
-    juce::Font font   = getFont();
-    int fontHeight    = font.getHeight();
-    int currentHeight = fontHeight;
-
-    int offset   = 0;
-    int baseline = 0;
-
-    std::string s(stringToFormat.toUTF8());
-
-    std::sregex_iterator begin(s.begin(), s.end(), r), end;
-
-    for (auto i = begin; i != end; ++i)
-    {
-
-        juce::String jstring = juce::String(i->str());
-
-        if (jstring.startsWith("^"))
-        {
-
-            if (baseline > 0)
-            {
-                baseline -= baseline / 2;
-            }
-            else if (baseline < 0)
-            {
-                baseline += baseline / 4;
-            }
-            else
-            {
-                baseline -= currentHeight / 2;
-            }
-
-            currentHeight -= currentHeight / 4;
-
-            if (jstring.startsWith("^{"))
-            {
-
-                jstring = jstring.substring(2);
-                jstring = jstring.upToFirstOccurrenceOf("}", false, false);
-
-                glyphs.addLineOfText
-                (
-                    font.withHeight(currentHeight),
-                    jstring,
-                    offset,
-                    baseline
-                );
-
-            }
-            else if (jstring.matchesWildcard("^*_*", true))
-            {
-
-                glyphs.addLineOfText
-                (
-                    font.withHeight(currentHeight),
-                    jstring.substring(1,2),
-                    offset,
-                    baseline
-                );
-
-                glyphs.addLineOfText
-                (
-                    font.withHeight(currentHeight),
-                    jstring.substring(3, 4),
-                    offset,
-                    baseline + baseline * -2
-                );
-
-            }
-            else
-            {
-
-                glyphs.addLineOfText
-                (
-                    font.withHeight(currentHeight),
-                    jstring.substring(1),
-                    offset,
-                    baseline
-                );
-
-            }
-
-        }
-        else if (jstring.startsWith("_"))
-        {
-
-            if (baseline > 0)
-            {
-                baseline += baseline / 4;
-            }
-            else if (baseline < 0)
-            {
-                baseline -= baseline / 2;
-            }
-            else
-            {
-                baseline += currentHeight / 2;
-            }
-
-            currentHeight -= currentHeight / 4;
-
-            if (jstring.startsWith("_{"))
-            {
-
-                jstring = jstring.substring(2);
-                jstring = jstring.upToFirstOccurrenceOf("}", false, false);
-
-                glyphs.addLineOfText
-                (
-                    font.withHeight(currentHeight),
-                    jstring,
-                    offset,
-                    baseline
-                );
-                
-            }
-            else if (jstring.matchesWildcard("_*^*", true))
-            {
-
-                glyphs.addLineOfText
-                (
-                 font.withHeight(currentHeight),
-                 jstring.substring(1,2),
-                 offset,
-                 baseline
-                 );
-
-                glyphs.addLineOfText
-                (
-                 font.withHeight(currentHeight),
-                 jstring.substring(3, 4),
-                 offset,
-                 baseline + baseline * -2
-                 );
-                
-            }
-            else
-            {
-
-                glyphs.addLineOfText
-                (
-                 font.withHeight(currentHeight),
-                 jstring.substring(1),
-                 offset,
-                 baseline
-                );
-
-            }
-
-        }
-        else if (jstring.startsWith("\\begin{array}"))
-        {
-
-            baseline = 0;
-            currentHeight = fontHeight;
-
-            jstring = jstring.fromFirstOccurrenceOf("\\begin{array}", false, true).upToFirstOccurrenceOf("\\end{array}", false, true);
-
-            juce::StringArray columns;
-
-            bool finished = false;
-            while (!finished)
-            {
-
-                columns.add(jstring.upToFirstOccurrenceOf(" &", false, true));
-                finished = (jstring.contains("&")) ? false : true;
-                jstring = jstring.fromFirstOccurrenceOf("&", false, false);
-
-            }
-
-            int k = 0;
-
-            for (int j = 0; j < columns.size(); ++j)
-            {
-
-                juce::String temp = columns[j];
-
-                if (columns[j].startsWith("\n"))
-                {
-                    baseline += currentHeight;
-                    temp = temp.removeCharacters("\n");
-                    temp = temp.trimStart();
-                    k = 0;
-                }
-
-                int spacing = (offset + ((width / columns.size()) * k)) - font.getStringWidth(columns[j]) / 2;
-
-                glyphs.addLineOfText(font.withHeight(currentHeight), columns[j], spacing, baseline);
-
-                k++;
-
-            }
-
-        }
-        else
-        {
-
-            baseline = 0;
-            currentHeight = fontHeight;
-
-            glyphs.addLineOfText(font.withHeight(currentHeight), jstring, offset, baseline);
-
-        }
-
-        offset = (int)glyphs.getBoundingBox(0, glyphs.getNumGlyphs(), true).getWidth();
-
-    }
-
-    glyphs.justifyGlyphs(0, glyphs.getNumGlyphs(), 12, 12 + 4, width - 24, height - 24, getJustificationType());
-
-    return glyphs;
-
-}
-
 void HackAudio::Label::paint(juce::Graphics& g)
 {
 
@@ -479,13 +249,13 @@ void HackAudio::Label::paint(juce::Graphics& g)
         if (!isTimerRunning() && placeholderStatus)
         {
 
-            formatText(placeholder).draw(g);
+            formatText(placeholder, getFont(), getJustificationType(), 12, 12, width - 24, height - 24).draw(g);
 
         }
         else
         {
 
-            formatText(getText()).draw(g);
+            formatText(getText(), getFont(), getJustificationType(), 12, 12, width - 24, height - 24).draw(g);
 
         }
 
