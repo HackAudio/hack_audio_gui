@@ -8,14 +8,7 @@ juce::StringArray parseText(juce::String stringToParse)
 
     juce::StringArray results;
 
-    std::string search = "([^\\^_]+|";
-
-    std::string scripts = "([\\^_][^\\s\\^_]){2}|[\\^_]\\{[^\\}]+\\}|[\\^_][^\\s\\^_]?|";
-
-    std::string arrays  = "\\\\array.+\\\\end)";
-
-    search = search.append(scripts).append(arrays);
-    std::regex r(search);
+    std::regex r("\\\\array.+");
 
     std::string s(stringToParse.toUTF8());
 
@@ -23,7 +16,17 @@ juce::StringArray parseText(juce::String stringToParse)
     for (auto i = begin; i != end; ++i)
     {
         results.add(i->str());
-        std::cout << i->str() << "\n";
+    }
+
+    if (!results.size())
+    {
+        r.assign("([^\\^_]+|([\\^_][^\\s\\^_]){2}|[\\^_]\\{[^\\}]+\\}|[\\^_][^\\s\\^_]?)");
+
+        std::sregex_iterator begin(s.begin(), s.end(), r), end;
+        for (auto i = begin; i != end; ++i)
+        {
+            results.add(i->str());
+        }
     }
     
     return results;
@@ -173,11 +176,12 @@ void formatScript(juce::GlyphArrangement& glyphs, juce::String jstring, juce::Fo
 void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Font& font, int& currentHeight, int& baseline, int& offset, int& width)
 {
 
+    offset = 0;
     baseline = 0;
     currentHeight = font.getHeight();
 
     jstring = jstring.fromFirstOccurrenceOf("\\array", false, true).upToFirstOccurrenceOf("\\end", false, true);
-    jstring = jstring.trimStart();
+    jstring = jstring.trimStart().trimEnd();
 
     juce::StringArray columns;
 
@@ -188,10 +192,11 @@ void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Fo
         columns.add(jstring.upToFirstOccurrenceOf("&", false, true));
         finished = (jstring.contains("&")) ? false : true;
         jstring = jstring.fromFirstOccurrenceOf("&", false, false);
-        jstring = jstring.replace("\n", "__NEWLINE__").trim().replace("__NEWLINE__", "\n"); // Thanks, JUCE
+        jstring = jstring.trim();
 
     }
 
+    int spacing = 0;
     int n = 0;
 
     for (int j = 0; j < columns.size(); ++j)
@@ -204,23 +209,35 @@ void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Fo
 
             juce::String temp = results[k];
 
-            if (temp.startsWith("\n"))
+            if (temp.startsWith("//"))
             {
 
-                baseline += currentHeight;
-                temp = temp.removeCharacters("\n");
-                temp = temp.trimStart();
+                baseline += currentHeight * 1.5;
+                temp = temp.removeCharacters("//");
+                spacing = 0;
+                offset = 0;
                 n = 0;
 
             }
             else if (temp.startsWith("^") || temp.startsWith("_"))
             {
 
-                formatScript(glyphs, temp, font, currentHeight, baseline, offset);
+                offset = spacing + font.getStringWidth(" ") * 1.25;
+
+                int tempBaseline = baseline;
+
+                formatScript(glyphs, temp, font, currentHeight, tempBaseline, offset);
+
+                currentHeight = font.getHeight();
+                offset = 0;
+
+                n--;
+
+                continue;
 
             }
 
-            int spacing = (offset + ((width / columns.size()) * n)) - font.getStringWidth(columns[j]) / 2;
+            spacing = ((width / columns.size()) * n) - font.getStringWidth(temp) / 2;
 
             glyphs.addLineOfText(font.withHeight(currentHeight), temp, spacing, baseline);
 
