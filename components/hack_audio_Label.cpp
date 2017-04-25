@@ -235,7 +235,7 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
 
     std::regex r
     (
-        "([^\\^_!]+|[\\^_][\\w\\d][\\^_][\\w\\d]|[\\^_!][^\\s\\^_!]?)"
+        "([^\\^_!]+|[\\^_][^\\s\\^_!][\\^_][^\\s\\^_!]|[\\^_!][^\\s\\^_!]?)"
     );
 
     juce::Font font = getFont();
