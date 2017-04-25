@@ -246,7 +246,7 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
     int baseline = 0;
 
     std::string s(stringToFormat.toUTF8());
-    for (std::sregex_iterator i = std::sregex_iterator(s.begin(), s.end(), r); i != std::sregex_iterator(); ++i)
+    for (auto i = std::sregex_iterator(s.begin(), s.end(), r); i != std::sregex_iterator(); ++i)
     {
 
         juce::String jstring = juce::String(i->str());
