@@ -233,10 +233,15 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
 
     juce::GlyphArrangement glyphs;
 
-    std::regex r
-    (
-        "([^\\^_]+|([\\^_][^\\s\\^_]){2}|[\\^_]\\{[^\\}]+\\}|[\\^_][^\\s\\^_]?)"
-    );
+    std::string search = "([^\\^_]+|";
+
+    std::string scripts = "([\\^_][^\\s\\^_]){2}|[\\^_]\\{[^\\}]+\\}|[\\^_][^\\s\\^_]?|";
+
+    std::string arrays  = "\\\\begin\\{array\\}.+\\\\end\\{array\\})";
+
+    search = search.append(scripts).append(arrays);
+
+    std::regex r(search);
 
     juce::Font font   = getFont();
     int fontHeight    = font.getHeight();
@@ -384,6 +389,50 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
                  offset,
                  baseline
                 );
+
+            }
+
+        }
+        else if (jstring.startsWith("\\begin{array}"))
+        {
+
+            baseline = 0;
+            currentHeight = fontHeight;
+
+            jstring = jstring.fromFirstOccurrenceOf("\\begin{array}", false, true).upToFirstOccurrenceOf("\\end{array}", false, true);
+
+            juce::StringArray columns;
+
+            bool finished = false;
+            while (!finished)
+            {
+
+                columns.add(jstring.upToFirstOccurrenceOf(" &", false, true));
+                finished = (jstring.contains("&")) ? false : true;
+                jstring = jstring.fromFirstOccurrenceOf("&", false, false);
+
+            }
+
+            int k = 0;
+
+            for (int j = 0; j < columns.size(); ++j)
+            {
+
+                juce::String temp = columns[j];
+
+                if (columns[j].startsWith("\n"))
+                {
+                    baseline += currentHeight;
+                    temp = temp.removeCharacters("\n");
+                    temp = temp.trimStart();
+                    k = 0;
+                }
+
+                int spacing = (offset + ((width / columns.size()) * k)) - font.getStringWidth(columns[j]) / 2;
+
+                glyphs.addLineOfText(font.withHeight(currentHeight), columns[j], spacing, baseline);
+
+                k++;
 
             }
 
