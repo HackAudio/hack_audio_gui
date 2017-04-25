@@ -268,7 +268,39 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
             }
 
             currentHeight -= 2;
-            jstring = jstring.substring(1);
+
+            if (jstring.contains("_"))
+            {
+
+                glyphs.addLineOfText
+                (
+                    font.withHeight(currentHeight),
+                    jstring.substring(1,2),
+                    offset,
+                    baseline
+                );
+
+                glyphs.addLineOfText
+                (
+                    font.withHeight(currentHeight),
+                    jstring.substring(3, 4),
+                    offset,
+                    baseline + baseline * -2
+                );
+
+            }
+            else
+            {
+
+                glyphs.addLineOfText
+                (
+                    font.withHeight(currentHeight),
+                    jstring.substring(1),
+                    offset,
+                    baseline
+                );
+
+            }
 
         }
         else if (jstring.startsWith("_"))
@@ -288,7 +320,39 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
             }
 
             currentHeight -= 2;
-            jstring = jstring.substring(1);
+
+            if (jstring.contains("^"))
+            {
+
+                glyphs.addLineOfText
+                (
+                 font.withHeight(currentHeight),
+                 jstring.substring(1,2),
+                 offset,
+                 baseline
+                 );
+
+                glyphs.addLineOfText
+                (
+                 font.withHeight(currentHeight),
+                 jstring.substring(3, 4),
+                 offset,
+                 baseline + baseline * -2
+                 );
+                
+            }
+            else
+            {
+
+                glyphs.addLineOfText
+                (
+                 font.withHeight(currentHeight),
+                 jstring.substring(1),
+                 offset,
+                 baseline
+                );
+
+            }
 
         }
         else if (jstring.startsWith("!"))
@@ -298,6 +362,8 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
             currentHeight = fontHeight;
             jstring = jstring.substring(1);
 
+            glyphs.addLineOfText(font.withHeight(currentHeight), jstring, offset, baseline);
+
         }
         else if (jstring.startsWith(" "))
         {
@@ -305,15 +371,17 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
             baseline = 0;
             currentHeight = fontHeight;
 
+            glyphs.addLineOfText(font.withHeight(currentHeight), jstring, offset, baseline);
+
         }
         else
         {
 
             baseline = 0;
 
-        }
+            glyphs.addLineOfText(font.withHeight(currentHeight), jstring, offset, baseline);
 
-        glyphs.addLineOfText(font.withHeight(currentHeight), jstring, offset, baseline);
+        }
 
         offset = (int)glyphs.getBoundingBox(0, glyphs.getNumGlyphs(), true).getWidth();
 
