@@ -264,10 +264,10 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
             }
             else
             {
-                baseline -= 8;
+                baseline -= currentHeight / 2;
             }
 
-            currentHeight -= 2;
+            currentHeight -= currentHeight / 4;
 
             if (jstring.startsWith("^{"))
             {
@@ -331,10 +331,10 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
             }
             else
             {
-                baseline += 8;
+                baseline += currentHeight / 2;
             }
 
-            currentHeight -= 2;
+            currentHeight -= currentHeight / 4;
 
             if (jstring.startsWith("_{"))
             {
