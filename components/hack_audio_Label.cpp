@@ -17,7 +17,7 @@ HackAudio::Label::Label()
 
     animationStatus = true;
     placeholderStatus = false;
-    formattingStatus = false;
+    formattingStatus = true;
 
     timeout = 0;
 
