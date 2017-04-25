@@ -73,10 +73,21 @@ public:
     */
     void setAnimationStatus(bool shouldAnimate);
 
+    /**
+     Returns the current animation status
+    */
     bool getAnimationStatus();
 
+    /**
+     Toggles whether or not the label should format its text (both placeholder and label text)
+     
+     The text formatting currently supports LaTeX style super and sub script (^ and _) with extended script using brackets (e.g. a^{bcd})
+    */
     void setFormattingStatus(bool shouldFormatText);
 
+    /**
+     Returns the current formatting status
+    */
     bool getFormattingStatus();
 
 private:
