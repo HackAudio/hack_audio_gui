@@ -235,7 +235,7 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
 
     std::regex r
     (
-        "([^\\^_!]+|([\\^_][^\\s\\^_!]){2}|[\\^_!][^\\s\\^_!]?)"
+        "([^\\^_!]+|([\\^_][^\\s\\^_!]){2}|[\\^_]\\{[^\\s\\^_!]+\\}|[\\^_!][^\\s\\^_!]?)"
     );
 
     juce::Font font = getFont();
@@ -271,7 +271,22 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
 
             currentHeight -= 2;
 
-            if (jstring.contains("_"))
+            if (jstring.startsWith("^{"))
+            {
+
+                jstring = jstring.substring(2);
+                jstring = jstring.upToFirstOccurrenceOf("}", false, false);
+
+                glyphs.addLineOfText
+                (
+                    font.withHeight(currentHeight),
+                    jstring,
+                    offset,
+                    baseline
+                );
+
+            }
+            else if (jstring.matchesWildcard("^*_*", true))
             {
 
                 glyphs.addLineOfText
@@ -323,7 +338,22 @@ juce::GlyphArrangement HackAudio::Label::formatText(juce::String stringToFormat)
 
             currentHeight -= 2;
 
-            if (jstring.contains("^"))
+            if (jstring.startsWith("_{"))
+            {
+
+                jstring = jstring.substring(2);
+                jstring = jstring.upToFirstOccurrenceOf("}", false, false);
+
+                glyphs.addLineOfText
+                (
+                    font.withHeight(currentHeight),
+                    jstring,
+                    offset,
+                    baseline
+                );
+                
+            }
+            else if (jstring.matchesWildcard("_*^*", true))
             {
 
                 glyphs.addLineOfText
