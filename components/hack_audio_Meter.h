@@ -166,6 +166,7 @@ private:
     int   meterFall;
 
     juce::Array<float*> meterSources;
+    juce::Array<float>  meterSourceCaches;
 
     MeterStyle       meterStyle;
     MeterCalibration meterCalibration;

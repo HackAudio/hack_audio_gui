@@ -94,13 +94,16 @@ void HackAudio::Meter::setSource(int channel, float* const source)
         startTimerHz(ANIMATION_FPS);
     }
 
+    repaint();
+
 }
 
 void HackAudio::Meter::clearSource(int channel)
 {
 
+    meterSources.remove(channel);
 
-    meterSources.set(channel, nullptr);
+    repaint();
 
 }
 
@@ -270,7 +273,28 @@ void HackAudio::Meter::timerCallback()
         stopTimer();
     }
 
-    repaint();
+    if (meterSourceCaches.size() != meterSources.size())
+    {
+        meterSourceCaches.resize(meterSources.size());
+    }
+
+    bool needsRepainting = false;
+
+    for (int i = 0; i < meterSources.size(); ++i)
+    {
+
+        if (meterSourceCaches[i] != *meterSources[i])
+        {
+            meterSourceCaches.set(i, *meterSources[i]);
+            needsRepainting = true;
+        }
+
+    }
+
+    if (needsRepainting)
+    {
+        repaint(indicatorArea);
+    }
 
 }
 
@@ -285,100 +309,105 @@ void HackAudio::Meter::paint(juce::Graphics& g)
     g.setColour(findColour(HackAudio::backgroundColourId));
     g.fillPath(b);
 
-    if (meterStyle == Vertical)
+    if (meterSources.size())
     {
 
-        int channelWidth = indicatorArea.getWidth() / meterSources.size();
-
-        for (int channel = 0; channel < meterSources.size(); ++channel)
+        if (meterStyle == Vertical)
         {
 
-            double nextVal = *meterSources[channel];
+            int channelWidth = indicatorArea.getWidth() / meterSources.size();
 
-            g.setColour(findColour(HackAudio::highlightColourId));
-
-            g.fillRect
-            (
-               indicatorArea.getX() + channelWidth * channel,
-               indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal),
-               channelWidth,
-               indicatorArea.getHeight() * nextVal
-            );
-
-            if (meterPeakStatus)
+            for (int channel = 0; channel < meterSources.size(); ++channel)
             {
 
-                g.setColour(findColour(HackAudio::foregroundColourId));
+                double nextVal = *meterSources[channel];
 
+                g.setColour(findColour(HackAudio::highlightColourId));
+
+                g.fillRect
+                (
+                   indicatorArea.getX() + channelWidth * channel,
+                   indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal),
+                   channelWidth,
+                   indicatorArea.getHeight() * nextVal
+                );
+
+                if (meterPeakStatus)
+                {
+
+                    g.setColour(findColour(HackAudio::foregroundColourId));
+
+                    g.drawLine
+                    (
+                        indicatorArea.getX() + channelWidth * channel,
+                        indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal),
+                        (indicatorArea.getX() + (channelWidth * channel)) + channelWidth,
+                        indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal),
+                        2
+                    );
+                    
+                }
+
+                g.setColour(findColour(HackAudio::backgroundColourId));
                 g.drawLine
                 (
-                    indicatorArea.getX() + channelWidth * channel,
-                    indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal),
-                    (indicatorArea.getX() + (channelWidth * channel)) + channelWidth,
-                    indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal),
+                    (indicatorArea.getX() + channelWidth * channel) + channelWidth,
+                    indicatorArea.getY(),
+                    (indicatorArea.getX() + channelWidth * channel) + channelWidth,
+                    indicatorArea.getBottom(),
                     2
                 );
-                
+
             }
 
-            g.setColour(findColour(HackAudio::backgroundColourId));
-            g.drawLine
-            (
-                (indicatorArea.getX() + channelWidth * channel) + channelWidth,
-                indicatorArea.getY(),
-                (indicatorArea.getX() + channelWidth * channel) + channelWidth,
-                indicatorArea.getBottom(),
-                2
-            );
-
         }
-
-    }
-    else if (meterStyle == Horizontal)
-    {
-
-        int channelHeight = indicatorArea.getHeight() / meterSources.size();
-
-        for (int channel = 0; channel < meterSources.size(); ++channel)
+        else if (meterStyle == Horizontal)
         {
 
-            double nextVal = *meterSources[channel];
+            int channelHeight = indicatorArea.getHeight() / meterSources.size();
 
-            g.setColour(findColour(HackAudio::highlightColourId));
-
-            g.fillRect
-            (
-                indicatorArea.getX(),
-                indicatorArea.getY() + channelHeight * channel,
-                indicatorArea.getWidth() * nextVal,
-                channelHeight
-            );
-
-            if (meterPeakStatus)
+            for (int channel = 0; channel < meterSources.size(); ++channel)
             {
 
-                g.setColour(findColour(HackAudio::foregroundColourId));
+                double nextVal = *meterSources[channel];
 
+                g.setColour(findColour(HackAudio::highlightColourId));
+
+                g.fillRect
+                (
+                    indicatorArea.getX(),
+                    indicatorArea.getY() + channelHeight * channel,
+                    indicatorArea.getWidth() * nextVal,
+                    channelHeight
+                );
+
+                if (meterPeakStatus)
+                {
+
+                    g.setColour(findColour(HackAudio::foregroundColourId));
+
+                    g.drawLine
+                    (
+                        indicatorArea.getX() + indicatorArea.getWidth() * nextVal,
+                        indicatorArea.getY() + channelHeight * channel,
+                        indicatorArea.getX() + indicatorArea.getWidth() * nextVal,
+                        (indicatorArea.getY() + channelHeight * channel) + channelHeight,
+                        2
+                    );
+
+                }
+
+                g.setColour(findColour(HackAudio::backgroundColourId));
                 g.drawLine
                 (
-                    indicatorArea.getX() + indicatorArea.getWidth() * nextVal,
-                    indicatorArea.getY() + channelHeight * channel,
-                    indicatorArea.getX() + indicatorArea.getWidth() * nextVal,
+                    indicatorArea.getX(),
+                    (indicatorArea.getY() + channelHeight * channel) + channelHeight,
+                    indicatorArea.getRight(),
                     (indicatorArea.getY() + channelHeight * channel) + channelHeight,
                     2
                 );
 
             }
-
-            g.setColour(findColour(HackAudio::backgroundColourId));
-            g.drawLine
-            (
-                indicatorArea.getX(),
-                (indicatorArea.getY() + channelHeight * channel) + channelHeight,
-                indicatorArea.getRight(),
-                (indicatorArea.getY() + channelHeight * channel) + channelHeight,
-                2
-            );
 
         }
 
