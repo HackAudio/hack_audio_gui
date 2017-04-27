@@ -214,7 +214,7 @@ void formatScript(juce::GlyphArrangement& glyphs, juce::String jstring, juce::Fo
 
 }
 
-void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Font& font, int& currentHeight, int& baseline, int& offset, int& width)
+void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Font& font, int& currentHeight, int& baseline, int& offset, int& width, int& height)
 {
 
     offset = 0;
@@ -253,7 +253,7 @@ void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Fo
             if (temp.startsWith("//"))
             {
 
-                baseline += currentHeight * 1.5;
+                baseline += height / columns.size();
                 temp = temp.removeCharacters("//");
                 spacing = 0;
                 offset = 0;
@@ -317,7 +317,7 @@ juce::GlyphArrangement formatText(juce::String stringToFormat, juce::Font font, 
         else if (jstring.startsWith("\\array"))
         {
 
-            formatArray(glyphs, jstring, font, currentHeight, baseline, offset, width);
+            formatArray(glyphs, jstring, font, currentHeight, baseline, offset, width, height);
 
         }
         else
@@ -335,7 +335,7 @@ juce::GlyphArrangement formatText(juce::String stringToFormat, juce::Font font, 
     }
     
     glyphs.justifyGlyphs(0, glyphs.getNumGlyphs(), x, y, width, height, justificationType);
-    
+
     return glyphs;
     
 }
