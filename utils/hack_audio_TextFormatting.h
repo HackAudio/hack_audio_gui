@@ -57,8 +57,8 @@ void formatScript(juce::GlyphArrangement& glyphs, juce::String jstring, juce::Fo
         if (jstring.startsWith("^{"))
         {
 
-            jstring = jstring.substring(2);
-            jstring = jstring.upToFirstOccurrenceOf("}", false, false);
+            jstring = jstring.fromFirstOccurrenceOf("{", false, true);
+            jstring = jstring.upToFirstOccurrenceOf("}", false, true);
 
             juce::StringArray temp = parseText(jstring);
 
@@ -144,8 +144,8 @@ void formatScript(juce::GlyphArrangement& glyphs, juce::String jstring, juce::Fo
         if (jstring.startsWith("_{"))
         {
 
-            jstring = jstring.substring(2);
-            jstring = jstring.upToFirstOccurrenceOf("}", false, false);
+            jstring = jstring.fromFirstOccurrenceOf("{", false, true);
+            jstring = jstring.upToFirstOccurrenceOf("}", false, true);
 
             juce::StringArray temp = parseText(jstring);
 
