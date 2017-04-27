@@ -268,7 +268,7 @@ void HackAudio::Label::paint(juce::Graphics& g)
         juce::String textToDisplay;
         textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
 
-        g.drawText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 1);
+        g.drawFittedText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 1);
 
     }
 
