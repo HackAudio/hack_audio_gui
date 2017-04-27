@@ -52,7 +52,7 @@ void formatScript(juce::GlyphArrangement& glyphs, juce::String jstring, juce::Fo
             baseline -= currentHeight / 2;
         }
 
-        currentHeight -= currentHeight / 4;
+        currentHeight -= currentHeight / 3;
 
         if (jstring.startsWith("^{"))
         {
@@ -119,7 +119,7 @@ void formatScript(juce::GlyphArrangement& glyphs, juce::String jstring, juce::Fo
             baseline += currentHeight / 2;
         }
 
-        currentHeight -= currentHeight / 4;
+        currentHeight -= currentHeight / 3;
 
         if (jstring.startsWith("_{"))
         {
