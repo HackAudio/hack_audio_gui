@@ -60,13 +60,33 @@ void formatScript(juce::GlyphArrangement& glyphs, juce::String jstring, juce::Fo
             jstring = jstring.substring(2);
             jstring = jstring.upToFirstOccurrenceOf("}", false, false);
 
-            glyphs.addLineOfText
-            (
-             font.withHeight(currentHeight),
-             jstring,
-             offset,
-             baseline
-            );
+            juce::StringArray temp = parseText(jstring);
+
+            for (int i = 0; i < temp.size(); ++i)
+            {
+
+                if (temp[i].containsAnyOf("^_"))
+                {
+
+                    formatScript(glyphs, temp[i], font, currentHeight, baseline, offset);
+
+                }
+                else
+                {
+
+                    glyphs.addLineOfText
+                    (
+                     font.withHeight(currentHeight),
+                     temp[i],
+                     offset,
+                     baseline
+                    );
+
+                    offset = (int)glyphs.getBoundingBox(0, glyphs.getNumGlyphs(), true).getWidth();
+
+                }
+
+            }
 
         }
         else if (jstring.matchesWildcard("^*_*", true))
@@ -127,13 +147,32 @@ void formatScript(juce::GlyphArrangement& glyphs, juce::String jstring, juce::Fo
             jstring = jstring.substring(2);
             jstring = jstring.upToFirstOccurrenceOf("}", false, false);
 
-            glyphs.addLineOfText
-            (
-             font.withHeight(currentHeight),
-             jstring,
-             offset,
-             baseline
-             );
+            juce::StringArray temp = parseText(jstring);
+
+            for (int i = 0; i < temp.size(); ++i)
+            {
+                if (temp[i].containsAnyOf("^_"))
+                {
+
+                    formatScript(glyphs, temp[i], font, currentHeight, baseline, offset);
+                    
+                }
+                else
+                {
+
+                    glyphs.addLineOfText
+                    (
+                     font.withHeight(currentHeight),
+                     jstring,
+                     offset,
+                     baseline
+                    );
+
+                    offset = (int)glyphs.getBoundingBox(0, glyphs.getNumGlyphs(), true).getWidth();
+
+                }
+
+            }
 
         }
         else if (jstring.matchesWildcard("_*^*", true))
@@ -170,6 +209,8 @@ void formatScript(juce::GlyphArrangement& glyphs, juce::String jstring, juce::Fo
         }
 
     }
+
+    offset = (int)glyphs.getBoundingBox(0, glyphs.getNumGlyphs(), true).getWidth();
 
 }
 
@@ -246,7 +287,6 @@ void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Fo
         }
 
     }
-
 
 }
 
