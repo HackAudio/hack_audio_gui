@@ -34,7 +34,7 @@ struct BiquadFilter : public HackAudio::Diagram
         main_mult.setSymbol(HackAudio::Diagram::Junction::Multiply);
         main_mult.setBounds(176, 5, 30, 30);
         main_sum.setSymbol(HackAudio::Diagram::Junction::Add);
-        main_sum.setBounds(85, -48, 55, 32);
+        main_sum.setBounds(250, 5, 30, 30);
 
         ff_1_delay.setText("z ^ -1", juce::dontSendNotification);
         ff_1_delay.setBounds(0, -115, 64, 40);
@@ -46,9 +46,9 @@ struct BiquadFilter : public HackAudio::Diagram
         ff_2_delay.setText("z ^ -2", juce::dontSendNotification);
         ff_2_delay.setBounds(0, -200, 64, 40);
         ff_2_gain.setPlaceholder("b2");
-        ff_2_gain.setBounds(410, -230, 55, 32);
+        ff_2_gain.setBounds(85, -230, 55, 32);
         ff_2_mult.setSymbol(HackAudio::Diagram::Junction::Multiply);
-        ff_2_mult.setBounds(336, -195, 30, 30);
+        ff_2_mult.setBounds(176, -195, 30, 30);
 
         fb_1_delay.setText("z ^ -1", juce::dontSendNotification);
         fb_1_delay.setBounds(512, -115, 64, 40);

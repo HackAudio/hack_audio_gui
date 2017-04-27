@@ -22,7 +22,7 @@ struct Gain : public HackAudio::Diagram
         main_mult.setSymbol(HackAudio::Diagram::Junction::Multiply);
         main_mult.setBounds(512, 64, 40, 40);
 
-        addDiagramInput(main_db);
+        addDiagramInput(main_mult);
 
         connect(main_db, main_linear);
         connect(main_linear, main_mult);

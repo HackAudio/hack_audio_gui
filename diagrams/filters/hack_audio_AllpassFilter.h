@@ -27,9 +27,9 @@ struct AllpassFilter : public HackAudio::Diagram
         main_sum_2.setBounds(550, 9, 30, 30);
 
         fb_gain.setPlaceholder("Gain");
-        fb_gain.setBounds(175, -100, 64, 48);
+        fb_gain.setBounds(130, -100, 64, 48);
         fb_mult.setSymbol(HackAudio::Diagram::Junction::Multiply);
-        fb_mult.setBounds(30, -50, 30, 30);
+        fb_mult.setBounds(275, -50, 30, 30);
         fb_node.setSymbol(HackAudio::Diagram::Junction::None);
         fb_node.setBounds(475, 15, 15, 15);
 
@@ -47,7 +47,7 @@ struct AllpassFilter : public HackAudio::Diagram
 
         connect(fb_node, fb_mult);
         connect(fb_gain, fb_mult);
-        connect(fb_mult, main_sum_1);
+        connect(fb_mult, main_sum_1,HackAudio::Diagram::Junction::Horizontal);
 
         connect(ff_node, ff_mult);
         connect(ff_gain, ff_mult);

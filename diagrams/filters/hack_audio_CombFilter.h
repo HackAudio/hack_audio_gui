@@ -15,11 +15,11 @@ struct CombFilter : public HackAudio::Diagram
     {
 
         main_sum.setSymbol(HackAudio::Diagram::Junction::Add);
-        main_sum.setBounds(250, 0, 30, 30);
+        main_sum.setBounds(250, 10, 30, 30);
         main_mult.setSymbol(HackAudio::Diagram::Junction::Multiply);
         main_mult.setBounds(300, -64, 30, 30);
         main_delay.setPlaceholder("Delay");
-        main_delay.setBounds(400, 15, 96, 64);
+        main_delay.setBounds(400, -7.5, 96, 64);
 
         fb_gain.setPlaceholder("Gain");
         fb_gain.setBounds(350, -128, 64, 48);
@@ -31,7 +31,7 @@ struct CombFilter : public HackAudio::Diagram
         connect(main_sum, main_delay);
         connect(fb_node, main_mult);
         connect(fb_gain, main_mult);
-        connect(main_mult, main_sum);
+        connect(main_mult, main_sum, HackAudio::Diagram::Junction::Horizontal);
         connect(main_delay, fb_node);
 
         addDiagramOutput(fb_node);
