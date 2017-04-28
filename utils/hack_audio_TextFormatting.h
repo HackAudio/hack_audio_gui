@@ -224,14 +224,22 @@ void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Fo
     jstring = jstring.fromFirstOccurrenceOf("\\array", false, true).upToFirstOccurrenceOf("\\end", false, true);
     jstring = jstring.trimStart().trimEnd();
 
+    int rows = 0;
+    juce::String s_row = jstring;
+    while (1)
+    {
+        rows++;
+        s_row = s_row.fromFirstOccurrenceOf("&//", false, true);
+        if (!s_row.contains("&//")) { break; }
+    }
+
     juce::StringArray chars;
 
-    bool finished = false;
-    while (!finished)
+    while (1)
     {
 
         chars.add(jstring.upToFirstOccurrenceOf("&", false, true));
-        finished = (jstring.contains("&")) ? false : true;
+        if (!jstring.contains("&")) { break; }
         jstring = jstring.fromFirstOccurrenceOf("&", false, false);
         jstring = jstring.trim();
 
@@ -253,7 +261,7 @@ void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Fo
             if (temp.startsWith("//"))
             {
 
-                baseline += height / chars.size();
+                baseline += height / rows;
                 temp = temp.removeCharacters("//");
                 spacing = 0;
                 offset = 0;
@@ -263,7 +271,7 @@ void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Fo
             else if (temp.startsWith("^") || temp.startsWith("_"))
             {
 
-                offset = spacing + font.getStringWidth(" ") * 1.25;
+                offset = spacing + font.getStringWidth(" ") * 1.5;
 
                 int tempBaseline = baseline;
 
@@ -278,7 +286,7 @@ void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Fo
 
             }
 
-            spacing = ((width / chars.size()) * n) - font.getStringWidth(temp) / 2;
+            spacing = ((width / rows) * n) - font.getStringWidth(temp) / 2;
 
             glyphs.addLineOfText(font.withHeight(currentHeight), temp, spacing, baseline);
 
