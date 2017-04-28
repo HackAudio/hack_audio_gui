@@ -12,8 +12,7 @@ namespace HackAudio
 
 class Viewport : public juce::Component,
                  private juce::ComponentListener,
-                 private juce::ButtonListener,
-                 private juce::Timer
+                 private juce::ButtonListener
 {
 
     class Diagram;
@@ -58,8 +57,6 @@ private:
     void buttonClicked(juce::Button* b) override;
 
     void componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized) override;
-
-    void timerCallback() override;
 
     void paint(juce::Graphics& g) override;
     void paintOverChildren(juce::Graphics& g) override;
