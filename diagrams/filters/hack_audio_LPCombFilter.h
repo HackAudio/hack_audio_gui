@@ -15,22 +15,20 @@ struct LPCombFilter : public HackAudio::Diagram
     HackAudio::Label delay2;
     HackAudio::Label fb_gain2;
     HackAudio::Diagram::Junction fb_node2;
-    
-    //
 
     LPCombFilter()
     {
         
         sum1.setSymbol(HackAudio::Diagram::Junction::Symbol::Add);
-        sum1.setBounds(250,7.5,30,30);
+        sum1.setBounds(250,0,30,30);
         mult1.setSymbol(HackAudio::Diagram::Junction::Symbol::Multiply);
         mult1.setBounds(300,-64,30,30);
         delay1.setPlaceholder("Delay");
-        delay1.setBounds(400,-7.5,96,64);
+        delay1.setBounds(400,-17,96,64);
         fb_gain1.setPlaceholder("Gain");
         fb_gain1.setBounds(200,-128,64,48);
         fb_node1.setSymbol(HackAudio::Diagram::Junction::Symbol::None);
-        fb_node1.setBounds(550,17,15,15);
+        fb_node1.setBounds(550,8,15,15);
         
         sum2.setSymbol(HackAudio::Diagram::Junction::Symbol::Add);
         sum2.setBounds(500,-64,30,30);
@@ -44,7 +42,9 @@ struct LPCombFilter : public HackAudio::Diagram
         fb_node2.setBounds(350,-56.5,15,15);
         
         addDiagramInput(sum1);
+
         connect(sum1,delay1,HackAudio::Diagram::Junction::Horizontal);
+        connect(delay1, fb_node1);
         connect(fb_node1,sum2);
         connect(fb_gain1,mult1);
         connect(sum2,delay2);
@@ -54,7 +54,7 @@ struct LPCombFilter : public HackAudio::Diagram
         connect(mult2,sum2,HackAudio::Diagram::Junction::Horizontal);
         connect(mult1,sum1,HackAudio::Diagram::Junction::Horizontal);
         
-        addDiagramOutput(delay1);
+        addDiagramOutput(fb_node1);
 
         setName("Low-Pass, Feed-Back Comb Filter");
 
