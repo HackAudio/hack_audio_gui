@@ -224,13 +224,13 @@ void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Fo
     jstring = jstring.fromFirstOccurrenceOf("\\array", false, true).upToFirstOccurrenceOf("\\end", false, true);
     jstring = jstring.trimStart().trimEnd();
 
-    juce::StringArray columns;
+    juce::StringArray chars;
 
     bool finished = false;
     while (!finished)
     {
 
-        columns.add(jstring.upToFirstOccurrenceOf("&", false, true));
+        chars.add(jstring.upToFirstOccurrenceOf("&", false, true));
         finished = (jstring.contains("&")) ? false : true;
         jstring = jstring.fromFirstOccurrenceOf("&", false, false);
         jstring = jstring.trim();
@@ -240,10 +240,10 @@ void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Fo
     int spacing = 0;
     int n = 0;
 
-    for (int j = 0; j < columns.size(); ++j)
+    for (int j = 0; j < chars.size(); ++j)
     {
 
-        juce::StringArray results = parseText(columns[j]);
+        juce::StringArray results = parseText(chars[j]);
 
         for (int k = 0; k < results.size(); ++k)
         {
@@ -253,7 +253,7 @@ void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Fo
             if (temp.startsWith("//"))
             {
 
-                baseline += height / columns.size();
+                baseline += height / chars.size();
                 temp = temp.removeCharacters("//");
                 spacing = 0;
                 offset = 0;
@@ -278,7 +278,7 @@ void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Fo
 
             }
 
-            spacing = ((width / columns.size()) * n) - font.getStringWidth(temp) / 2;
+            spacing = ((width / chars.size()) * n) - font.getStringWidth(temp) / 2;
 
             glyphs.addLineOfText(font.withHeight(currentHeight), temp, spacing, baseline);
 
