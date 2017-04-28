@@ -82,6 +82,12 @@ public:
      Toggles whether or not the label should format its text (both placeholder and label text)
      
      The text formatting currently supports LaTeX style super and sub script (^ and _) with extended script using brackets (e.g. a^{bcd})
+     It also supports square matrix displays using the syntax: 
+     
+        \\array 1 & 2 & 3 &// 4 & 5 & 6 \\end
+     
+     Where & denotes column delimiters and &// represents newlines
+
     */
     void setFormattingStatus(bool shouldFormatText);
 
