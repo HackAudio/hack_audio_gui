@@ -872,14 +872,14 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                 else if (sourceX == destinationX)
                 {
 
-                    x1 = source->getX() + source->getWidth();
-                    y1 = source->getY() + source->getHeight() / 2;  /* Possibly handle Junction directions? */
-
-                    x2 = destination->getX() + destination->getWidth();
-                    y2 = destination->getY() + destination->getHeight() / 2;
-
                     if (sourceIsJunction && destinationIsJunction)
                     {
+
+                        x1 = source->getX() + source->getWidth() / 2;
+                        y1 = source->getY() + source->getHeight();
+
+                        x2 = destination->getX() + destination->getWidth() / 2;
+                        y2 = destination->getY();
 
                         connectionPaths.startNewSubPath(x1, y1);
                         connectionPaths.lineTo(x2, y2);
@@ -887,6 +887,12 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                     }
                     else
                     {
+
+                        x1 = source->getX() + source->getWidth();
+                        y1 = source->getY() + source->getHeight() / 2;
+
+                        x2 = destination->getX() + destination->getWidth();
+                        y2 = destination->getY() + destination->getHeight() / 2;
 
                         int midY = (y1 + y2) / 2;
 
@@ -1082,28 +1088,12 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
                     if (sourceIsJunction && destinationIsJunction)
                     {
+
                         x1 = source->getX() + source->getWidth() / 2;
                         y1 = source->getY();
-                    }
-                    else
-                    {
-                        x1 = source->getX() + source->getWidth();
-                        y1 = source->getY() + source->getHeight() / 2;
-                    }
 
-                    if (destinationIsJunction && sourceIsJunction)
-                    {
                         x2 = destination->getX() + destination->getWidth() / 2;
-                        y2 = destination->getY() + destination->getHeight();
-                    }
-                    else
-                    {
-                        x2 = destination->getX() + destination->getWidth();
                         y2 = destination->getY() + destination->getHeight() / 2;
-                    }
-
-                    if (sourceIsJunction && destinationIsJunction)
-                    {
 
                         connectionPaths.startNewSubPath(x1, y1);
                         connectionPaths.lineTo(x2, y2);
@@ -1111,6 +1101,12 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                     }
                     else
                     {
+
+                        x1 = source->getX() + source->getWidth();
+                        y1 = source->getY() + source->getHeight() / 2;
+
+                        x2 = destination->getX() + destination->getWidth();
+                        y2 = destination->getY() + destination->getHeight() / 2;
 
                         int midY = (y1 + y2) / 2;
 
