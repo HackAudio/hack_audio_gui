@@ -24,15 +24,28 @@ public:
     ~Viewport();
 
     /**
-     Sets the top-level diagram to display
+     Sets the top-level diagram to display, clearing out any traversal chains
     */
     void setDiagram(HackAudio::Diagram& d);
 
+    /**
+     Move downwards to a specific diagram, marking the current one as the last parent
+    */
+    void traverseDown(HackAudio::Diagram& d);
+
+    /**
+     Move up to the next parent diagram
+    */
+    void traverseUp();
+
+    /**
+     Return to the top level diagram
+    */
+    void traverseTop();
+
 private:
 
-    void traverseDown(HackAudio::Diagram* d);
-    void traverseUp();
-    void traverseTop();
+    void setDiagramViaTraversal(HackAudio::Diagram& d);
 
     void mouseEnter    (const juce::MouseEvent& e) override;
     void mouseExit     (const juce::MouseEvent& e) override;

@@ -63,18 +63,16 @@ void HackAudio::Viewport::setDiagram(HackAudio::Diagram& d)
 
     currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
 
-    if (parentContent.size() == 0)
-    {
-        backButton.setVisible(false);
-        topButton.setVisible(false);
-    }
+    parentContent.clear();
+    backButton.setVisible(false);
+    topButton.setVisible(false);
 
     repaint();
     startTimerHz(10);
 
 }
 
-void HackAudio::Viewport::traverseDown(HackAudio::Diagram *d)
+void HackAudio::Viewport::traverseDown(HackAudio::Diagram &d)
 {
 
     assert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
@@ -84,7 +82,7 @@ void HackAudio::Viewport::traverseDown(HackAudio::Diagram *d)
 
     parentContent.add(currentContent);
 
-    setDiagram(*d);
+    setDiagramViaTraversal(d);
 
     backButton.setVisible(true);
     topButton.setVisible(true);
@@ -99,7 +97,7 @@ void HackAudio::Viewport::traverseUp()
     
     HackAudio::Diagram* d = parentContent.removeAndReturn(parentContent.size() - 1);
 
-    setDiagram(*d);
+    setDiagramViaTraversal(*d);
 
 }
 
@@ -112,7 +110,46 @@ void HackAudio::Viewport::traverseTop()
     HackAudio::Diagram* d = parentContent.removeAndReturn(0);
     parentContent.clear();
 
-    setDiagram(*d);
+    setDiagramViaTraversal(*d);
+
+}
+
+void HackAudio::Viewport::setDiagramViaTraversal(HackAudio::Diagram &d)
+{
+
+    if (currentContent)
+    {
+        currentContent->removeComponentListener(this);
+
+        for (int child = 0; child < currentContent->getNumChildComponents(); ++child)
+        {
+            currentContent->getChildComponent(child)->removeMouseListener(this);
+        }
+
+    }
+
+    contentContainer.removeAllChildren();
+
+    currentContent = &d;
+
+    for (int child = 0; child < currentContent->getNumChildComponents(); ++child)
+    {
+        currentContent->getChildComponent(child)->addMouseListener(this, false);
+    }
+
+    currentContent->addComponentListener(this);
+    contentContainer.addAndMakeVisible(currentContent);
+
+    currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
+
+    if (parentContent.size() == 0)
+    {
+        backButton.setVisible(false);
+        topButton.setVisible(false);
+    }
+    
+    repaint();
+    startTimerHz(10);
 
 }
 
@@ -187,7 +224,7 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
             if (it.getKey()->isVisible() && it.getKey()->getScreenBounds().contains(e.getScreenPosition()))
             {
                 it.getKey()->setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray);
-                traverseDown(it.getValue());
+                traverseDown(*it.getValue());
                 return;
             }
         }
