@@ -40,6 +40,7 @@ void HackAudio::Viewport::setDiagram(HackAudio::Diagram& d)
 
     if (currentContent)
     {
+
         currentContent->removeComponentListener(this);
 
         for (int child = 0; child < currentContent->getNumChildComponents(); ++child)
@@ -62,6 +63,33 @@ void HackAudio::Viewport::setDiagram(HackAudio::Diagram& d)
     contentContainer.addAndMakeVisible(currentContent);
 
     currentContent->centreWithSize(currentContent->getWidth(), currentContent->getHeight());
+
+    parentContent.clear();
+    backButton.setVisible(false);
+    topButton.setVisible(false);
+
+    repaint();
+
+}
+
+void HackAudio::Viewport::clearDiagram()
+{
+
+    if (currentContent)
+    {
+
+        currentContent->removeComponentListener(this);
+
+        for (int child = 0; child < currentContent->getNumChildComponents(); ++child)
+        {
+            currentContent->getChildComponent(child)->removeMouseListener(this);
+        }
+
+    }
+
+    contentContainer.removeAllChildren();
+
+    currentContent = nullptr;
 
     parentContent.clear();
     backButton.setVisible(false);

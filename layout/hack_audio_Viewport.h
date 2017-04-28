@@ -28,6 +28,11 @@ public:
     void setDiagram(HackAudio::Diagram& d);
 
     /**
+     Removes any diagrams from the display
+    */
+    void clearDiagram();
+
+    /**
      Move downwards to a specific diagram, marking the current one as the last parent
     */
     void traverseDown(HackAudio::Diagram& d);
