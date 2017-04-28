@@ -105,12 +105,9 @@ void HackAudio::Viewport::traverseTop()
 {
 
     assert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
-    assert(parentContent.size() > 0);                       /* Warning: Viewport Is Already On Top-Level Diagram */
+    assert(!parentContent.isEmpty());                       /* Warning: Viewport Is Already On Top-Level Diagram */
 
-    HackAudio::Diagram* d = parentContent.removeAndReturn(0);
-    parentContent.clear();
-
-    setDiagramViaTraversal(*d);
+    setDiagram(*parentContent.getFirst());
 
 }
 
