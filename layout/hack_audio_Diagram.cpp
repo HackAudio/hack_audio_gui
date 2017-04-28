@@ -687,12 +687,15 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
             int destinationX = destination->getX() + destination->getWidth() / 2;
             int destinationY = destination->getY() + destination->getHeight() / 2;
 
+            int diffX = abs(sourceX - destinationX);
+            int diffY = abs(sourceY - destinationY);
+
             int x1, y1, x2, y2;
 
-            if (sourceY < destinationY)
+            if (diffY > 8 && sourceY < destinationY)
             {
 
-                if (sourceX < destinationX)
+                if (diffX > 8 && sourceX < destinationX)
                 {
 
                     if (sourceIsJunction)
@@ -780,7 +783,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                     }
 
                 }
-                else if (sourceX > destinationX)
+                else if (diffX > 8 && sourceX > destinationX)
                 {
 
 
@@ -869,7 +872,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                     }
 
                 }
-                else if (sourceX == destinationX)
+                else if (diffX <= 8 || sourceX == destinationX)
                 {
 
                     if (sourceIsJunction && destinationIsJunction)
@@ -882,7 +885,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         y2 = destination->getY();
 
                         connectionPaths.startNewSubPath(x1, y1);
-                        connectionPaths.lineTo(x2, y2);
+                        connectionPaths.quadraticTo((x1 + x2) / 2, (y1 + y2) / 2, x2, y2);
 
                     }
                     else
@@ -906,10 +909,10 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                 }
 
             }
-            else if (sourceY > destinationY)
+            else if (diffY > 8 && sourceY > destinationY)
             {
 
-                if (sourceX < destinationX)
+                if (diffX > 8 && sourceX < destinationX)
                 {
 
                     if (sourceIsJunction)
@@ -996,7 +999,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                     }
 
                 }
-                else if (sourceX > destinationX)
+                else if (diffX > 8 && sourceX > destinationX)
                 {
 
                     if (sourceIsJunction)
@@ -1083,7 +1086,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                     }
                     
                 }
-                else if (sourceX == destinationX)
+                else if (diffX <= 8 || sourceX == destinationX)
                 {
 
                     if (sourceIsJunction && destinationIsJunction)
@@ -1093,10 +1096,10 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                         y1 = source->getY();
 
                         x2 = destination->getX() + destination->getWidth() / 2;
-                        y2 = destination->getY() + destination->getHeight() / 2;
+                        y2 = destination->getY() + destination->getHeight();
 
                         connectionPaths.startNewSubPath(x1, y1);
-                        connectionPaths.lineTo(x2, y2);
+                        connectionPaths.quadraticTo((x1 + x2) / 2, (y1 + y2) / 2, x2, y2);
 
                     }
                     else
@@ -1120,10 +1123,10 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
                 }
 
             }
-            else if (sourceY == destinationY)
+            else if (diffY <= 8 || sourceY == destinationY)
             {
 
-                assert(sourceX != destinationX);    /* Warning: Components Are Placed Directly On Top Of Each Other */
+                assert(diffX > 8);    /* Warning: Components Are Placed Directly On Top Of Each Other */
 
                 if (sourceX < destinationX)
                 {
