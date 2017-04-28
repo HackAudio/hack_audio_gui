@@ -95,21 +95,21 @@ struct EarlyReflections : public HackAudio::Diagram
         mul8.setBounds(750,5,30,30);
         
         gain_1_label.setPlaceholder("g1");
-        gain_1_label.setBounds(12,5,40,25);
+        gain_1_label.setBounds(12,5,40,30);
         gain_2_label.setPlaceholder("g2");
-        gain_2_label.setBounds(108,5,40,25);
+        gain_2_label.setBounds(108,5,40,30);
         gain_3_label.setPlaceholder("g3");
-        gain_3_label.setBounds(204,5,40,25);
+        gain_3_label.setBounds(204,5,40,30);
         gain_4_label.setPlaceholder("g4");
-        gain_4_label.setBounds(300,5,40,25);
+        gain_4_label.setBounds(300,5,40,30);
         gain_5_label.setPlaceholder("g5");
-        gain_5_label.setBounds(396,5,40,25);
+        gain_5_label.setBounds(396,5,40,30);
         gain_6_label.setPlaceholder("g6");
-        gain_6_label.setBounds(492,5,40,25);
+        gain_6_label.setBounds(492,5,40,30);
         gain_7_label.setPlaceholder("g7");
-        gain_7_label.setBounds(588,5,40,25);
+        gain_7_label.setBounds(588,5,40,30);
         gain_8_label.setPlaceholder("g8");
-        gain_8_label.setBounds(684,5,40,25);
+        gain_8_label.setBounds(684,5,40,30);
 
         addDiagramInput(delay_1_label);
         connect(delay_1_label,delay_2_label);
