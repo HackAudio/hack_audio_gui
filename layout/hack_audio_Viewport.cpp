@@ -139,7 +139,7 @@ void HackAudio::Viewport::traverseTop()
 bool HackAudio::Viewport::isInTraversal(HackAudio::Diagram& d)
 {
 
-    return (parentContent.contains(&d) || currentContent != &d);
+    return (parentContent.contains(&d) || currentContent == &d);
 
 }
 
