@@ -41,11 +41,11 @@ void formatScript(juce::GlyphArrangement& glyphs, juce::String jstring, juce::Fo
 
         if (baseline > 0)
         {
-            baseline -= baseline / 2;
+            baseline -= currentHeight / 2;
         }
         else if (baseline < 0)
         {
-            baseline += baseline / 4;
+            baseline += currentHeight / 4;
         }
         else
         {
@@ -128,11 +128,11 @@ void formatScript(juce::GlyphArrangement& glyphs, juce::String jstring, juce::Fo
 
         if (baseline > 0)
         {
-            baseline += baseline / 4;
+            baseline += currentHeight / 4;
         }
         else if (baseline < 0)
         {
-            baseline -= baseline / 2;
+            baseline -= currentHeight / 2;
         }
         else
         {
@@ -263,6 +263,7 @@ void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Fo
 
                 baseline += height / rows;
                 temp = temp.removeCharacters("//");
+                temp = temp.trimStart();
                 spacing = 0;
                 offset = 0;
                 n = 0;
@@ -271,7 +272,8 @@ void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Fo
             else if (temp.startsWith("^") || temp.startsWith("_"))
             {
 
-                offset = spacing + font.getStringWidth(" ") * 1.5;
+                juce::Rectangle<float> glyphOffset = glyphs.getBoundingBox(glyphs.getNumGlyphs() - 1, glyphs.getNumGlyphs(), true);
+                offset = spacing + glyphOffset.getWidth();
 
                 int tempBaseline = baseline;
 
@@ -286,7 +288,7 @@ void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Fo
 
             }
 
-            spacing = ((width / rows) * n) - font.getStringWidth(temp) / 2;
+            spacing = ((width / rows) * n) - font.getStringWidth(temp);
 
             glyphs.addLineOfText(font.withHeight(currentHeight), temp, spacing, baseline);
 
