@@ -247,13 +247,13 @@ void HackAudio::Label::paint(juce::Graphics& g)
         if (!isTimerRunning() && placeholderStatus)
         {
 
-            formatText(placeholder, getFont(), getJustificationType(), 12, 12, width - 24, height - 24).draw(g);
+            formatText(placeholder, getFont(), getJustificationType(), 24, 24, width - 48, height - 48).draw(g);
 
         }
         else
         {
 
-            formatText(getText(), getFont(), getJustificationType(), 12, 12, width - 24, height - 24).draw(g);
+            formatText(getText(), getFont(), getJustificationType(), 24, 24, width - 48, height - 48).draw(g);
 
         }
 
