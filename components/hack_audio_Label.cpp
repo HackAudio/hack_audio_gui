@@ -241,34 +241,36 @@ void HackAudio::Label::paint(juce::Graphics& g)
 
     g.setColour(foreground.interpolatedWith(highlight, colourInterpolation.getNextValue()));
 
+
     if (formattingStatus)
     {
 
+
         if (!isTimerRunning() && placeholderStatus)
         {
-
-            formatText(placeholder, getFont(), getJustificationType(), 24, 24, width - 48, height - 48).draw(g);
-
+            if (placeholder.containsAnyOf("^_") || placeholder.contains("\\array"))
+            {
+                formatText(placeholder, getFont(), getJustificationType(), 24, 24, width - 48, height - 48).draw(g);
+                return;
+            }
         }
         else
         {
-
-            formatText(getText(), getFont(), getJustificationType(), 24, 24, width - 48, height - 48).draw(g);
-
+            if (getText().containsAnyOf("^_") || getText().contains("\\array"))
+            {
+                formatText(getText(), getFont(), getJustificationType(), 24, 24, width - 48, height - 48).draw(g);
+                return;
+            }
         }
 
     }
-    else
-    {
 
-        g.setFont(getFont());
+    g.setFont(getFont());
 
-        juce::String textToDisplay;
-        textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
+    juce::String textToDisplay;
+    textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
 
-        g.drawFittedText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 1);
-
-    }
+    g.drawFittedText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 1);
 
 }
 
