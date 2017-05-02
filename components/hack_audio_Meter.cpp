@@ -52,11 +52,14 @@ void HackAudio::Meter::setMeterCalibration(HackAudio::Meter::MeterCalibration ca
     switch (calibration)
     {
         case Peak:
-            setRiseTime(0);
+            setRiseTime(10);
+            setFallTime(1500);
+            setOvershoot(0);
             setPeakStatus(false);
             break;
 
         case RMS:
+            setRiseTime(10);
             setPeakStatus(true);
             break;
 
@@ -64,7 +67,7 @@ void HackAudio::Meter::setMeterCalibration(HackAudio::Meter::MeterCalibration ca
             setRiseTime(300);
             setOvershoot(1.25);
             setFallTime(300);
-            setPeakStatus(false);
+            setPeakStatus(true);
             break;
 
         default:
@@ -86,6 +89,7 @@ void HackAudio::Meter::setSource(int channel, float* const source)
 {
 
     meterSources.set(channel, source);
+    meterBuffers.set(channel, 0.0f);
 
     if (!isTimerRunning())
     {
@@ -100,6 +104,7 @@ void HackAudio::Meter::clearSource(int channel)
 {
 
     meterSources.remove(channel);
+    meterBuffers.remove(channel);
 
     repaint();
 
@@ -109,6 +114,8 @@ void HackAudio::Meter::clearSources()
 {
 
     meterSources.clear();
+    meterBuffers.clear();
+
     stopTimer();
     
 }
@@ -271,27 +278,64 @@ void HackAudio::Meter::timerCallback()
         stopTimer();
     }
 
-    if (meterSourceCaches.size() != meterSources.size())
-    {
-        meterSourceCaches.resize(meterSources.size());
-    }
+    float out;
 
-    bool needsRepainting = false;
+    float rise = (float)meterRise / 1000.0f;
+    float fall = (float)meterFall / 1000.0f;
 
     for (int i = 0; i < meterSources.size(); ++i)
     {
 
-        if (meterSourceCaches[i] != *meterSources[i])
+        if (meterCalibration == Peak || meterCalibration == Custom)
         {
-            meterSourceCaches.set(i, *meterSources[i]);
-            needsRepainting = true;
+
+            float in   = std::abs(*meterSources[i]);
+            float last = meterBuffers[i];
+
+            float ga = exp(-1.0f / (float)(ANIMATION_FPS * rise));
+            float gr = exp(-1.0f / (float)(ANIMATION_FPS * fall));
+
+            float g;
+
+            if (last < in)
+            {
+                g = ga;
+            }
+            else
+            {
+                g = gr;
+            }
+
+            out = (1.0f - g) * in + g * last;
+
+        }
+        else if (meterCalibration == VU)
+        {
+
+            float in   = fmax(0.0f, *meterSources[i]);
+            float last = meterBuffers[i];
+
+            float g = exp(-1.0f / (ANIMATION_FPS * rise)); // rise is a placeholder for a generic time constant here!
+
+            out = (1.0f - g) * in + g * last;
+
+        }
+        else if (meterCalibration == RMS)
+        {
+
+            float in   = (*meterSources[i]) * (*meterSources[i]);
+            float last = meterBuffers[i];
+
+            float g = exp(-1.0f / (ANIMATION_FPS * rise)); // rise is a placeholder for a generic time constant here!
+
+            out = (1.0f - g) * in + g * last;
+
         }
 
-    }
-
-    if (needsRepainting)
-    {
+        meterBuffers.set(i, out);
+        meterOutputs.set(i, out);
         repaint(indicatorArea);
+
     }
 
 }
@@ -318,16 +362,16 @@ void HackAudio::Meter::paint(juce::Graphics& g)
             for (int channel = 0; channel < meterSources.size(); ++channel)
             {
 
-                double nextVal = *meterSources[channel];
+                float output = meterOutputs[channel];
 
                 g.setColour(findColour(HackAudio::highlightColourId));
 
                 g.fillRect
                 (
                    indicatorArea.getX() + channelWidth * channel,
-                   indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal),
+                   indicatorArea.getBottom() - (int)(indicatorArea.getHeight() * output),
                    channelWidth,
-                   indicatorArea.getHeight() * nextVal
+                   (int)(indicatorArea.getHeight() * output)
                 );
 
                 if (meterPeakStatus)
@@ -338,9 +382,9 @@ void HackAudio::Meter::paint(juce::Graphics& g)
                     g.drawLine
                     (
                         indicatorArea.getX() + channelWidth * channel,
-                        indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal),
+                        indicatorArea.getBottom() - (indicatorArea.getHeight() * output),
                         (indicatorArea.getX() + (channelWidth * channel)) + channelWidth,
-                        indicatorArea.getBottom() - (indicatorArea.getHeight() * nextVal),
+                        indicatorArea.getBottom() - (indicatorArea.getHeight() * output),
                         2
                     );
                     
@@ -367,7 +411,7 @@ void HackAudio::Meter::paint(juce::Graphics& g)
             for (int channel = 0; channel < meterSources.size(); ++channel)
             {
 
-                double nextVal = *meterSources[channel];
+                float output = meterOutputs[channel];
 
                 g.setColour(findColour(HackAudio::highlightColourId));
 
@@ -375,7 +419,7 @@ void HackAudio::Meter::paint(juce::Graphics& g)
                 (
                     indicatorArea.getX(),
                     indicatorArea.getY() + channelHeight * channel,
-                    indicatorArea.getWidth() * nextVal,
+                    (int)(indicatorArea.getWidth() * output),
                     channelHeight
                 );
 
@@ -386,9 +430,9 @@ void HackAudio::Meter::paint(juce::Graphics& g)
 
                     g.drawLine
                     (
-                        indicatorArea.getX() + indicatorArea.getWidth() * nextVal,
+                        indicatorArea.getX() + indicatorArea.getWidth() * output,
                         indicatorArea.getY() + channelHeight * channel,
-                        indicatorArea.getX() + indicatorArea.getWidth() * nextVal,
+                        indicatorArea.getX() + indicatorArea.getWidth() * output,
                         (indicatorArea.getY() + channelHeight * channel) + channelHeight,
                         2
                     );

@@ -17,10 +17,10 @@ public:
 
     enum MeterCalibration
     {
-        Custom,
-        Peak,
+        Peak,   // Peak Program Meter (PPM)
         RMS,
-        VU
+        VU,
+        Custom,
     };
 
     Meter();
@@ -166,7 +166,8 @@ private:
     int   meterFall;
 
     juce::Array<float*> meterSources;
-    juce::Array<float>  meterSourceCaches;
+    juce::Array<float>  meterBuffers;
+    juce::Array<float>  meterOutputs;
 
     MeterStyle       meterStyle;
     MeterCalibration meterCalibration;
