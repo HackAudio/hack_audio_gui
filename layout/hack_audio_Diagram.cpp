@@ -1,5 +1,3 @@
-#include "hack_audio_Diagram.h"
-
 HackAudio::Diagram::Junction::Junction()
 {
 

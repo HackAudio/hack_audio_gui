@@ -1,5 +1,3 @@
-#include "hack_audio_Slider.h"
-
 HackAudio::Slider::Slider()
 {
 

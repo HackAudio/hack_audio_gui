@@ -1,8 +1,6 @@
-#include "hack_audio_Label.h"
+#include <regex>
 
 #include "../utils/hack_audio_TextFormatting.h"
-
-#include <regex>
 
 HackAudio::Label::Label()
 {

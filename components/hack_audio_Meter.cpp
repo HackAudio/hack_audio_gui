@@ -1,5 +1,3 @@
-#include "hack_audio_Meter.h"
-
 HackAudio::Meter::Meter()
 {
 

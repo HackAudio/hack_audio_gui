@@ -1,5 +1,3 @@
-#include "hack_audio_Selector.h"
-
 HackAudio::Selector::Selector() : selectorJustification(juce::Justification::centred)
 {
 
