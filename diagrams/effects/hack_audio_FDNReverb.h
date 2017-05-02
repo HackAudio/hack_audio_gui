@@ -46,8 +46,8 @@ struct FDNReverb : public HackAudio::Diagram
         delay_4_label.setPlaceholder("Delay");
         delay_4_label.setBounds(130,0,64,40);
         
-        matrix_label.setPlaceholder("Matrix");
-        matrix_label.setBounds(210,43,105,105);
+        matrix_label.setPlaceholder("\\array Feed-back &// Matrix \\end");
+        matrix_label.setBounds(210,43,130,105);
         
         fb1.setSymbol(HackAudio::Diagram::Junction::Symbol::None);
         fb1.setBounds(450,-93,10,10);

@@ -14,6 +14,8 @@ namespace Diagrams
     #include "filters/hack_audio_DampingFilter.h"
     #include "filters/hack_audio_LPCombFilter.h"
     #include "filters/hack_audio_BiquadFilter.h"
+    #include "filters/hack_audio_NestedallpassFilter.h"
+    #include "filters/hack_audio_NestedtwoFilter.h"
 
     #include "effects/hack_audio_SchroederReverb.h"
     #include "effects/hack_audio_EarlyReflections.h"

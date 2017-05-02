@@ -31,17 +31,9 @@ struct GardnermediumReverb : public HackAudio::Diagram
     HackAudio::Diagram::Junction node2;
 
     HackAudio::Diagrams::BiquadFilter lpf_diag;
-//    HackAudio::Diagrams::CombFilter comb_2_diag;
-//    HackAudio::Diagrams::CombFilter comb_3_diag;
-//    HackAudio::Diagrams::CombFilter comb_4_diag;
-//    HackAudio::Diagrams::CombFilter comb_5_diag;
-//    HackAudio::Diagrams::CombFilter comb_6_diag;
-//    HackAudio::Diagrams::CombFilter comb_7_diag;
-//    HackAudio::Diagrams::CombFilter comb_8_diag;
-//
-//    HackAudio::Diagrams::AllpassFilter apf_1_diag;
-//    HackAudio::Diagrams::AllpassFilter apf_2_diag;
-//    HackAudio::Diagrams::AllpassFilter apf_3_diag;
+    HackAudio::Diagrams::AllpassFilter apf_diag;
+    HackAudio::Diagrams::NestedtwoFilter napf_1_diag;
+    HackAudio::Diagrams::NestedallpassFilter napf_2_diag;
 
     GardnermediumReverb()
     {
@@ -145,6 +137,9 @@ struct GardnermediumReverb : public HackAudio::Diagram
         setName("Gardner Medium Reverb");
         
         setSubDiagram(lpf_label, lpf_diag);
+        setSubDiagram(apf_label, apf_diag);
+        setSubDiagram(napf_1_label, napf_1_diag);
+        setSubDiagram(napf_2_label, napf_2_diag);
     }
 
 };

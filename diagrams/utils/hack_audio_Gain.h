@@ -16,7 +16,7 @@ struct Gain : public HackAudio::Diagram
         main_db.setPlaceholder("Decibel");
         main_db.setBounds(0, -64, 96, 64);
 
-        main_linear.setPlaceholder("10 ^ (dB/20)");
+        main_linear.setPlaceholder("10^{(dB/20)}");
         main_linear.setBounds(256, -64, 128, 64);
 
         main_mult.setSymbol(HackAudio::Diagram::Junction::Multiply);

@@ -21,7 +21,7 @@ struct DampingFilter : public HackAudio::Diagram
         main_sum.setBounds(250, 10, 30, 30);
         main_mult.setSymbol(HackAudio::Diagram::Junction::Multiply);
         main_mult.setBounds(300, -64, 30, 30);
-        main_delay.setPlaceholder("z ^ -1");
+        main_delay.setPlaceholder("z^{-1}");
         main_delay.setBounds(400, -81, 96, 64);
 
         fb_gain.setPlaceholder("Gain");

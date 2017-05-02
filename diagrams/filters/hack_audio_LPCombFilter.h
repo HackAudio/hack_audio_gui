@@ -36,6 +36,7 @@ struct LPCombFilter : public HackAudio::Diagram
         mult_2.setBounds(440,-125,30,30);
         delay_2.setPlaceholder("z^{-1}");
         delay_2.setBounds(400,-72,64,48);
+
         fb_gain2.setPlaceholder("Gain");
         fb_gain2.setBounds(500,-160,48,36);
         fb_2_node.setSymbol(HackAudio::Diagram::Junction::Symbol::None);
