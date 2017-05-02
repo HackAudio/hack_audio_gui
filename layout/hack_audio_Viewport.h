@@ -47,6 +47,11 @@ public:
     */
     void traverseTop();
 
+    /** 
+     Returns true if the diagram is within the traversal chain
+     */
+    bool isInTraversal(HackAudio::Diagram& d);
+
 private:
 
     void setDiagramViaTraversal(HackAudio::Diagram& d);
