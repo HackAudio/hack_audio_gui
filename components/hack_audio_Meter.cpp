@@ -278,35 +278,36 @@ void HackAudio::Meter::timerCallback()
         stopTimer();
     }
 
-    float out;
-
     float rise = (float)meterRise / 1000.0f;
     float fall = (float)meterFall / 1000.0f;
 
     for (int i = 0; i < meterSources.size(); ++i)
     {
 
+        float in   = std::abs(*meterSources[i]);
+        float last = meterBuffers[i];
+        float out;
+
+        float ga = exp(-1.0f / (float)(ANIMATION_FPS * rise));
+        float gr = exp(-1.0f / (float)(ANIMATION_FPS * fall));
+
+        float g;
+
+        if (last < in)
+        {
+            g = ga;
+        }
+        else
+        {
+            g = gr;
+        }
+
+        meterPeaks.set(i, (1.0f - g) * in + g * last);
+
         if (meterCalibration == Peak || meterCalibration == Custom)
         {
 
-            float in   = std::abs(*meterSources[i]);
-            float last = meterBuffers[i];
-
-            float ga = exp(-1.0f / (float)(ANIMATION_FPS * rise));
-            float gr = exp(-1.0f / (float)(ANIMATION_FPS * fall));
-
-            float g;
-
-            if (last < in)
-            {
-                g = ga;
-            }
-            else
-            {
-                g = gr;
-            }
-
-            out = (1.0f - g) * in + g * last;
+            out = meterPeaks[i];
 
         }
         else if (meterCalibration == VU)
@@ -333,7 +334,6 @@ void HackAudio::Meter::timerCallback()
         }
 
         meterBuffers.set(i, out);
-        meterOutputs.set(i, out);
         repaint(indicatorArea);
 
     }
@@ -362,7 +362,8 @@ void HackAudio::Meter::paint(juce::Graphics& g)
             for (int channel = 0; channel < meterSources.size(); ++channel)
             {
 
-                float output = meterOutputs[channel];
+                float output = meterBuffers[channel];
+                float peak   = meterPeaks[channel];
 
                 g.setColour(findColour(HackAudio::highlightColourId));
 
@@ -382,9 +383,9 @@ void HackAudio::Meter::paint(juce::Graphics& g)
                     g.drawLine
                     (
                         indicatorArea.getX() + channelWidth * channel,
-                        indicatorArea.getBottom() - (indicatorArea.getHeight() * output),
+                        indicatorArea.getBottom() - (indicatorArea.getHeight() * peak),
                         (indicatorArea.getX() + (channelWidth * channel)) + channelWidth,
-                        indicatorArea.getBottom() - (indicatorArea.getHeight() * output),
+                        indicatorArea.getBottom() - (indicatorArea.getHeight() * peak),
                         2
                     );
                     
@@ -411,7 +412,8 @@ void HackAudio::Meter::paint(juce::Graphics& g)
             for (int channel = 0; channel < meterSources.size(); ++channel)
             {
 
-                float output = meterOutputs[channel];
+                float output = meterBuffers[channel];
+                float peak   = meterPeaks[channel];
 
                 g.setColour(findColour(HackAudio::highlightColourId));
 
@@ -430,9 +432,9 @@ void HackAudio::Meter::paint(juce::Graphics& g)
 
                     g.drawLine
                     (
-                        indicatorArea.getX() + indicatorArea.getWidth() * output,
+                        indicatorArea.getX() + indicatorArea.getWidth() * peak,
                         indicatorArea.getY() + channelHeight * channel,
-                        indicatorArea.getX() + indicatorArea.getWidth() * output,
+                        indicatorArea.getX() + indicatorArea.getWidth() * peak,
                         (indicatorArea.getY() + channelHeight * channel) + channelHeight,
                         2
                     );

@@ -167,7 +167,7 @@ private:
 
     juce::Array<float*> meterSources;
     juce::Array<float>  meterBuffers;
-    juce::Array<float>  meterOutputs;
+    juce::Array<float>  meterPeaks;
 
     MeterStyle       meterStyle;
     MeterCalibration meterCalibration;
