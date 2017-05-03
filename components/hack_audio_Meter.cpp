@@ -288,8 +288,8 @@ void HackAudio::Meter::timerCallback()
         float last = meterBuffers[i];
         float out;
 
-        float ga = exp(-1.0f / (float)(ANIMATION_FPS * rise));
-        float gr = exp(-1.0f / (float)(ANIMATION_FPS * fall));
+        float ga = exp(-1.0f / (float)(ANIMATION_FPS * 0.015f));
+        float gr = exp(-1.0f / (float)(ANIMATION_FPS * 1.0f));
 
         float g;
 
@@ -307,16 +307,30 @@ void HackAudio::Meter::timerCallback()
         if (meterCalibration == Peak || meterCalibration == Custom)
         {
 
-            out = meterPeaks[i];
+            in   = std::abs(*meterSources[i]);
+            last = meterBuffers[i];
+
+            ga = exp(-1.0f / (float)(ANIMATION_FPS * rise));
+            gr = exp(-1.0f / (float)(ANIMATION_FPS * fall));
+
+            if (last < in)
+            {
+                g = ga;
+            }
+            else
+            {
+                g = gr;
+            }
+
+            out = (1.0f - g) * in + g * last;
 
         }
         else if (meterCalibration == VU)
         {
 
-            float in   = fmax(0.0f, *meterSources[i]);
-            float last = meterBuffers[i];
-
-            float g = exp(-1.0f / (ANIMATION_FPS * rise)); // rise is a placeholder for a generic time constant here!
+            in   = fmax(0.0f, *meterSources[i]);
+            last = meterBuffers[i];
+            g = exp(-1.0f / (float)(ANIMATION_FPS * rise));
 
             out = (1.0f - g) * in + g * last;
 
@@ -324,10 +338,9 @@ void HackAudio::Meter::timerCallback()
         else if (meterCalibration == RMS)
         {
 
-            float in   = (*meterSources[i]) * (*meterSources[i]);
-            float last = meterBuffers[i];
-
-            float g = exp(-1.0f / (ANIMATION_FPS * rise)); // rise is a placeholder for a generic time constant here!
+            in   = (*meterSources[i]) * (*meterSources[i]);
+            last = meterBuffers[i];
+            g = exp(-1.0f / (float)(ANIMATION_FPS * rise));
 
             out = (1.0f - g) * in + g * last;
 
