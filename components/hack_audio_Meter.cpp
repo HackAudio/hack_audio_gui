@@ -289,8 +289,8 @@ void HackAudio::Meter::timerCallback()
         float peak = meterPeaks[i];
         float out;
 
-        float ga = exp(-1.0f / (float)(ANIMATION_FPS * 0.015f));
-        float gr = exp(-1.0f / (float)(ANIMATION_FPS * 1.0f));
+        float ga = exp(-1.0f / (float)(ANIMATION_FPS * 0.01f));
+        float gr = exp(-1.0f / (float)(ANIMATION_FPS * 1.5f));
 
         float g;
 
