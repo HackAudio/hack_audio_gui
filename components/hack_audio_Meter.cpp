@@ -286,6 +286,7 @@ void HackAudio::Meter::timerCallback()
 
         float in   = std::abs(*meterSources[i]);
         float last = meterBuffers[i];
+        float peak = meterPeaks[i];
         float out;
 
         float ga = exp(-1.0f / (float)(ANIMATION_FPS * 0.015f));
@@ -293,7 +294,7 @@ void HackAudio::Meter::timerCallback()
 
         float g;
 
-        if (last < in)
+        if (peak < in)
         {
             g = ga;
         }
@@ -302,7 +303,7 @@ void HackAudio::Meter::timerCallback()
             g = gr;
         }
 
-        meterPeaks.set(i, (1.0f - g) * in + g * last);
+        meterPeaks.set(i, (1.0f - g) * in + g * peak);
 
         if (meterCalibration == Peak || meterCalibration == Custom)
         {
