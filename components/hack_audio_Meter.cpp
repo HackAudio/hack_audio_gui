@@ -176,8 +176,6 @@ void HackAudio::Meter::setPeakStatus(bool shouldShowPeak)
 
     meterPeakStatus = shouldShowPeak;
 
-    meterCalibration = Custom;
-
 }
 
 bool HackAudio::Meter::getPeakStatus()
