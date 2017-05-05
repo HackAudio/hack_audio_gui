@@ -22,13 +22,20 @@ public:
     Label();
     ~Label();
 
+    /** 
+        A wrapper for juce::Label::setText allowing for non-UTF8 characters
+     
+        CAVEAT: Will not work on label pointers, pointers will call base class function instead
+     */
+    void setText(const char* newText, juce::NotificationType notification);
+
     /**
      Sets the prefix that should always display before the label text
      
      @parameter preText     the text to append before the label's main text
      @parameter notificationType    whether to send a change message to any Label::Listener objects
      */
-    void setPrefix(juce::String preText, juce::NotificationType notificationType);
+    void setPrefix(const char* preText, juce::NotificationType notificationType);
 
     /**
         Returns the label's current prefix string
@@ -41,7 +48,7 @@ public:
      @parameter postText     the text to append before the label's main text
      @parameter notificationType    whether to send a change message to any Label::Listener objects
     */
-    void setPostfix(juce::String postText, juce::NotificationType notificationType);
+    void setPostfix(const char* postText, juce::NotificationType notificationType);
 
     /**
      Returns the label's current postfix string
@@ -54,7 +61,7 @@ public:
      @parameter placeholderText the text to show before and after animation
      @parameter notificationType whether to send a change message to any Label::Listener objects
     */
-    void setPlaceholder(juce::String placeholderText);
+    void setPlaceholder(const char* placeholderText);
 
     /**
      Turns the placeholder text feature on or off. This is set to true whenever setPlaceholder() is called
