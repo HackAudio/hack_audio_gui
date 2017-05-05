@@ -208,7 +208,7 @@ void HackAudio::Viewport::mouseMove(const juce::MouseEvent& e)
 
     for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
     {
-        if (it.getKey()->getScreenBounds().contains(e.getScreenPosition()))
+        if (it.getKey() == e.eventComponent)
         {
             it.getKey()->setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.25f));
         }
@@ -249,9 +249,9 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
         for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
         {
 
-            if (it.getKey()->isVisible() && it.getKey()->getScreenBounds().contains(e.getScreenPosition()))
+            if (it.getKey()->isVisible() && it.getKey() == e.eventComponent)
             {
-                it.getKey()->setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray);
+//                it.getKey()->setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray);
                 traverseDown(*it.getValue());
                 return;
             }
