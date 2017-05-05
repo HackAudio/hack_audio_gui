@@ -48,9 +48,10 @@ void HackAudio::Label::setPrefix(const char* preText, juce::NotificationType not
 
     prefix = juce::String::CharPointerType::CharPointer_UTF8(preText);
 
-    if (notificationType == juce::sendNotification)
+    if (notificationType != juce::dontSendNotification)
     {
         labelTextChanged(this);
+        callChangeListeners();
     }
 
     repaint();
@@ -69,9 +70,10 @@ void HackAudio::Label::setPostfix(const char* postText, juce::NotificationType n
 
     postfix = juce::String::CharPointerType::CharPointer_UTF8(postText);
 
-    if (notificationType == juce::sendNotification)
+    if (notificationType != juce::dontSendNotification)
     {
         labelTextChanged(this);
+        callChangeListeners();
     }
 
     repaint();
