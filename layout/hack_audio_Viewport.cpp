@@ -329,6 +329,11 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
     juce::Array<juce::Component*> contentInputs = currentContent->getDiagramInputs();
     juce::Array<juce::Component*> contentOutputs = currentContent->getDiagramOutputs();
 
+    int cX = contentContainer.getX();
+    int cY = contentContainer.getY();
+    int cW = contentContainer.getWidth();
+    int cH = contentContainer.getHeight();
+
     // Input Nodes
     // =========================================================================================
     for (int i = 0; i < contentInputs.size(); ++i)
@@ -523,6 +528,33 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
     g.fillEllipse(contentContainer.getRight() - 12, (getHeight() / 2) - 12, 24, 24);
 
+
+    // Rounded Corners (CORNER_CONFIG)
+    // =========================================================================================
+    juce::Path corners;
+
+//    corners.startNewSubPath(cX, cY);
+//    corners.lineTo(cX + 32, cY);
+//    corners.cubicTo(cX, cY, cX, cY, cX, cY + 32);
+//    corners.closeSubPath();
+
+    corners.startNewSubPath(cX, cY + cH);
+    corners.lineTo(cX + 24, cY + cH);
+    corners.cubicTo(cX + 12, cY + cH, cX, cY + cH - 12, cX, cY + cH - 24);
+    corners.closeSubPath();
+
+    corners.startNewSubPath(cX + cW, cY);
+    corners.lineTo(cX + cW - 24, cY);
+    corners.cubicTo(cX + cW - 12, cY, cX + cW, cY + 12, cX + cW, cY + 24);
+    corners.closeSubPath();
+
+//    corners.startNewSubPath(cX + cW, cY + cH);
+//    corners.lineTo(cX + cW - 32, cY + cH);
+//    corners.cubicTo(cX + cW, cY + cH, cX + cW, cY + cH, cX + cW, cY + cH - 32);
+//    corners.closeSubPath();
+
+    g.setColour(findColour(HackAudio::midgroundColourId));
+    g.fillPath(corners);
 
 
     // Output Connector
