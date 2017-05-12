@@ -7,7 +7,7 @@
 const juce::Colour HackAudio::Colours::Black (0xFF010D14);
 const juce::Colour HackAudio::Colours::Gray  (0xFF343D3E);
 const juce::Colour HackAudio::Colours::White (0xFFCAD8DE);
-const juce::Colour HackAudio::Colours::Cyan  (0xFF20D3D0);
+const juce::Colour HackAudio::Colours::Cyan  (0xFF4DDDDB);
 
 #include "components/hack_audio_Selector.cpp"
 #include "components/hack_audio_Slider.cpp"
