@@ -28,6 +28,7 @@ public:
         CAVEAT: Will not work on label pointers, pointers will call base class function instead
      */
     void setText(const char* newText, juce::NotificationType notification);
+    void setText(const juce::String newText, juce::NotificationType notification);
 
     /**
      Sets the prefix that should always display before the label text
@@ -36,6 +37,7 @@ public:
      @parameter notificationType    whether to send a change message to any Label::Listener objects
      */
     void setPrefix(const char* preText, juce::NotificationType notificationType);
+    void setPrefix(const juce::String preText, juce::NotificationType notificationType);
 
     /**
         Returns the label's current prefix string
@@ -49,6 +51,7 @@ public:
      @parameter notificationType    whether to send a change message to any Label::Listener objects
     */
     void setPostfix(const char* postText, juce::NotificationType notificationType);
+    void setPostfix(const juce::String postText, juce::NotificationType notificationType);
 
     /**
      Returns the label's current postfix string
@@ -62,6 +65,7 @@ public:
      @parameter notificationType whether to send a change message to any Label::Listener objects
     */
     void setPlaceholder(const char* placeholderText);
+    void setPlaceholder(const juce::String placeholderText);
 
     /**
      Turns the placeholder text feature on or off. This is set to true whenever setPlaceholder() is called

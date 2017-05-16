@@ -36,6 +36,11 @@ void HackAudio::Label::setText(const char* newText, juce::NotificationType notif
     juce::Label::setText(charPtr, notification);
 }
 
+void HackAudio::Label::setText(const juce::String newText, juce::NotificationType notification)
+{
+    juce::Label::setText(newText, notification);
+}
+
 juce::String HackAudio::Label::getPrefix()
 {
 
@@ -47,6 +52,21 @@ void HackAudio::Label::setPrefix(const char* preText, juce::NotificationType not
 {
 
     prefix = juce::String::CharPointerType::CharPointer_UTF8(preText);
+
+    if (notificationType != juce::dontSendNotification)
+    {
+        labelTextChanged(this);
+        callChangeListeners();
+    }
+
+    repaint();
+
+}
+
+void HackAudio::Label::setPrefix(const juce::String preText, juce::NotificationType notificationType)
+{
+
+    prefix = preText;
 
     if (notificationType != juce::dontSendNotification)
     {
@@ -80,6 +100,21 @@ void HackAudio::Label::setPostfix(const char* postText, juce::NotificationType n
 
 }
 
+void HackAudio::Label::setPostfix(const juce::String postText, juce::NotificationType notificationType)
+{
+
+    postfix = postText;
+
+    if (notificationType != juce::dontSendNotification)
+    {
+        labelTextChanged(this);
+        callChangeListeners();
+    }
+
+    repaint();
+
+}
+
 void HackAudio::Label::setPlaceholder(const char* placeholderText)
 {
 
@@ -87,6 +122,15 @@ void HackAudio::Label::setPlaceholder(const char* placeholderText)
     placeholderStatus = true;
     repaint();
     
+}
+
+void HackAudio::Label::setPlaceholder(const juce::String placeholderText)
+{
+
+    placeholder = placeholderText;
+    placeholderStatus = true;
+    repaint();
+
 }
 
 void HackAudio::Label::setPlaceholderStatus(bool shouldShowPlaceholder)
