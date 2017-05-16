@@ -10,6 +10,8 @@ struct CombFilter : public HackAudio::Diagram
 
     HackAudio::Label fb_gain;
     HackAudio::Diagram::Junction fb_node;
+    
+    HackAudio::Diagrams::Moddelay moddelay_diag;
 
     CombFilter()
     {
@@ -37,6 +39,8 @@ struct CombFilter : public HackAudio::Diagram
         addDiagramOutput(fb_node);
 
         setName("Feed-Back Comb Filter");
+        
+        setSubDiagram(main_delay, moddelay_diag);
 
     }
 

@@ -8,6 +8,8 @@ struct FDNReverb : public HackAudio::Diagram
     HackAudio::Diagram::Junction sum3;
     HackAudio::Diagram::Junction sum4;
     
+    HackAudio::Diagram::Junction fbMult;
+    
     HackAudio::Label delay_1_label;
     HackAudio::Label delay_2_label;
     HackAudio::Label delay_3_label;
@@ -21,6 +23,12 @@ struct FDNReverb : public HackAudio::Diagram
     HackAudio::Diagram::Junction sumOut;
     
     HackAudio::Label matrix_label;
+    HackAudio::Label fbGain_label;
+    
+    HackAudio::Diagrams::Moddelay moddelay_1_diag;
+    HackAudio::Diagrams::Moddelay moddelay_2_diag;
+    HackAudio::Diagrams::Moddelay moddelay_3_diag;
+    HackAudio::Diagrams::Moddelay moddelay_4_diag;
     ///
 
     FDNReverb()
@@ -36,6 +44,9 @@ struct FDNReverb : public HackAudio::Diagram
         
         sumOut.setSymbol(HackAudio::Diagram::Junction::Symbol::Add);
         sumOut.setBounds(500,-62,20,20);
+        
+        fbMult.setSymbol(HackAudio::Diagram::Junction::Symbol::Multiply);
+        fbMult.setBounds(170,85,20,20);
 
         delay_1_label.setPlaceholder("Delay");
         delay_1_label.setBounds(310,-108,64,40);
@@ -46,8 +57,11 @@ struct FDNReverb : public HackAudio::Diagram
         delay_4_label.setPlaceholder("Delay");
         delay_4_label.setBounds(130,0,64,40);
         
-        matrix_label.setPlaceholder("\\array Feed-back &// Matrix \\end");
+        matrix_label.setPlaceholder("Feed-back\nMatrix");
         matrix_label.setBounds(210,43,130,105);
+        
+        fbGain_label.setPlaceholder("Gain");
+        fbGain_label.setBounds(100,108,50,32);
         
         fb1.setSymbol(HackAudio::Diagram::Junction::Symbol::None);
         fb1.setBounds(450,-93,10,10);
@@ -76,14 +90,22 @@ struct FDNReverb : public HackAudio::Diagram
         connect(fb3,matrix_label);
         connect(fb4,matrix_label);
         
-        connect(matrix_label,sum1);
-        connect(matrix_label,sum2);
-        connect(matrix_label,sum3);
-        connect(matrix_label,sum4);
+        connect(matrix_label,fbMult);
+        connect(fbGain_label,fbMult);
+        
+        connect(fbMult,sum1,HackAudio::Diagram::Junction::Horizontal);
+        connect(fbMult,sum2,HackAudio::Diagram::Junction::Horizontal);
+        connect(fbMult,sum3,HackAudio::Diagram::Junction::Horizontal);
+        connect(fbMult,sum4,HackAudio::Diagram::Junction::Horizontal);
         
         addDiagramOutput(sumOut);
 
         setName("Feed-back Delay Network Reverb");
+        
+        setSubDiagram(delay_1_label, moddelay_1_diag);
+        setSubDiagram(delay_2_label, moddelay_2_diag);
+        setSubDiagram(delay_3_label, moddelay_3_diag);
+        setSubDiagram(delay_4_label, moddelay_4_diag);
 
     }
 

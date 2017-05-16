@@ -15,6 +15,8 @@ struct LPCombFilter : public HackAudio::Diagram
     HackAudio::Label delay_2;
     HackAudio::Label fb_gain2;
     HackAudio::Diagram::Junction fb_2_node;
+    
+    HackAudio::Diagrams::Moddelay moddelay_diag;
 
     LPCombFilter()
     {
@@ -59,6 +61,7 @@ struct LPCombFilter : public HackAudio::Diagram
 
         setName("Low-Pass, Feed-Back Comb Filter");
 
+        setSubDiagram(delay_1, moddelay_diag);
     }
 
 };

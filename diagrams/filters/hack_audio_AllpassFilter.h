@@ -15,6 +15,8 @@ struct AllpassFilter : public HackAudio::Diagram
     HackAudio::Label ff_gain;
     HackAudio::Diagram::Junction ff_mult;
     HackAudio::Diagram::Junction ff_node;
+    
+    HackAudio::Diagrams::Moddelay moddelay_diag;
 
     AllpassFilter()
     {
@@ -56,6 +58,8 @@ struct AllpassFilter : public HackAudio::Diagram
         addDiagramOutput(main_sum_2);
 
         setName("All-Pass Filter");
+        
+        setSubDiagram(main_delay, moddelay_diag);
 
     }
 

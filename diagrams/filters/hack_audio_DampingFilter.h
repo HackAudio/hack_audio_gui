@@ -14,6 +14,7 @@ struct DampingFilter : public HackAudio::Diagram
     HackAudio::Diagram::Junction ff_mult;
     HackAudio::Label ff_gain;
     
+    
     DampingFilter()
     {
 
@@ -46,6 +47,8 @@ struct DampingFilter : public HackAudio::Diagram
         addDiagramOutput(main_sum);
 
         setName("Feed-Back Comb Filter");
+        
+        
 
     }
 
