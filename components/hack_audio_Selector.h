@@ -27,16 +27,16 @@ public:
     /**
      Adds an item to the list of the selector choices
      
-     @parameter newItemText     the string of the new item
-     @parameter itemIndex       where to place the item, use -1 to place the new item last in the array
+     @param newItemText     the string of the new item
+     @param itemIndex       where to place the item, use -1 to place the new item last in the array
     */
     void addItem(const juce::String& newItemText, int itemIndex = -1);
 
     /**
      Adds an array of strings as new selector choices
      
-     @parameter items       an array of strings
-     @parameter firstItemOffset     where to begin placing the new choices, use -1 to place them last in the array
+     @param items       an array of strings
+     @param firstItemOffset     where to begin placing the new choices, use -1 to place them last in the array
     */
     void addItemList(const juce::StringArray& items, int firstItemOffset = -1);
 

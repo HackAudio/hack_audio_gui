@@ -49,7 +49,7 @@ public:
     /**
      Sets the float value to listen for
      
-     @parameter source  a value ranging from 0.0 to 1.0
+     @param source  a value ranging from 0.0 to 1.0
     */
     void setSource(int channel, float* const source);
 
@@ -121,7 +121,7 @@ public:
     /**
      Enables an overshoot value for VU style metering
      
-     @parameter overshoot   a percentage of overshoot (e.g. 5.7)
+     @param overshoot   a percentage of overshoot (e.g. 5.7)
     */
     void setOvershoot(float overshoot);
 

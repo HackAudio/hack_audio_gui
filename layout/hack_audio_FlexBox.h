@@ -21,8 +21,8 @@ public:
     /**
      Sets the default juce::FlexItem settings to use when adding new items
      
-     @parameter item    the juce::FlexItem to use as default
-     @parameter updateExistingItems whether or not to conform the current items to the passed default
+     @param item    the juce::FlexItem to use as default
+     @param updateExistingItems whether or not to conform the current items to the passed default
     */
     void setDefaultItem(juce::FlexItem item, bool updateExistingItems);
 
@@ -36,7 +36,7 @@ public:
     /**
      Remove a component from being controlled by the FlexBox
      
-     @parameter component   a component currently controlled by the FlexBox
+     @param component   a component currently controlled by the FlexBox
     */
     void removeComponent(juce::Component& component);
 
@@ -108,30 +108,30 @@ public:
     /**
      Returns the FlexItem associated with the given component
      
-     @parameter component   a component controlled by the FlexBox
+     @param component   a component controlled by the FlexBox
     */
     juce::FlexItem* getItem(juce::Component& component);
 
     /**
      Returns the FlexItem associated with the given FlexBox
 
-     @parameter flexbox   a component controlled by this FlexBox
+     @param flexbox   a component controlled by this FlexBox
      */
     juce::FlexItem* getItem(juce::FlexBox& flexbox);
 
     /**
      Sets the properties for the FlexItem of the relevant component
      
-     @parameter component   a component controlled by the FlexBox
-     @parameter newFlexProperties   the properties the FlexItem should inherit
+     @param component   a component controlled by the FlexBox
+     @param newFlexProperties   the properties the FlexItem should inherit
     */
     void setItem(juce::Component& component, juce::FlexItem newFlexProperties);
 
     /**
      Sets the properties for the FlexItem of the relevant FlexBox
 
-     @parameter flexbox   a FlexBox controlled by this FlexBox
-     @parameter newFlexProperties   the properties the FlexItem should inherit
+     @param flexbox   a FlexBox controlled by this FlexBox
+     @param newFlexProperties   the properties the FlexItem should inherit
      */
     void setItem(juce::FlexBox& flexbox, juce::FlexItem newFlexProperties);
 
@@ -209,7 +209,7 @@ public:
     /**
      Sets the bounds the FlexBox should use and performs a layout adjustment
      
-     @parameter bounds  the bounds the FlexBox should conform to
+     @param bounds  the bounds the FlexBox should conform to
     */
     void applyBounds(juce::Rectangle<int> bounds);
     void applyBounds(juce::Rectangle<float> bounds);

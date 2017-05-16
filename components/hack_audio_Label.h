@@ -33,8 +33,8 @@ public:
     /**
      Sets the prefix that should always display before the label text
      
-     @parameter preText     the text to append before the label's main text
-     @parameter notificationType    whether to send a change message to any Label::Listener objects
+     @param preText     the text to append before the label's main text
+     @param notificationType    whether to send a change message to any Label::Listener objects
      */
     void setPrefix(const char* preText, juce::NotificationType notificationType);
     void setPrefix(const juce::String preText, juce::NotificationType notificationType);
@@ -47,8 +47,8 @@ public:
     /**
      Sets the postfix that should always display after the label text
      
-     @parameter postText     the text to append before the label's main text
-     @parameter notificationType    whether to send a change message to any Label::Listener objects
+     @param postText     the text to append before the label's main text
+     @param notificationType    whether to send a change message to any Label::Listener objects
     */
     void setPostfix(const char* postText, juce::NotificationType notificationType);
     void setPostfix(const juce::String postText, juce::NotificationType notificationType);
@@ -61,8 +61,8 @@ public:
     /**
      Sets the text that displays automatically. When setting new text with animation enabled, the new text will display during the animation and then revert to the placeholder text after the animation completes
      
-     @parameter placeholderText the text to show before and after animation
-     @parameter notificationType whether to send a change message to any Label::Listener objects
+     @param placeholderText the text to show before and after animation
+     @param notificationType whether to send a change message to any Label::Listener objects
     */
     void setPlaceholder(const char* placeholderText);
     void setPlaceholder(const juce::String placeholderText);
@@ -80,7 +80,7 @@ public:
     /**
      Toggles whether the label should animate when its text changes
      
-     @parameter shouldAnimate   determines whether to animate when setting the text, prefix, or postfix
+     @param shouldAnimate   determines whether to animate when setting the text, prefix, or postfix
     */
     void setAnimationStatus(bool shouldAnimate);
 

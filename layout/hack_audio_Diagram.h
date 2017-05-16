@@ -105,25 +105,25 @@ public:
     /**
      Adds two components as children and draws a connection between them
      
-     @parameter source  the component outputting a connection
-     @parameter destination     the component accepting a connection
+     @param source  the component outputting a connection
+     @param destination     the component accepting a connection
     */
     void connect(juce::Component& source, juce::Component& destination);
 
     /**
      Adds a junction and component as children and draws a connection between them
 
-     @parameter source  the component outputting a connection
-     @parameter destination     the component accepting a connection
-     @parameter directionFromSource     this is a specific argument to determine which axis the connection should be drawn from when the source is a HackAudio::Diagram::Junction
+     @param source  the component outputting a connection
+     @param destination     the component accepting a connection
+     @param directionFromSource     this is a specific argument to determine which axis the connection should be drawn from when the source is a HackAudio::Diagram::Junction
      */
     void connect(Junction& source, juce::Component& destination, Junction::Direction directionFromSource = Junction::Direction::Auto);
 
     /**
      Breaks a connection between two components
 
-     @parameter source  the component outputting a connection
-     @parameter destination     the component accepting a connection
+     @param source  the component outputting a connection
+     @param destination     the component accepting a connection
     */
     void disconnect(juce::Component& source, juce::Component& destination);
 
@@ -140,34 +140,34 @@ public:
     /**
      Toggles the state of a connection between source and destination
      
-     @parameter source  the component outputting a connection
-     @parameter destination  the component to break or receive a connection from source
+     @param source  the component outputting a connection
+     @param destination  the component to break or receive a connection from source
     */
     void toggle(juce::Component& source, juce::Component& destination);
 
     /**
      Swaps the state of connections between source, a connected component, and a disconnected component. This method does nothing if both destinations are connected to source or disconnected from source.
      
-     @parameter source  the component outputting a connection
-     @parameter destinationOne  a component to break or receive a connection from source
-     @parameter destinationTwo  a component to break or receive a connection from source
+     @param source  the component outputting a connection
+     @param destinationOne  a component to break or receive a connection from source
+     @param destinationTwo  a component to break or receive a connection from source
     */
     void swap(juce::Component& source, juce::Component& destinationOne, juce::Component& destinationTwo);
 
     /**
      Breaks a connection between two components to route it to a new destination. This method only creates the new connection if the connection between source and oldDestination exists
      
-     @parameter source  the component outputting a connection
-     @parameter oldDestination  the previous component receiving the connection
-     @parameter newDestination  the component to reroute the connection to
+     @param source  the component outputting a connection
+     @param oldDestination  the previous component receiving the connection
+     @param newDestination  the component to reroute the connection to
     */
     void reroute(juce::Component& source, juce::Component& oldDestination, juce::Component& newDestination);
 
     /**
      Designates a diagram to be expanded when double-clicking the source component
      
-     @parameter source  the component to double click to expand the diagram
-     @parameter subDiagram  the diagram to expand
+     @param source  the component to double click to expand the diagram
+     @param subDiagram  the diagram to expand
     */
     void setSubDiagram(juce::Component& source, HackAudio::Diagram& subDiagram);
 
