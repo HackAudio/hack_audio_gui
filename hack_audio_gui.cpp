@@ -2,7 +2,7 @@
     #error "Incorrect use of JUCE cpp file"
 #endif
 
-#include "hack_audio.h"
+#include "hack_audio_gui.h"
 
 const juce::Colour HackAudio::Colours::Black (0xFF010D14);
 const juce::Colour HackAudio::Colours::Gray  (0xFF343D3E);
