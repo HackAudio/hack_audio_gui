@@ -80,6 +80,16 @@ public:
     */
     int getIndexForItem(const juce::String& itemText);
 
+    /**
+     Sets the selector's font
+    */
+    void setFont(juce::Font font);
+
+    /**
+     Returns the selector's current font
+    */
+    juce::Font getFont();
+
 private:
 
     void mouseUp(const juce::MouseEvent& e) override;
@@ -90,6 +100,8 @@ private:
 
     void paint(juce::Graphics& g) override;
     void resized() override;
+
+    juce::Font selectorFont;
 
     juce::Justification selectorJustification;
 

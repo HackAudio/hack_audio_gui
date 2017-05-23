@@ -6,6 +6,10 @@ HackAudio::Button::Button() : juce::Button("")
     setColour(HackAudio::foregroundColourId, HackAudio::Colours::White);
     setColour(HackAudio::highlightColourId,  HackAudio::Colours::Cyan);
 
+    juce::Font font(HackAudio::Fonts::Fira);
+    font.setHeight(32);
+    setFont(font);
+
 	setButtonText("");
 
 	setClickingTogglesState(true);
@@ -293,7 +297,7 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
         g.setColour(foreground.interpolatedWith(findColour(HackAudio::midgroundColourId), colourInterpolation.getNextValue()));
 
         g.setFont(buttonFont);
-        g.drawText(getButtonText(), 0, 0, width, height, juce::Justification::centred, 1);
+        g.drawFittedText(getButtonText(), 0, 0, width, height, juce::Justification::centred, 1, 1.0f);
 
     }
     else
@@ -345,9 +349,6 @@ void HackAudio::Button::resized()
         trackArea.setBounds(0, 0, 0, 0);
         indicatorArea.setBounds(0, 0, 0, 0);
         thumbArea.setBounds(0, 0, 0, 0);
-
-        int fontSize = std::min(width, height) / 4;
-        buttonFont.setHeight(fontSize);
 
         setSize(width, height);
 

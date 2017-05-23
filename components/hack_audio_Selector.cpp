@@ -8,6 +8,8 @@ HackAudio::Selector::Selector() : selectorJustification(juce::Justification::cen
 
     setMouseClickGrabsKeyboardFocus(true);
 
+    setFont(HackAudio::Fonts::Fira);
+
     colourInterpolation.reset(50, 0.5);
 
     selectLeft.buttonDirection  = HackAudio::NavigationButton::Left;
@@ -145,6 +147,20 @@ int HackAudio::Selector::getIndexForItem(const juce::String& itemText)
     }
 
     return -1;
+
+}
+
+void HackAudio::Selector::setFont(juce::Font font)
+{
+    selectorFont = font;
+    resized();
+    repaint();
+}
+
+juce::Font HackAudio::Selector::getFont()
+{
+
+    return selectorFont;
 
 }
 

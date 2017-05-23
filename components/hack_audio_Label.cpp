@@ -7,6 +7,10 @@ HackAudio::Label::Label()
 
     setInterceptsMouseClicks(true, false);
 
+    juce::Font font(HackAudio::Fonts::Fira);
+    font.setHeight(32);
+    setFont(font);
+
     setJustificationType(juce::Justification::centred);
 
     setColour(HackAudio::backgroundColourId, HackAudio::Colours::Black);
@@ -312,16 +316,6 @@ void HackAudio::Label::paint(juce::Graphics& g)
     juce::String textToDisplay;
     textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
 
-    g.drawFittedText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 1);
+    g.drawFittedText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 1, 1.0f);
 
-}
-
-void HackAudio::Label::resized()
-{
-
-    int width = getWidth();
-    int height = getHeight();
-
-    getFont().setHeight(std::min(width, height) / 4);
-    
 }

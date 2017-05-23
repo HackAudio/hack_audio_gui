@@ -61,6 +61,8 @@ namespace HackAudio
 
 }
 
+#include "fonts/hack_audio_Fonts.h"
+
 #include "components/hack_audio_Selector.h"
 #include "components/hack_audio_Slider.h"
 #include "components/hack_audio_Button.h"
