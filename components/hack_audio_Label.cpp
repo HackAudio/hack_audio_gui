@@ -8,7 +8,7 @@ HackAudio::Label::Label()
     setInterceptsMouseClicks(true, false);
 
     juce::Font font(HackAudio::Fonts::Fira);
-    font.setHeight(32);
+    font.setHeight(18);
     setFont(font);
 
     setJustificationType(juce::Justification::centred);
