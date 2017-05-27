@@ -35,33 +35,8 @@ END_JUCE_MODULE_DECLARATION
 
 #define MOUSEWHEEL_SENSITIVITY 128
 
-namespace HackAudio
-{
-
-    struct Colours
-    {
-
-        static const juce::Colour
-        Black,
-        Gray,
-        White,
-        Cyan;
-
-    };
-
-    enum ColourIds
-    {
-
-        backgroundColourId,
-        midgroundColourId,
-        foregroundColourId,
-        highlightColourId
-
-    };
-
-}
-
-#include "fonts/hack_audio_Fonts.h"
+#include "utils/hack_audio_Colours.h"
+#include "utils/hack_audio_Fonts.h"
 
 #include "components/hack_audio_Selector.h"
 #include "components/hack_audio_Slider.h"
