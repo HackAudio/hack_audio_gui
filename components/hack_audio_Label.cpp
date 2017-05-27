@@ -13,7 +13,7 @@ HackAudio::Label::Label()
 
     setJustificationType(juce::Justification::centred);
 
-    setColour(HackAudio::backgroundColourId, HackAudio::Colours::Black);
+    setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray);
     setColour(HackAudio::foregroundColourId, HackAudio::Colours::White);
     setColour(HackAudio::highlightColourId, HackAudio::Colours::Cyan);
 

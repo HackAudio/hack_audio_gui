@@ -251,7 +251,7 @@ void HackAudio::Selector::paint(juce::Graphics& g)
 
     juce::Path p;
     p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
-    g.setColour(findColour(HackAudio::backgroundColourId));
+    g.setColour(findColour(HackAudio::midgroundColourId));
     g.fillPath(p);
 
     juce::Colour foreground = findColour(HackAudio::foregroundColourId);

@@ -436,13 +436,13 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     // Draw Background
     juce::Path p;
     p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
-    g.setColour(findColour(HackAudio::backgroundColourId));
+    g.setColour(findColour(HackAudio::midgroundColourId));
     g.fillPath(p);
 
     // Draw Slider Track And Indicator
     if (isVertical() || isHorizontal())
     {
-        g.setColour(findColour(HackAudio::midgroundColourId));
+        g.setColour(findColour(HackAudio::backgroundColourId));
         g.fillRoundedRectangle(trackArea.getX(), trackArea.getY(), trackArea.getWidth(), trackArea.getHeight(), 8);
 
         g.setColour(findColour(HackAudio::highlightColourId));
@@ -457,14 +457,14 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     if (!isRotary())
     {
 
-        g.setColour(findColour(HackAudio::backgroundColourId));
+        g.setColour(findColour(HackAudio::midgroundColourId));
         g.drawEllipse(thumbArea.getX(), thumbArea.getY(), thumbArea.getWidth(), thumbArea.getHeight(), thumbArea.getWidth() / 4);
 
     }
     else
     {
 
-        g.setColour(findColour(HackAudio::midgroundColourId));
+        g.setColour(findColour(HackAudio::backgroundColourId));
         g.fillEllipse(indicatorArea.getX(), indicatorArea.getY(), indicatorArea.getWidth(), indicatorArea.getHeight());
 
     }
@@ -481,7 +481,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
             if (thumbArea.getY() > pipLocations[i].getY())
             {
 
-                g.setColour(findColour(HackAudio::midgroundColourId));
+                g.setColour(findColour(HackAudio::backgroundColourId));
                 pipSize = currentMinPipSize;
 
             }
@@ -510,7 +510,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
             if (thumbArea.getX() + thumbArea.getWidth() < pipLocations[i].getX())
             {
 
-                g.setColour(findColour(HackAudio::midgroundColourId));
+                g.setColour(findColour(HackAudio::backgroundColourId));
                 pipSize = currentMinPipSize;
 
             }
@@ -542,7 +542,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
             if (angle >= indicatorAngle || (!isAnimating && getValue() == getMinimum()))
             {
 
-                g.setColour(findColour(HackAudio::midgroundColourId));
+                g.setColour(findColour(HackAudio::backgroundColourId));
                 pipSize = currentMinPipSize;
 
             }

@@ -275,26 +275,26 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
             if (getToggleState())
             {
                 background = findColour(HackAudio::highlightColourId);
-                foreground = findColour(HackAudio::midgroundColourId);
+                foreground = findColour(HackAudio::backgroundColourId);
             }
             else
             {
                 background = findColour(HackAudio::foregroundColourId);
-                foreground = findColour(HackAudio::midgroundColourId);
+                foreground = findColour(HackAudio::backgroundColourId);
             }
         }
         else
         {
             background = findColour(HackAudio::foregroundColourId);
-            foreground = findColour(HackAudio::midgroundColourId);
+            foreground = findColour(HackAudio::backgroundColourId);
         }
 
-        g.setColour(background.interpolatedWith(findColour(HackAudio::backgroundColourId), colourInterpolation.getNextValue()));
+        g.setColour(background.interpolatedWith(findColour(HackAudio::midgroundColourId), colourInterpolation.getNextValue()));
 
         g.fillPath(p);
         p.clear();
 
-        g.setColour(foreground.interpolatedWith(findColour(HackAudio::midgroundColourId), colourInterpolation.getNextValue()));
+        g.setColour(foreground.interpolatedWith(findColour(HackAudio::backgroundColourId), colourInterpolation.getNextValue()));
 
         g.setFont(buttonFont);
         g.drawFittedText(getButtonText(), 12, 12, width - 24, height - 24, juce::Justification::centred, 1, 1.0f);
@@ -305,13 +305,13 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
 
         juce::Path p;
         p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
-        g.setColour(findColour(HackAudio::backgroundColourId));
+        g.setColour(findColour(HackAudio::midgroundColourId));
         g.fillPath(p);
 
         p.clear();
 
         p.addRoundedRectangle(trackArea.getX(), trackArea.getY(), trackArea.getWidth(), trackArea.getHeight(), 8, 8, false, true, true, false);
-        g.setColour(findColour(HackAudio::midgroundColourId));
+        g.setColour(findColour(HackAudio::backgroundColourId));
         g.fillPath(p);
 
         p.clear();
@@ -326,7 +326,7 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
         g.setColour(findColour(HackAudio::foregroundColourId));
         g.fillPath(p);
 
-        g.setColour(findColour(HackAudio::backgroundColourId));
+        g.setColour(findColour(HackAudio::midgroundColourId));
         g.strokePath(p, juce::PathStrokeType::PathStrokeType(8));
 
     }
