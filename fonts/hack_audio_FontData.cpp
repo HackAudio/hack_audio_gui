@@ -1,4 +1,8 @@
-#include "hack_audio_FontData.h"
+extern const char*   BaumansRegular_ttf;
+const int            BaumansRegular_ttfSize = 53408;
+
+extern const char*   NowRegular_otf;
+const int            NowRegular_otfSize = 35920;
 
 //================== Baumans-Regular.ttf ==================
 static const unsigned char temp_binary_data_0[] =
