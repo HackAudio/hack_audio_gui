@@ -7,7 +7,9 @@ namespace HackAudio
 struct Fonts
 {
 
-    static const juce::Font Fira, Baumans;
+    static const juce::Font
+    Now,
+    Baumans;
 
 };
 

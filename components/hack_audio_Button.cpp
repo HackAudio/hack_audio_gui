@@ -6,7 +6,7 @@ HackAudio::Button::Button() : juce::Button("")
     setColour(HackAudio::foregroundColourId, HackAudio::Colours::White);
     setColour(HackAudio::highlightColourId,  HackAudio::Colours::Cyan);
 
-    juce::Font font(HackAudio::Fonts::Fira);
+    juce::Font font(HackAudio::Fonts::Now);
     font.setHeight(18);
     setFont(font);
 

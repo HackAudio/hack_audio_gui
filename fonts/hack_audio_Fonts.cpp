@@ -1,9 +1,7 @@
-#include "BinaryData.cpp"
+#include "hack_audio_FontData.cpp"
 
-const juce::Typeface::Ptr fira = juce::Typeface::createSystemTypefaceFor(BinaryData::FiraSansRegular_otf, BinaryData::FiraSansRegular_otfSize);
+const juce::Typeface::Ptr ptr_NowRegular     = juce::Typeface::createSystemTypefaceFor(NowRegular_otf,     NowRegular_otfSize);
+const juce::Typeface::Ptr ptr_BaumansRegular = juce::Typeface::createSystemTypefaceFor(BaumansRegular_ttf, BaumansRegular_ttfSize);
 
-const juce::Font HackAudio::Fonts::Fira(fira);
-
-const juce::Typeface::Ptr baumans = juce::Typeface::createSystemTypefaceFor(BinaryData::BaumansRegular_ttf, BinaryData::BaumansRegular_ttfSize);
-
-const juce::Font HackAudio::Fonts::Baumans(baumans);
+const juce::Font HackAudio::Fonts::Now     (ptr_NowRegular);
+const juce::Font HackAudio::Fonts::Baumans (ptr_BaumansRegular);
