@@ -464,7 +464,7 @@ void HackAudio::Slider::paint(juce::Graphics& g)
     else
     {
 
-        g.setColour(findColour(HackAudio::backgroundColourId));
+        g.setColour(findColour(HackAudio::midgroundColourId));
         g.fillEllipse(indicatorArea.getX(), indicatorArea.getY(), indicatorArea.getWidth(), indicatorArea.getHeight());
 
     }
