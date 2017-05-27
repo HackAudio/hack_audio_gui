@@ -8,7 +8,7 @@ HackAudio::Selector::Selector() : selectorJustification(juce::Justification::cen
 
     setMouseClickGrabsKeyboardFocus(true);
 
-    setFont(HackAudio::Fonts::Now);
+    setFont(HackAudio::Fonts::Now.withHeight(18));
 
     colourInterpolation.reset(50, 0.5);
 
@@ -258,6 +258,7 @@ void HackAudio::Selector::paint(juce::Graphics& g)
     juce::Colour highlight  = findColour(HackAudio::highlightColourId);
 
     g.setColour(foreground.interpolatedWith(highlight, colourInterpolation.getNextValue()));
+    g.setFont(getFont());
     g.drawFittedText(selectorItems[currentIndex], 0, 0, width, height, selectorJustification.getFlags(), 1);
 
 }
