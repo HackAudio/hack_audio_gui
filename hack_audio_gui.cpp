@@ -4,10 +4,10 @@
 
 #include "hack_audio_gui.h"
 
-const juce::Colour HackAudio::Colours::Black (0xFF010D14);
-const juce::Colour HackAudio::Colours::Gray  (0xFF343D3E);
-const juce::Colour HackAudio::Colours::White (0xFFCAD8DE);
-const juce::Colour HackAudio::Colours::Cyan  (0xFF4DDDDB);
+const juce::Colour HackAudio::Colours::Black (0xFF10151D);
+const juce::Colour HackAudio::Colours::Gray  (0xFF3E4C5C);
+const juce::Colour HackAudio::Colours::White (0xFFFFFFFF);
+const juce::Colour HackAudio::Colours::Cyan  (0xFF11F2DE);
 
 #include "fonts/hack_audio_Fonts.cpp"
 
