@@ -1,1 +1,68 @@
-<h1>HackAudio GUI</h1>
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<title>HackAudio GUI</title>
+	<meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/css?family=Baumans" rel="stylesheet">
+	<link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/now" type="text/css">
+	<link rel="stylesheet" type="text/css" href="index.css">
+</head>
+
+<header>
+	<div class="hFrame" style="text-align: center">
+		<span class="hTitle nonSelectable" style="color: var(--white); font-size: 48pt">hack</span>
+		<span class="hTitle nonSelectable" style="color: var(--cyan);  font-size: 48pt">audio</span>
+		<span class="nonSelectable"        style="font-size: 14pt; vertical-align: top">gui</span>
+	</div>
+</header>
+
+<div id="hContainer">
+	<div class="hWidgetContainer">
+		<img src="img/slider.png" style="height: 384px"/>
+		<div style="height: 64px"></div>
+		<img src="img/button.png" style="width: 150px"/>
+	</div>
+
+	<div id="hBody">
+		<div class="hFrame">
+			<span class="hTitle" style="color: var(--cyan)">about</span>
+			<br><br>
+			This <a href="https://juce.com">JUCE</a> module provides a custom interface for HackAudio plugins.
+		</div>
+
+		<div class="hFrame">
+			<span class="hTitle" style="color: var(--cyan)">installation</span>
+			<br><br>
+			To install this module, simply clone the repository into the modules folder of your JUCE installation.
+			<br><br>
+			<img src="img/clone-module.png" style="width: 512px"/>
+			<br><br>
+			Once the module has been downloaded, you can import it with the Projucer!
+			<br><br><br><br>
+			<img src="img/add-module.png" style="width: 512px; box-shadow: 0px 25px 50px rgba(0, 0, 0, 0.6)"/>
+			<br><br>
+		</div>
+
+		<div class="hFrame">
+			<span class="hTitle" style="color: var(--cyan)">requirements</span>
+			<br><br>
+			This modules requires at least JUCE version 4.0.
+		</div>
+
+		<div class="hFrame">
+			<span class="hTitle" style="color: var(--cyan)">features</span>
+			<br><br>
+			This module customizes built-in JUCE components such as sliders, buttons, and labels, while also offering new components such as selectors, diagram displays, and meters!
+		</div>
+	</div>
+
+	<div class="hWidgetContainer">
+		<img src="img/knob.png" style="width: 196px"/>
+	</div>
+</div>
+
+<footer>
+	<div class="hFrame"></div>
+</footer>
+
+</html>

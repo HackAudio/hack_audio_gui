@@ -1,0 +1,133 @@
+:root
+{
+
+	--black: #10151D;
+	--gray:  #3E4C5C;
+	--white: #FFFFFF;
+	--cyan:  #11F2DE;
+
+	--clear-black: rgba(16, 21, 29, 0.5);
+	--hidden-gray: #141D26;
+
+	background-color: var(--black);
+	color: var(--white);
+
+	font-family: 'NowRegular';
+	font-weight: normal;
+	font-style:  normal;
+
+}
+
+::selection
+{
+
+	background: var(--clear-black);
+
+}
+
+::-moz-selection
+{
+
+	background: var(--clear-black);
+
+}
+
+.nonSelectable
+{
+
+	user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
+
+}
+
+a:link, a:visited
+{
+
+	color: var(--cyan);
+	text-decoration: none;
+
+}
+
+a:hover
+{
+
+	text-decoration: underline;
+
+}
+
+a:active
+{
+
+	color: var(--black);
+	text-decoration: none;
+
+}
+
+img
+{
+
+	max-width: none;
+
+}
+
+#hContainer
+{
+
+	width: 80%;
+
+	margin-left:   auto;
+	margin-right:  auto;
+	margin-top:    -48px;
+	margin-bottom: -48px;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	flex-wrap: nowrap;
+	align-items: flex-end;
+
+}
+
+.hFrame
+{
+
+	width: 512px;
+
+	background-color: var(--gray);
+
+	border-top-left-radius:     0px;
+	border-top-right-radius:    24px;
+	border-bottom-left-radius:  24px;
+	border-bottom-right-radius: 0px;
+
+	position: relative;
+
+	padding: 	   48px;
+	margin-top:    48px;
+	margin-bottom: 48px;
+	margin-left:   auto;
+	margin-right:  auto;
+
+	text-align: justify;
+
+}
+
+.hWidgetContainer
+{
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+}
+
+.hTitle
+{
+
+	font-family: 'Baumans', cursive;
+	font-size: 32pt;
+
+}
