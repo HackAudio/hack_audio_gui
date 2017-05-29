@@ -590,9 +590,9 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
     // =========================================================================================
     g.setFont(HackAudio::Fonts::Now.withHeight(DEFAULT_FONTSIZE));
     g.setColour(findColour(HackAudio::backgroundColourId).withAlpha(0.75f));
-    g.drawFittedText(currentContent->getName(), 0, cY + 2, width, 32, juce::Justification::centred, 1);
+    g.drawFittedText(currentContent->getName(), cX + 48, cY + 2, cW - 96, 32, juce::Justification::centred, 0, 1);
     g.setColour(findColour(HackAudio::foregroundColourId));
-    g.drawFittedText(currentContent->getName(), 0, cY, width, 32, juce::Justification::centred, 1);
+    g.drawFittedText(currentContent->getName(), cX + 48, cY, cW - 96, 32, juce::Justification::centred, 0, 1);
 
 }
 
