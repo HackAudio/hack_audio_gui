@@ -179,6 +179,7 @@ void HackAudio::Button::timerCallback()
 
         if (colourInterpolation.isSmoothing())
         {
+            
             repaint();
 
             if (std::abs(colourInterpolation.getTargetValue() - colourInterpolation.getNextValue()) < 0.0001)
@@ -195,11 +196,16 @@ void HackAudio::Button::timerCallback()
                 colourInterpolation.setValue(0.0f);
 
             }
+            else if (colourInterpolation.getTargetValue() == 1.0f)
+            {
+                colourInterpolation.setValue(1.0f);
+            }
             else
             {
 
                 if (colourInterpolation.getNextValue() == 0.0f)
                 {
+                    colourInterpolation.setValue(0.0f);
                     stopTimer();
                 }
 
