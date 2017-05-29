@@ -73,7 +73,6 @@ private:
 
     void resized() override;
 
-    bool resizeGuard;
     juce::Component contentContainer;
     HackAudio::Diagram* currentContent;
 

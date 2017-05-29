@@ -24,8 +24,6 @@ HackAudio::Viewport::Viewport()
 
     currentContent = nullptr;
 
-    resizeGuard = false;
-
 }
 
 HackAudio::Viewport::~Viewport()
@@ -531,27 +529,27 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
     // Frame & Rounded Corners (CORNER_CONFIG)
     // =========================================================================================
+    const float csx = fmin(24, width * 0.5f);
+    const float csy = fmin(24, height * 0.5f);
+    const float cs45x = csx * 0.45f;
+    const float cs45y = csy * 0.45f;
+
     juce::Path corners;
 
     corners.startNewSubPath(cX, cY + cH);
-    corners.lineTo(cX + 24, cY + cH);
-    corners.cubicTo(cX + 12, cY + cH, cX, cY + cH - 12, cX, cY + cH - 24);
+    corners.lineTo(cX + csx, cY + cH);
+    corners.cubicTo(cX + cs45x, cY + cH, cX, cY + cH - cs45y, cX, cY + cH - csy);
     corners.closeSubPath();
 
     corners.startNewSubPath(cX + cW, cY);
-    corners.lineTo(cX + cW - 24, cY);
-    corners.cubicTo(cX + cW - 12, cY, cX + cW, cY + 12, cX + cW, cY + 24);
+    corners.lineTo(cX + cW - csx, cY);
+    corners.cubicTo(cX + cW - cs45x, cY, cX + cW, cY + cs45y, cX + cW, cY + csy);
     corners.closeSubPath();
 
     g.setColour(findColour(HackAudio::midgroundColourId));
     g.fillPath(corners);
 
     juce::Path p;
-
-    const float csx = fmin(24, width * 0.5f);
-    const float csy = fmin(24, height * 0.5f);
-    const float cs45x = csx * 0.45f;
-    const float cs45y = csy * 0.45f;
 
     p.startNewSubPath(0, 0);
     p.lineTo(width - csx, 0);
@@ -570,7 +568,6 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
     g.setColour(findColour(HackAudio::midgroundColourId));
     g.fillPath(p);
-
 
     // Output Connector
     // =========================================================================================
@@ -602,16 +599,10 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 void HackAudio::Viewport::resized()
 {
 
-    if (resizeGuard) { return; }
-
     int width  = getWidth();
     int height = getHeight();
 
-    resizeGuard = true;
-    setBounds(getX() - 12, getY(), width + 24, height + 24);
-    resizeGuard = false;
-
-    contentContainer.centreWithSize(width - 24, height - 24);
+    contentContainer.centreWithSize(width - 48, height - 48);
 
     backButton.setBounds(contentContainer.getX() + 12, contentContainer.getY() + 8, 16, 16);
     topButton.setBounds(contentContainer.getRight() - 32, contentContainer.getY() + 8, 16, 16);
