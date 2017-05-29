@@ -107,18 +107,18 @@ void HackAudio::Button::mouseDrag(const juce::MouseEvent& e)
 
         int xoffset = thumbArea.getX();
 
-        if (e.x > 32 || e.x < 64)
+        if (e.x > getWidth() / 4 || e.x < getWidth() / 2)
         {
             thumbArea.setX(xoffset + (e.getDistanceFromDragStartX() / 4));
         }
 
-        if (thumbArea.getX() < 32)
+        if (thumbArea.getX() < getWidth() / 4)
         {
-            thumbArea.setX(32);
+            thumbArea.setX(getWidth() / 4);
         }
-        else if (thumbArea.getX() > 64)
+        else if (thumbArea.getX() > getWidth() / 2)
         {
-            thumbArea.setX(64);
+            thumbArea.setX(getWidth() / 2);
         }
 
         indicatorArea.setWidth((thumbArea.getX() - indicatorArea.getX()) + thumbArea.getWidth()/2);
@@ -155,12 +155,12 @@ void HackAudio::Button::mouseUp(const juce::MouseEvent& e)
             if (e.x <= getWidth() / 2)
             {
                 setToggleState(false, juce::sendNotification);
-                animationEnd.setXY(32, 16);
+                animationEnd.setXY(getWidth() / 4, getHeight() / 4);
             }
             else
             {
                 setToggleState(true, juce::sendNotification);
-                animationEnd.setXY(64, 16);
+                animationEnd.setXY(getWidth() / 2, getHeight() / 4);
             }
 
             startTimerHz(60);
@@ -234,7 +234,7 @@ void HackAudio::Button::timerCallback()
             indicatorArea.setWidth(0);
         }
 
-        if (thumbArea.getPosition().getDistanceFrom(animationEnd) <= 4 || thumbArea.getX() < 32 || thumbArea.getX() > 64)
+        if (thumbArea.getPosition().getDistanceFrom(animationEnd) <= 4 || thumbArea.getX() < getWidth() / 4 || thumbArea.getX() > getWidth() / 2)
         {
 
             animationAcc = 0;
@@ -325,7 +325,8 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
         g.fillPath(p);
 
         g.setColour(findColour(HackAudio::midgroundColourId));
-        g.strokePath(p, juce::PathStrokeType::PathStrokeType(8));
+        int strokeWidth = std::min(thumbArea.getWidth(), thumbArea.getHeight()) / 4;
+        g.strokePath(p, juce::PathStrokeType::PathStrokeType(strokeWidth));
 
     }
 
@@ -334,12 +335,8 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
 void HackAudio::Button::resized()
 {
 
-	if (resizeGuard) { return; }
-
     int width  = getWidth();
     int height = getHeight();
-
-	resizeGuard = true;
 
     if (buttonStyle != ButtonStyle::SlidingToggle)
     {
@@ -348,30 +345,26 @@ void HackAudio::Button::resized()
         indicatorArea.setBounds(0, 0, 0, 0);
         thumbArea.setBounds(0, 0, 0, 0);
 
-        setSize(width, height);
-
     }
     else
     {
 
-        trackArea.setBounds(32, 16, 64, 32);
+        trackArea.setBounds(width / 4, height / 4, width / 2, height / 2);
 
-        thumbArea.setSize(32, 32);
-        indicatorArea.setPosition(32, 16);
-        indicatorArea.setHeight(32);
+        thumbArea.setSize(width / 4, height / 2);
+        indicatorArea.setPosition(width / 4, height / 4);
+        indicatorArea.setHeight(height / 2);
 
         if (getToggleState())
         {
-            thumbArea.setPosition(64, 16);
+            thumbArea.setPosition(width / 2, height / 4);
         }
         else
         {
-            thumbArea.setPosition(32, 16);
+            thumbArea.setPosition(width / 4, height / 4);
         }
 
-        indicatorArea.setWidth((thumbArea.getX() - indicatorArea.getX()) + thumbArea.getWidth()/2);
-
-        setSize(128, 64);
+        indicatorArea.setWidth((thumbArea.getX() - indicatorArea.getX()) + thumbArea.getWidth() / 2);
 
     }
 
