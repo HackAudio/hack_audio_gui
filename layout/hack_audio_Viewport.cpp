@@ -452,9 +452,9 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
       juce::ColourGradient
       (
        HackAudio::Colours::Black.withAlpha(0.75f),
-       contentContainer.getX(), contentContainer.getY(),
+       cX, cY,
        HackAudio::Colours::Black.withAlpha(0.0f),
-       contentContainer.getX(), contentContainer.getY() + 4,
+       cX, cY + 4,
        false
       )
     );
@@ -465,9 +465,9 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
       juce::ColourGradient
       (
        HackAudio::Colours::Black.withAlpha(0.0f),
-       contentContainer.getX(), contentContainer.getBottom() - 4,
+       cX, (cY + cH) - 4,
        HackAudio::Colours::Black.withAlpha(0.75f),
-       contentContainer.getX(), contentContainer.getBottom(),
+       cX, cY + cH,
        false
       )
     );
@@ -478,9 +478,9 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
       juce::ColourGradient
       (
        HackAudio::Colours::Black.withAlpha(0.75f),
-       contentContainer.getX(), contentContainer.getY(),
+       cX, cY,
        HackAudio::Colours::Black.withAlpha(0.0f),
-       contentContainer.getX() + 4, contentContainer.getY(),
+       cX + 4, cY,
        false
       )
     );
@@ -491,9 +491,9 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
       juce::ColourGradient
       (
        HackAudio::Colours::Black.withAlpha(0.0f),
-       contentContainer.getRight() - 4, contentContainer.getY(),
+       (cX + cW) - 4, cY,
        HackAudio::Colours::Black.withAlpha(0.75f),
-       contentContainer.getRight(), contentContainer.getY(),
+       (cX + cW), cY,
        false
       )
     );
@@ -504,9 +504,9 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
       juce::ColourGradient
       (
        HackAudio::Colours::Black.withAlpha(1.0f),
-       contentContainer.getX(), getHeight() / 2,
+       cX, height / 2,
        HackAudio::Colours::Black.withAlpha(0.0f),
-       contentContainer.getX() + 16, (getHeight() / 2),
+       cX + 16, height / 2,
        true
       )
     );
@@ -517,14 +517,14 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
       juce::ColourGradient
       (
        HackAudio::Colours::Black.withAlpha(1.0f),
-       contentContainer.getRight(), getHeight() / 2,
+       (cX + cW), height / 2,
        HackAudio::Colours::Black.withAlpha(0.0f),
-       contentContainer.getRight() - 16, (getHeight() / 2),
+       (cX + cW) - 16, height / 2,
        true
       )
     );
 
-    g.fillEllipse(contentContainer.getRight() - 12, (getHeight() / 2) - 12, 24, 24);
+    g.fillEllipse((cX + cW) - 12, (height / 2) - 12, 24, 24);
 
 
     // Frame & Rounded Corners (CORNER_CONFIG)
@@ -572,9 +572,9 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
     // Output Connector
     // =========================================================================================
     g.setColour(findColour(HackAudio::midgroundColourId));
-    g.fillEllipse(contentContainer.getRight() - 8, (getHeight() / 2) - 8, 16, 16);
+    g.fillEllipse((cX + cW) - 8, (height / 2) - 8, 16, 16);
     g.setColour(findColour(HackAudio::backgroundColourId));
-    g.drawEllipse(contentContainer.getRight() - 8, (getHeight() / 2) - 8, 16, 16, 4);
+    g.drawEllipse((cX + cW) - 8, (height / 2) - 8, 16, 16, 4);
 
     g.setColour(findColour(HackAudio::midgroundColourId));
     g.strokePath(outputConnections, juce::PathStrokeType(4));
@@ -582,17 +582,17 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
     // Input Connector
     // =========================================================================================
     g.setColour(findColour(HackAudio::backgroundColourId));
-    g.fillEllipse(contentContainer.getX() - 8, (getHeight() / 2) - 8, 16, 16);
+    g.fillEllipse(cX - 8, (height / 2) - 8, 16, 16);
     g.setColour(findColour(HackAudio::midgroundColourId));
-    g.drawEllipse(contentContainer.getX() - 8, (getHeight() / 2) - 8, 16, 16, 4);
+    g.drawEllipse(cX - 8, (height / 2) - 8, 16, 16, 4);
 
     // Navigation Title
     // =========================================================================================
     g.setFont(HackAudio::Fonts::Now);
     g.setColour(findColour(HackAudio::backgroundColourId).withAlpha(0.75f));
-    g.drawFittedText(currentContent->getName(), 0, contentContainer.getY() + 2, getWidth(), 32, juce::Justification::centred, 1);
+    g.drawFittedText(currentContent->getName(), 0, cY + 2, width, 32, juce::Justification::centred, 1);
     g.setColour(findColour(HackAudio::foregroundColourId));
-    g.drawFittedText(currentContent->getName(), 0, contentContainer.getY(), getWidth(), 32, juce::Justification::centred, 1);
+    g.drawFittedText(currentContent->getName(), 0, cY, width, 32, juce::Justification::centred, 1);
 
 }
 
