@@ -6,7 +6,7 @@
 	--white: #FFFFFF;
 	--cyan:  #11F2DE;
 
-	--clear-black: rgba(16, 21, 29, 0.5);
+	--clear-black: rgba(16, 21, 29, 0.6);
 	--hidden-gray: #1B2229;
 
 	background-color: var(--black);
@@ -120,6 +120,8 @@ img
 	margin-right:  auto;
 
 	text-align: justify;
+
+	box-shadow: 0px 25px 50px var(--clear-black);
 
 }
 
