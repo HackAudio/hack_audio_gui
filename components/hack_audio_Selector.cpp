@@ -269,7 +269,7 @@ void HackAudio::Selector::resized()
     int width  = getWidth();
     int height = getHeight();
 
-    selectLeft.setBounds(height / 4, height / 4, height / 2, height / 2);
-    selectRight.setBounds(width - (height - (height / 4)), height / 4, height / 2, height / 2);
+    selectLeft.setBounds(8, height/2 - 8, 16, 16);
+    selectRight.setBounds(width - 24, height/2 - 8, 16, 16);
 
 }
