@@ -125,6 +125,13 @@ img
 
 }
 
+.hWidget
+{
+
+	box-shadow: 0px 25px 50px var(--clear-black);
+
+}
+
 .hWidgetContainer
 {
 
