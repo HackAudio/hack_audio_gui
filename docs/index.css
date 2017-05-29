@@ -32,6 +32,14 @@
 
 }
 
+body, html
+{
+
+	overflow-x: hidden;
+	overflow-y: hidden;
+
+}
+
 .nonSelectable
 {
 
