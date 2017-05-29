@@ -15,8 +15,6 @@ class Viewport : public juce::Component,
                  private juce::ButtonListener
 {
 
-    class Diagram;
-
 public:
 
     Viewport();

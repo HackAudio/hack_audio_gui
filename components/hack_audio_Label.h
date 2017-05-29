@@ -15,8 +15,6 @@ class Label : public  juce::Label,
               private juce::Timer
 {
 
-    class Diagram;
-
 public:
 
     Label();
