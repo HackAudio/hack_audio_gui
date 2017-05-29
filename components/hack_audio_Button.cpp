@@ -295,7 +295,7 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
         g.setColour(foreground.interpolatedWith(findColour(HackAudio::backgroundColourId), colourInterpolation.getNextValue()));
 
         g.setFont(buttonFont);
-        g.drawFittedText(getButtonText(), CORNER_RADIUS / 2, CORNER_RADIUS / 12, width - CORNER_RADIUS, height - CORNER_RADIUS, juce::Justification::centred, 1, 1.0f);
+        g.drawFittedText(getButtonText(), CORNER_RADIUS / 2, CORNER_RADIUS / 2, width - CORNER_RADIUS, height - CORNER_RADIUS, juce::Justification::centred, 1, 1.0f);
 
     }
     else
