@@ -6,6 +6,10 @@ This module provides the custom GUI components used in HackAudio software.
 
 Simply clone this repository into the `modules` folder of your JUCE installation, and include the module in your JUCE projects using the Projucer!
 
+![](docs/img/clone-module.png)
+
+![](docs/img/add-module.png)
+
 ## Features
 
 HackAudio GUI customizes the following JUCE components:
