@@ -21,6 +21,8 @@ END_JUCE_MODULE_DECLARATION
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <juce_audio_basics/juce_audio_basics.h>
 
+// User Interface Configurations
+
 #define ANIMATION_SPEED 0.1
 #define ANIMATION_FPS 60
 
@@ -33,7 +35,11 @@ END_JUCE_MODULE_DECLARATION
 #define DEFAULT_PIPMIN 6
 #define DEFAULT_PIPMAX 8
 
+#define DEFAULT_FONTSIZE 18
+
 #define MOUSEWHEEL_SENSITIVITY 128
+
+// ===================================================
 
 #include "utils/hack_audio_Colours.h"
 #include "utils/hack_audio_Fonts.h"

@@ -588,7 +588,7 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
     // Navigation Title
     // =========================================================================================
-    g.setFont(HackAudio::Fonts::Now);
+    g.setFont(HackAudio::Fonts::Now.withHeight(DEFAULT_FONTSIZE));
     g.setColour(findColour(HackAudio::backgroundColourId).withAlpha(0.75f));
     g.drawFittedText(currentContent->getName(), 0, cY + 2, width, 32, juce::Justification::centred, 1);
     g.setColour(findColour(HackAudio::foregroundColourId));
