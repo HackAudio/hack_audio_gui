@@ -250,7 +250,7 @@ void HackAudio::Selector::paint(juce::Graphics& g)
     int height = getHeight();
 
     juce::Path p;
-    p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
+    p.addRoundedRectangle(0, 0, width, height, CORNER_CONFIG);
     g.setColour(findColour(HackAudio::midgroundColourId));
     g.fillPath(p);
 

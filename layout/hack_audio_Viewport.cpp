@@ -529,8 +529,8 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
     // Frame & Rounded Corners (CORNER_CONFIG)
     // =========================================================================================
-    const float csx = fmin(24, width * 0.5f);
-    const float csy = fmin(24, height * 0.5f);
+    const float csx = fmin(CORNER_RADIUS, width * 0.5f);
+    const float csy = fmin(CORNER_RADIUS, height * 0.5f);
     const float cs45x = csx * 0.45f;
     const float cs45y = csy * 0.45f;
 
@@ -590,9 +590,9 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
     // =========================================================================================
     g.setFont(HackAudio::Fonts::Now.withHeight(DEFAULT_FONTSIZE));
     g.setColour(findColour(HackAudio::backgroundColourId).withAlpha(0.75f));
-    g.drawFittedText(currentContent->getName(), cX + 48, cY + 2, cW - 96, 32, juce::Justification::centred, 0, 1);
+    g.drawFittedText(currentContent->getName(), cX + (CORNER_RADIUS * 2), cY + 2, cW - (CORNER_RADIUS * 4), 32, juce::Justification::centred, 0, 1);
     g.setColour(findColour(HackAudio::foregroundColourId));
-    g.drawFittedText(currentContent->getName(), cX + 48, cY, cW - 96, 32, juce::Justification::centred, 0, 1);
+    g.drawFittedText(currentContent->getName(), cX + (CORNER_RADIUS * 2), cY, cW - (CORNER_RADIUS * 4), 32, juce::Justification::centred, 0, 1);
 
 }
 

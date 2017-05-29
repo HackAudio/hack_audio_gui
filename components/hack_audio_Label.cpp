@@ -276,7 +276,7 @@ void HackAudio::Label::paint(juce::Graphics& g)
     int height = getHeight();
 
     juce::Path p;
-    p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
+    p.addRoundedRectangle(0, 0, width, height, CORNER_CONFIG);
     g.setColour(findColour(HackAudio::backgroundColourId));
     g.fillPath(p);
 
@@ -294,7 +294,7 @@ void HackAudio::Label::paint(juce::Graphics& g)
         {
             if (placeholder.containsAnyOf("^_") || placeholder.contains("\\array"))
             {
-                formatText(placeholder, getFont(), getJustificationType(), 24, 24, width - 48, height - 48).draw(g);
+                formatText(placeholder, getFont(), getJustificationType(), CORNER_RADIUS, CORNER_RADIUS, width - (CORNER_RADIUS * 2), height - (CORNER_RADIUS * 2)).draw(g);
                 return;
             }
         }
@@ -302,7 +302,7 @@ void HackAudio::Label::paint(juce::Graphics& g)
         {
             if (getText().containsAnyOf("^_") || getText().contains("\\array"))
             {
-                formatText(getText(), getFont(), getJustificationType(), 24, 24, width - 48, height - 48).draw(g);
+                formatText(getText(), getFont(), getJustificationType(), CORNER_RADIUS, CORNER_RADIUS, width - (CORNER_RADIUS * 2), height - (CORNER_RADIUS * 2)).draw(g);
                 return;
             }
         }
@@ -314,6 +314,6 @@ void HackAudio::Label::paint(juce::Graphics& g)
     juce::String textToDisplay;
     textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
 
-    g.drawFittedText(textToDisplay, 12, 12, width - 24, height - 24, getJustificationType(), 1, 1.0f);
+    g.drawFittedText(textToDisplay, CORNER_RADIUS / 2, CORNER_RADIUS / 2, width - CORNER_RADIUS, height - CORNER_RADIUS, getJustificationType(), 1, 1.0f);
 
 }

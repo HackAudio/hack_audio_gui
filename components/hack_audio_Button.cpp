@@ -263,7 +263,7 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
     {
 
         juce::Path p;
-        p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, false, !(isConnectedOnTop() || isConnectedOnRight()), !(isConnectedOnBottom() || isConnectedOnLeft()), false);
+        p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_RADIUS, false, !(isConnectedOnTop() || isConnectedOnRight()), !(isConnectedOnBottom() || isConnectedOnLeft()), false);
 
         juce::Colour background;
         juce::Colour foreground;
@@ -295,14 +295,14 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
         g.setColour(foreground.interpolatedWith(findColour(HackAudio::backgroundColourId), colourInterpolation.getNextValue()));
 
         g.setFont(buttonFont);
-        g.drawFittedText(getButtonText(), 12, 12, width - 24, height - 24, juce::Justification::centred, 1, 1.0f);
+        g.drawFittedText(getButtonText(), CORNER_RADIUS / 2, CORNER_RADIUS / 12, width - CORNER_RADIUS, height - CORNER_RADIUS, juce::Justification::centred, 1, 1.0f);
 
     }
     else
     {
 
         juce::Path p;
-        p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
+        p.addRoundedRectangle(0, 0, width, height, CORNER_CONFIG);
         g.setColour(findColour(HackAudio::midgroundColourId));
         g.fillPath(p);
 

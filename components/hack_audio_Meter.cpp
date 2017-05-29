@@ -359,7 +359,7 @@ void HackAudio::Meter::paint(juce::Graphics& g)
     int height = getHeight();
 
     juce::Path b;
-    b.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_CONFIG);
+    b.addRoundedRectangle(0, 0, width, height, CORNER_CONFIG);
     g.setColour(findColour(HackAudio::midgroundColourId));
     g.fillPath(b);
 
@@ -479,7 +479,7 @@ void HackAudio::Meter::paint(juce::Graphics& g)
     }
 
     juce::Path p;
-    p.addRoundedRectangle(4, 4, width - 8, height - 8, CORNER_RADIUS, CORNER_CONFIG);
+    p.addRoundedRectangle(4, 4, width - 8, height - 8, CORNER_CONFIG);
     g.setColour(findColour(HackAudio::midgroundColourId));
     g.strokePath(p, juce::PathStrokeType(8));
 

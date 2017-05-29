@@ -26,8 +26,8 @@ END_JUCE_MODULE_DECLARATION
 #define ANIMATION_SPEED 0.1
 #define ANIMATION_FPS 60
 
-#define CORNER_RADIUS   24, 24
-#define CORNER_CONFIG   false, true, true, false
+#define CORNER_RADIUS   24
+#define CORNER_CONFIG   CORNER_RADIUS, CORNER_RADIUS, false, true, true, false
 
 #define ROTARY_ANGLESTART ((7.0f * M_PI) / 6.0f)
 #define ROTARY_ANGLERANGE ((5.0f * M_PI) / 3.0f)
