@@ -37,7 +37,7 @@ private:
         if (state == juce::Button::ButtonState::buttonOver && state != juce::Button::ButtonState::buttonDown)
         {
 
-            g.setColour(HackAudio::Colours::Gray);
+            g.setColour(HackAudio::Colours::Gray.darker());
 
         }
         else if (state == juce::Button::ButtonState::buttonOver || state == juce::Button::ButtonState::buttonDown)
