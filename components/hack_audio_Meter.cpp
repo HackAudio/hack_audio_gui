@@ -8,7 +8,7 @@ HackAudio::Meter::Meter()
 
     pipsShown = true;
 
-    pipSize = 8;
+    pipSize = 4;
 
     pipLocations.resize(10);
 
@@ -257,7 +257,7 @@ void HackAudio::Meter::setPipScale()
 
     }
 
-    pipSize = std::min(pipSizeCheck, 8);
+    pipSize = std::min(pipSizeCheck, 4);
 
 }
 
