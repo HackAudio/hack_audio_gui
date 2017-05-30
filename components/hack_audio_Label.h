@@ -15,6 +15,8 @@ class Label : public  juce::Label,
               private juce::Timer
 {
 
+    friend class Diagram;
+
 public:
 
     Label();
@@ -109,6 +111,7 @@ private:
 
     void mouseEnter(const juce::MouseEvent& e) override;
     void mouseExit (const juce::MouseEvent& e) override;
+    void mouseDown (const juce::MouseEvent& e) override;
     void mouseUp   (const juce::MouseEvent& e) override;
 
     void labelTextChanged(juce::Label* labelThatHasChanged) override;
@@ -124,6 +127,7 @@ private:
     bool animationStatus;
     bool placeholderStatus;
     bool formattingStatus;
+    bool highlightStatus;
 
     int timeout;
 

@@ -409,6 +409,9 @@ void HackAudio::Diagram::setSubDiagram(juce::Component& source, HackAudio::Diagr
 {
 
     assert(getIndexOfChildComponent(&source) != -1);    /* Warning: Subdiagram Trigger Component Must Be A Child Of Your Diagram */
+    assert(dynamic_cast<HackAudio::Label*>(&source));    /* Warning: Sources May Only Be HackAudio::Labels */
+
+    dynamic_cast<HackAudio::Label*>(&source)->highlightStatus = true;
 
     submap.set(&source, &subDiagram);
 

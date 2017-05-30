@@ -199,29 +199,17 @@ void HackAudio::Viewport::mouseExit(const juce::MouseEvent& e)
 
 }
 
-void HackAudio::Viewport::mouseMove(const juce::MouseEvent& e)
-{
-
-    if (!currentContent) { return; }
-
-    for(juce::HashMap<juce::Component*, HackAudio::Diagram*>::Iterator it (currentContent->submap); it.next();)
-    {
-        if (it.getKey() == e.eventComponent)
-        {
-            it.getKey()->setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.25f));
-        }
-        else
-        {
-            it.getKey()->setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray);
-        }
-    }
-
-}
-
 void HackAudio::Viewport::mouseDown(const juce::MouseEvent& e)
 {
 
     if (!currentContent) { return; }
+
+    if (e.eventComponent != this)
+    {
+
+        e.eventComponent->mouseDown(e);
+
+    }
 
     componentDragger.startDraggingComponent(contentContainer.getChildComponent(0), e);
 

@@ -17,9 +17,10 @@ HackAudio::Label::Label()
 
     colourInterpolation.reset(50, 0.5);
 
-    animationStatus = true;
+    animationStatus   = true;
     placeholderStatus = false;
-    formattingStatus = true;
+    formattingStatus  = true;
+    highlightStatus   = false;
 
     timeout = 0;
 
@@ -178,7 +179,7 @@ bool HackAudio::Label::getFormattingStatus()
 void HackAudio::Label::mouseEnter(const juce::MouseEvent& e)
 {
 
-    if (placeholderStatus && getText().isNotEmpty())
+    if ((placeholderStatus && getText().isNotEmpty()) || highlightStatus)
     {
 
         setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.25f));
@@ -197,8 +198,25 @@ void HackAudio::Label::mouseExit(const juce::MouseEvent& e)
 
 }
 
+void HackAudio::Label::mouseDown(const juce::MouseEvent& e)
+{
+
+    if ((placeholderStatus && getText().isNotEmpty()) || highlightStatus)
+    {
+
+        setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(0.75f));
+
+    }
+
+}
+
 void HackAudio::Label::mouseUp(const juce::MouseEvent& e)
 {
+
+    if (findColour(HackAudio::backgroundColourId) == HackAudio::Colours::Gray.withMultipliedBrightness(0.75f))
+    {
+        setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.25f));
+    }
 
     if (placeholderStatus && !e.mouseWasDraggedSinceMouseDown())
     {
