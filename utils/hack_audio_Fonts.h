@@ -8,7 +8,9 @@ struct Fonts
 {
 
     static const juce::Font
-    Now,
+    NowLight,
+    NowRegular,
+    NowBold,
     Baumans;
 
 };
