@@ -176,3 +176,50 @@ img
 	transform: translateZ(-2px) scale(1.5);
 
 }
+
+@media only screen and (max-width: 768px)
+{
+
+	.hFrame
+	{
+
+		width: 70vw;
+
+	}
+
+	.hWidgetContainer
+	{
+
+		display: none;
+
+	}
+
+	.hParallax
+	{
+
+		perspective: 0px;
+
+	}
+
+	.hParallaxBack
+	{
+
+		display: none;
+
+	}
+
+	.hParallaxFront
+	{
+
+		transform: translateZ(0px) scale(1);
+
+	}
+
+	.hParallaxTop
+	{
+
+		display: none;
+
+	}
+
+}
