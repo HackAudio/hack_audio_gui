@@ -363,6 +363,9 @@ void HackAudio::Meter::paint(juce::Graphics& g)
     g.setColour(findColour(HackAudio::midgroundColourId));
     g.fillPath(b);
 
+    g.setColour(findColour(HackAudio::backgroundColourId));
+    g.fillRect(indicatorArea);
+
     if (meterSources.size())
     {
 
@@ -403,14 +406,14 @@ void HackAudio::Meter::paint(juce::Graphics& g)
                     
                 }
 
-                g.setColour(findColour(HackAudio::midgroundColourId));
+                g.setColour(findColour(HackAudio::backgroundColourId));
                 g.drawLine
                 (
                     (indicatorArea.getX() + channelWidth * channel) + channelWidth,
                     indicatorArea.getY(),
                     (indicatorArea.getX() + channelWidth * channel) + channelWidth,
                     indicatorArea.getBottom(),
-                    2
+                    1
                 );
 
             }
@@ -453,14 +456,14 @@ void HackAudio::Meter::paint(juce::Graphics& g)
 
                 }
 
-                g.setColour(findColour(HackAudio::midgroundColourId));
+                g.setColour(findColour(HackAudio::backgroundColourId));
                 g.drawLine
                 (
                     indicatorArea.getX(),
                     (indicatorArea.getY() + channelHeight * channel) + channelHeight,
                     indicatorArea.getRight(),
                     (indicatorArea.getY() + channelHeight * channel) + channelHeight,
-                    2
+                    1
                 );
 
             }
@@ -469,7 +472,7 @@ void HackAudio::Meter::paint(juce::Graphics& g)
 
     }
 
-    g.setColour(findColour(HackAudio::backgroundColourId));
+    g.setColour(findColour(HackAudio::midgroundColourId));
     for (int i = 0; i < pipLocations.size(); ++i)
     {
 
