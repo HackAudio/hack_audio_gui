@@ -42,6 +42,18 @@
 			background-color: var(--hidden-gray)"></div>
 	</div>
 
+	<div class="hParallaxLayer hParallaxTop">
+		<div class="hWidgetContainer" style="float: left">
+			<img class="hWidget" src="img/slider.svg" style="height: 384px;"/>
+			<div style="height: 96px; float: left"></div>
+			<img class="hWidget" src="img/button.svg" style="width: 128px; height: 64px"/>
+		</div>
+
+		<div class="hWidgetContainer" style="float: right">
+			<img class="hWidget" src="img/knob.svg" style="width: 196px"/>
+		</div>
+	</div>
+
 	<div class="hParallaxLayer hParallaxFront">
 		<header>
 			<div class="hFrame" style="text-align: center">
@@ -51,49 +63,35 @@
 			</div>
 		</header>
 
-		<div id="hFlexbox">
-			<div class="hWidgetContainer">
-				<img class="hWidget" src="img/slider.svg" style="height: 384px;"/>
-				<div style="height: 64px"></div>
-				<img class="hWidget" src="img/button.svg" style="width: 128px; height: 64px;"/>
-			</div>
+		<div class="hFrame">
+			<span class="hTitle" style="color: var(--cyan)">about</span>
+			<br><br>
+			This <a href="https://juce.com">JUCE</a> module provides a custom interface for HackAudio plugins.
+		</div>
 
-			<div id="hBody">
-				<div class="hFrame">
-					<span class="hTitle" style="color: var(--cyan)">about</span>
-					<br><br>
-					This <a href="https://juce.com">JUCE</a> module provides a custom interface for HackAudio plugins.
-				</div>
+		<div class="hFrame">
+			<span class="hTitle" style="color: var(--cyan)">installation</span>
+			<br><br>
+			To install this module, simply clone the repository into the modules folder of your JUCE installation.
+			<br><br>
+			<img src="img/clone-module.png" style="width: 512px"/>
+			<br><br>
+			Once the module has been downloaded, you can import it with the Projucer!
+			<br><br><br><br>
+			<img src="img/add-module.png" style="width: 512px; box-shadow: 0px 25px 50px rgba(0, 0, 0, 0.6)"/>
+			<br><br>
+		</div>
 
-				<div class="hFrame">
-					<span class="hTitle" style="color: var(--cyan)">installation</span>
-					<br><br>
-					To install this module, simply clone the repository into the modules folder of your JUCE installation.
-					<br><br>
-					<img src="img/clone-module.png" style="width: 512px"/>
-					<br><br>
-					Once the module has been downloaded, you can import it with the Projucer!
-					<br><br><br><br>
-					<img src="img/add-module.png" style="width: 512px; box-shadow: 0px 25px 50px rgba(0, 0, 0, 0.6)"/>
-					<br><br>
-				</div>
+		<div class="hFrame">
+			<span class="hTitle" style="color: var(--cyan)">requirements</span>
+			<br><br>
+			This modules requires at least JUCE version 4.0.
+		</div>
 
-				<div class="hFrame">
-					<span class="hTitle" style="color: var(--cyan)">requirements</span>
-					<br><br>
-					This modules requires at least JUCE version 4.0.
-				</div>
-
-				<div class="hFrame">
-					<span class="hTitle" style="color: var(--cyan)">features</span>
-					<br><br>
-					This module customizes built-in JUCE components such as sliders, buttons, and labels, while also offering new components such as selectors, diagram displays, and meters!
-				</div>
-			</div>
-
-			<div class="hWidgetContainer">
-				<img class="hWidget" src="img/knob.svg" style="width: 196px"/>
-			</div>
+		<div class="hFrame">
+			<span class="hTitle" style="color: var(--cyan)">features</span>
+			<br><br>
+			This module customizes built-in JUCE components such as sliders, buttons, and labels, while also offering new components such as selectors, diagram displays, and meters!
 		</div>
 
 		<footer>

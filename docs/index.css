@@ -7,7 +7,7 @@
 	--cyan:  #11F2DE;
 
 	--clear-black: rgba(16, 21, 29, 0.6);
-	--hidden-gray: #1B2229;
+	--hidden-gray: #202830;
 
 	background-color: var(--black);
 	color: var(--white);
@@ -135,8 +135,9 @@ img
 .hWidgetContainer
 {
 
-	margin-left: 48px;
-	margin-right: 48px;
+	margin-top: 128px;
+	margin-left: 96px;
+	margin-right: 96px;
 
 	display: flex;
 	flex-direction: column;
@@ -171,10 +172,17 @@ img
 	left: 0;
 }
 
+.hParallaxTop
+{
+
+	transform: translateZ(0px);
+
+}
+
 .hParallaxFront
 {
 
-	transform: translateZ(0);
+	transform: translateZ(-1px) scale(2);
 
 }
 
@@ -183,6 +191,6 @@ img
 
 	width: 100vh;
 	height: 100vh;
-	transform: translateZ(-1px);
+	transform: translateZ(-2px) scale(1.5);
 
 }
