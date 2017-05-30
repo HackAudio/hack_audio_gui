@@ -529,8 +529,8 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
     // Frame & Rounded Corners (CORNER_CONFIG)
     // =========================================================================================
-    const float csx = fmin(CORNER_RADIUS, width * 0.5f);
-    const float csy = fmin(CORNER_RADIUS, height * 0.5f);
+    const float csx = fmin(CORNER_RADIUS/2, width * 0.5f);
+    const float csy = fmin(CORNER_RADIUS/2, height * 0.5f);
     const float cs45x = csx * 0.45f;
     const float cs45y = csy * 0.45f;
 
@@ -602,7 +602,7 @@ void HackAudio::Viewport::resized()
     int width  = getWidth();
     int height = getHeight();
 
-    contentContainer.centreWithSize(width - 48, height - 48);
+    contentContainer.centreWithSize(width - 24, height - 24);
 
     backButton.setBounds(contentContainer.getX() + 12, contentContainer.getY() + 8, 16, 16);
     topButton.setBounds(contentContainer.getRight() - 32, contentContainer.getY() + 8, 16, 16);
