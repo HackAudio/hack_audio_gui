@@ -1,3 +1,8 @@
+inline float clip(float x)
+{
+    return std::max(0.0f, std::min(1.0f, x));
+}
+
 HackAudio::Meter::Meter()
 {
 
@@ -301,7 +306,8 @@ void HackAudio::Meter::timerCallback()
             g = gr;
         }
 
-        meterPeaks.set(i, (1.0f - g) * in + g * peak);
+        peak = (1.0f - g) * in + g * peak;
+        meterPeaks.set(i, clip(peak));
 
         if (meterCalibration == Peak || meterCalibration == Custom)
         {
@@ -345,7 +351,7 @@ void HackAudio::Meter::timerCallback()
 
         }
 
-        meterBuffers.set(i, out);
+        meterBuffers.set(i, clip(out));
         repaint(indicatorArea);
 
     }
