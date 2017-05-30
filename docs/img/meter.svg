@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 128 384" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:bevel;stroke-miterlimit:1.5;">
+    <g id="Artboard1" transform="matrix(2,0,0,1,0,0)">
+        <rect x="0" y="0" width="64" height="384" style="fill:none;"/>
+        <g transform="matrix(0.5,0,0,1,0,0)">
+            <path d="M128,24C128,10.754 117.246,0 104,0L0,0L0,360C0,373.246 10.754,384 24,384L128,384L128,24Z" style="fill:rgb(62,76,92);"/>
+        </g>
+        <g transform="matrix(0.5,0,0,1,0,0)">
+            <path d="M104,48C104,34.754 93.246,24 80,24L24,24L24,346C24,359.246 34.754,370 48,370L104,370L104,48Z" style="fill:rgb(14,14,15);"/>
+            <clipPath id="_clip1">
+                <path d="M104,48C104,34.754 93.246,24 80,24L24,24L24,346C24,359.246 34.754,370 48,370L104,370L104,48Z"/>
+            </clipPath>
+            <g clip-path="url(#_clip1)">
+                <g transform="matrix(1.33333,0,0,0.711656,-21.3333,105.264)">
+                    <rect x="34" y="46" width="30" height="326" style="fill:rgb(17,242,222);"/>
+                </g>
+                <g transform="matrix(1.33333,0,0,0.911043,18.6667,31.092)">
+                    <rect x="34" y="46" width="30" height="326" style="fill:rgb(17,242,222);"/>
+                </g>
+                <g transform="matrix(1,0,0,1.28017,0,-103.664)">
+                    <path d="M64,138L64,370" style="fill:none;stroke:rgb(14,14,15);stroke-width:0.87px;"/>
+                </g>
+                <g transform="matrix(1,0,0,1,5.68434e-14,-20)">
+                    <path d="M24,138L64,138" style="fill:none;stroke:white;stroke-width:1px;"/>
+                </g>
+                <g transform="matrix(1,0,0,1,40,-103)">
+                    <path d="M24,138L64,138" style="fill:none;stroke:white;stroke-width:1px;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
