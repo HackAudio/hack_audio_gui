@@ -22,7 +22,7 @@ public:
     /**
      Returns the current justification type
     */
-    juce::Justification getJustificationType();
+    juce::Justification getJustificationType() const;
 
     /**
      Adds an item to the list of the selector choices
@@ -58,27 +58,27 @@ public:
     /**
      Returns the index of the currently displayed item
     */
-    int getCurrentIndex();
+    int getCurrentIndex() const;
 
     /**
      Returns the total number of items the selector holds
     */
-    int getNumItems();
+    int getNumItems() const;
 
     /**
      Returns the text of the currently displayed item
     */
-    juce::String getCurrentText();
+    juce::String getCurrentText() const;
 
     /**
      Returns the text of the item at a specific index
     */
-    juce::String getItemText(int index);
+    juce::String getItemText(int index) const;
 
     /**
      Searches the choices and returns the index if it finds the given string
     */
-    int getIndexForItem(const juce::String& itemText);
+    int getIndexForItem(const juce::String& itemText) const;
 
     /**
      Sets the selector's font
@@ -88,7 +88,7 @@ public:
     /**
      Returns the selector's current font
     */
-    juce::Font getFont();
+    juce::Font getFont() const;
 
 private:
 

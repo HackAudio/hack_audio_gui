@@ -37,7 +37,7 @@ void HackAudio::Selector::setJustificationType(juce::Justification justification
 
 }
 
-juce::Justification HackAudio::Selector::getJustificationType()
+juce::Justification HackAudio::Selector::getJustificationType() const
 {
 
     return selectorJustification;
@@ -103,35 +103,35 @@ void HackAudio::Selector::setCurrentIndex(int index)
 
 }
 
-int HackAudio::Selector::getCurrentIndex()
+int HackAudio::Selector::getCurrentIndex() const
 {
 
     return currentIndex;
 
 }
 
-int HackAudio::Selector::getNumItems()
+int HackAudio::Selector::getNumItems() const
 {
 
     return selectorItems.size();
 
 }
 
-juce::String HackAudio::Selector::getCurrentText()
+juce::String HackAudio::Selector::getCurrentText() const
 {
 
     return selectorItems.getReference(currentIndex);
 
 }
 
-juce::String HackAudio::Selector::getItemText(int index)
+juce::String HackAudio::Selector::getItemText(int index) const
 {
 
     return selectorItems.getReference(index);
 
 }
 
-int HackAudio::Selector::getIndexForItem(const juce::String& itemText)
+int HackAudio::Selector::getIndexForItem(const juce::String& itemText) const
 {
 
     for (int i = 0; i < selectorItems.size(); ++i)
@@ -157,7 +157,7 @@ void HackAudio::Selector::setFont(juce::Font font)
     repaint();
 }
 
-juce::Font HackAudio::Selector::getFont()
+juce::Font HackAudio::Selector::getFont() const
 {
 
     return selectorFont;

@@ -48,7 +48,7 @@ public:
     /** 
      Returns true if the diagram is within the traversal chain
      */
-    bool isInTraversal(HackAudio::Diagram& d);
+    bool isInTraversal(HackAudio::Diagram& d) const;
 
 private:
 

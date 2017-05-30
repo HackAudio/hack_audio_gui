@@ -58,7 +58,7 @@ void HackAudio::Slider::setPipState(bool shouldBeShown)
 
 }
 
-bool HackAudio::Slider::getPipState()
+bool HackAudio::Slider::getPipState() const
 {
 
     return pipsShown;
@@ -75,7 +75,7 @@ void HackAudio::Slider::setPipCount(int count)
 
 }
 
-int HackAudio::Slider::getPipCount()
+int HackAudio::Slider::getPipCount() const
 {
 
     return pipLocations.size();

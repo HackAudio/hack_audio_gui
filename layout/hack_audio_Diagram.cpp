@@ -126,7 +126,7 @@ void HackAudio::Diagram::removeDiagramInput(juce::Component& component)
 
 }
 
-juce::Array<juce::Component*> HackAudio::Diagram::getDiagramInputs()
+juce::Array<juce::Component*> HackAudio::Diagram::getDiagramInputs() const
 {
 
     return inputComponents;
@@ -163,7 +163,7 @@ void HackAudio::Diagram::removeDiagramOutput(juce::Component& component)
 
 }
 
-juce::Array<juce::Component*> HackAudio::Diagram::getDiagramOutputs()
+juce::Array<juce::Component*> HackAudio::Diagram::getDiagramOutputs() const
 {
 
     return outputComponents;

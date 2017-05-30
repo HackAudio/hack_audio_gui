@@ -44,7 +44,7 @@ void HackAudio::Label::setText(const juce::String newText, juce::NotificationTyp
     juce::Label::setText(newText, notification);
 }
 
-juce::String HackAudio::Label::getPrefix()
+juce::String HackAudio::Label::getPrefix() const
 {
 
     return prefix;
@@ -81,7 +81,7 @@ void HackAudio::Label::setPrefix(const juce::String preText, juce::NotificationT
 
 }
 
-juce::String HackAudio::Label::getPostfix()
+juce::String HackAudio::Label::getPostfix() const
 {
 
     return postfix;
@@ -142,7 +142,7 @@ void HackAudio::Label::setPlaceholderStatus(bool shouldShowPlaceholder)
     repaint();
 }
 
-juce::String HackAudio::Label::getPlaceholder()
+juce::String HackAudio::Label::getPlaceholder() const
 {
     return placeholder;
 }
@@ -154,7 +154,7 @@ void HackAudio::Label::setAnimationStatus(bool shouldAnimate)
 
 }
 
-bool HackAudio::Label::getAnimationStatus()
+bool HackAudio::Label::getAnimationStatus() const
 {
 
     return animationStatus;
@@ -169,7 +169,7 @@ void HackAudio::Label::setFormattingStatus(bool shouldFormatText)
 
 }
 
-bool HackAudio::Label::getFormattingStatus()
+bool HackAudio::Label::getFormattingStatus() const
 {
 
     return formattingStatus;

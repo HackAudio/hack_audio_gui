@@ -36,7 +36,7 @@ public:
     /**
         Returns the current visibility of the slider's pips
     */
-    bool getPipState();
+    bool getPipState() const;
 
     /**
         Sets the number of pips the slider should display, adjusting their spacing automatically
@@ -46,7 +46,7 @@ public:
     /**
         Returns the current number of pips for the slider
     */
-    int  getPipCount();
+    int  getPipCount() const;
 
     /**
      Sets the size of the slider with a 1:1 aspect ratio. Useful for rotary sliders

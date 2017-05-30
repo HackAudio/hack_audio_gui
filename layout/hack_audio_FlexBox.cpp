@@ -87,7 +87,7 @@ void HackAudio::FlexBox::setDirection(juce::FlexBox::Direction newDirection)
     applyLayout();
 }
 
-juce::FlexBox::Direction HackAudio::FlexBox::getDirection()
+juce::FlexBox::Direction HackAudio::FlexBox::getDirection() const
 {
     return flexDirection;
 }
@@ -98,7 +98,7 @@ void HackAudio::FlexBox::setWrap(juce::FlexBox::Wrap newWrap)
     applyLayout();
 }
 
-juce::FlexBox::Wrap HackAudio::FlexBox::getWrap()
+juce::FlexBox::Wrap HackAudio::FlexBox::getWrap() const
 {
     return flexWrap;
 }
@@ -109,7 +109,7 @@ void HackAudio::FlexBox::setAlignContent(juce::FlexBox::AlignContent newAlignmen
     applyLayout();
 }
 
-juce::FlexBox::AlignContent HackAudio::FlexBox::getAlignContent()
+juce::FlexBox::AlignContent HackAudio::FlexBox::getAlignContent() const
 {
     return alignContent;
 }
@@ -120,7 +120,7 @@ void HackAudio::FlexBox::setAlignItems(juce::FlexBox::AlignItems newAlignment)
     applyLayout();
 }
 
-juce::FlexBox::AlignItems HackAudio::FlexBox::getAlignItems()
+juce::FlexBox::AlignItems HackAudio::FlexBox::getAlignItems() const
 {
     return alignItems;
 }
@@ -131,17 +131,17 @@ void HackAudio::FlexBox::setJustifyContent(juce::FlexBox::JustifyContent newJust
     applyLayout();
 }
 
-juce::FlexBox::JustifyContent HackAudio::FlexBox::getJustifyContent()
+juce::FlexBox::JustifyContent HackAudio::FlexBox::getJustifyContent() const
 {
     return justifyContent;
 }
 
-juce::Array<juce::FlexItem> HackAudio::FlexBox::getItems()
+juce::Array<juce::FlexItem> HackAudio::FlexBox::getItems() const
 {
     return items;
 }
 
-juce::FlexItem* HackAudio::FlexBox::getItem(juce::Component& component)
+juce::FlexItem* HackAudio::FlexBox::getItem(juce::Component& component) const
 {
 
     for (int i = 0; i < items.size(); ++i)
@@ -161,7 +161,7 @@ juce::FlexItem* HackAudio::FlexBox::getItem(juce::Component& component)
 
 }
 
-juce::FlexItem* HackAudio::FlexBox::getItem(juce::FlexBox& flexbox)
+juce::FlexItem* HackAudio::FlexBox::getItem(juce::FlexBox& flexbox) const
 {
 
     for (int i = 0; i < items.size(); ++i)

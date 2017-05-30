@@ -34,7 +34,7 @@ public:
     /**
      Returns the current meter's style
     */
-    MeterStyle getMeterStyle();
+    MeterStyle getMeterStyle() const;
 
     /**
      Sets the calibration for the meter based off a MeterCalibration preset
@@ -44,7 +44,7 @@ public:
     /**
      Returns the current meter calibration preset. If the meter has been calibrated by hand with the calibration methods, this will return MeterCalibration::Custom
     */
-    MeterCalibration getMeterCalibration();
+    MeterCalibration getMeterCalibration() const;
 
     /**
      Sets the float value to listen for
@@ -76,7 +76,7 @@ public:
     /**
      Returns the current skew factor
     */
-    double getSkewFactor();
+    double getSkewFactor() const;
 
     /**
         Sets the visibility state of the meter's decorative pips
@@ -86,7 +86,7 @@ public:
     /**
         Returns the current visibility of the meter's pips
     */
-    bool getPipState();
+    bool getPipState() const;
 
     /**
         Sets the number of pips the meter should display, adjusting their spacing automatically
@@ -96,7 +96,7 @@ public:
     /**
         Returns the current number of pips for the slider
     */
-    int  getPipCount();
+    int  getPipCount() const;
 
     /**
      Determines whether or not to show a line denoting the current peak value (will have no noticeable effect on a peak calibrated meter)
@@ -106,7 +106,7 @@ public:
     /**
      Returns the current status for displaying the peak value
     */
-    bool getPeakStatus();
+    bool getPeakStatus() const;
 
     /**
      Sets the time in milliseconds it takes for the meter to reach its target value. Set this to 0 for peak metering
@@ -116,7 +116,7 @@ public:
     /**
      Returns the current meter's rise time
     */
-    int getRiseTime();
+    int getRiseTime() const;
 
     /**
      Enables an overshoot value for VU style metering
@@ -128,7 +128,7 @@ public:
     /**
      Return the meter's current overshoot value;
     */
-    float getOvershoot();
+    float getOvershoot() const;
 
     /**
      Sets the time in milliseconds it takes for the meter to reach 0 from its current value. Set this to 0 for peak metering
@@ -138,7 +138,7 @@ public:
     /**
      Returns the meter's current fall time
     */
-    int getFallTime();
+    int getFallTime() const;
 
 private:
 

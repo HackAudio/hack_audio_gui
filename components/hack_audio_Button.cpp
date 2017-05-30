@@ -34,7 +34,7 @@ void HackAudio::Button::setButtonStyle(HackAudio::Button::ButtonStyle style)
 
 }
 
-HackAudio::Button::ButtonStyle HackAudio::Button::getButtonStyle()
+HackAudio::Button::ButtonStyle HackAudio::Button::getButtonStyle() const
 {
 
     return buttonStyle;
@@ -50,7 +50,7 @@ void HackAudio::Button::setFont(juce::Font font)
 
 }
 
-juce::Font HackAudio::Button::getFont()
+juce::Font HackAudio::Button::getFont() const
 {
 
     return buttonFont;

@@ -85,7 +85,7 @@ public:
     /**
      Returns an array of current input components
     */
-    juce::Array<juce::Component*> getDiagramInputs();
+    juce::Array<juce::Component*> getDiagramInputs() const;
 
     /**
      Designates a component that represents an audio output source of the diagram
@@ -100,7 +100,7 @@ public:
     /**
      Returns an array of current output components
     */
-    juce::Array<juce::Component*> getDiagramOutputs();
+    juce::Array<juce::Component*> getDiagramOutputs() const;
 
     /**
      Adds two components as children and draws a connection between them

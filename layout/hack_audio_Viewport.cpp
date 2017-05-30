@@ -134,7 +134,7 @@ void HackAudio::Viewport::traverseTop()
 
 }
 
-bool HackAudio::Viewport::isInTraversal(HackAudio::Diagram& d)
+bool HackAudio::Viewport::isInTraversal(HackAudio::Diagram& d) const
 {
 
     return (parentContent.contains(&d) || currentContent == &d);

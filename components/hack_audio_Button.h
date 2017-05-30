@@ -46,7 +46,7 @@ public:
      
      @see ButtonStyle
     */
-    ButtonStyle getButtonStyle();
+    ButtonStyle getButtonStyle() const;
 
     /**
      Sets the button's font style
@@ -56,7 +56,7 @@ public:
     /**
      Return the button's current font
     */
-    juce::Font getFont();
+    juce::Font getFont() const;
 
 private:
 

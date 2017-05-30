@@ -42,7 +42,7 @@ public:
     /**
         Returns the label's current prefix string
      */
-    juce::String getPrefix();
+    juce::String getPrefix() const;
 
     /**
      Sets the postfix that should always display after the label text
@@ -56,7 +56,7 @@ public:
     /**
      Returns the label's current postfix string
      */
-    juce::String getPostfix();
+    juce::String getPostfix() const;
 
     /**
      Sets the text that displays automatically. When setting new text with animation enabled, the new text will display during the animation and then revert to the placeholder text after the animation completes
@@ -75,7 +75,7 @@ public:
     /**
      Returns the current placeholder text that the label shows before and after animations. Note that the actual current text is still accessible via getText()
     */
-    juce::String getPlaceholder();
+    juce::String getPlaceholder() const;
 
     /**
      Toggles whether the label should animate when its text changes
@@ -87,7 +87,7 @@ public:
     /**
      Returns the current animation status
     */
-    bool getAnimationStatus();
+    bool getAnimationStatus() const;
 
     /**
      Toggles whether or not the label should format its text (both placeholder and label text)
@@ -105,7 +105,7 @@ public:
     /**
      Returns the current formatting status
     */
-    bool getFormattingStatus();
+    bool getFormattingStatus() const;
 
 private:
 

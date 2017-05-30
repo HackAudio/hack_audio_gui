@@ -58,7 +58,7 @@ public:
     /**
      Returns the FlexBox's current direction
      */
-    juce::FlexBox::Direction getDirection();
+    juce::FlexBox::Direction getDirection() const;
 
     /**
      Specifies whether items are forced into a single line or can be wrapped onto multiple lines
@@ -68,7 +68,7 @@ public:
     /**
      Returns the FlexBox's current wrapping
      */
-    juce::FlexBox::Wrap getWrap();
+    juce::FlexBox::Wrap getWrap() const;
 
     /**
      Specifies how a flex container's lines are placed within the flex container when there is extra space on the cross-axis
@@ -78,7 +78,7 @@ public:
     /**
      Returns the FlexBox's current content alignment
      */
-    juce::FlexBox::AlignContent getAlignContent();
+    juce::FlexBox::AlignContent getAlignContent() const;
 
     /**
      Specifies the alignment of flex items along the cross-axis of each line
@@ -88,7 +88,7 @@ public:
     /**
      Returns the FlexBox's current item alignment
     */
-    juce::FlexBox::AlignItems getAlignItems();
+    juce::FlexBox::AlignItems getAlignItems() const;
 
     /**
      Defines how the container distributes space between and around items along the main-axis
@@ -98,26 +98,26 @@ public:
     /**
      Returns the FlexBox's current justification
     */
-    juce::FlexBox::JustifyContent getJustifyContent();
+    juce::FlexBox::JustifyContent getJustifyContent() const;
 
     /**
      Returns the FlexItems currently held by the FlexBox
     */
-    juce::Array<juce::FlexItem> getItems();
+    juce::Array<juce::FlexItem> getItems() const;
 
     /**
      Returns the FlexItem associated with the given component
      
      @param component   a component controlled by the FlexBox
     */
-    juce::FlexItem* getItem(juce::Component& component);
+    juce::FlexItem* getItem(juce::Component& component) const;
 
     /**
      Returns the FlexItem associated with the given FlexBox
 
      @param flexbox   a component controlled by this FlexBox
      */
-    juce::FlexItem* getItem(juce::FlexBox& flexbox);
+    juce::FlexItem* getItem(juce::FlexBox& flexbox) const;
 
     /**
      Sets the properties for the FlexItem of the relevant component

@@ -44,7 +44,7 @@ void HackAudio::Meter::setMeterStyle(HackAudio::Meter::MeterStyle style)
 
 }
 
-HackAudio::Meter::MeterStyle HackAudio::Meter::getMeterStyle()
+HackAudio::Meter::MeterStyle HackAudio::Meter::getMeterStyle() const
 {
 
     return meterStyle;
@@ -83,7 +83,7 @@ void HackAudio::Meter::setMeterCalibration(HackAudio::Meter::MeterCalibration ca
 
 }
 
-HackAudio::Meter::MeterCalibration HackAudio::Meter::getMeterCalibration()
+HackAudio::Meter::MeterCalibration HackAudio::Meter::getMeterCalibration() const
 {
 
     return meterCalibration;
@@ -137,7 +137,7 @@ void HackAudio::Meter::setSkewFactorFromMidPoint(double meterValueToShowAtMidPoi
 
 }
 
-double HackAudio::Meter::getSkewFactor()
+double HackAudio::Meter::getSkewFactor() const
 {
 
     return meterSkewFactor;
@@ -153,7 +153,7 @@ void HackAudio::Meter::setPipState(bool shouldBeShown)
 
 }
 
-bool HackAudio::Meter::getPipState()
+bool HackAudio::Meter::getPipState() const
 {
 
     return pipsShown;
@@ -169,7 +169,7 @@ void HackAudio::Meter::setPipCount(int count)
 
 }
 
-int HackAudio::Meter::getPipCount()
+int HackAudio::Meter::getPipCount() const
 {
 
     return pipLocations.size();
@@ -183,7 +183,7 @@ void HackAudio::Meter::setPeakStatus(bool shouldShowPeak)
 
 }
 
-bool HackAudio::Meter::getPeakStatus()
+bool HackAudio::Meter::getPeakStatus() const
 {
 
     return meterPeakStatus;
@@ -201,7 +201,7 @@ void HackAudio::Meter::setRiseTime(int riseMs)
 
 }
 
-int HackAudio::Meter::getRiseTime()
+int HackAudio::Meter::getRiseTime() const
 {
 
     return meterRise;
@@ -219,7 +219,7 @@ void HackAudio::Meter::setOvershoot(float overshoot)
 
 }
 
-float HackAudio::Meter::getOvershoot()
+float HackAudio::Meter::getOvershoot() const
 {
 
     return meterOvershoot;
@@ -237,7 +237,7 @@ void HackAudio::Meter::setFallTime(int fallMs)
 
 }
 
-int HackAudio::Meter::getFallTime()
+int HackAudio::Meter::getFallTime() const
 {
 
     return meterFall;
