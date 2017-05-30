@@ -81,24 +81,6 @@ img
 
 }
 
-#hFlexbox
-{
-
-	width: 0%;
-
-	margin-left:   auto;
-	margin-right:  auto;
-	margin-top:    -48px;
-	margin-bottom: -48px;
-
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
-	flex-wrap: nowrap;
-	align-items: flex-end;
-
-}
-
 .hFrame
 {
 
