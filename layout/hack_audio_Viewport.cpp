@@ -294,7 +294,7 @@ void HackAudio::Viewport::buttonClicked(juce::Button *b)
 void HackAudio::Viewport::componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized)
 {
 
-    repaint();
+    repaint(contentContainer.getBounds());
 
 }
 
