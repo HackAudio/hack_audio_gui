@@ -57,6 +57,33 @@ juce::Font HackAudio::Button::getFont() const
 
 }
 
+void HackAudio::Button::mouseMove(const juce::MouseEvent &e)
+{
+
+    if (buttonStyle != ButtonStyle::SlidingToggle)
+    {
+
+        setMouseCursor(juce::MouseCursor::PointingHandCursor);
+        return;
+
+    }
+    else
+    {
+
+        if (trackArea.contains(e.getPosition()) || thumbArea.contains(e.getPosition()))
+        {
+
+            setMouseCursor(juce::MouseCursor::PointingHandCursor);
+            return;
+
+        }
+
+    }
+
+    setMouseCursor(juce::MouseCursor::NormalCursor);
+
+}
+
 void HackAudio::Button::mouseDown(const juce::MouseEvent& e)
 {
 

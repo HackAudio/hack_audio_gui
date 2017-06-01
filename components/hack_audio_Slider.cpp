@@ -153,6 +153,38 @@ void HackAudio::Slider::setSymmetricSize(int size)
 
 }
 
+void HackAudio::Slider::mouseMove(const juce::MouseEvent& e)
+{
+
+    if (trackArea.contains(e.getPosition()) || thumbArea.contains(e.getPosition()))
+    {
+
+        setMouseCursor(juce::MouseCursor::PointingHandCursor);
+        return;
+
+    }
+    else
+    {
+
+        for (int i = 0; i <= pipLocations.size(); ++i)
+        {
+
+            if (pipLocations[i].getDistanceFrom(e.getPosition()) <= maxPipSize * 0.75f)
+            {
+
+                setMouseCursor(juce::MouseCursor::PointingHandCursor);
+                return;
+
+            }
+            
+        }
+        
+    }
+    
+    setMouseCursor(juce::MouseCursor::NormalCursor);
+    
+}
+
 void HackAudio::Slider::mouseDown(const juce::MouseEvent &e)
 {
 

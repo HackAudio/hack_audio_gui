@@ -26,6 +26,22 @@ public:
 
 private:
 
+    void mouseEnter(const juce::MouseEvent& e) override
+    {
+
+        setMouseCursor(juce::MouseCursor::PointingHandCursor);
+        juce::Button::mouseEnter(e);
+
+    }
+
+    void mouseExit(const juce::MouseEvent& e) override
+    {
+
+        setMouseCursor(juce::MouseCursor::NormalCursor);
+        juce::Button::mouseExit(e);
+        
+    }
+
     void paintButton(juce::Graphics& g, bool isMouseOverButton, bool isButtonDown) override
     {
 
