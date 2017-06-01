@@ -164,6 +164,32 @@ juce::Font HackAudio::Selector::getFont() const
 
 }
 
+void HackAudio::Selector::addListener(Listener* listener)
+{
+
+    if (!listeners.contains(listener))
+    {
+
+        listeners.add(listener);
+
+    }
+
+}
+
+void HackAudio::Selector::removeListener(Listener* listener)
+{
+
+    listeners.remove(listener);
+
+}
+
+void HackAudio::Selector::indexChanged()
+{
+
+    listeners.call(&HackAudio::Selector::Listener::selectorIndexChanged, this, currentIndex);
+
+}
+
 void HackAudio::Selector::mouseUp(const juce::MouseEvent& e)
 {
 
@@ -174,6 +200,8 @@ void HackAudio::Selector::mouseUp(const juce::MouseEvent& e)
         colourInterpolation.setValue(1.0f);
         startTimerHz(ANIMATION_FPS);
 
+        indexChanged();
+
     }
     else if (e.eventComponent == &selectRight)
     {
@@ -181,6 +209,8 @@ void HackAudio::Selector::mouseUp(const juce::MouseEvent& e)
         currentIndex += (currentIndex < selectorItems.size() - 1) ? 1 : 0;
         colourInterpolation.setValue(1.0f);
         startTimerHz(ANIMATION_FPS);
+
+        indexChanged();
 
     }
 
@@ -194,6 +224,9 @@ bool HackAudio::Selector::keyPressed(const juce::KeyPress& key)
 
         currentIndex -= (currentIndex > 0) ? 1 : 0;
         repaint();
+
+        indexChanged();
+
         return true;
         
     }
@@ -202,6 +235,9 @@ bool HackAudio::Selector::keyPressed(const juce::KeyPress& key)
 
         currentIndex += (currentIndex < selectorItems.size()) ? 1 : 0;
         repaint();
+
+        indexChanged();
+
         return true;
 
     }

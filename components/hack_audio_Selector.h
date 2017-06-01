@@ -90,7 +90,37 @@ public:
     */
     juce::Font getFont() const;
 
+    /**
+        A class for receiving callbacks from a selector.
+     
+        To be told when a selector changes, you can register a Selector::Listener
+        object using Selector::addListener()
+     
+        @see Selector::addListener, Selector::removeListener
+    */
+    class Listener
+    {
+    public:
+        virtual ~Listener() {}
+
+        /**
+         Called when a selector moves forwards or backwards
+        */
+        virtual void selectorIndexChanged(Selector*, int index) = 0;
+
+    };
+
+    /**
+    */
+    void addListener(Listener* listener);
+
+    /**
+    */
+    void removeListener(Listener* listener);
+
 private:
+
+    void indexChanged();
 
     void mouseUp(const juce::MouseEvent& e) override;
 
@@ -100,6 +130,8 @@ private:
 
     void paint(juce::Graphics& g) override;
     void resized() override;
+
+    juce::ListenerList<Listener> listeners;
 
     juce::Font selectorFont;
 
