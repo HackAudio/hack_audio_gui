@@ -4,26 +4,39 @@
 namespace HackAudio
 {
 
-    struct Colours
-    {
+/**
 
-        static const juce::Colour
-        Black,
-        Gray,
-        White,
-        Cyan;
+    Contains the predefined colours for the HackAudio theme
+ 
+*/
+class Colours
+{
+public:
+    static const juce::Colour
+    Black,
+    Gray,
+    White,
+    Cyan;
 
-    };
+private:
+    Colours();
 
-    enum ColourIds
-    {
+    JUCE_DECLARE_NON_COPYABLE (Colours)
 
-        backgroundColourId,
-        midgroundColourId,
-        foregroundColourId,
-        highlightColourId
-        
-    };
+};
+
+/**
+ The standard colour IDs for the HackAudio theme
+*/
+enum ColourIds
+{
+
+    backgroundColourId,
+    midgroundColourId,
+    foregroundColourId,
+    highlightColourId
+    
+};
     
 }
 
