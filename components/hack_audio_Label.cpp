@@ -179,6 +179,8 @@ bool HackAudio::Label::getFormattingStatus() const
 void HackAudio::Label::mouseEnter(const juce::MouseEvent& e)
 {
 
+    if (!isEnabled()) { return; }
+
     if ((placeholderStatus && getText().isNotEmpty()) || highlightStatus)
     {
 
@@ -205,6 +207,8 @@ void HackAudio::Label::mouseExit(const juce::MouseEvent& e)
 void HackAudio::Label::mouseDown(const juce::MouseEvent& e)
 {
 
+    if (!isEnabled()) { return; }
+
     if ((placeholderStatus && getText().isNotEmpty()) || highlightStatus)
     {
 
@@ -216,6 +220,8 @@ void HackAudio::Label::mouseDown(const juce::MouseEvent& e)
 
 void HackAudio::Label::mouseUp(const juce::MouseEvent& e)
 {
+
+    if (!isEnabled()) { return; }
 
     if (findColour(HackAudio::backgroundColourId) == HackAudio::Colours::Gray.withMultipliedBrightness(0.75f))
     {

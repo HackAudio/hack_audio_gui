@@ -64,6 +64,8 @@ private:
     void mouseDrag(const juce::MouseEvent& e) override;
     void mouseUp  (const juce::MouseEvent& e) override;
 
+    void enablementChanged() override;
+
     void timerCallback() override;
 
     void sliderValueChanged(juce::Slider*) override;

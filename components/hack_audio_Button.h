@@ -65,6 +65,8 @@ private:
     void mouseDrag(const juce::MouseEvent& e) override;
     void mouseUp  (const juce::MouseEvent& e) override;
 
+    void enablementChanged() override;
+
     void timerCallback() override;
 
     void paintButton(juce::Graphics& g, bool isMouseOverButton, bool isButtonDown) override;

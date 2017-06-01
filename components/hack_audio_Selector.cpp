@@ -246,6 +246,35 @@ bool HackAudio::Selector::keyPressed(const juce::KeyPress& key)
 
 }
 
+void HackAudio::Selector::enablementChanged()
+{
+
+    selectLeft.setEnabled(isEnabled());
+    selectRight.setEnabled(isEnabled());
+
+    if (isEnabled())
+    {
+
+        setColour(HackAudio::backgroundColourId, HackAudio::Colours::Black);
+        setColour(HackAudio::midgroundColourId,  HackAudio::Colours::Gray);
+        setColour(HackAudio::foregroundColourId, HackAudio::Colours::White);
+        setColour(HackAudio::highlightColourId,  HackAudio::Colours::Cyan);
+
+    }
+    else
+    {
+
+        setColour(HackAudio::backgroundColourId, HackAudio::Colours::Black);
+        setColour(HackAudio::midgroundColourId,  HackAudio::Colours::Gray);
+        setColour(HackAudio::foregroundColourId, HackAudio::Colours::Black);
+        setColour(HackAudio::highlightColourId,  HackAudio::Colours::Black);
+        
+    }
+    
+    repaint();
+    
+}
+
 void HackAudio::Selector::timerCallback()
 {
 

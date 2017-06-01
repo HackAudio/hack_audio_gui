@@ -29,7 +29,13 @@ private:
     void mouseEnter(const juce::MouseEvent& e) override
     {
 
-        setMouseCursor(juce::MouseCursor::PointingHandCursor);
+        if (isEnabled())
+        {
+
+            setMouseCursor(juce::MouseCursor::PointingHandCursor);
+            
+        }
+
         juce::Button::mouseEnter(e);
 
     }
@@ -37,9 +43,22 @@ private:
     void mouseExit(const juce::MouseEvent& e) override
     {
 
-        setMouseCursor(juce::MouseCursor::NormalCursor);
+        if (isEnabled())
+        {
+
+            setMouseCursor(juce::MouseCursor::NormalCursor);
+
+        }
+
         juce::Button::mouseExit(e);
         
+    }
+
+    void enablementChanged() override
+    {
+
+        repaint();
+
     }
 
     void paintButton(juce::Graphics& g, bool isMouseOverButton, bool isButtonDown) override
@@ -66,6 +85,13 @@ private:
         {
 
             g.setColour(HackAudio::Colours::White);
+
+        }
+
+        if (!isEnabled())
+        {
+
+            g.setColour(HackAudio::Colours::Black);
 
         }
 

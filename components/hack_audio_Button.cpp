@@ -60,6 +60,14 @@ juce::Font HackAudio::Button::getFont() const
 void HackAudio::Button::mouseMove(const juce::MouseEvent &e)
 {
 
+    if (!isEnabled())
+    {
+
+        setMouseCursor(juce::MouseCursor::NormalCursor);
+        return;
+
+    }
+
     if (buttonStyle != ButtonStyle::SlidingToggle)
     {
 
@@ -86,6 +94,8 @@ void HackAudio::Button::mouseMove(const juce::MouseEvent &e)
 
 void HackAudio::Button::mouseDown(const juce::MouseEvent& e)
 {
+
+    if (!isEnabled()) { return; }
 
     colourInterpolation.setValue(1.0f);
 
@@ -120,6 +130,8 @@ void HackAudio::Button::mouseDown(const juce::MouseEvent& e)
 
 void HackAudio::Button::mouseDrag(const juce::MouseEvent& e)
 {
+
+    if (!isEnabled()) { return; }
 
     if (buttonStyle != ButtonStyle::SlidingToggle)
     {
@@ -159,6 +171,8 @@ void HackAudio::Button::mouseDrag(const juce::MouseEvent& e)
 void HackAudio::Button::mouseUp(const juce::MouseEvent& e)
 {
 
+    if (!isEnabled()) { return; }
+
     if (buttonStyle == ButtonStyle::BarSingleton)
     {
 
@@ -196,6 +210,46 @@ void HackAudio::Button::mouseUp(const juce::MouseEvent& e)
 
     }
     
+}
+
+void HackAudio::Button::enablementChanged()
+{
+
+    if (isEnabled())
+    {
+
+        setColour(HackAudio::backgroundColourId, HackAudio::Colours::Black);
+        setColour(HackAudio::midgroundColourId,  HackAudio::Colours::Gray);
+        setColour(HackAudio::foregroundColourId, HackAudio::Colours::White);
+        setColour(HackAudio::highlightColourId,  HackAudio::Colours::Cyan);
+
+    }
+    else
+    {
+
+        if (buttonStyle == ButtonStyle::SlidingToggle)
+        {
+
+            setColour(HackAudio::backgroundColourId, HackAudio::Colours::Black);
+            setColour(HackAudio::midgroundColourId,  HackAudio::Colours::Gray);
+            setColour(HackAudio::foregroundColourId, HackAudio::Colours::Black);
+            setColour(HackAudio::highlightColourId,  HackAudio::Colours::Black);
+
+        }
+        else
+        {
+
+            setColour(HackAudio::backgroundColourId, HackAudio::Colours::Black);
+            setColour(HackAudio::midgroundColourId,  HackAudio::Colours::Gray);
+            setColour(HackAudio::foregroundColourId, HackAudio::Colours::Gray);
+            setColour(HackAudio::highlightColourId,  HackAudio::Colours::Gray);
+
+        }
+        
+    }
+    
+    repaint();
+
 }
 
 void HackAudio::Button::timerCallback()

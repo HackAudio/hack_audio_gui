@@ -126,6 +126,8 @@ private:
 
     bool keyPressed(const juce::KeyPress& key) override;
 
+    void enablementChanged() override;
+
     void timerCallback() override;
 
     void paint(juce::Graphics& g) override;

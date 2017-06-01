@@ -156,6 +156,8 @@ void HackAudio::Slider::setSymmetricSize(int size)
 void HackAudio::Slider::mouseMove(const juce::MouseEvent& e)
 {
 
+    if (!isEnabled()) { return; }
+
     if (trackArea.contains(e.getPosition()) || thumbArea.contains(e.getPosition()))
     {
 
@@ -240,6 +242,32 @@ void HackAudio::Slider::mouseDrag(const juce::MouseEvent& e)
     {
         return;
     }
+
+}
+
+void HackAudio::Slider::enablementChanged()
+{
+
+    if (isEnabled())
+    {
+
+        setColour(HackAudio::backgroundColourId, HackAudio::Colours::Black);
+        setColour(HackAudio::midgroundColourId,  HackAudio::Colours::Gray);
+        setColour(HackAudio::foregroundColourId, HackAudio::Colours::White);
+        setColour(HackAudio::highlightColourId,  HackAudio::Colours::Cyan);
+
+    }
+    else
+    {
+
+        setColour(HackAudio::backgroundColourId, HackAudio::Colours::Black);
+        setColour(HackAudio::midgroundColourId,  HackAudio::Colours::Gray);
+        setColour(HackAudio::foregroundColourId, HackAudio::Colours::Black);
+        setColour(HackAudio::highlightColourId,  HackAudio::Colours::Black);
+
+    }
+
+    repaint();
 
 }
 
