@@ -186,6 +186,8 @@ void HackAudio::Selector::removeListener(Listener* listener)
 void HackAudio::Selector::indexChanged()
 {
 
+    colourInterpolation.setValue(1.0f);
+    startTimerHz(ANIMATION_FPS);
     listeners.call(&HackAudio::Selector::Listener::selectorIndexChanged, this, currentIndex);
 
 }
@@ -196,21 +198,25 @@ void HackAudio::Selector::mouseUp(const juce::MouseEvent& e)
     if (e.eventComponent == &selectLeft)
     {
 
-        currentIndex -= (currentIndex > 0) ? 1 : 0;
-        colourInterpolation.setValue(1.0f);
-        startTimerHz(ANIMATION_FPS);
+        if (currentIndex > 0)
+        {
 
-        indexChanged();
+            currentIndex--;
+            indexChanged();
+
+        }
 
     }
     else if (e.eventComponent == &selectRight)
     {
 
-        currentIndex += (currentIndex < selectorItems.size() - 1) ? 1 : 0;
-        colourInterpolation.setValue(1.0f);
-        startTimerHz(ANIMATION_FPS);
+        if (currentIndex < selectorItems.size() - 1)
+        {
 
-        indexChanged();
+            currentIndex++;
+            indexChanged();
+
+        }
 
     }
 
@@ -222,10 +228,13 @@ bool HackAudio::Selector::keyPressed(const juce::KeyPress& key)
     if (key.getKeyCode() == key.leftKey)
     {
 
-        currentIndex -= (currentIndex > 0) ? 1 : 0;
-        repaint();
+        if (currentIndex > 0)
+        {
 
-        indexChanged();
+            currentIndex--;
+            indexChanged();
+            
+        }
 
         return true;
         
@@ -233,10 +242,13 @@ bool HackAudio::Selector::keyPressed(const juce::KeyPress& key)
     else if (key.getKeyCode() == key.rightKey)
     {
 
-        currentIndex += (currentIndex < selectorItems.size()) ? 1 : 0;
-        repaint();
+        if (currentIndex < selectorItems.size() - 1)
+        {
 
-        indexChanged();
+            currentIndex++;
+            indexChanged();
+            
+        }
 
         return true;
 
