@@ -354,7 +354,7 @@ void HackAudio::Button::timerCallback()
         }
         else
         {
-            if (colourInterpolation.getTargetValue() == 1.0f && !(juce::Desktop::getInstance().getDraggingMouseSource(0)))
+            if (colourInterpolation.getTargetValue() == 1.0f && !juce::Component::isMouseButtonDownAnywhere())
             {
 
                 colourInterpolation.setValue(0.0f);
