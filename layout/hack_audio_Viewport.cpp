@@ -34,6 +34,8 @@ HackAudio::Viewport::~Viewport()
 void HackAudio::Viewport::setDiagram(HackAudio::Diagram& d)
 {
 
+    if (!isEnabled()) { return; }
+
     if (currentContent)
     {
 
@@ -71,6 +73,8 @@ void HackAudio::Viewport::setDiagram(HackAudio::Diagram& d)
 void HackAudio::Viewport::clearDiagram()
 {
 
+    if (!isEnabled()) { return; }
+
     if (currentContent)
     {
 
@@ -98,6 +102,8 @@ void HackAudio::Viewport::clearDiagram()
 void HackAudio::Viewport::traverseDown(HackAudio::Diagram &d)
 {
 
+    if (!isEnabled()) { return; }
+
     assert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
 
     backButton.setVisible(true);
@@ -115,6 +121,8 @@ void HackAudio::Viewport::traverseDown(HackAudio::Diagram &d)
 void HackAudio::Viewport::traverseUp()
 {
 
+    if (!isEnabled()) { return; }
+
     assert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
     assert(parentContent.size() > 0);                       /* Warning: Viewport Is Already On Top-Level Diagram */
     
@@ -126,6 +134,8 @@ void HackAudio::Viewport::traverseUp()
 
 void HackAudio::Viewport::traverseTop()
 {
+
+    if (!isEnabled()) { return; }
 
     assert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
     assert(!parentContent.isEmpty());                       /* Warning: Viewport Is Already On Top-Level Diagram */
@@ -182,6 +192,8 @@ void HackAudio::Viewport::setDiagramViaTraversal(HackAudio::Diagram &d)
 void HackAudio::Viewport::mouseEnter(const juce::MouseEvent& e)
 {
 
+    if (!currentContent || !isEnabled()) { return; }
+
     if (e.eventComponent != this)
     {
         e.eventComponent->mouseEnter(e);
@@ -191,6 +203,8 @@ void HackAudio::Viewport::mouseEnter(const juce::MouseEvent& e)
 
 void HackAudio::Viewport::mouseExit(const juce::MouseEvent& e)
 {
+
+    if (!currentContent || !isEnabled()) { return; }
 
     if (e.eventComponent != this)
     {
@@ -202,7 +216,7 @@ void HackAudio::Viewport::mouseExit(const juce::MouseEvent& e)
 void HackAudio::Viewport::mouseDown(const juce::MouseEvent& e)
 {
 
-    if (!currentContent) { return; }
+    if (!currentContent || !isEnabled()) { return; }
 
     if (e.eventComponent != this)
     {
@@ -218,7 +232,7 @@ void HackAudio::Viewport::mouseDown(const juce::MouseEvent& e)
 void HackAudio::Viewport::mouseDrag(const juce::MouseEvent& e)
 {
 
-    if (!currentContent) { return; }
+    if (!currentContent || !isEnabled()) { return; }
 
     componentDragger.dragComponent(contentContainer.getChildComponent(0), e, nullptr);
 
@@ -227,7 +241,7 @@ void HackAudio::Viewport::mouseDrag(const juce::MouseEvent& e)
 void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
 {
 
-    if (!currentContent) { return; }
+    if (!currentContent || !isEnabled()) { return; }
 
     if (e.getNumberOfClicks() > 1 && !componentAnimator.isAnimating())
     {
@@ -266,13 +280,21 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
 void HackAudio::Viewport::mouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& w)
 {
 
-    if (!currentContent) { return; }
+    if (!currentContent || !isEnabled()) { return; }
 
     juce::Point<int> pos(currentContent->getPosition());
 
     pos.x -= w.deltaX * MOUSEWHEEL_SENSITIVITY;
     pos.y -= w.deltaY * MOUSEWHEEL_SENSITIVITY;
     currentContent->setTopLeftPosition(pos);
+
+}
+
+void HackAudio::Viewport::enablementChanged()
+{
+
+    backButton.setEnabled(isEnabled());
+    topButton.setEnabled(isEnabled());
 
 }
 

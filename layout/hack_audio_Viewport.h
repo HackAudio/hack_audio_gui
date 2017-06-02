@@ -61,6 +61,8 @@ private:
     void mouseUp       (const juce::MouseEvent& e) override;
     void mouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& w) override;
 
+    void enablementChanged() override;
+
     void buttonClicked(juce::Button* b) override;
 
     void componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized) override;
