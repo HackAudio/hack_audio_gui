@@ -437,25 +437,21 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
         p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_RADIUS, false, !(isConnectedOnTop() || isConnectedOnRight()), !(isConnectedOnBottom() || isConnectedOnLeft()), false);
 
         juce::Colour background;
-        juce::Colour foreground;
 
         if (buttonStyle != ButtonStyle::BarSingleton)
         {
             if (getToggleState())
             {
                 background = findColour(HackAudio::highlightColourId);
-                foreground = findColour(HackAudio::backgroundColourId);
             }
             else
             {
                 background = findColour(HackAudio::foregroundColourId);
-                foreground = findColour(HackAudio::backgroundColourId);
             }
         }
         else
         {
             background = findColour(HackAudio::foregroundColourId);
-            foreground = findColour(HackAudio::backgroundColourId);
         }
 
         g.setColour(background.interpolatedWith(findColour(HackAudio::midgroundColourId), colourInterpolation.getNextValue()));
@@ -463,7 +459,7 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
         g.fillPath(p);
         p.clear();
 
-        g.setColour(foreground.interpolatedWith(findColour(HackAudio::backgroundColourId), colourInterpolation.getNextValue()));
+        g.setColour(HackAudio::Colours::DarkGray);
 
         g.setFont(buttonFont);
         g.drawFittedText(getButtonText(), CORNER_RADIUS / 2, CORNER_RADIUS / 2, width - CORNER_RADIUS, height - CORNER_RADIUS, juce::Justification::centred, 1, 1.0f);

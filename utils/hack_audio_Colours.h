@@ -14,9 +14,15 @@ class Colours
 public:
     static const juce::Colour
     Black,
+    DarkGray,
     Gray,
+    LightGray,
     White,
-    Cyan;
+
+    Teal,
+    Cyan,
+    Violet,
+    Magenta;
 
 private:
     Colours();
