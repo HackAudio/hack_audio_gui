@@ -26,6 +26,21 @@ private:
 
 };
 
+/**
+
+    The default font heights used in the HackAudio theme
+
+*/
+enum FontHeights
+{
+
+    Small  = 12,
+    Medium = 14,
+    Large  = 18,
+    Huge   = 24,
+
+};
+
 }
 
 #endif

@@ -35,8 +35,6 @@ END_JUCE_MODULE_DECLARATION
 #define DEFAULT_PIPMIN 6
 #define DEFAULT_PIPMAX 8
 
-#define DEFAULT_FONTSIZE 14
-
 #define MOUSEWHEEL_SENSITIVITY 128
 
 // ===================================================

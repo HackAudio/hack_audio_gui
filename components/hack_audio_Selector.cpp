@@ -9,7 +9,7 @@ HackAudio::Selector::Selector() : selectorJustification(juce::Justification::cen
     setWantsKeyboardFocus(true);
     setMouseClickGrabsKeyboardFocus(true);
 
-    setFont(HackAudio::Fonts::NowRegular.withHeight(DEFAULT_FONTSIZE));
+    setFont(HackAudio::Fonts::NowRegular.withHeight(HackAudio::FontHeights::Medium));
 
     colourInterpolation.reset(50, 0.5);
 
