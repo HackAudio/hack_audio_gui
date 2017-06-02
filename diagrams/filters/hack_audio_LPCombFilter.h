@@ -40,7 +40,7 @@ struct LPCombFilter : public HackAudio::Diagram
         delay_2.setBounds(400,-72,64,48);
 
         fb_gain2.setPlaceholder("Gain");
-        fb_gain2.setBounds(500,-160,48,36);
+        fb_gain2.setBounds(500,-160,64,48);
         fb_2_node.setSymbol(HackAudio::Diagram::Junction::Symbol::None);
         fb_2_node.setBounds(350,-56.5,15,15);
         

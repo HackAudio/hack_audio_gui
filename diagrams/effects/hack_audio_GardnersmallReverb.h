@@ -51,14 +51,14 @@ struct GardnersmallReverb : public HackAudio::Diagram
         
         gain_1_label.setPlaceholder("Gain");
         //gain_1_label.setText("0.5",dontSendNotification);
-        gain_1_label.setBounds(200,-96,48,30);
+        gain_1_label.setBounds(200,-96,50,30);
         
         gain_2_label.setPlaceholder("Gain");
         //gain_2_label.setText("0.5",dontSendNotification);
-        gain_2_label.setBounds(365,-48,48,30);
+        gain_2_label.setBounds(365,-48,50,30);
         
         gain_3_label.setPlaceholder("Gain");
-        gain_3_label.setBounds(100,64,48,30);
+        gain_3_label.setBounds(100,64,50,30);
         
         
         node1.setSymbol(HackAudio::Diagram::Junction::Symbol::None);

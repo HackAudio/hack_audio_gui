@@ -74,13 +74,13 @@ struct GardnerlargeReverb : public HackAudio::Diagram
         lpf_label.setBounds(256,95,60,48);
         
         gain_1_label.setPlaceholder("Gain");
-        gain_1_label.setBounds(460,-48,48,30);
+        gain_1_label.setBounds(460,-48,50,30);
         
         gain_2_label.setPlaceholder("Gain");
-        gain_2_label.setBounds(650,-48,48,30);
+        gain_2_label.setBounds(650,-48,50,30);
         
         gain_3_label.setPlaceholder("Gain");
-        gain_3_label.setBounds(100,64,48,30);
+        gain_3_label.setBounds(100,64,50,30);
         
         // Output
         node1.setSymbol(HackAudio::Diagram::Junction::Symbol::None);
@@ -105,7 +105,7 @@ struct GardnerlargeReverb : public HackAudio::Diagram
         sum3.setBounds(580,-96,30,30);
         
         gain_0_label.setPlaceholder("Gain");
-        gain_0_label.setBounds(205,-96,48,30);
+        gain_0_label.setBounds(205,-96,50,30);
         mul0.setSymbol(HackAudio::Diagram::Junction::Symbol::Multiply);
         mul0.setBounds(280,-96,30,30);
         node0.setSymbol(HackAudio::Diagram::Junction::Symbol::None);

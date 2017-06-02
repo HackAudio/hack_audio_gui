@@ -124,9 +124,9 @@ struct DattorroReverb : public HackAudio::Diagram
         
         // Gains
         decay_1_label.setPlaceholder("Decay");
-        decay_1_label.setBounds(590,-45,55,30);
+        decay_1_label.setBounds(590,-45,60,30);
         decay_2_label.setPlaceholder("Decay");
-        decay_2_label.setBounds(500,25,55,30);
+        decay_2_label.setBounds(500,28,60,30);
         
         // Connections
         addDiagramInput(fbd_1_label);
