@@ -282,7 +282,7 @@ bool HackAudio::Button::keyPressed(const juce::KeyPress &key)
 void HackAudio::Button::focusGained(juce::Component::FocusChangeType cause)
 {
 
-    setColour(HackAudio::midgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.15f));
+    setColour(HackAudio::midgroundColourId, HackAudio::Colours::LightGray);
     repaint();
 
 }

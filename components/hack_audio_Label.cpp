@@ -184,7 +184,7 @@ void HackAudio::Label::mouseEnter(const juce::MouseEvent& e)
     if ((placeholderStatus && getText().isNotEmpty()) || highlightStatus)
     {
 
-        setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.25f));
+        setColour(HackAudio::backgroundColourId, HackAudio::Colours::LightGray);
         setMouseCursor(juce::MouseCursor::PointingHandCursor);
 
     }
@@ -212,7 +212,7 @@ void HackAudio::Label::mouseDown(const juce::MouseEvent& e)
     if ((placeholderStatus && getText().isNotEmpty()) || highlightStatus)
     {
 
-        setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(0.75f));
+        setColour(HackAudio::backgroundColourId, HackAudio::Colours::DarkGray);
 
     }
 
@@ -223,10 +223,10 @@ void HackAudio::Label::mouseUp(const juce::MouseEvent& e)
 
     if (!isEnabled()) { return; }
 
-    if (findColour(HackAudio::backgroundColourId) == HackAudio::Colours::Gray.withMultipliedBrightness(0.75f))
+    if (findColour(HackAudio::backgroundColourId) == HackAudio::Colours::DarkGray)
     {
 
-        setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.25f));
+        setColour(HackAudio::backgroundColourId, HackAudio::Colours::LightGray);
         
     }
 
