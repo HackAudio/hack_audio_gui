@@ -50,6 +50,16 @@ public:
      */
     bool isInTraversal(HackAudio::Diagram& d) const;
 
+    /**
+     Sets the font to be used when displaying diagram titles
+     */
+    void setFont(juce::Font newFont);
+
+    /**
+     Returns the viewport's current font
+    */
+    juce::Font getFont() const;
+
 private:
 
     void setDiagramViaTraversal(HackAudio::Diagram& d);
@@ -71,6 +81,8 @@ private:
     void paintOverChildren(juce::Graphics& g) override;
 
     void resized() override;
+
+    juce::Font viewportFont;
 
     juce::Component contentContainer;
     HackAudio::Diagram* currentContent;

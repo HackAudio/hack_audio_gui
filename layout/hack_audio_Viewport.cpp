@@ -24,6 +24,9 @@ HackAudio::Viewport::Viewport()
 
     currentContent = nullptr;
 
+    viewportFont = HackAudio::Fonts::NowRegular;
+    viewportFont.setHeight(HackAudio::FontHeights::Large);
+
 }
 
 HackAudio::Viewport::~Viewport()
@@ -148,6 +151,21 @@ bool HackAudio::Viewport::isInTraversal(HackAudio::Diagram& d) const
 {
 
     return (parentContent.contains(&d) || currentContent == &d);
+
+}
+
+void HackAudio::Viewport::setFont(juce::Font newFont)
+{
+
+    viewportFont = newFont;
+    repaint();
+
+}
+
+juce::Font HackAudio::Viewport::getFont() const
+{
+
+    return viewportFont;
 
 }
 
@@ -598,7 +616,7 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
     // Navigation Title
     // =========================================================================================
-    g.setFont(HackAudio::Fonts::NowRegular.withHeight(HackAudio::FontHeights::Large));
+    g.setFont(viewportFont);
     g.setColour(findColour(HackAudio::backgroundColourId).withAlpha(0.75f));
     g.drawFittedText(currentContent->getName(), cX + (CORNER_RADIUS * 2), cY + 2, cW - (CORNER_RADIUS * 4), 32, juce::Justification::centred, 0, 1);
     g.setColour(findColour(HackAudio::foregroundColourId));
