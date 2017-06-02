@@ -126,6 +126,9 @@ private:
 
     bool keyPressed(const juce::KeyPress& key) override;
 
+    void focusGained(juce::Component::FocusChangeType cause) override;
+    void focusLost  (juce::Component::FocusChangeType cause) override;
+
     void enablementChanged() override;
 
     void timerCallback() override;

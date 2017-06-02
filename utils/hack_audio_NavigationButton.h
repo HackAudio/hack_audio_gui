@@ -11,7 +11,7 @@ class NavigationButton : public juce::Button
 {
 public:
 
-    NavigationButton() : juce::Button("") {};
+    NavigationButton() : juce::Button("") { setWantsKeyboardFocus(false); }
     ~NavigationButton() {};
 
     enum Direction

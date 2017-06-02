@@ -11,6 +11,8 @@ HackAudio::Meter::Meter()
     setColour(HackAudio::foregroundColourId, HackAudio::Colours::White);
     setColour(HackAudio::highlightColourId, HackAudio::Colours::Cyan);
 
+    setWantsKeyboardFocus(false);
+
     pipsShown = true;
 
     pipSize = 4;

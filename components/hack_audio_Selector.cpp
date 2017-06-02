@@ -6,6 +6,7 @@ HackAudio::Selector::Selector() : selectorJustification(juce::Justification::cen
     setColour(HackAudio::foregroundColourId, HackAudio::Colours::White);
     setColour(HackAudio::highlightColourId,  HackAudio::Colours::Cyan);
 
+    setWantsKeyboardFocus(true);
     setMouseClickGrabsKeyboardFocus(true);
 
     setFont(HackAudio::Fonts::NowRegular.withHeight(DEFAULT_FONTSIZE));
@@ -225,6 +226,14 @@ void HackAudio::Selector::mouseUp(const juce::MouseEvent& e)
 bool HackAudio::Selector::keyPressed(const juce::KeyPress& key)
 {
 
+    if (key.getKeyCode() == key.escapeKey)
+    {
+
+        juce::Component::unfocusAllComponents();
+        return true;
+
+    }
+
     if (key.getKeyCode() == key.leftKey)
     {
 
@@ -255,6 +264,22 @@ bool HackAudio::Selector::keyPressed(const juce::KeyPress& key)
     }
 
     return false;
+
+}
+
+void HackAudio::Selector::focusGained(juce::Component::FocusChangeType cause)
+{
+
+    setColour(HackAudio::midgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.15f));
+    repaint();
+
+}
+
+void HackAudio::Selector::focusLost(juce::Component::FocusChangeType cause)
+{
+
+    setColour(HackAudio::midgroundColourId, HackAudio::Colours::Gray);
+    repaint();
 
 }
 

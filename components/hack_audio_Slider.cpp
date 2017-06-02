@@ -14,6 +14,9 @@ HackAudio::Slider::Slider()
     setDoubleClickReturnValue(false, 0);
     setRepaintsOnMouseActivity(false);
 
+    setWantsKeyboardFocus(true);
+    setMouseClickGrabsKeyboardFocus(true);
+
     pipLocations.resize(10);
 
     animationAcc = 0;
@@ -245,6 +248,22 @@ void HackAudio::Slider::mouseDrag(const juce::MouseEvent& e)
 
 }
 
+void HackAudio::Slider::focusGained(juce::Component::FocusChangeType cause)
+{
+
+    setColour(HackAudio::midgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.15f));
+    repaint();
+
+}
+
+void HackAudio::Slider::focusLost(juce::Component::FocusChangeType cause)
+{
+
+    setColour(HackAudio::midgroundColourId, HackAudio::Colours::Gray);
+    repaint();
+
+}
+
 void HackAudio::Slider::enablementChanged()
 {
 
@@ -332,6 +351,110 @@ void HackAudio::Slider::mouseUp(const juce::MouseEvent& e)
             startTimerHz(ANIMATION_FPS);
         }
     }
+
+}
+
+bool HackAudio::Slider::keyPressed(const juce::KeyPress &key)
+{
+
+    if (key.getKeyCode() == key.escapeKey)
+    {
+
+        juce::Component::unfocusAllComponents();
+        return true;
+
+    }
+
+    float value    = getValue();
+    float interval = (getInterval()) ? getInterval() : (getMaximum() - getMinimum()) / pipLocations.size();
+
+    if (key.getModifiers().isShiftDown())
+    {
+
+        interval *= 2;
+
+    }
+
+    if (isHorizontal())
+    {
+
+        if (key.getKeyCode() == key.leftKey)
+        {
+
+            setValue(value - interval);
+            return true;
+
+        }
+
+        if (key.getKeyCode() == key.leftKey)
+        {
+
+            setValue(value + interval);
+            return true;
+
+        }
+
+    }
+
+    if (isVertical())
+    {
+
+        if (key.getKeyCode() == key.upKey)
+        {
+
+            setValue(value + interval);
+            return true;
+
+        }
+
+        if (key.getKeyCode() == key.downKey)
+        {
+
+            setValue(value - interval);
+            return true;
+
+        }
+
+    }
+
+    if (isRotary())
+    {
+
+        if (key.getKeyCode() == key.upKey)
+        {
+
+            setValue(value + interval);
+            return true;
+
+        }
+
+        if (key.getKeyCode() == key.downKey)
+        {
+
+            setValue(value - interval);
+            return true;
+
+        }
+
+        if (key.getKeyCode() == key.leftKey)
+        {
+
+            setValue(value - interval);
+            return true;
+
+        }
+
+        if (key.getKeyCode() == key.rightKey)
+        {
+
+            setValue(value + interval);
+            return true;
+
+        }
+
+    }
+
+    return false;
 
 }
 

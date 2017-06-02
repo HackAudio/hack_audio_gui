@@ -204,12 +204,87 @@ void HackAudio::Button::mouseUp(const juce::MouseEvent& e)
                 animationEnd.setXY(getWidth() / 2, getHeight() / 4);
             }
 
-            startTimerHz(60);
+            startTimerHz(ANIMATION_FPS);
 
         }
 
     }
     
+}
+
+bool HackAudio::Button::keyPressed(const juce::KeyPress &key)
+{
+
+    if (key.getKeyCode() == key.escapeKey)
+    {
+
+        juce::Component::unfocusAllComponents();
+        return true;
+
+    }
+
+
+    if (buttonStyle == ButtonStyle::SlidingToggle)
+    {
+
+        if (key.getKeyCode() == key.leftKey)
+        {
+
+            animationStart.setXY(thumbArea.getX(), thumbArea.getY());
+
+            setToggleState(false, juce::sendNotification);
+            animationEnd.setXY(getWidth() / 4, getHeight() / 4);
+
+            startTimerHz(ANIMATION_FPS);
+
+            return true;
+
+        }
+        else if (key.getKeyCode() == key.rightKey)
+        {
+
+            animationStart.setXY(thumbArea.getX(), thumbArea.getY());
+            setToggleState(true, juce::sendNotification);
+            animationEnd.setXY(getWidth() / 2, getHeight() / 4);
+            
+            startTimerHz(ANIMATION_FPS);
+            
+            return true;
+            
+        }
+
+    }
+    else
+    {
+
+        if (key.getKeyCode() == key.spaceKey)
+        {
+
+            triggerClick();
+            return true;
+
+        }
+
+    }
+
+    return false;
+
+}
+
+void HackAudio::Button::focusGained(juce::Component::FocusChangeType cause)
+{
+
+    setColour(HackAudio::midgroundColourId, HackAudio::Colours::Gray.withMultipliedBrightness(1.15f));
+    repaint();
+
+}
+
+void HackAudio::Button::focusLost(juce::Component::FocusChangeType cause)
+{
+
+    setColour(HackAudio::midgroundColourId, HackAudio::Colours::Gray);
+    repaint();
+
 }
 
 void HackAudio::Button::enablementChanged()
@@ -328,6 +403,7 @@ void HackAudio::Button::timerCallback()
             animationVel = 0;
 
             thumbArea.setPosition(animationEnd);
+            indicatorArea.setWidth((thumbArea.getX() - indicatorArea.getX()) + thumbArea.getWidth()/2);
 
             stopTimer();
             repaint();
