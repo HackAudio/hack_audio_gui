@@ -25,6 +25,14 @@ HackAudio::Button::~Button()
 
 }
 
+void HackAudio::Button::setButtonText(const char *newText)
+{
+
+    juce::String charPtr = juce::String::CharPointerType::CharPointer_UTF8(newText);
+    juce::Button::setButtonText(charPtr);
+    
+}
+
 void HackAudio::Button::setButtonStyle(HackAudio::Button::ButtonStyle style)
 {
 

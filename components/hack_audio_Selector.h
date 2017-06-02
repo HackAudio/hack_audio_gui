@@ -31,6 +31,7 @@ public:
      @param itemIndex       where to place the item, use -1 to place the new item last in the array
     */
     void addItem(const juce::String& newItemText, int itemIndex = -1);
+    void addItem(const char* newItemText, int itemIndex = -1);
 
     /**
      Adds an array of strings as new selector choices
@@ -44,6 +45,7 @@ public:
      Changes the text of one of the exisiting items
     */
     void changeItemText(int itemId, const juce::String& newText);
+    void changeItemText(int itemId, const char* newText);
 
     /**
      Clears all choices from the selector
@@ -79,6 +81,7 @@ public:
      Searches the choices and returns the index if it finds the given string
     */
     int getIndexForItem(const juce::String& itemText) const;
+    int getIndexForItem(const char* itemText) const;
 
     /**
      Sets the selector's font

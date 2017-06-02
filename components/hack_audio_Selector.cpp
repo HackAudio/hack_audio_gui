@@ -56,6 +56,18 @@ void HackAudio::Selector::addItem(const juce::String& newItemText, int itemIndex
 
 }
 
+void HackAudio::Selector::addItem(const char* newItemText, int itemIndex)
+{
+
+    itemIndex = (itemIndex = -1) ? selectorItems.size() : itemIndex;
+
+    juce::String charPtr = juce::String::CharPointerType::CharPointer_UTF8(newItemText);
+    selectorItems.insert(itemIndex, charPtr);
+
+    repaint();
+    
+}
+
 void HackAudio::Selector::addItemList(const juce::StringArray& items, int firstItemIdOffset)
 {
 
@@ -78,6 +90,15 @@ void HackAudio::Selector::changeItemText(int itemIndex, const juce::String& newT
     selectorItems[itemIndex] = newText;
     repaint();
 
+}
+
+void HackAudio::Selector::changeItemText(int itemIndex, const char* newText)
+{
+
+    juce::String charPtr = juce::String::CharPointerType::CharPointer_UTF8(newText);
+    selectorItems[itemIndex] = charPtr;
+    repaint();
+    
 }
 
 void HackAudio::Selector::clear(juce::NotificationType notification)
@@ -149,6 +170,27 @@ int HackAudio::Selector::getIndexForItem(const juce::String& itemText) const
 
     return -1;
 
+}
+
+int HackAudio::Selector::getIndexForItem(const char* itemText) const
+{
+
+    juce::String charPtr = juce::String::CharPointerType::CharPointer_UTF8(itemText);
+
+    for (int i = 0; i < selectorItems.size(); ++i)
+    {
+
+        if (selectorItems.getReference(i).compare(charPtr) == 0)
+        {
+
+            return i;
+
+        }
+        
+    }
+    
+    return -1;
+    
 }
 
 void HackAudio::Selector::setFont(juce::Font font)

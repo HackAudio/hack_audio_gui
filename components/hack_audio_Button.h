@@ -35,6 +35,11 @@ public:
     };
 
     /**
+     A char* wrapper for setButtonText()
+     */
+    void setButtonText(const char* newText);
+
+    /**
      Sets the button's current style
      
      @see ButtonStyle
