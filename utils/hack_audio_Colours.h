@@ -24,6 +24,11 @@ public:
     Violet,
     Magenta;
 
+    /**
+     Registers a colour for every available component. This affects all components even if they are invisible or disabled.
+    */
+    static void setGlobalColour(int colourId, juce::Colour newColour);
+
 private:
     Colours();
 

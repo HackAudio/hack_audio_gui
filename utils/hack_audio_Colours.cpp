@@ -8,3 +8,39 @@ const juce::Colour HackAudio::Colours::Teal      (0xFF13F59B);
 const juce::Colour HackAudio::Colours::Cyan      (0xFF00C8FF);
 const juce::Colour HackAudio::Colours::Violet    (0xFFCE8AFF);
 const juce::Colour HackAudio::Colours::Magenta   (0xFFFB7BCA);
+
+void HackAudio::Colours::setGlobalColour(int colourId, juce::Colour newColour)
+{
+
+    std::function<void (juce::Component*)> traverse = [&](juce::Component* parent)
+    {
+
+        for (int i = 0; i < parent->getNumChildComponents(); ++i)
+        {
+
+            if (juce::Component* const child = parent->getChildComponent(i))
+            {
+
+                child->setColour(colourId, newColour);
+                child->repaint();
+                traverse(child);
+                
+            }
+            
+        }
+
+    };
+
+    juce::Desktop& d = juce::Desktop::getInstance();
+
+    for (int i = 0; i < d.getNumComponents(); ++i)
+    {
+
+        if (juce::Component* c = d.getComponent(i))
+        {
+            traverse(c);
+        }
+
+    }
+
+}
