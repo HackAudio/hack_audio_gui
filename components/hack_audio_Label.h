@@ -35,7 +35,7 @@ namespace HackAudio
 
 class Label : public  juce::Label,
               private juce::LabelListener,
-              private juce::Timer
+              private juce::MultiTimer
 {
 
     friend class Diagram;
@@ -132,6 +132,14 @@ public:
 
 private:
 
+    enum timerIds
+    {
+
+        backgroundAnimation,
+        foregroundAnimation
+
+    };
+
     void mouseEnter(const juce::MouseEvent& e) override;
     void mouseExit (const juce::MouseEvent& e) override;
     void mouseDown (const juce::MouseEvent& e) override;
@@ -139,7 +147,7 @@ private:
 
     void labelTextChanged(juce::Label* labelThatHasChanged) override;
 
-    void timerCallback() override;
+    void timerCallback(int timerID) override;
 
     void paint(juce::Graphics& g) override;
 
@@ -155,6 +163,7 @@ private:
     int timeout;
 
     juce::LinearSmoothedValue<float> colourInterpolation;
+    juce::LinearSmoothedValue<float> backgroundInterpolation;
 
     juce::Rectangle<int> textArea;
 

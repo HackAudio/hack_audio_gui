@@ -39,6 +39,7 @@ HackAudio::Label::Label()
     setColour(HackAudio::highlightColourId, HackAudio::Colours::Cyan);
 
     colourInterpolation.reset(50, 0.5);
+    backgroundInterpolation.reset(50, 0.35);
 
     animationStatus   = true;
     placeholderStatus = false;
@@ -235,7 +236,8 @@ void HackAudio::Label::mouseDown(const juce::MouseEvent& e)
     if ((placeholderStatus && getText().isNotEmpty()) || highlightStatus)
     {
 
-        setColour(HackAudio::backgroundColourId, HackAudio::Colours::DarkGray);
+        backgroundInterpolation.setValue(1.0f);
+        startTimer(backgroundAnimation, 1000.0f / (float)ANIMATION_FPS);
 
     }
 
@@ -275,45 +277,99 @@ void HackAudio::Label::labelTextChanged(juce::Label* labelThatHasChanged)
 
         timeout = 75;
         colourInterpolation.setValue(1.0f);
-        startTimerHz(ANIMATION_FPS);
+        startTimer(foregroundAnimation, 1000.0f / (float)ANIMATION_FPS);
 
     }
 
 }
 
-void HackAudio::Label::timerCallback()
+void HackAudio::Label::timerCallback(int timerID)
 {
 
-    if (colourInterpolation.isSmoothing())
+    if (timerID == foregroundAnimation)
     {
-        
-        repaint();
 
-        if (std::abs(colourInterpolation.getTargetValue() - colourInterpolation.getNextValue()) < 0.0001)
+        if (colourInterpolation.isSmoothing())
         {
-            colourInterpolation.setValue(colourInterpolation.getTargetValue());
+            
+            repaint();
+
+            if (std::abs(colourInterpolation.getTargetValue() - colourInterpolation.getNextValue()) < 0.0001)
+            {
+                colourInterpolation.setValue(colourInterpolation.getTargetValue());
+            }
+
+        }
+        else
+        {
+
+            if (colourInterpolation.getTargetValue() == 1.0f)
+            {
+                colourInterpolation.setValue(0.0f);
+            }
+            else
+            {
+
+                if (timeout > 0)
+                {
+                    timeout--;
+
+                }
+                else
+                {
+                    repaint();
+                    stopTimer(foregroundAnimation);
+                }
+
+            }
+
         }
 
     }
     else
     {
 
-        if (colourInterpolation.getTargetValue() == 1.0f)
+        if (backgroundInterpolation.isSmoothing())
         {
-            colourInterpolation.setValue(0.0f);
+
+            repaint();
+
+            if (std::abs(backgroundInterpolation.getTargetValue() - backgroundInterpolation.getNextValue()) < 0.0001)
+            {
+
+                backgroundInterpolation.setValue(backgroundInterpolation.getTargetValue());
+
+            }
+
         }
         else
         {
 
-            if (timeout > 0)
+            if (backgroundInterpolation.getTargetValue() == 1.0f && !juce::Component::isMouseButtonDownAnywhere())
             {
-                timeout--;
+
+                backgroundInterpolation.setValue(0.0f);
+
+            }
+            else if (backgroundInterpolation.getTargetValue() == 1.0f)
+            {
+
+                backgroundInterpolation.setValue(1.0f);
 
             }
             else
             {
-                repaint();
-                stopTimer();
+
+                if (backgroundInterpolation.getNextValue() == 0.0f)
+                {
+
+                    backgroundInterpolation.setValue(0.0f);
+                    stopTimer(backgroundAnimation);
+
+                }
+
+                return;
+
             }
 
         }
@@ -330,7 +386,8 @@ void HackAudio::Label::paint(juce::Graphics& g)
 
     juce::Path p;
     p.addRoundedRectangle(0, 0, width, height, CORNER_CONFIG);
-    g.setColour(findColour(HackAudio::backgroundColourId));
+    juce::Colour background = findColour(HackAudio::backgroundColourId).interpolatedWith(HackAudio::Colours::DarkGray, backgroundInterpolation.getNextValue());
+    g.setColour(background);
     g.fillPath(p);
 
     juce::Colour foreground = findColour(HackAudio::foregroundColourId);
@@ -338,12 +395,10 @@ void HackAudio::Label::paint(juce::Graphics& g)
 
     g.setColour(foreground.interpolatedWith(highlight, colourInterpolation.getNextValue()));
 
-
     if (formattingStatus)
     {
 
-
-        if (!isTimerRunning() && placeholderStatus)
+        if (!isTimerRunning(foregroundAnimation) && placeholderStatus)
         {
             if (placeholder.containsAnyOf("^_") || placeholder.contains("\\array"))
             {
@@ -365,7 +420,7 @@ void HackAudio::Label::paint(juce::Graphics& g)
     g.setFont(getFont());
 
     juce::String textToDisplay;
-    textToDisplay = (!isTimerRunning() && placeholderStatus) ? placeholder : prefix + getText() + postfix;
+    textToDisplay = (!isTimerRunning(foregroundAnimation) && placeholderStatus) ? placeholder : prefix + getText() + postfix;
 
     g.drawFittedText(textToDisplay, CORNER_RADIUS / 2, CORNER_RADIUS / 2, width - CORNER_RADIUS, height - CORNER_RADIUS, getJustificationType(), 1, 1.0f);
 
