@@ -274,8 +274,13 @@ void HackAudio::Slider::mouseDrag(const juce::MouseEvent& e)
 void HackAudio::Slider::focusGained(juce::Component::FocusChangeType cause)
 {
 
-    setColour(HackAudio::midgroundColourId, HackAudio::Colours::LightGray);
-    repaint();
+    if (cause == juce::Component::focusChangedByTabKey)
+    {
+
+        setColour(HackAudio::midgroundColourId, HackAudio::Colours::LightGray);
+        repaint();
+
+    }
 
 }
 
