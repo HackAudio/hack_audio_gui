@@ -119,6 +119,7 @@ private:
 	juce::Rectangle<int> indicatorArea;
 
     bool isDraggable;
+    bool wasFocusedByTab;
 
     juce::Font buttonFont;
 

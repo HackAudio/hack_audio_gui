@@ -39,6 +39,8 @@ HackAudio::Button::Button() : juce::Button("")
 
 	resizeGuard = false;
 
+    wasFocusedByTab = false;
+
     colourInterpolation.reset(50, 0.35);
 
 }
@@ -308,7 +310,15 @@ void HackAudio::Button::focusGained(juce::Component::FocusChangeType cause)
     if (cause == juce::Component::focusChangedByTabKey)
     {
 
-        setColour(HackAudio::midgroundColourId, HackAudio::Colours::LightGray);
+        wasFocusedByTab = true;
+
+        if (buttonStyle == ButtonStyle::SlidingToggle)
+        {
+
+            setColour(HackAudio::midgroundColourId, HackAudio::Colours::LightGray);
+
+        }
+
         repaint();
 
     }
@@ -318,7 +328,8 @@ void HackAudio::Button::focusGained(juce::Component::FocusChangeType cause)
 void HackAudio::Button::focusLost(juce::Component::FocusChangeType cause)
 {
 
-    setColour(HackAudio::midgroundColourId, HackAudio::Colours::Gray);
+    wasFocusedByTab = false;
+    setColour(HackAudio::midgroundColourId,  HackAudio::Colours::Gray);
     repaint();
 
 }
@@ -465,29 +476,73 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
         p.addRoundedRectangle(0, 0, width, height, CORNER_RADIUS, CORNER_RADIUS, false, !(isConnectedOnTop() || isConnectedOnRight()), !(isConnectedOnBottom() || isConnectedOnLeft()), false);
 
         juce::Colour background;
+        juce::Colour foreground;
 
         if (buttonStyle != ButtonStyle::BarSingleton)
         {
             if (getToggleState())
             {
+
                 background = findColour(HackAudio::highlightColourId);
+
+                if (hasKeyboardFocus(true) && wasFocusedByTab)
+                {
+
+                    foreground = findColour(HackAudio::foregroundColourId);
+
+                }
+                else
+                {
+
+                    foreground = findColour(HackAudio::backgroundColourId);
+
+                }
+
             }
             else
             {
+
                 background = findColour(HackAudio::foregroundColourId);
+
+                if (hasKeyboardFocus(true) && wasFocusedByTab)
+                {
+
+                    foreground = findColour(HackAudio::highlightColourId);
+
+                }
+                else
+                {
+
+                    foreground = findColour(HackAudio::backgroundColourId);
+                    
+                }
+
             }
         }
         else
         {
+
             background = findColour(HackAudio::foregroundColourId);
+
+            if (hasKeyboardFocus(true) && wasFocusedByTab)
+            {
+
+                foreground = findColour(HackAudio::highlightColourId);
+
+            }
+            else
+            {
+
+                foreground = findColour(HackAudio::backgroundColourId);
+
+            }
+
         }
 
         g.setColour(background.interpolatedWith(findColour(HackAudio::midgroundColourId), colourInterpolation.getNextValue()));
-
         g.fillPath(p);
-        p.clear();
 
-        g.setColour(HackAudio::Colours::Black);
+        g.setColour(foreground);
 
         g.setFont(buttonFont);
         g.drawFittedText(getButtonText(), CORNER_RADIUS / 2, CORNER_RADIUS / 2, width - CORNER_RADIUS, height - CORNER_RADIUS, juce::Justification::centred, 1, 1.0f);
