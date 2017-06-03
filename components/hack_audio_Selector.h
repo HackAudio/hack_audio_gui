@@ -30,27 +30,36 @@ public:
      @param newItemText     the string of the new item
      @param itemIndex       where to place the item, use -1 to place the new item last in the array
     */
-    void addItem(const juce::String& newItemText, int itemIndex = -1);
-    void addItem(const char* newItemText, int itemIndex = -1);
+    void add(const juce::String& newItemText, int itemIndex = -1);
+    void add(const char* newItemText, int itemIndex = -1);
 
     /**
      Adds an array of strings as new selector choices
      
-     @param items       an array of strings
-     @param firstItemOffset     where to begin placing the new choices, use -1 to place them last in the array
+     @param items               an array of strings
+     @param startIndex          where to begin placing the new items
+     @param numElementsToAdd    how many elements to insert (inserts all if < 0)
     */
-    void addItemList(const juce::StringArray& items, int firstItemOffset = -1);
+    void addArray(const juce::StringArray& items, int startIndex = 0, int numElementsToAdd = -1);
+
+    /**
+     Inserts an item into the selector
+     
+     @param index           the index to insert the item at
+     @param newItemText     the text of the new item
+    */
+    void insert(int index, const juce::String& newItemText);
 
     /**
      Changes the text of one of the exisiting items
     */
-    void changeItemText(int itemId, const juce::String& newText);
-    void changeItemText(int itemId, const char* newText);
+    void set(int itemIndex, const juce::String& newText);
+    void set(int itemIndex, const char* newText);
 
     /**
      Clears all choices from the selector
     */
-    void clear(juce::NotificationType notification = juce::sendNotificationAsync);
+    void clear();
 
     /**
      Manually sets the current choice of the selector
@@ -111,6 +120,11 @@ public:
         */
         virtual void selectorIndexChanged(Selector*, int index) = 0;
 
+        /**
+         Called when a selector has items added or removed
+        */
+        virtual void selectorItemsChanged(Selector*) {}
+
     };
 
     /**
@@ -124,6 +138,7 @@ public:
 private:
 
     void indexChanged();
+    void itemsChanged();
 
     void mouseUp(const juce::MouseEvent& e) override;
 

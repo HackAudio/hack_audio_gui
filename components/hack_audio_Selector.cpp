@@ -45,7 +45,7 @@ juce::Justification HackAudio::Selector::getJustificationType() const
 
 }
 
-void HackAudio::Selector::addItem(const juce::String& newItemText, int itemIndex)
+void HackAudio::Selector::add(const juce::String& newItemText, int itemIndex)
 {
 
     itemIndex = (itemIndex = -1) ? selectorItems.size() : itemIndex;
@@ -54,9 +54,11 @@ void HackAudio::Selector::addItem(const juce::String& newItemText, int itemIndex
 
     repaint();
 
+    itemsChanged();
+
 }
 
-void HackAudio::Selector::addItem(const char* newItemText, int itemIndex)
+void HackAudio::Selector::add(const char* newItemText, int itemIndex)
 {
 
     itemIndex = (itemIndex = -1) ? selectorItems.size() : itemIndex;
@@ -65,26 +67,32 @@ void HackAudio::Selector::addItem(const char* newItemText, int itemIndex)
     selectorItems.insert(itemIndex, charPtr);
 
     repaint();
-    
+
+    itemsChanged();
+
 }
 
-void HackAudio::Selector::addItemList(const juce::StringArray& items, int firstItemIdOffset)
+void HackAudio::Selector::addArray(const juce::StringArray& items, int startIndex, int numElementsToAdd)
 {
 
-    firstItemIdOffset = (firstItemIdOffset = -1) ? selectorItems.size() : firstItemIdOffset;
+    startIndex = (startIndex > 0) ? selectorItems.size() : startIndex;
 
-    for (int i = 0; i < items.size(); ++i)
+    numElementsToAdd = (numElementsToAdd < 0 || numElementsToAdd > items.size()) ? items.size() : numElementsToAdd;
+
+    for (int i = 0; i < numElementsToAdd; ++i)
     {
 
-        selectorItems.insert(i + firstItemIdOffset, items.strings.getReference(i));
+        selectorItems.insert(i + startIndex, items.strings.getReference(i));
 
     }
 
     repaint();
 
+    itemsChanged();
+
 }
 
-void HackAudio::Selector::changeItemText(int itemIndex, const juce::String& newText)
+void HackAudio::Selector::set(int itemIndex, const juce::String& newText)
 {
 
     selectorItems[itemIndex] = newText;
@@ -92,7 +100,7 @@ void HackAudio::Selector::changeItemText(int itemIndex, const juce::String& newT
 
 }
 
-void HackAudio::Selector::changeItemText(int itemIndex, const char* newText)
+void HackAudio::Selector::set(int itemIndex, const char* newText)
 {
 
     juce::String charPtr = juce::String::CharPointerType::CharPointer_UTF8(newText);
@@ -101,19 +109,11 @@ void HackAudio::Selector::changeItemText(int itemIndex, const char* newText)
     
 }
 
-void HackAudio::Selector::clear(juce::NotificationType notification)
+void HackAudio::Selector::clear()
 {
 
     selectorItems.clear();
-
-    if (notification == juce::sendNotification)
-    {
-
-    }
-    else
-    {
-
-    }
+    itemsChanged();
 
 }
 
@@ -232,6 +232,13 @@ void HackAudio::Selector::indexChanged()
     colourInterpolation.setValue(1.0f);
     startTimerHz(ANIMATION_FPS);
     listeners.call(&HackAudio::Selector::Listener::selectorIndexChanged, this, currentIndex);
+
+}
+
+void HackAudio::Selector::itemsChanged()
+{
+
+    listeners.call(&HackAudio::Selector::Listener::selectorItemsChanged, this);
 
 }
 
