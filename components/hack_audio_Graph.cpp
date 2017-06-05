@@ -40,7 +40,7 @@ HackAudio::Graph::Node::Node(HackAudio::Graph* graph) : owner(*graph)
 void HackAudio::Graph::Node::setAxisLocking(bool shouldLockVertical, bool shouldLockHorizontal)
 {
 
-    assert(shouldLockVertical == shouldLockHorizontal == true);
+    assert(!(shouldLockVertical == true && shouldLockHorizontal == true));
 
     axisLockedY = shouldLockVertical;
     axisLockedX = shouldLockHorizontal;
@@ -52,7 +52,9 @@ void HackAudio::Graph::Node::setXValue(float newX)
 
     assert(newX >= 0.0f && newX <= 1.0f);
 
-    setCentrePosition((getParentWidth() - getWidth()) * newX, getY() + getHeight() / 2);
+    int width = getParentWidth() - getWidth();
+
+    setCentrePosition((getWidth() / 2) + (width * newX), getY() + getHeight() / 2);
 
 }
 
@@ -60,7 +62,11 @@ float HackAudio::Graph::Node::getXValue() const
 {
 
     float x = getX() + getWidth() / 2;
-    return x / (getParentWidth() - getWidth() / 2);
+
+    float minX = getWidth() / 2;
+    float maxX = getParentWidth() - getWidth() / 2;
+
+    return ((x - minX) / (maxX - minX));
 
 }
 
@@ -69,7 +75,9 @@ void HackAudio::Graph::Node::setYValue(float newY)
 
     assert(newY >= 0.0f && newY <= 1.0f);
 
-    setCentrePosition(getX() + getWidth() / 2, (getParentHeight() - getHeight()) * newY);
+    int height = getParentHeight() - getHeight();
+
+    setCentrePosition(getX() + getWidth() / 2, height - (height * newY));
 
 }
 
@@ -77,17 +85,18 @@ float HackAudio::Graph::Node::getYValue() const
 {
 
     float y = getY() + getHeight() / 2;
-    return y / (getParentHeight() - getHeight() / 2);
+
+    float maxY = getHeight() / 2;
+    float minY = getParentHeight() - getHeight() / 2;
+
+    return std::abs((y - minY) / (maxY - minY));
 
 }
 
 void HackAudio::Graph::Node::setZValue(float newZ)
 {
 
-    assert(newZ >= 0.0f && newZ <= 1.0f);
-
     z = newZ;
-
     owner.nodeChanged(owner.graphNodes.indexOf(this), getComponentID());
 
 }
