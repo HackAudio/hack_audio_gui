@@ -28,11 +28,8 @@ namespace HackAudio
 {
 
 /**
-
- A custom button using the generic juce::Slider API while adding custom styling and new methods.
- 
- */
-
+ A custom button using the juce::Button API
+*/
 class Button : public juce::Button,
                private juce::Timer
 {
@@ -43,23 +40,17 @@ public:
 
     /**
      The available HackAudio::Button styles
-     
-     BarSingleton is a square button that saves no state and simply sends a singleton event
-     
-     BarToggle saves its state and colors itself accordingly
-     
-     SlidingToggle saves state and aesthetically emulates a toggle switch
     */
     enum ButtonStyle
     {
-        BarSingleton,
-        BarToggle,
-        SlidingToggle
+        Bar,            /**< A square button that sends singleton messages when pressed */
+        BarToggle,      /**< A toggle button that saves its state */
+        SlidingToggle   /**< A toggle button that emulates a sliding toggle switch */
     };
 
     /**
-     A char* wrapper for setButtonText()
-     */
+     A char* wrapper for juce::Button::setButtonText()
+    */
     void setButtonText(const char* newText);
 
     /**

@@ -61,7 +61,9 @@ void HackAudio::Colours::setGlobalColour(int colourId, juce::Colour newColour)
 
         if (juce::Component* c = d.getComponent(i))
         {
+
             traverse(c);
+            
         }
 
     }

@@ -59,13 +59,17 @@ HackAudio::Label::~Label()
 
 void HackAudio::Label::setText(const char* newText, juce::NotificationType notification)
 {
+
     juce::String charPtr = juce::String::CharPointerType::CharPointer_UTF8(newText);
     juce::Label::setText(charPtr, notification);
+
 }
 
 void HackAudio::Label::setText(const juce::String newText, juce::NotificationType notification)
 {
+
     juce::Label::setText(newText, notification);
+
 }
 
 juce::String HackAudio::Label::getPrefix() const
@@ -82,8 +86,10 @@ void HackAudio::Label::setPrefix(const char* preText, juce::NotificationType not
 
     if (notificationType != juce::dontSendNotification)
     {
+
         labelTextChanged(this);
         callChangeListeners();
+
     }
 
     repaint();
@@ -97,8 +103,10 @@ void HackAudio::Label::setPrefix(const juce::String preText, juce::NotificationT
 
     if (notificationType != juce::dontSendNotification)
     {
+
         labelTextChanged(this);
         callChangeListeners();
+
     }
 
     repaint();
@@ -119,8 +127,10 @@ void HackAudio::Label::setPostfix(const char* postText, juce::NotificationType n
 
     if (notificationType != juce::dontSendNotification)
     {
+
         labelTextChanged(this);
         callChangeListeners();
+
     }
 
     repaint();
@@ -134,8 +144,10 @@ void HackAudio::Label::setPostfix(const juce::String postText, juce::Notificatio
 
     if (notificationType != juce::dontSendNotification)
     {
+
         labelTextChanged(this);
         callChangeListeners();
+
     }
 
     repaint();
@@ -162,13 +174,17 @@ void HackAudio::Label::setPlaceholder(const juce::String placeholderText)
 
 void HackAudio::Label::setPlaceholderStatus(bool shouldShowPlaceholder)
 {
+
     placeholderStatus = shouldShowPlaceholder;
     repaint();
+
 }
 
 juce::String HackAudio::Label::getPlaceholder() const
 {
+
     return placeholder;
+
 }
 
 void HackAudio::Label::setAnimationStatus(bool shouldAnimate)
@@ -296,7 +312,9 @@ void HackAudio::Label::timerCallback(int timerID)
 
             if (std::abs(colourInterpolation.getTargetValue() - colourInterpolation.getNextValue()) < 0.0001)
             {
+
                 colourInterpolation.setValue(colourInterpolation.getTargetValue());
+
             }
 
         }
@@ -305,20 +323,25 @@ void HackAudio::Label::timerCallback(int timerID)
 
             if (colourInterpolation.getTargetValue() == 1.0f)
             {
+
                 colourInterpolation.setValue(0.0f);
+
             }
             else
             {
 
                 if (timeout > 0)
                 {
+
                     timeout--;
 
                 }
                 else
                 {
+
                     repaint();
                     stopTimer(foregroundAnimation);
+
                 }
 
             }
@@ -400,19 +423,27 @@ void HackAudio::Label::paint(juce::Graphics& g)
 
         if (!isTimerRunning(foregroundAnimation) && placeholderStatus)
         {
+
             if (placeholder.containsAnyOf("^_") || placeholder.contains("\\array"))
             {
+
                 formatText(placeholder, getFont(), getJustificationType(), CORNER_RADIUS, CORNER_RADIUS, width - (CORNER_RADIUS * 2), height - (CORNER_RADIUS * 2)).draw(g);
                 return;
+
             }
+
         }
         else
         {
+
             if (getText().containsAnyOf("^_") || getText().contains("\\array"))
             {
+
                 formatText(getText(), getFont(), getJustificationType(), CORNER_RADIUS, CORNER_RADIUS, width - (CORNER_RADIUS * 2), height - (CORNER_RADIUS * 2)).draw(g);
                 return;
+
             }
+            
         }
 
     }

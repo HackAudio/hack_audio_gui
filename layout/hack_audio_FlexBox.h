@@ -28,11 +28,8 @@ namespace HackAudio
 {
 
 /**
-
  A custom implementation of juce::FlexBox that provides an easier API for setting up a basic layout
-
 */
-
 class FlexBox : private juce::FlexBox,
                 private juce::ComponentListener
 {

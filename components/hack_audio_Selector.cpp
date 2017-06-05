@@ -56,7 +56,6 @@ void HackAudio::Selector::setJustificationType(juce::Justification justification
 {
 
     selectorJustification = justification;
-
     repaint();
 
 }
@@ -72,11 +71,9 @@ void HackAudio::Selector::add(const juce::String& newItemText, int itemIndex)
 {
 
     itemIndex = (itemIndex = -1) ? selectorItems.size() : itemIndex;
-
     selectorItems.insert(itemIndex, newItemText);
 
     repaint();
-
     itemsChanged();
 
 }
@@ -85,12 +82,10 @@ void HackAudio::Selector::add(const char* newItemText, int itemIndex)
 {
 
     itemIndex = (itemIndex = -1) ? selectorItems.size() : itemIndex;
-
     juce::String charPtr = juce::String::CharPointerType::CharPointer_UTF8(newItemText);
     selectorItems.insert(itemIndex, charPtr);
 
     repaint();
-
     itemsChanged();
 
 }
@@ -110,7 +105,6 @@ void HackAudio::Selector::addArray(const juce::StringArray& items, int startInde
     }
 
     repaint();
-
     itemsChanged();
 
 }
@@ -218,9 +212,11 @@ int HackAudio::Selector::getIndexForItem(const char* itemText) const
 
 void HackAudio::Selector::setFont(juce::Font font)
 {
+
     selectorFont = font;
     resized();
     repaint();
+
 }
 
 juce::Font HackAudio::Selector::getFont() const
@@ -399,7 +395,9 @@ void HackAudio::Selector::timerCallback()
 
         if (std::abs(colourInterpolation.getTargetValue() - colourInterpolation.getNextValue()) < 0.0001)
         {
+
             colourInterpolation.setValue(colourInterpolation.getTargetValue());
+
         }
 
     }
@@ -408,7 +406,9 @@ void HackAudio::Selector::timerCallback()
 
         if (colourInterpolation.getTargetValue() == 1.0f)
         {
+
             colourInterpolation.setValue(0.0f);
+            
         }
         else
         {

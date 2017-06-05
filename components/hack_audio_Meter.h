@@ -27,23 +27,34 @@
 namespace HackAudio
 {
 
+/**
+ A custom meter component used to measure audio signals 
+*/
 class Meter : public juce::Component,
               private juce::Timer
 {
 public:
 
+    /**
+     The available HackAudio::Meter styles
+     
+     @see setMeterStyle
+    */
     enum MeterStyle
     {
-        Vertical,
-        Horizontal
+        Vertical,       /**< A vertically facing meter */
+        Horizontal      /**< A horizontally facing meter */
     };
 
+    /**
+     Identifiers for easily setting meter calibration presets
+    */
     enum MeterCalibration
     {
-        Peak,   // Peak Program Meter (PPM)
-        RMS,
-        VU,
-        Custom,
+        Peak,           /**< Peak Program Meter (PPM), responds very quickly to the absolute digital levels of the audio signal */
+        RMS,            /**< Root-Mean-Square (RMS), a display of the overall average level of the incoming signal */
+        VU,             /**< Volume-Units (VU), based on specifications of analog VU meters where 0VU = +4 dBu */
+        Custom,         /**< Custom is automatically assigned whenever meter attributes are manually set */
     };
 
     Meter();

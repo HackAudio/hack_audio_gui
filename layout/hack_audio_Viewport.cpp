@@ -69,7 +69,9 @@ void HackAudio::Viewport::setDiagram(HackAudio::Diagram& d)
 
         for (int child = 0; child < currentContent->getNumChildComponents(); ++child)
         {
+
             currentContent->getChildComponent(child)->removeMouseListener(this);
+
         }
 
     }
@@ -80,7 +82,9 @@ void HackAudio::Viewport::setDiagram(HackAudio::Diagram& d)
 
     for (int child = 0; child < currentContent->getNumChildComponents(); ++child)
     {
+
         currentContent->getChildComponent(child)->addMouseListener(this, false);
+
     }
 
     currentContent->addComponentListener(this);
@@ -108,7 +112,9 @@ void HackAudio::Viewport::clearDiagram()
 
         for (int child = 0; child < currentContent->getNumChildComponents(); ++child)
         {
+
             currentContent->getChildComponent(child)->removeMouseListener(this);
+
         }
 
     }
@@ -201,7 +207,9 @@ void HackAudio::Viewport::setDiagramViaTraversal(HackAudio::Diagram &d)
 
         for (int child = 0; child < currentContent->getNumChildComponents(); ++child)
         {
+
             currentContent->getChildComponent(child)->removeMouseListener(this);
+
         }
 
     }
@@ -212,7 +220,9 @@ void HackAudio::Viewport::setDiagramViaTraversal(HackAudio::Diagram &d)
 
     for (int child = 0; child < currentContent->getNumChildComponents(); ++child)
     {
+
         currentContent->getChildComponent(child)->addMouseListener(this, false);
+
     }
 
     currentContent->addComponentListener(this);
@@ -222,8 +232,10 @@ void HackAudio::Viewport::setDiagramViaTraversal(HackAudio::Diagram &d)
 
     if (parentContent.size() == 0)
     {
+
         backButton.setVisible(false);
         topButton.setVisible(false);
+
     }
     
     repaint();
@@ -237,7 +249,9 @@ void HackAudio::Viewport::mouseEnter(const juce::MouseEvent& e)
 
     if (e.eventComponent != this)
     {
+
         e.eventComponent->mouseEnter(e);
+
     }
 
 }
@@ -249,7 +263,9 @@ void HackAudio::Viewport::mouseExit(const juce::MouseEvent& e)
 
     if (e.eventComponent != this)
     {
+
         e.eventComponent->mouseExit(e);
+
     }
 
 }
@@ -292,8 +308,10 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
 
             if (it.getKey()->isVisible() && it.getKey() == e.eventComponent)
             {
+
                 traverseDown(*it.getValue());
                 return;
+
             }
         }
 
@@ -311,7 +329,9 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
 
         if (e.eventComponent != this)
         {
+
             e.eventComponent->mouseUp(e);
+
         }
 
     }
@@ -344,12 +364,16 @@ void HackAudio::Viewport::buttonClicked(juce::Button *b)
 
     if (b == &backButton)
     {
+
         traverseUp();
+
     }
 
     if (b == &topButton)
     {
+
         traverseTop();
+
     }
 
 }
@@ -409,10 +433,12 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
             if (!dynamic_cast<HackAudio::Diagram::Junction*>(contentInput))
             {
+
                 g.setColour(findColour(HackAudio::midgroundColourId));
                 g.fillEllipse(x2 - 8, y2 - 8, 16, 16);
                 g.setColour(findColour(HackAudio::backgroundColourId));
                 g.drawEllipse(x2 - 8, y2 - 8, 16, 16, 4);
+
             }
 
 
@@ -487,10 +513,12 @@ void HackAudio::Viewport::paintOverChildren(juce::Graphics& g)
 
             if (!dynamic_cast<HackAudio::Diagram::Junction*>(contentOutput))
             {
+
                 g.setColour(findColour(HackAudio::backgroundColourId));
                 g.fillEllipse(x3 - 8, y3 - 8, 16, 16);
                 g.setColour(findColour(HackAudio::midgroundColourId));
                 g.drawEllipse(x3 - 8, y3 - 8, 16, 16, 4);
+                
             }
             
         }

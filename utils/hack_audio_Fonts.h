@@ -28,9 +28,7 @@ namespace HackAudio
 {
 
 /**
-
-    The default fonts for the HackAudio theme
- 
+ The default fonts for the HackAudio theme
 */
 class Fonts
 {
@@ -50,9 +48,7 @@ private:
 };
 
 /**
-
-    The default font heights used in the HackAudio theme
-
+ The default font heights used in the HackAudio theme
 */
 enum FontHeights
 {

@@ -38,18 +38,24 @@ juce::StringArray parseText(juce::String stringToParse)
     std::sregex_iterator begin(s.begin(), s.end(), r), end;
     for (auto i = begin; i != end; ++i)
     {
+
         results.add(i->str());
+
     }
 
     if (!results.size())
     {
+
         r.assign("([^\\^_]+|([\\^_][^\\s\\^_]){2}|[\\^_]\\{[^\\}]+\\}|[\\^_][^\\s\\^_]?)");
 
         std::sregex_iterator begin(s.begin(), s.end(), r), end;
         for (auto i = begin; i != end; ++i)
         {
+
             results.add(i->str());
+
         }
+
     }
     
     return results;
@@ -151,15 +157,21 @@ void formatScript(juce::GlyphArrangement& glyphs, juce::String jstring, juce::Fo
 
         if (baseline > 0)
         {
+
             baseline += currentHeight / 4;
+
         }
         else if (baseline < 0)
         {
+
             baseline -= currentHeight / 2;
+
         }
-        else
+        else if (baseline == 0)
         {
+
             baseline += currentHeight / 2;
+
         }
 
         currentHeight -= currentHeight / 3;
@@ -174,6 +186,7 @@ void formatScript(juce::GlyphArrangement& glyphs, juce::String jstring, juce::Fo
 
             for (int i = 0; i < temp.size(); ++i)
             {
+
                 if (temp[i].containsAnyOf("^_"))
                 {
 
@@ -251,9 +264,11 @@ void formatArray(juce::GlyphArrangement& glyphs, juce::String& jstring, juce::Fo
     juce::String s_row = jstring;
     while (1)
     {
+
         rows++;
         s_row = s_row.fromFirstOccurrenceOf("&//", false, true);
         if (!s_row.contains("&//")) { break; }
+
     }
 
     juce::StringArray chars;

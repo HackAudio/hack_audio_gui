@@ -24,11 +24,12 @@
 #ifndef HACK_AUDIO_SELECTOR_H
 #define HACK_AUDIO_SELECTOR_H
 
-#include "../utils/hack_audio_NavigationButton.h"
-
 namespace HackAudio
 {
 
+/**
+ A component that allows a user to traverse through a list of options
+*/
 class Selector : public juce::Component,
                  private juce::Timer
 {
@@ -151,10 +152,12 @@ public:
     };
 
     /**
+     Adds a listener to be called when the selector changes items
     */
     void addListener(Listener* listener);
 
     /**
+     Removes a previously registered listener
     */
     void removeListener(Listener* listener);
 

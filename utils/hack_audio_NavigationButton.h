@@ -30,6 +30,9 @@
 namespace HackAudio
 {
 
+/**
+ A basic arrow style button to embed in larger components
+*/
 class NavigationButton : public juce::Button
 {
 public:
@@ -37,6 +40,9 @@ public:
     NavigationButton() : juce::Button("") { setWantsKeyboardFocus(false); }
     ~NavigationButton() {};
 
+    /**
+     The direction the button should face
+    */
     enum Direction
     {
         Up,

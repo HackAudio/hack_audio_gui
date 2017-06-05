@@ -28,11 +28,8 @@ namespace HackAudio
 {
 
 /**
-
- A class that displays labels as a signal flow diagram
-
+ A class that displays HackAudio::Labels in a signal flow diagram
 */
-
 class Diagram : private juce::Component,
                 private juce::ComponentListener
 {
@@ -41,6 +38,9 @@ class Diagram : private juce::Component,
 
 public:
 
+    /**
+     A circular junction for use in HackAudio::Diagrams
+    */
     class Junction : public juce::Component
     {
 
@@ -51,28 +51,39 @@ public:
         Junction();
         ~Junction();
 
+        /**
+         The mathematical operation symbol the junction will display
+        */
         enum Symbol
         {
 
-            None,
-            Add,
-            Subtract,
-            Divide,
-            Multiply,
-            Power,
-            Sqrt,
-            Average
+            None,           /**< An empty junction, usually used to represent a signal path splitting into multiple paths */
+            Add,            /**< An addition junction */
+            Subtract,       /**< A subtraction junction */
+            Divide,         /**< A dividing junction */
+            Multiply,       /**< A multiplying junction */
+            Power,          /**< An exponential junction */
+            Sqrt,           /**< A square root junction */
+            Average         /**< An averaging junction */
 
         };
 
+        /**
+         The direction that the junction should connect from
+        */
         enum Direction
         {
-            Null,
-            Auto,
-            Vertical,
-            Horizontal
+            Null,           /**< I forget */
+            Auto,           /**< The diagram automatically picks the best direction in which to draw the connection */
+            Vertical,       /**< The diagram only draws the connection from either the top or bottom of the junction */
+            Horizontal      /**< The diagram only draws the connection from either the left or right of the junction */
         };
 
+        /**
+         Sets the junction's displayed symbol
+         
+         @see Symbol
+        */
         void setSymbol(Symbol s);
 
     private:
@@ -193,7 +204,6 @@ public:
      @param subDiagram  the diagram to expand
     */
     void setSubDiagram(juce::Component& source, HackAudio::Diagram& subDiagram);
-
 
 private:
 

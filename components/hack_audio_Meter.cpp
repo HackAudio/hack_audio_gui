@@ -123,7 +123,9 @@ void HackAudio::Meter::setSource(int channel, float* const source)
 
     if (!isTimerRunning())
     {
+
         startTimerHz(ANIMATION_FPS);
+
     }
 
     repaint();
@@ -303,7 +305,9 @@ void HackAudio::Meter::timerCallback()
 
     if (meterSources.size() == 0)
     {
+
         stopTimer();
+
     }
 
     float rise = (float)meterRise / 1000.0f;
@@ -534,11 +538,15 @@ void HackAudio::Meter::resized()
 
         if (meterStyle == Vertical)
         {
+
             p.setXY(width / 2, (pipSize * 2) + ((indicatorArea.getHeight() - pipSize * 2) / (float)(pipLocations.size() - 1) * i));
+
         }
         else
         {
+
             p.setXY((pipSize * 2) + ((indicatorArea.getWidth() - pipSize * 2) / (float)(pipLocations.size() - 1) * i), height / 2);
+            
         }
 
     }

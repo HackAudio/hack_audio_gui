@@ -132,7 +132,7 @@ void HackAudio::Button::mouseDown(const juce::MouseEvent& e)
 
     colourInterpolation.setValue(1.0f);
 
-    if (buttonStyle == ButtonStyle::BarSingleton)
+    if (buttonStyle == ButtonStyle::Bar)
     {
 
         startTimerHz(ANIMATION_FPS);
@@ -206,7 +206,7 @@ void HackAudio::Button::mouseUp(const juce::MouseEvent& e)
 
     if (!isEnabled()) { return; }
 
-    if (buttonStyle == ButtonStyle::BarSingleton)
+    if (buttonStyle == ButtonStyle::Bar)
     {
 
         setToggleState(false, juce::dontSendNotification);
@@ -401,20 +401,25 @@ void HackAudio::Button::timerCallback()
             }
             else if (colourInterpolation.getTargetValue() == 1.0f)
             {
+
                 colourInterpolation.setValue(1.0f);
+
             }
             else
             {
 
                 if (colourInterpolation.getNextValue() == 0.0f)
                 {
+
                     colourInterpolation.setValue(0.0f);
                     stopTimer();
+
                 }
 
                 return;
 
             }
+
         }
 
     }
@@ -423,16 +428,22 @@ void HackAudio::Button::timerCallback()
 
         if (thumbArea.getX() <= (animationStart.getX() + animationEnd.getX()) / 2)
         {
+
             animationAcc += ANIMATION_SPEED;
+
         }
         else
         {
+
             animationAcc -= ANIMATION_SPEED;
+
         }
 
         if (std::abs(animationVel) < 4)
         {
+
             animationVel += animationAcc;
+
         }
 
         thumbArea.translate(animationVel, 0);
@@ -440,7 +451,9 @@ void HackAudio::Button::timerCallback()
 
         if (indicatorArea.getWidth() < 0)
         {
+
             indicatorArea.setWidth(0);
+
         }
 
         if (thumbArea.getPosition().getDistanceFrom(animationEnd) <= 4 || thumbArea.getX() < getWidth() / 4 || thumbArea.getX() > getWidth() / 2)
@@ -478,8 +491,9 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
         juce::Colour background;
         juce::Colour foreground;
 
-        if (buttonStyle != ButtonStyle::BarSingleton)
+        if (buttonStyle != ButtonStyle::Bar)
         {
+
             if (getToggleState())
             {
 
@@ -607,11 +621,15 @@ void HackAudio::Button::resized()
 
         if (getToggleState())
         {
+
             thumbArea.setPosition(width / 2, height / 4);
+
         }
         else
         {
+
             thumbArea.setPosition(width / 4, height / 4);
+            
         }
 
         indicatorArea.setWidth((thumbArea.getX() - indicatorArea.getX()) + thumbArea.getWidth() / 2);

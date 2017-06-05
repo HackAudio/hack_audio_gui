@@ -22,8 +22,32 @@
  */
 
 #ifdef HACK_AUDIO_UI_INCLUDED
-    #error "Incorrect use of JUCE cpp file"
+ /* When you add this cpp file to your project, you mustn't include it in a file where you've
+  already included any other headers - just put it inside a file on its own, possibly with your config
+  flags preceding it, but don't include anything else. That also includes avoiding any automatic prefix
+  header files that the compiler may be using.
+ */
+ #error "Incorrect use of JUCE cpp file"
 #endif
+
+/* HackAudio GUI Configurations */
+// =============================================================================
+
+#define ANIMATION_SPEED 0.1
+#define ANIMATION_FPS 60
+
+#define CORNER_RADIUS   24
+#define CORNER_CONFIG   CORNER_RADIUS, CORNER_RADIUS, false, true, true, false
+
+#define ROTARY_ANGLESTART ((7.0f * M_PI) / 6.0f)
+#define ROTARY_ANGLERANGE ((5.0f * M_PI) / 3.0f)
+
+#define DEFAULT_PIPMIN 6
+#define DEFAULT_PIPMAX 8
+
+#define MOUSEWHEEL_SENSITIVITY 128
+
+// =============================================================================
 
 #include "hack_audio_gui.h"
 

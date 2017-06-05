@@ -28,9 +28,7 @@ namespace HackAudio
 {
 
 /**
-
-    Contains the predefined colours for the HackAudio theme
- 
+ The predefined colours for the HackAudio theme
 */
 class Colours
 {

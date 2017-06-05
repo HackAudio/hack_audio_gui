@@ -28,11 +28,8 @@ namespace HackAudio
 {
 
 /**
-
- A custom label using the generic juce::Slider API that supports pre/post-fixes 
- 
- */
-
+ A custom label using the juce::Label API that also supports pre/post-fixes and text formatting
+*/
 class Label : public  juce::Label,
               private juce::LabelListener,
               private juce::MultiTimer

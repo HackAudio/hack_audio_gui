@@ -24,15 +24,12 @@
 #ifndef HACK_AUDIO_VIEWPORT_H
 #define HACK_AUDIO_VIEWPORT_H
 
-#include "../utils/hack_audio_NavigationButton.h"
-
 namespace HackAudio
 {
 
 /**
  An unbounded, infinitely-scrollable viewport for displaying HackAudio::Diagram components
 */
-
 class Viewport : public juce::Component,
                  private juce::ComponentListener,
                  private juce::ButtonListener
@@ -70,12 +67,12 @@ public:
 
     /** 
      Returns true if the diagram is within the traversal chain
-     */
+    */
     bool isInTraversal(HackAudio::Diagram& d) const;
 
     /**
      Sets the font to be used when displaying diagram titles
-     */
+    */
     void setFont(juce::Font newFont);
 
     /**

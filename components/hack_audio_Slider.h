@@ -28,11 +28,8 @@ namespace HackAudio
 {
 
 /**
-
- A custom slider using the generic juce::Slider API while adding custom styling and new methods.
-
+ A custom slider using the juce::Slider API while adding custom styling and new methods.
 */
-
 class Slider : public juce::Slider,
                private juce::Timer,
                private juce::SliderListener

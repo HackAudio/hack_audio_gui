@@ -44,26 +44,11 @@ END_JUCE_MODULE_DECLARATION
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <juce_audio_basics/juce_audio_basics.h>
 
-// User Interface Configurations
-
-#define ANIMATION_SPEED 0.1
-#define ANIMATION_FPS 60
-
-#define CORNER_RADIUS   24
-#define CORNER_CONFIG   CORNER_RADIUS, CORNER_RADIUS, false, true, true, false
-
-#define ROTARY_ANGLESTART ((7.0f * M_PI) / 6.0f)
-#define ROTARY_ANGLERANGE ((5.0f * M_PI) / 3.0f)
-
-#define DEFAULT_PIPMIN 6
-#define DEFAULT_PIPMAX 8
-
-#define MOUSEWHEEL_SENSITIVITY 128
-
-// ===================================================
+// =============================================================================
 
 #include "utils/hack_audio_Colours.h"
 #include "utils/hack_audio_Fonts.h"
+#include "utils/hack_audio_NavigationButton.h"
 
 #include "components/hack_audio_Selector.h"
 #include "components/hack_audio_Slider.h"

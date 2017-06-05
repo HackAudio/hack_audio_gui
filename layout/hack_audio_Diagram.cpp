@@ -130,7 +130,9 @@ void HackAudio::Diagram::addDiagramInput(juce::Component& component)
 
     if (getParentComponent())
     {
+
         getParentComponent()->repaint();
+
     }
 
 }
@@ -144,7 +146,9 @@ void HackAudio::Diagram::removeDiagramInput(juce::Component& component)
 
     if (getParentComponent())
     {
+
         getParentComponent()->repaint();
+
     }
 
 }
@@ -167,7 +171,9 @@ void HackAudio::Diagram::addDiagramOutput(juce::Component& component)
 
     if (getParentComponent())
     {
+
         getParentComponent()->repaint();
+
     }
 
 }
@@ -181,7 +187,9 @@ void HackAudio::Diagram::removeDiagramOutput(juce::Component& component)
 
     if (getParentComponent())
     {
+
         getParentComponent()->repaint();
+
     }
 
 }
@@ -205,9 +213,7 @@ void HackAudio::Diagram::connect(juce::Component& source, juce::Component& desti
     {
 
         juce::Array<juce::Component*> newArray = connections[&source];
-
         newArray.addIfNotAlreadyThere(&destination);
-
         connections.set(&source, newArray);
 
     }
@@ -215,9 +221,7 @@ void HackAudio::Diagram::connect(juce::Component& source, juce::Component& desti
     {
 
         juce::Array<juce::Component*> newArray;
-
         newArray.add(&destination);
-
         connections.set(&source, newArray);
 
     }
@@ -240,9 +244,7 @@ void HackAudio::Diagram::connect(HackAudio::Diagram::Junction& source, juce::Com
     {
 
         juce::Array<juce::Component*> newArray = connections[&source];
-
         newArray.addIfNotAlreadyThere(&destination);
-
         connections.set(&source, newArray);
 
     }
@@ -250,9 +252,7 @@ void HackAudio::Diagram::connect(HackAudio::Diagram::Junction& source, juce::Com
     {
 
         juce::Array<juce::Component*> newArray;
-
         newArray.add(&destination);
-
         connections.set(&source, newArray);
 
     }
@@ -268,11 +268,8 @@ void HackAudio::Diagram::disconnect(juce::Component& source, juce::Component& de
     {
 
         juce::Array<juce::Component*> newArray = connections[&source];
-
         newArray.removeFirstMatchingValue(&destination);
-
         connections.set(&source, newArray);
-
         updateChildren();
 
     }
@@ -305,7 +302,6 @@ void HackAudio::Diagram::disconnectInputs(juce::Component& component)
     }
 
     inputComponents.removeFirstMatchingValue(&component);
-
     updateChildren();
 
 }
@@ -319,7 +315,6 @@ void HackAudio::Diagram::disconnectOutputs(juce::Component& component)
     {
 
         connections.remove(&component);
-
         updateChildren();
 
     }
@@ -339,11 +334,8 @@ void HackAudio::Diagram::toggle(juce::Component& source, juce::Component& destin
     {
 
         juce::Array<juce::Component*> newArray = connections[&source];
-
         (newArray.contains(&destination)) ? newArray.removeFirstMatchingValue(&destination) : newArray.add(&destination);
-
         connections.set(&source, newArray);
-
         updateChildren();
 
     }
@@ -374,7 +366,6 @@ void HackAudio::Diagram::swap(juce::Component& source, juce::Component& destinat
             (stateTwo) ? newArray.removeFirstMatchingValue(&destinationTwo) : newArray.add(&destinationTwo);
 
             connections.set(&source, newArray);
-
             repaint();
 
         }
@@ -407,9 +398,7 @@ void HackAudio::Diagram::reroute(juce::Component& source, juce::Component& oldDe
         {
 
             newArray.addIfNotAlreadyThere(&newDestination);
-
             connections.set(&source, newArray);
-
             repaint();
 
         }
@@ -459,7 +448,9 @@ void HackAudio::Diagram::updateSize()
 
         if (!c->isVisible())
         {
+
             continue;
+
         }
 
         minX = std::min(c->getX(), minX);
@@ -489,7 +480,6 @@ void HackAudio::Diagram::updateSize()
         {
 
             juce::Component* c = getChildComponent(i);
-
             c->setTopLeftPosition(c->getX() - minX, c->getY() - minY);
 
         }
@@ -510,7 +500,9 @@ void HackAudio::Diagram::updateSize()
 
     if (newBounds != getBounds())
     {
+
         setBounds(newBounds);
+
     }
 
     moveGuard = false;
@@ -572,14 +564,18 @@ void HackAudio::Diagram::updateConnections()
         
         if (orphanedConnections)
         {
+
             connections.set(source, destinations);
+
         }
         
     }
     
     if (orphanedConnections)
     {
+
         repaint();
+
     }
 
     updateSize();
@@ -598,12 +594,16 @@ void HackAudio::Diagram::updateChildren()
 
         if (inputComponents.contains(c) || outputComponents.contains(c))
         {
+
             childHasConnections = true;
+
         }
 
         if (connections.contains(c))
         {
+
             childHasConnections = true;
+
         }
 
         for(juce::HashMap<juce::Component*, juce::Array<juce::Component*>>::Iterator it (connections); it.next();)
@@ -613,18 +613,24 @@ void HackAudio::Diagram::updateChildren()
 
             if (arr.contains(c))
             {
+
                 childHasConnections = true;
+
             }
 
         }
 
         if (!childHasConnections)
         {
+
             c->setVisible(false);
+
         }
         else
         {
+
             c->setVisible(true);
+
         }
 
     }
@@ -638,11 +644,11 @@ void HackAudio::Diagram::childrenChanged()
 
     for (int i = 0; i < getNumChildComponents(); ++i)
     {
+
         juce::Component* c = getChildComponent(i);
-
         c->setColour(HackAudio::backgroundColourId, HackAudio::Colours::Gray);
-
         c->addComponentListener(this);
+
     }
 
     updateSize();
@@ -663,7 +669,9 @@ void HackAudio::Diagram::componentMovedOrResized(juce::Component &component, boo
 
     if (!moveGuard)
     {
+
         updateSize();
+
     }
     
 }
@@ -699,10 +707,14 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
             if (sourceIsJunction)
             {
+
                 if (sourceIsJunction->outputDirections.contains(destination))
                 {
+
                     sourceDirection = sourceIsJunction->outputDirections[destination];
+
                 }
+
             }
 
             int sourceX = source->getX() + source->getWidth() / 2;
@@ -1181,12 +1193,16 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
 
             if (!destinationIsJunction)
             {
+
                 inputNodes.add(juce::Point<int>(x2, y2));
+
             }
 
             if (!sourceIsJunction)
             {
+
                 outputNodes.add(juce::Point<int>(x1, y1));
+                
             }
 
         }
