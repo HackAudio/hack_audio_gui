@@ -35,6 +35,7 @@
 #include "components/hack_audio_Button.cpp"
 #include "components/hack_audio_Label.cpp"
 #include "components/hack_audio_Meter.cpp"
+#include "components/hack_audio_Graph.cpp"
 
 #include "layout/hack_audio_Diagram.cpp"
 #include "layout/hack_audio_Viewport.cpp"
