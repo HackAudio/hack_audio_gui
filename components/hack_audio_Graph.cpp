@@ -40,7 +40,7 @@ HackAudio::Graph::Node::Node(HackAudio::Graph* graph) : owner(*graph)
 void HackAudio::Graph::Node::setAxisLocking(bool shouldLockVertical, bool shouldLockHorizontal)
 {
 
-    assert(shouldLockVertical != shouldLockHorizontal);
+    assert(shouldLockVertical == shouldLockHorizontal == true);
 
     axisLockedY = shouldLockVertical;
     axisLockedX = shouldLockHorizontal;
