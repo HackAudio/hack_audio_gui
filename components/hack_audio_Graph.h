@@ -23,13 +23,22 @@
 
 namespace HackAudio
 {
-
+/**
+ A component for using control points to manipulate a curve function
+*/
 class Graph : public juce::Component,
               private juce::ComponentListener
 {
 
 public:
 
+    /**
+     A control point used for HackAudio::Graphs. This class should not be 
+     instantiated directly, instead use the relevant HackAudio::Graph methods 
+     to control Node adding and removal.
+     
+     @see HackAudio::Graph::add, HackAudio::Graph::insert, HackAudio::Graph::remove
+    */
     class Node : public juce::Component
     {
 
@@ -37,15 +46,58 @@ public:
 
     public:
 
+        /**
+         Restricts whether or not a Node should be able to move along a certain axis.
+         
+         Note that the two arguments cannot both be true, instead use the graph's 
+         enablement to set whether or not the user can interact with the graph
+         
+         @param shouldLockVertical      whether or not to lock Y-axis movement
+         @param shouldLockHorizontal    whether or not to lock X-axis movement
+        */
         void setAxisLocking(bool shouldLockVertical, bool shouldLockHorizontal);
 
+
+        /**
+         Sets the node's X value. This is similar to its X position, but on a range
+         of 0.0 - 1.0 along the width of the graph itself.
+         
+         @param newX    a float ratio from 0.0 - 1.0
+        */
         void  setXValue(float newX);
+
+        /**
+         Returns the current value of the node's X position with respect to 
+         the graph's width
+        */
         float getXValue() const;
 
+        /**
+         Sets the node's Y value. This is similar to its Y position, but on a range
+         of 0.0 - 1.0 along the height of the graph itself.
+
+         @param newY    a float ratio from 0.0 - 1.0
+        */
         void  setYValue(float newY);
+
+        /**
+         Returns the current value of the node's Y position with respect to
+         the graph's height
+        */
         float getYValue() const;
 
+        /**
+         Sets the node's Z value. This value is an arbitrary third dimension
+         used by the graph's interpolation functions. Users can set their own
+         interpolation functions that utilize this value in any way they like
+         
+         @param newZ    a float representing the Z value (no current range restriction)
+        */
         void  setZValue(float newZ);
+
+        /**
+         Returns the Node's current Z value
+        */
         float getZValue() const;
 
     private:
@@ -74,45 +126,136 @@ public:
     };
 
     Graph();
-
     ~Graph();
 
+    /**
+     Adds a new, unidentified node to the graph
+    */
     void add();
+
+    /**
+     Adds a new node to the graph and assigns it a ComponentID for easy referencing
+     
+     @param nodeId      a string to use as the ComponentID
+    */
     void add(const juce::String& nodeId);
 
+    /**
+     Inserts a new, unidentified node to the graph at the index argument
+     
+     @param index       where to insert the new node
+    */
     void insert(int index);
+
+    /**
+     Inserts a new node to the graph and assigns it a ComponentID
+
+     @param index       where to insert the new node
+     @param nodeId      the ComponentID to give the node
+    */
     void insert(int index, const juce::String& nodeId);
 
+    /**
+     Returns a node based on the node's position in which it was added
+    */
     Graph::Node* getNode(int index) const;
+
+    /**
+     Returns the node with the given ComponentID
+     
+     @param nodeId      the ComponentID to search for
+    */
     Graph::Node* getNode(const juce::String& nodeId) const;
 
+    /**
+     Removes the node at a given index from the graph
+     
+     @param index       the index of the node to remove
+    */
     void remove(int index);
+
+    /**
+     Removes the node with the matching ComponentID from the graph
+     
+     @param nodeId      the ComponentID of the node to remove
+    */
     void remove(const juce::String& nodeId);
 
+    /**
+     Sets the size at which to draw the graph nodes
+    */
     void setNodeSize(int newSize);
+
+    /**
+     Returns the size at which the graph nodes are drawn
+    */
     int  getNodeSize() const;
 
+    /**
+     Sets whether or not the graph has start and end node connections along its sides
+    */
     void setGraphPointStatus(bool shouldShowStartAndEndPoints);
+
+    /**
+     Returns whether or not the graph displays its start and end nodes along its sides
+    */
     bool getGraphPointStatus() const;
 
+
+    /**
+     Sets the relative Y position at which to draw the start node
+     
+     @param pos     a float ratio from 0.0 - 1.0
+    */
     void setStartPoint(float pos);
+
+    /**
+     Returns the relative Y position the start point is drawn at
+    */
     float getStartPoint() const;
+
+    /**
+     Sets the relative Y position at which to draw the end node
+     
+     @param pos     a float ratio from 0.0 - 1.0
+    */
     void setEndPoint(float pos);
+
+    /**
+     Returns the relative Y position the end point is drawn at
+    */
     float getEndPoint() const;
 
+    /**
+     Sets whether all nodes should share the same colour or not.
+     If this is disabled, the user can manually colour nodes using different
+     colour values.
+    */
     void setColourStatus(bool shouldSyncNodeColours);
 
+    /**
+     A class for receiving callbacks when a graph's nodes are moved or changed
+    */
     struct Listener
     {
 
         virtual ~Listener() {}
 
+        /**
+         Called when a graph's node has its X, Y, or Z values changed
+        */
         virtual void graphNodeChanged(Graph*, int nodeIndex, const juce::String& nodeId) = 0;
 
     };
 
+    /**
+     Adds a listener to the graph
+    */
     void addListener(Graph::Listener* listener);
 
+    /**
+     Removes a previously registered listener from the graph
+    */
     void removeListener(Graph::Listener* listener);
 
 private:
