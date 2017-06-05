@@ -89,6 +89,9 @@ public:
     void remove(int index);
     void remove(const juce::String& nodeId);
 
+    void setNodeSize(int newSize);
+    int  getNodeSize() const;
+
     void setGraphPointStatus(bool shouldShowStartAndEndPoints);
     bool getGraphPointStatus() const;
 
@@ -135,6 +138,8 @@ private:
 
     juce::ComponentDragger           dragger;
     juce::ComponentBoundsConstrainer constraints;
+
+    int nodeSize;
 
     float startPoint, endPoint;
     bool  startAndEndShown;

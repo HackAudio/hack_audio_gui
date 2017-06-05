@@ -21,8 +21,6 @@
  * SOFTWARE.
  */
 
-const int NODESIZE = 24;
-
 HackAudio::Graph::Node::Node(HackAudio::Graph* graph) : owner(*graph)
 {
 
@@ -35,7 +33,7 @@ HackAudio::Graph::Node::Node(HackAudio::Graph* graph) : owner(*graph)
     setMouseClickGrabsKeyboardFocus(true);
     setBroughtToFrontOnMouseClick(true);
 
-    setSize(NODESIZE, NODESIZE);
+    setSize(owner.nodeSize, owner.nodeSize);
 
 }
 
@@ -251,8 +249,10 @@ HackAudio::Graph::Graph()
 
     addAndMakeVisible(contentContainer);
 
-    constraints.setSizeLimits(NODESIZE, NODESIZE, NODESIZE, NODESIZE);
-    constraints.setMinimumOnscreenAmounts(NODESIZE, NODESIZE, NODESIZE, NODESIZE);
+    nodeSize = 24;
+
+    constraints.setSizeLimits(nodeSize, nodeSize, nodeSize, nodeSize);
+    constraints.setMinimumOnscreenAmounts(nodeSize, nodeSize, nodeSize, nodeSize);
 
     startPoint = 0.5f;
     endPoint   = 0.5f;
@@ -356,6 +356,28 @@ void HackAudio::Graph::remove(const juce::String& nodeId)
     n->removeComponentListener(this);
     graphNodes.removeObject(n);
     nodeOrderChanged();
+
+}
+
+void HackAudio::Graph::setNodeSize(int newSize)
+{
+
+    nodeSize = newSize;
+
+    for (int i = 0; i < graphNodes.size(); ++i)
+    {
+
+        HackAudio::Graph::Node* n = graphNodes[i];
+        n->setSize(nodeSize, nodeSize);
+
+    }
+
+}
+
+int HackAudio::Graph::getNodeSize() const
+{
+
+    return nodeSize;
 
 }
 
@@ -623,7 +645,7 @@ void HackAudio::Graph::paintOverChildren(juce::Graphics& g)
     if (startAndEndShown)
     {
 
-        const int size = NODESIZE - (NODESIZE / 6);
+        const int size = nodeSize - (nodeSize / 6);
 
         juce::Rectangle<float> start = juce::Rectangle<float>(cX - (size/2), cY + (cH * startPoint) - (size/2), size, size);
         juce::Rectangle<float> end = juce::Rectangle<float>(cX + cW - (size/2), cY + (cH * endPoint) - (size/2), size, size);
@@ -646,6 +668,6 @@ void HackAudio::Graph::resized()
     int width  = getWidth();
     int height = getHeight();
 
-    contentContainer.centreWithSize(width - 48, height - 48);
+    contentContainer.centreWithSize(width - (CORNER_RADIUS * 2), height - (CORNER_RADIUS * 2));
 
 }
