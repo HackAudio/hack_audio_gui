@@ -108,6 +108,18 @@ float HackAudio::Graph::Node::getZValue() const
 
 }
 
+juce::Point<int> HackAudio::Graph::Node::getNodePosition() const
+{
+
+    juce::Rectangle<int> parentBounds = getParentComponent()->getBounds();
+
+    return juce::Point<int>(
+        getX() + (getWidth() / 2) + parentBounds.getX(),
+        getY() + (getHeight() / 2) + parentBounds.getY()
+    );
+
+}
+
 void HackAudio::Graph::Node::mouseEnter(const juce::MouseEvent& e)
 {
 
@@ -445,6 +457,49 @@ void HackAudio::Graph::setColourStatus(bool shouldSyncNodeColours)
 
 }
 
+juce::Path HackAudio::Graph::drawLineBetween(HackAudio::Graph::Node* nodeOne, Graph::Node* nodeTwo)
+{
+
+    juce::Path p;
+
+    juce::Point<int> n1 = nodeOne->getNodePosition();
+    juce::Point<int> n2 = nodeTwo->getNodePosition();
+
+    p.startNewSubPath(n1.getX(), n1.getY());
+    p.lineTo(n2.getX(), n2.getY());
+
+    return p;
+
+}
+
+juce::Path HackAudio::Graph::drawLineFromStart(juce::Point<int> graphStart, HackAudio::Graph::Node* firstNode)
+{
+
+    juce::Path p;
+
+    juce::Point<int> n = firstNode->getNodePosition();
+
+    p.startNewSubPath(graphStart.getX(), graphStart.getY());
+    p.lineTo(n.getX(), n.getY());
+
+    return p;
+
+}
+
+juce::Path HackAudio::Graph::drawLineToEnd(HackAudio::Graph::Node* lastNode, juce::Point<int> graphEnd)
+{
+
+    juce::Path p;
+
+    juce::Point<int> n = lastNode->getNodePosition();
+
+    p.startNewSubPath(n.getX(), n.getY());
+    p.lineTo(graphEnd.getX(), graphEnd.getY());
+
+    return p;
+    
+}
+
 void HackAudio::Graph::addListener(HackAudio::Graph::Listener* listener)
 {
 
@@ -568,15 +623,16 @@ void HackAudio::Graph::paint(juce::Graphics& g)
     if (startAndEndShown)
     {
 
-        p.clear();
-        p.startNewSubPath(contentContainer.getX(), contentContainer.getY() + (contentContainer.getHeight() * startPoint));
+        juce::Point<int> graphStart = juce::Point<int>(
+            contentContainer.getX(),
+            startPoint
+        );
 
         HackAudio::Graph::Node* n = graphNodes.getFirst();
-        float x = (n->getX() + n->getWidth()  / 2) + contentContainer.getX();
-        float y = (n->getY() + n->getHeight() / 2) + contentContainer.getY();
 
-        p.lineTo(x, y);
-        g.strokePath(p, juce::PathStrokeType(4, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+        juce::Path interp = drawLineFromStart(graphStart, n);
+
+        g.strokePath(interp, juce::PathStrokeType(4, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
 
     }
 
@@ -586,34 +642,29 @@ void HackAudio::Graph::paint(juce::Graphics& g)
         HackAudio::Graph::Node* n0 = graphNodes[i];
         HackAudio::Graph::Node* n1 = graphNodes[i + 1];
 
-        float n0x = (n0->getX() + n0->getWidth() / 2) + contentContainer.getX();
-        float n0y = (n0->getY() + n0->getHeight() / 2) + contentContainer.getY();
-
-        juce::Point<float> start(n0x, n0y);
-        juce::Point<float> end;
+        juce::Path interp;
 
         if (n1)
         {
 
-            float n1x = (n1->getX() + n1->getWidth() / 2) + contentContainer.getX();
-            float n1y = (n1->getY() + n1->getHeight() / 2) + contentContainer.getY();
-            end.setXY(n1x, n1y);
+            interp = drawLineBetween(n0, n1);
 
         }
         else
         {
 
-            if (!startAndEndShown) { return; }
+            if (!startAndEndShown)
+                return;
 
-            float n1x = contentContainer.getRight();
-            float n1y = contentContainer.getY() + (contentContainer.getHeight() * endPoint);
-            end.setXY(n1x, n1y);
+            juce::Point<int> graphEnd = juce::Point<int>(
+                contentContainer.getRight(),
+                endPoint
+            );
+
+            interp = drawLineToEnd(n0, graphEnd);
 
         }
 
-        juce::Path interp;
-        interp.startNewSubPath(start);
-        interp.lineTo(end);
         g.strokePath(interp, juce::PathStrokeType(4, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
 
     }
@@ -656,8 +707,8 @@ void HackAudio::Graph::paintOverChildren(juce::Graphics& g)
 
         const int size = nodeSize - (nodeSize / 6);
 
-        juce::Rectangle<float> start = juce::Rectangle<float>(cX - (size/2), cY + (cH * startPoint) - (size/2), size, size);
-        juce::Rectangle<float> end = juce::Rectangle<float>(cX + cW - (size/2), cY + (cH * endPoint) - (size/2), size, size);
+        juce::Rectangle<float> start = juce::Rectangle<float>(cX - (size/2), startPoint - (size/2), size, size);
+        juce::Rectangle<float> end = juce::Rectangle<float>(cX + cW - (size/2), endPoint - (size/2), size, size);
 
         g.setColour(findColour(HackAudio::backgroundColourId));
         g.fillEllipse(start);

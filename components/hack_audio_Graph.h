@@ -100,6 +100,11 @@ public:
         */
         float getZValue() const;
 
+        /**
+         Returns the Node's centre position relevant to its parent
+        */
+        juce::Point<int> getNodePosition() const;
+
     private:
         Node(HackAudio::Graph* graph);
 
@@ -201,7 +206,6 @@ public:
     */
     bool getGraphPointStatus() const;
 
-
     /**
      Sets the relative Y position at which to draw the start node
      
@@ -229,9 +233,24 @@ public:
     /**
      Sets whether all nodes should share the same colour or not.
      If this is disabled, the user can manually colour nodes using different
-     colour values.
+     colour values
     */
     void setColourStatus(bool shouldSyncNodeColours);
+
+    /**
+     Override this function to create your own interpolation curves between nodes
+    */
+    virtual juce::Path drawLineBetween(Graph::Node* nodeOne, Graph::Node* nodeTwo);
+
+    /**
+     Override this function to create your own interpolation for the graph's starting point (useful for equalizers)
+    */
+    virtual juce::Path drawLineFromStart(juce::Point<int> graphStart, Graph::Node* firstNode);
+
+    /**
+     Override this function to create your own interpolation for the graph's ending point (useful for equalizers)
+    */
+    virtual juce::Path drawLineToEnd(Graph::Node* lastNode, juce::Point<int> graphEnd);
 
     /**
      A class for receiving callbacks when a graph's nodes are moved or changed
