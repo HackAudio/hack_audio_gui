@@ -268,6 +268,7 @@ HackAudio::Graph::Graph()
     setWantsKeyboardFocus(false);
     setMouseClickGrabsKeyboardFocus(false);
 
+    contentContainer.addMouseListener(this, false);
     addAndMakeVisible(contentContainer);
 
     nodeSize = 24;
@@ -601,6 +602,13 @@ void HackAudio::Graph::colourChanged()
         }
 
     }
+
+}
+
+void HackAudio::Graph::mouseUp(const juce::MouseEvent &e)
+{
+
+    unfocusAllComponents();
 
 }
 
