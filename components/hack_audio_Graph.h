@@ -250,6 +250,60 @@ public:
     float getEndPoint() const;
 
     /**
+     Sets the numerical range for the X axis
+    */
+    void setXRange(int min, int max);
+    void setXRange(float min, float max);
+    void setXRange(double min, double max);
+
+    /**
+     Returns a juce::var containing the minimum X value that was set
+    */
+    juce::var getXMin() const;
+
+    /**
+     Returns a juce::var of the maximum X value that was set
+    */
+    juce::var getXMax() const;
+
+    /**
+     Sets the unit suffix to display for the X axis
+    */
+    void setXUnits(const juce::String &units);
+
+    /**
+     Returns the unit suffix for the X axis
+    */
+    juce::String getXUnits() const;
+
+    /**
+     Sets the numerical range for the Y axis
+    */
+    void setYRange(int min, int max);
+    void setYRange(float min, float max);
+    void setYRange(double min, double max);
+
+    /**
+     Returns a juce::var of the minimum Y value that was set
+    */
+    juce::var getYMin() const;
+
+    /**
+     Returns a juce::var of the maximum Y value that was set
+    */
+    juce::var getYMax() const;
+
+    /**
+     Sets the unit suffix to display for the Y axis
+    */
+    void setYUnits(const juce::String &units);
+
+    /**
+     Returns the unit suffix for the Y axis
+    */
+    juce::String getYUnits() const;
+
+    /**
      Sets whether all nodes should share the same colour or not.
      If this is disabled, the user can manually colour nodes using different
      colour values
@@ -326,6 +380,12 @@ private:
 
     float startPoint, endPoint;
     bool  startAndEndShown;
+
+    juce::var xmin, xmax;
+    juce::var ymin, ymax;
+
+    juce::String xUnits;
+    juce::String yUnits;
 
     juce::OwnedArray<Node> graphNodes;
 

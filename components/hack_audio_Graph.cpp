@@ -147,20 +147,62 @@ void HackAudio::Graph::Node::updateTooltip()
     if (!displayValues)
         return;
 
-    juce::String tooltipText;
+    juce::String tooltipText, x, y;
 
     if (getComponentID().isNotEmpty())
         tooltipText += getComponentID() + "\n";
 
-    juce::String x = juce::String(getXValue());
+    if (owner.getXUnits().isNotEmpty())
+    {
 
-    if (x.length() > 4)
-        x = x.dropLastCharacters(x.length() - 4);
+        juce::var minvar = owner.getXMin();
+        juce::var maxvar = owner.getXMax();
 
-    juce::String y = juce::String(getYValue());
+        auto min = (minvar.isInt()) ? (int)minvar : (minvar.isDouble()) ? (double)minvar : 0.0f;
+        auto max = (maxvar.isInt()) ? (int)maxvar : (maxvar.isDouble()) ? (double)maxvar : 0.0f;
 
-    if (y.length() > 4)
-        y = y.dropLastCharacters(y.length() - 4);
+        x = juce::String(
+            ((max - min) * getXValue()) + min
+        );
+
+        x += owner.getXUnits();
+
+    }
+    else
+    {
+
+        x = juce::String(getXValue());
+
+        if (x.length() > 4)
+            x = x.dropLastCharacters(x.length() - 4);
+
+    }
+
+    if (owner.getYUnits().isNotEmpty())
+    {
+
+        juce::var minvar = owner.getYMin();
+        juce::var maxvar = owner.getYMax();
+
+        auto min = (minvar.isInt()) ? (int)minvar : (minvar.isDouble()) ? (double)minvar : 0.0f;
+        auto max = (maxvar.isInt()) ? (int)maxvar : (maxvar.isDouble()) ? (double)maxvar : 0.0f;
+
+        y = juce::String(
+            ((max - min) * getYValue()) + min
+        );
+        
+        y += owner.getYUnits();
+
+    }
+    else
+    {
+
+        y = juce::String(getYValue());
+
+        if (y.length() > 4)
+            y = y.dropLastCharacters(y.length() - 4);
+
+    }
 
     tooltipText += x + ", " + y;
 
@@ -501,6 +543,110 @@ float HackAudio::Graph::getEndPoint() const
 
     return endPoint;
 
+}
+
+void HackAudio::Graph::setXRange(int min, int max)
+{
+
+    xmin = min;
+    xmax = max;
+
+}
+
+void HackAudio::Graph::setXRange(float min, float max)
+{
+
+    xmin = min;
+    xmax = max;
+
+}
+
+void HackAudio::Graph::setXRange(double min, double max)
+{
+
+    xmin = min;
+    xmax = max;
+    
+}
+
+juce::var HackAudio::Graph::getXMin() const
+{
+
+    return xmin;
+
+}
+
+juce::var HackAudio::Graph::getXMax() const
+{
+
+    return xmax;
+    
+}
+
+void HackAudio::Graph::setXUnits(const juce::String& units)
+{
+
+    xUnits = units;
+
+}
+
+juce::String HackAudio::Graph::getXUnits() const
+{
+
+    return xUnits;
+
+}
+
+void HackAudio::Graph::setYRange(int min, int max)
+{
+
+    ymin = min;
+    ymax = max;
+
+}
+
+void HackAudio::Graph::setYRange(float min, float max)
+{
+
+    ymin = min;
+    ymax = max;
+
+}
+
+void HackAudio::Graph::setYRange(double min, double max)
+{
+
+    ymin = min;
+    ymax = max;
+
+}
+
+juce::var HackAudio::Graph::getYMin() const
+{
+
+    return ymin;
+
+}
+
+juce::var HackAudio::Graph::getYMax() const
+{
+
+    return ymax;
+
+}
+
+void HackAudio::Graph::setYUnits(const juce::String& units)
+{
+
+    yUnits = units;
+
+}
+
+juce::String HackAudio::Graph::getYUnits() const
+{
+    
+    return yUnits;
+    
 }
 
 void HackAudio::Graph::setColourStatus(bool shouldSyncNodeColours)
