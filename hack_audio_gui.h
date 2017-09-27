@@ -55,6 +55,7 @@ END_JUCE_MODULE_DECLARATION
 #include "components/hack_audio_Button.h"
 #include "components/hack_audio_Label.h"
 #include "components/hack_audio_Meter.h"
+#include "components/hack_audio_Graph.h"
 
 #include "layout/hack_audio_Diagram.h"
 #include "layout/hack_audio_Viewport.h"
