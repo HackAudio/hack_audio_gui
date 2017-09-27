@@ -330,6 +330,14 @@ public:
     virtual juce::Path drawGraph(juce::Rectangle<int> graphBounds, juce::Point<int> start, juce::Point<int> end);
 
     /**
+     Override this method if you wish to add special graphics to the graph's background,
+     such as gridlines
+     
+     All graphics must be drawn within the graphBounds rectangle
+    */
+    virtual void drawGraphBackground(juce::Graphics &g, juce::Rectangle<int> graphBounds);
+
+    /**
      Override this function to create your own interpolation curves between nodes
     */
     virtual juce::Path drawLineBetween(Graph::Node* nodeOne, Graph::Node* nodeTwo);

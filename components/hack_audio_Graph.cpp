@@ -701,6 +701,13 @@ juce::Path HackAudio::Graph::drawGraph(juce::Rectangle<int> graphBounds, juce::P
 
 }
 
+void HackAudio::Graph::drawGraphBackground(juce::Graphics &g, juce::Rectangle<int> graphBounds)
+{
+
+    return;
+
+}
+
 juce::Path HackAudio::Graph::drawLineBetween(HackAudio::Graph::Node* nodeOne, Graph::Node* nodeTwo)
 {
 
@@ -869,6 +876,8 @@ void HackAudio::Graph::paint(juce::Graphics& g)
 
     g.setColour(findColour(HackAudio::backgroundColourId));
     g.fillRect(contentContainer.getBounds());
+
+    drawGraphBackground(g, contentContainer.getBounds());
 
     g.setColour(findColour(HackAudio::foregroundColourId));
 
