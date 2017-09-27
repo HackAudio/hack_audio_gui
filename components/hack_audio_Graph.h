@@ -155,21 +155,21 @@ public:
     /**
      Adds a new, unidentified node to the graph
     */
-    void add();
+    Graph::Node* add();
 
     /**
      Adds a new node to the graph and assigns it a ComponentID for easy referencing
      
      @param nodeId      a string to use as the ComponentID
     */
-    void add(const juce::String& nodeId);
+    Graph::Node* add(const juce::String& nodeId);
 
     /**
      Inserts a new, unidentified node to the graph at the index argument
      
      @param index       where to insert the new node
     */
-    void insert(int index);
+    Graph::Node* insert(int index);
 
     /**
      Inserts a new node to the graph and assigns it a ComponentID
@@ -177,7 +177,7 @@ public:
      @param index       where to insert the new node
      @param nodeId      the ComponentID to give the node
     */
-    void insert(int index, const juce::String& nodeId);
+    Graph::Node* insert(int index, const juce::String& nodeId);
 
     /**
      Returns a node based on the node's position in which it was added

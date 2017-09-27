@@ -385,7 +385,7 @@ HackAudio::Graph::~Graph()
 
 }
 
-void HackAudio::Graph::add()
+HackAudio::Graph::Node* HackAudio::Graph::add()
 {
 
     HackAudio::Graph::Node* n = new HackAudio::Graph::Node(this);
@@ -397,9 +397,11 @@ void HackAudio::Graph::add()
 
     nodeOrderChanged();
 
+    return n;
+
 }
 
-void HackAudio::Graph::add(const juce::String& nodeId)
+HackAudio::Graph::Node* HackAudio::Graph::add(const juce::String& nodeId)
 {
 
     HackAudio::Graph::Node* n = new HackAudio::Graph::Node(this);
@@ -412,9 +414,11 @@ void HackAudio::Graph::add(const juce::String& nodeId)
 
     nodeOrderChanged();
 
+    return n;
+
 }
 
-void HackAudio::Graph::insert(int index)
+HackAudio::Graph::Node* HackAudio::Graph::insert(int index)
 {
 
     HackAudio::Graph::Node* n = new HackAudio::Graph::Node(this);
@@ -426,9 +430,11 @@ void HackAudio::Graph::insert(int index)
 
     nodeOrderChanged();
 
+    return n;
+
 }
 
-void HackAudio::Graph::insert(int index, const juce::String& nodeId)
+HackAudio::Graph::Node* HackAudio::Graph::insert(int index, const juce::String& nodeId)
 {
 
     HackAudio::Graph::Node* n = new HackAudio::Graph::Node(this);
@@ -440,6 +446,8 @@ void HackAudio::Graph::insert(int index, const juce::String& nodeId)
     n->setCentreRelative(0.5f, 0.5f);
 
     nodeOrderChanged();
+
+    return n;
 
 }
 
