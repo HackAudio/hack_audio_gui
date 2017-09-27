@@ -58,6 +58,20 @@ public:
         */
         void setAxisLocking(bool shouldLockVertical, bool shouldLockHorizontal);
 
+        /**
+         Whether or not to automatically set the node's tooltip to its XY values.
+         
+         If this is enabled, the tooltip will be overwritten every time
+         the node is moved or hovered over.
+
+         If this is disabled, you can set a custom tooltip for the node that will
+         be preserved. When disabling this mode, the tooltip is cleared.
+         
+         This value defaults to true when a node is created.
+         
+         @param shouldDisplayValues     whether or not to automatically update the tooltip
+        */
+        void setValueDisplay(bool shouldDisplayValues);
 
         /**
          Sets the node's X value. This is similar to its X position, but on a range
@@ -109,6 +123,8 @@ public:
     private:
         Node(HackAudio::Graph* graph);
 
+        void updateTooltip();
+
         void mouseEnter    (const juce::MouseEvent& e) override;
         void mouseExit     (const juce::MouseEvent& e) override;
         void mouseDown     (const juce::MouseEvent& e) override;
@@ -124,6 +140,8 @@ public:
         void paint(juce::Graphics& g) override;
 
         bool axisLockedX, axisLockedY;
+
+        bool displayValues;
 
         float z;
 

@@ -36,6 +36,8 @@ HackAudio::Graph::Node::Node(HackAudio::Graph* graph) : owner(*graph)
     axisLockedX = false;
     axisLockedY = false;
 
+    displayValues = true;
+
     z = 0.0f;
 
     setSize(owner.nodeSize, owner.nodeSize);
@@ -49,6 +51,20 @@ void HackAudio::Graph::Node::setAxisLocking(bool shouldLockVertical, bool should
 
     axisLockedY = shouldLockVertical;
     axisLockedX = shouldLockHorizontal;
+
+}
+
+void HackAudio::Graph::Node::setValueDisplay(bool shouldDisplayValues)
+{
+
+    displayValues = shouldDisplayValues;
+
+    if (!shouldDisplayValues)
+    {
+
+        setTooltip("");
+
+    }
 
 }
 
@@ -125,8 +141,38 @@ juce::Point<int> HackAudio::Graph::Node::getNodePosition() const
 
 }
 
+void HackAudio::Graph::Node::updateTooltip()
+{
+
+    if (!displayValues)
+        return;
+
+    juce::String tooltipText;
+
+    if (getComponentID().isNotEmpty())
+        tooltipText += getComponentID() + "\n";
+
+    juce::String x = juce::String(getXValue());
+
+    if (x.length() > 4)
+        x = x.dropLastCharacters(x.length() - 4);
+
+    juce::String y = juce::String(getYValue());
+
+    if (y.length() > 4)
+        y = y.dropLastCharacters(y.length() - 4);
+
+    tooltipText += x + ", " + y;
+
+    setTooltip(tooltipText);
+
+}
+
 void HackAudio::Graph::Node::mouseEnter(const juce::MouseEvent& e)
 {
+
+    // Updating the tooltip on mouseEnter ensures it's always set when we need it
+    updateTooltip();
 
     setMouseCursor(juce::MouseCursor::PointingHandCursor);
 
@@ -168,7 +214,7 @@ void HackAudio::Graph::Node::mouseDrag(const juce::MouseEvent& e)
 
     }
 
-    setTooltip(juce::String(getXValue()) + ", " + juce::String(getYValue()));
+    updateTooltip();
 
 }
 
