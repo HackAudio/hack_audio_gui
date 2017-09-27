@@ -39,7 +39,8 @@ public:
      
      @see HackAudio::Graph::add, HackAudio::Graph::insert, HackAudio::Graph::remove
     */
-    class Node : public juce::Component
+    class Node : public juce::Component,
+                 public juce::SettableTooltipClient
     {
 
         friend class Graph;

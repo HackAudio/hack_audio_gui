@@ -33,6 +33,11 @@ HackAudio::Graph::Node::Node(HackAudio::Graph* graph) : owner(*graph)
     setMouseClickGrabsKeyboardFocus(true);
     setBroughtToFrontOnMouseClick(true);
 
+    axisLockedX = false;
+    axisLockedY = false;
+
+    z = 0.0f;
+
     setSize(owner.nodeSize, owner.nodeSize);
 
 }
@@ -162,6 +167,8 @@ void HackAudio::Graph::Node::mouseDrag(const juce::MouseEvent& e)
         setTopLeftPosition(getX(), y);
 
     }
+
+    setTooltip(juce::String(getXValue()) + ", " + juce::String(getYValue()));
 
 }
 
