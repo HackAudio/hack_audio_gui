@@ -323,6 +323,13 @@ public:
     void setColourStatus(bool shouldSyncNodeColours);
 
     /**
+     Override to draw on the graph without using nodes
+     
+     This is only called if no nodes have been set
+    */
+    virtual juce::Path drawGraph(juce::Rectangle<int> graphBounds, juce::Point<int> start, juce::Point<int> end);
+
+    /**
      Override this function to create your own interpolation curves between nodes
     */
     virtual juce::Path drawLineBetween(Graph::Node* nodeOne, Graph::Node* nodeTwo);

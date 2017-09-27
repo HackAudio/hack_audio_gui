@@ -686,6 +686,13 @@ void HackAudio::Graph::setColourStatus(bool shouldSyncNodeColours)
 
 }
 
+juce::Path HackAudio::Graph::drawGraph(juce::Rectangle<int> graphBounds, juce::Point<int> start, juce::Point<int> end)
+{
+
+    return juce::Path();
+
+}
+
 juce::Path HackAudio::Graph::drawLineBetween(HackAudio::Graph::Node* nodeOne, Graph::Node* nodeTwo)
 {
 
@@ -857,51 +864,73 @@ void HackAudio::Graph::paint(juce::Graphics& g)
 
     g.setColour(findColour(HackAudio::foregroundColourId));
 
-    if (startAndEndShown)
+    if (graphNodes.size() > 0)
+    {
+
+        if (startAndEndShown)
+        {
+
+            juce::Point<int> graphStart = juce::Point<int>(
+                contentContainer.getX(),
+                startPoint
+            );
+
+            HackAudio::Graph::Node* n = graphNodes.getFirst();
+
+            juce::Path interp = drawLineFromStart(graphStart, n);
+
+            g.strokePath(interp, juce::PathStrokeType(lineWidth, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+
+        }
+
+        for (int i = 0; i < graphNodes.size(); ++i)
+        {
+
+            HackAudio::Graph::Node* n0 = graphNodes[i];
+            HackAudio::Graph::Node* n1 = graphNodes[i + 1];
+
+            juce::Path interp;
+
+            if (n1)
+            {
+
+                interp = drawLineBetween(n0, n1);
+
+            }
+            else
+            {
+
+                if (!startAndEndShown)
+                    return;
+
+                juce::Point<int> graphEnd = juce::Point<int>(
+                    contentContainer.getRight(),
+                    endPoint
+                );
+
+                interp = drawLineToEnd(n0, graphEnd);
+
+            }
+
+            g.strokePath(interp, juce::PathStrokeType(lineWidth, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+
+        }
+
+    }
+    else
     {
 
         juce::Point<int> graphStart = juce::Point<int>(
-            contentContainer.getX(),
-            startPoint
+                contentContainer.getX(),
+                startPoint
         );
 
-        HackAudio::Graph::Node* n = graphNodes.getFirst();
+        juce::Point<int> graphEnd = juce::Point<int>(
+                    contentContainer.getRight(),
+                    endPoint
+        );
 
-        juce::Path interp = drawLineFromStart(graphStart, n);
-
-        g.strokePath(interp, juce::PathStrokeType(lineWidth, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
-
-    }
-
-    for (int i = 0; i < graphNodes.size(); ++i)
-    {
-
-        HackAudio::Graph::Node* n0 = graphNodes[i];
-        HackAudio::Graph::Node* n1 = graphNodes[i + 1];
-
-        juce::Path interp;
-
-        if (n1)
-        {
-
-            interp = drawLineBetween(n0, n1);
-
-        }
-        else
-        {
-
-            if (!startAndEndShown)
-                return;
-
-            juce::Point<int> graphEnd = juce::Point<int>(
-                contentContainer.getRight(),
-                endPoint
-            );
-
-            interp = drawLineToEnd(n0, graphEnd);
-
-        }
-
+        juce::Path interp = drawGraph(contentContainer.getBounds(), graphStart, graphEnd);
         g.strokePath(interp, juce::PathStrokeType(lineWidth, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
 
     }
