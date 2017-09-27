@@ -118,7 +118,7 @@ void HackAudio::Graph::Node::setZValue(float newZ)
 {
 
     z = newZ;
-    owner.nodeChanged(owner.graphNodes.indexOf(this), getComponentID());
+    owner.nodeChanged(this);
 
 }
 
@@ -784,10 +784,10 @@ void HackAudio::Graph::nodeOrderChanged()
 
 }
 
-void HackAudio::Graph::nodeChanged(int index, const juce::String& nodeId)
+void HackAudio::Graph::nodeChanged(HackAudio::Graph::Node* n)
 {
 
-    listeners.call(&HackAudio::Graph::Listener::graphNodeChanged, this, index, nodeId);
+    listeners.call(&HackAudio::Graph::Listener::graphNodeChanged, this, n);
 
 }
 
@@ -806,7 +806,7 @@ void HackAudio::Graph::componentMovedOrResized(juce::Component& component, bool 
         {
 
             constraints.checkComponentBounds(c);
-            nodeChanged(i, c->getComponentID());
+            nodeChanged(graphNodes[i]);
             repaint();
             return;
 

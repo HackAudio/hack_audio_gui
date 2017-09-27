@@ -363,7 +363,7 @@ public:
         /**
          Called when a graph's node has its X, Y, or Z values changed
         */
-        virtual void graphNodeChanged(Graph*, int nodeIndex, const juce::String& nodeId) = 0;
+        virtual void graphNodeChanged(Graph*, Graph::Node*) = 0;
 
     };
 
@@ -380,7 +380,7 @@ public:
 private:
 
     void nodeOrderChanged();
-    void nodeChanged(int index, const juce::String& nodeId);
+    void nodeChanged(Graph::Node* n);
 
     void componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized) override;
 
