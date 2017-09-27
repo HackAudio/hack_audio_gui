@@ -213,7 +213,19 @@ public:
     /**
      Returns the size at which the graph nodes are drawn
     */
-    int  getNodeSize() const;
+    int getNodeSize() const;
+
+    /**
+     Sets the line width to use when drawing paths between nodes
+     
+     This defaults to 4.0f
+    */
+    void setLineWidth(float width);
+
+    /**
+     Returns the default line width that was set
+    */
+    float getLineWidth() const;
 
     /**
      Sets whether or not the graph has start and end node connections along its sides
@@ -377,6 +389,8 @@ private:
     juce::ComponentBoundsConstrainer constraints;
 
     int nodeSize;
+
+    float lineWidth;
 
     float startPoint, endPoint;
     bool  startAndEndShown;

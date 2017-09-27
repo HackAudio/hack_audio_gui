@@ -98,7 +98,7 @@ void HackAudio::Graph::Node::setYValue(float newY)
 
     int height = getParentHeight() - getHeight();
 
-    setCentrePosition(getX() + getWidth() / 2, height - (height * newY));
+    setCentrePosition(getX() + getWidth() / 2, height - (height * newY) + (getHeight() / 2));
 
 }
 
@@ -348,7 +348,7 @@ void HackAudio::Graph::Node::paint(juce::Graphics& g)
 
     }
 
-    g.drawEllipse(2, 2, width - 4, height - 4, 4);
+    g.drawEllipse(2, 2, width - 4, height - 4, owner.getLineWidth());
 
 }
 
@@ -367,6 +367,7 @@ HackAudio::Graph::Graph()
     addAndMakeVisible(contentContainer);
 
     nodeSize = 24;
+    lineWidth = 4.0f;
 
     constraints.setSizeLimits(nodeSize, nodeSize, nodeSize, nodeSize);
     constraints.setMinimumOnscreenAmounts(nodeSize, nodeSize, nodeSize, nodeSize);
@@ -479,13 +480,24 @@ void HackAudio::Graph::remove(const juce::String& nodeId)
 void HackAudio::Graph::setNodeSize(int newSize)
 {
 
+    assert(nodeSize > 0);
+
     nodeSize = newSize;
+
+    constraints.setSizeLimits(nodeSize, nodeSize, nodeSize, nodeSize);
 
     for (int i = 0; i < graphNodes.size(); ++i)
     {
 
         HackAudio::Graph::Node* n = graphNodes[i];
+
+        float x = n->getXValue();
+        float y = n->getYValue();
+
         n->setSize(nodeSize, nodeSize);
+
+        n->setXValue(x);
+        n->setYValue(y);
 
     }
 
@@ -495,6 +507,23 @@ int HackAudio::Graph::getNodeSize() const
 {
 
     return nodeSize;
+
+}
+
+void HackAudio::Graph::setLineWidth(float width)
+{
+
+    assert(lineWidth > 0.0f);
+
+    lineWidth = width;
+    repaint();
+
+}
+
+float HackAudio::Graph::getLineWidth() const
+{
+
+    return lineWidth;
 
 }
 
@@ -743,7 +772,8 @@ void HackAudio::Graph::nodeChanged(int index, const juce::String& nodeId)
 void HackAudio::Graph::componentMovedOrResized(juce::Component& component, bool wasMoved, bool wasResized)
 {
 
-    assert(!wasResized);    /* Warning: Graph::Nodes should never resize */
+    if (!wasMoved)
+        return;
 
     for (int i = 0; i < graphNodes.size(); ++i)
     {
@@ -839,7 +869,7 @@ void HackAudio::Graph::paint(juce::Graphics& g)
 
         juce::Path interp = drawLineFromStart(graphStart, n);
 
-        g.strokePath(interp, juce::PathStrokeType(4, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+        g.strokePath(interp, juce::PathStrokeType(lineWidth, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
 
     }
 
@@ -872,7 +902,7 @@ void HackAudio::Graph::paint(juce::Graphics& g)
 
         }
 
-        g.strokePath(interp, juce::PathStrokeType(4, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+        g.strokePath(interp, juce::PathStrokeType(lineWidth, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
 
     }
 
@@ -922,8 +952,8 @@ void HackAudio::Graph::paintOverChildren(juce::Graphics& g)
         g.fillEllipse(end);
 
         g.setColour(findColour(HackAudio::midgroundColourId));
-        g.drawEllipse(start, 4);
-        g.drawEllipse(end, 4);
+        g.drawEllipse(start, lineWidth);
+        g.drawEllipse(end, lineWidth);
 
     }
 
