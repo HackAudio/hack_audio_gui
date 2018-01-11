@@ -31,7 +31,7 @@ namespace Diagrams
 {
 
     #include "utils/hack_audio_Gain.h"
-    #include "utils/hack_audio_Predelay.h"
+    #include "utils/hack_audio_preDelay.h"
     #include "utils/hack_audio_Moddelay.h"
 
     #include "filters/hack_audio_AllpassFilter.h"
