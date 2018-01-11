@@ -30,8 +30,7 @@ namespace HackAudio
 /**
  A custom implementation of juce::FlexBox that provides an easier API for setting up a basic layout
 */
-class FlexBox : private juce::FlexBox,
-                private juce::ComponentListener
+class FlexBox : private juce::ComponentListener
 {
 public:
 
@@ -250,6 +249,8 @@ private:
 
     bool validBounds;
     juce::Rectangle<int> flexBoxBounds;
+    
+    juce::FlexBox flexbox;
 
     juce::FlexItem defaultFlexSettings;
 

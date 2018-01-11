@@ -24,10 +24,10 @@
 HackAudio::FlexBox::FlexBox()
 {
 
-    flexDirection  = juce::FlexBox::Direction::row;
-    alignItems     = juce::FlexBox::AlignItems::center;
-    alignContent   = juce::FlexBox::AlignContent::center;
-    justifyContent = juce::FlexBox::JustifyContent::spaceAround;
+    flexbox.flexDirection  = juce::FlexBox::Direction::row;
+    flexbox.alignItems     = juce::FlexBox::AlignItems::center;
+    flexbox.alignContent   = juce::FlexBox::AlignContent::center;
+    flexbox.justifyContent = juce::FlexBox::JustifyContent::spaceAround;
 
     flexBoxBounds.setBounds(0, 0, 0, 0);
 
@@ -66,7 +66,7 @@ void HackAudio::FlexBox::addComponent(juce::Component& component, int customOrde
     itemToAdd.width  = component.getWidth();
     itemToAdd.height = component.getHeight();
     itemToAdd.order  = customOrder;
-    items.add(itemToAdd);
+    flexbox.items.add(itemToAdd);
 
     component.addComponentListener(this);
     applyLayout();
@@ -77,7 +77,7 @@ void HackAudio::FlexBox::removeComponent(juce::Component& component)
 {
     
     juce::FlexItem* fi = getItem(component);
-    items.remove(fi);
+    flexbox.items.remove(fi);
     applyLayout();
 
 }
@@ -88,7 +88,7 @@ void HackAudio::FlexBox::addFlexBox(juce::FlexBox& flexbox, int customOrder)
     juce::FlexItem itemToAdd = defaultFlexSettings;
     itemToAdd.associatedFlexBox = &flexbox;
     itemToAdd.order = customOrder;
-    items.add(itemToAdd);
+    flexbox.items.add(itemToAdd);
     applyLayout();
     
 }
@@ -97,7 +97,7 @@ void HackAudio::FlexBox::removeFlexBox(juce::FlexBox& flexbox)
 {
 
     juce::FlexItem* fi = getItem(flexbox);
-    items.remove(fi);
+    flexbox.items.remove(fi);
     applyLayout();
 
 }
@@ -105,7 +105,7 @@ void HackAudio::FlexBox::removeFlexBox(juce::FlexBox& flexbox)
 void HackAudio::FlexBox::setDirection(juce::FlexBox::Direction newDirection)
 {
 
-    flexDirection = newDirection;
+    flexbox.flexDirection = newDirection;
     applyLayout();
 
 }
@@ -113,14 +113,14 @@ void HackAudio::FlexBox::setDirection(juce::FlexBox::Direction newDirection)
 juce::FlexBox::Direction HackAudio::FlexBox::getDirection() const
 {
 
-    return flexDirection;
+    return flexbox.flexDirection;
 
 }
 
 void HackAudio::FlexBox::setWrap(juce::FlexBox::Wrap newWrap)
 {
 
-    flexWrap = newWrap;
+    flexbox.flexWrap = newWrap;
     applyLayout();
 
 }
@@ -128,14 +128,14 @@ void HackAudio::FlexBox::setWrap(juce::FlexBox::Wrap newWrap)
 juce::FlexBox::Wrap HackAudio::FlexBox::getWrap() const
 {
 
-    return flexWrap;
+    return flexbox.flexWrap;
 
 }
 
 void HackAudio::FlexBox::setAlignContent(juce::FlexBox::AlignContent newAlignment)
 {
 
-    alignContent = newAlignment;
+    flexbox.alignContent = newAlignment;
     applyLayout();
 
 }
@@ -143,14 +143,14 @@ void HackAudio::FlexBox::setAlignContent(juce::FlexBox::AlignContent newAlignmen
 juce::FlexBox::AlignContent HackAudio::FlexBox::getAlignContent() const
 {
 
-    return alignContent;
+    return flexbox.alignContent;
 
 }
 
 void HackAudio::FlexBox::setAlignItems(juce::FlexBox::AlignItems newAlignment)
 {
 
-    alignItems = newAlignment;
+    flexbox.alignItems = newAlignment;
     applyLayout();
 
 }
@@ -158,14 +158,14 @@ void HackAudio::FlexBox::setAlignItems(juce::FlexBox::AlignItems newAlignment)
 juce::FlexBox::AlignItems HackAudio::FlexBox::getAlignItems() const
 {
 
-    return alignItems;
+    return flexbox.alignItems;
 
 }
 
 void HackAudio::FlexBox::setJustifyContent(juce::FlexBox::JustifyContent newJustification)
 {
 
-    justifyContent = newJustification;
+    flexbox.justifyContent = newJustification;
     applyLayout();
 
 }
@@ -173,24 +173,24 @@ void HackAudio::FlexBox::setJustifyContent(juce::FlexBox::JustifyContent newJust
 juce::FlexBox::JustifyContent HackAudio::FlexBox::getJustifyContent() const
 {
 
-    return justifyContent;
+    return flexbox.justifyContent;
 
 }
 
 juce::Array<juce::FlexItem> HackAudio::FlexBox::getItems() const
 {
 
-    return items;
+    return flexbox.items;
 
 }
 
 juce::FlexItem* HackAudio::FlexBox::getItem(juce::Component& component) const
 {
 
-    for (int i = 0; i < items.size(); ++i)
+    for (int i = 0; i < flexbox.items.size(); ++i)
     {
 
-        juce::FlexItem& fi = items.getReference(i);
+        juce::FlexItem& fi = flexbox.items.getReference(i);
 
         if (fi.associatedComponent == &component)
         {
@@ -207,10 +207,10 @@ juce::FlexItem* HackAudio::FlexBox::getItem(juce::Component& component) const
 juce::FlexItem* HackAudio::FlexBox::getItem(juce::FlexBox& flexbox) const
 {
 
-    for (int i = 0; i < items.size(); ++i)
+    for (int i = 0; i < flexbox.items.size(); ++i)
     {
 
-        juce::FlexItem& fi = items.getReference(i);
+        juce::FlexItem& fi = flexbox.items.getReference(i);
 
         if (fi.associatedFlexBox == &flexbox)
         {
@@ -365,10 +365,10 @@ void HackAudio::FlexBox::setItemMargin(juce::FlexBox &flexbox, juce::FlexItem::M
 void HackAudio::FlexBox::applyItemFlex(float newFlexGrow)
 {
 
-    for (int i = 0; i < items.size(); ++i)
+    for (int i = 0; i < flexbox.items.size(); ++i)
     {
 
-        items.getReference(i).flexGrow = newFlexGrow;
+        flexbox.items.getReference(i).flexGrow = newFlexGrow;
 
     }
 
@@ -379,11 +379,11 @@ void HackAudio::FlexBox::applyItemFlex(float newFlexGrow)
 void HackAudio::FlexBox::applyItemFlex(float newFlexGrow, float newFlexShrink)
 {
 
-    for (int i = 0; i < items.size(); ++i)
+    for (int i = 0; i < flexbox.items.size(); ++i)
     {
 
-        items.getReference(i).flexGrow   = newFlexGrow;
-        items.getReference(i).flexShrink = newFlexShrink;
+        flexbox.items.getReference(i).flexGrow   = newFlexGrow;
+        flexbox.items.getReference(i).flexShrink = newFlexShrink;
 
     }
 
@@ -394,12 +394,12 @@ void HackAudio::FlexBox::applyItemFlex(float newFlexGrow, float newFlexShrink)
 void HackAudio::FlexBox::applyItemFlex(float newFlexGrow, float newFlexShrink, float newFlexBasis)
 {
 
-    for (int i = 0; i < items.size(); ++i)
+    for (int i = 0; i < flexbox.items.size(); ++i)
     {
 
-        items.getReference(i).flexGrow   = newFlexGrow;
-        items.getReference(i).flexShrink = newFlexShrink;
-        items.getReference(i).flexBasis  = newFlexBasis;
+        flexbox.items.getReference(i).flexGrow   = newFlexGrow;
+        flexbox.items.getReference(i).flexShrink = newFlexShrink;
+        flexbox.items.getReference(i).flexBasis  = newFlexBasis;
 
     }
 
@@ -410,10 +410,10 @@ void HackAudio::FlexBox::applyItemFlex(float newFlexGrow, float newFlexShrink, f
 void HackAudio::FlexBox::applyItemWidth(float newWidth)
 {
 
-    for (int i = 0; i < items.size(); ++i)
+    for (int i = 0; i < flexbox.items.size(); ++i)
     {
 
-        items.getReference(i).width = newWidth;
+        flexbox.items.getReference(i).width = newWidth;
 
     }
 
@@ -424,10 +424,10 @@ void HackAudio::FlexBox::applyItemWidth(float newWidth)
 void HackAudio::FlexBox::applyItemHeight(float newHeight)
 {
 
-    for (int i = 0; i < items.size(); ++i)
+    for (int i = 0; i < flexbox.items.size(); ++i)
     {
 
-        items.getReference(i).width = newHeight;
+        flexbox.items.getReference(i).width = newHeight;
 
     }
 
@@ -438,10 +438,10 @@ void HackAudio::FlexBox::applyItemHeight(float newHeight)
 void HackAudio::FlexBox::applyItemMargin(juce::FlexItem::Margin newMargin)
 {
 
-    for (int i = 0; i < items.size(); ++i)
+    for (int i = 0; i < flexbox.items.size(); ++i)
     {
 
-        items.getReference(i).margin = newMargin;
+        flexbox.items.getReference(i).margin = newMargin;
 
     }
 
@@ -452,12 +452,12 @@ void HackAudio::FlexBox::applyItemMargin(juce::FlexItem::Margin newMargin)
 void HackAudio::FlexBox::applyGlobalFlexItem(juce::FlexItem newFlexProperties)
 {
 
-    for (int i = 0; i < items.size(); ++i)
+    for (int i = 0; i < flexbox.items.size(); ++i)
     {
 
-        juce::Component * c = items[i].associatedComponent;
-        items[i] = newFlexProperties;
-        items.getReference(i).associatedComponent = c;
+        juce::Component * c = flexbox.items[i].associatedComponent;
+        flexbox.items[i] = newFlexProperties;
+        flexbox.items.getReference(i).associatedComponent = c;
 
     }
 
@@ -499,15 +499,15 @@ void HackAudio::FlexBox::applyLayout()
 
     if (!validBounds) { return; }
 
-    for (int i = 0; i < items.size(); ++i)
+    for (int i = 0; i < flexbox.items.size(); ++i)
     {
 
-        assert(items[i].associatedComponent || items[i].associatedFlexBox); /* Warning: FlexItem Does Not Control Anything */
+        assert(flexbox.items[i].associatedComponent || flexbox.items[i].associatedFlexBox); /* Warning: FlexItem Does Not Control Anything */
         
     }
 
     resizeGuard = true;
-    performLayout(flexBoxBounds);
+    flexbox.performLayout(flexBoxBounds);
     resizeGuard = false;
 
 }
@@ -524,7 +524,7 @@ void HackAudio::FlexBox::componentMovedOrResized(juce::Component& component, boo
 
         component.getProperties().set(juce::Identifier("flexIndexCache"), juce::var(fi->order));
 
-        items.remove(fi);
+        flexbox.items.remove(fi);
 
     }
     else
@@ -540,7 +540,7 @@ void HackAudio::FlexBox::componentMovedOrResized(juce::Component& component, boo
             fi.height = component.getHeight();
 
             fi.order = component.getProperties().getWithDefault(juce::Identifier("flexIndexCache"), juce::var(0));
-            items.add(fi);
+            flexbox.items.add(fi);
 
             component.getProperties().remove(juce::Identifier("flexIndexCache"));
 
@@ -573,7 +573,7 @@ void HackAudio::FlexBox::componentVisibilityChanged(juce::Component& component)
         fi.height = component.getProperties().getWithDefault(juce::Identifier("flexHeightCache"), juce::var(0));
 
         fi.order = component.getProperties().getWithDefault(juce::Identifier("flexIndexCache"), juce::var(0));
-        items.add(fi);
+        flexbox.items.add(fi);
 
         component.getProperties().remove(juce::Identifier("flexWidthCache"));
         component.getProperties().remove(juce::Identifier("flexHeightCache"));
@@ -589,7 +589,7 @@ void HackAudio::FlexBox::componentVisibilityChanged(juce::Component& component)
         component.getProperties().set(juce::Identifier("flexWidthCache"), juce::var(component.getWidth()));
         component.getProperties().set(juce::Identifier("flexHeightCache"), juce::var(component.getHeight()));
 
-        items.remove(fi);
+        flexbox.items.remove(fi);
 
     }
 
