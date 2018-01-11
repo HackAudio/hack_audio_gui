@@ -49,6 +49,8 @@ HackAudio::Viewport::Viewport()
 
     viewportFont = HackAudio::Fonts::NowRegular;
     viewportFont.setHeight(HackAudio::FontHeights::Large);
+    
+    draggable = true;
 
 }
 
@@ -198,6 +200,13 @@ juce::Font HackAudio::Viewport::getFont() const
 
 }
 
+void HackAudio::Viewport::setDraggable(bool isDraggable)
+{
+
+    draggable = isDraggable;
+
+}
+
 void HackAudio::Viewport::setDiagramViaTraversal(HackAudio::Diagram &d)
 {
 
@@ -282,14 +291,15 @@ void HackAudio::Viewport::mouseDown(const juce::MouseEvent& e)
 
     }
 
-    componentDragger.startDraggingComponent(contentContainer.getChildComponent(0), e);
+    if (draggable)
+        componentDragger.startDraggingComponent(contentContainer.getChildComponent(0), e);
 
 }
 
 void HackAudio::Viewport::mouseDrag(const juce::MouseEvent& e)
 {
 
-    if (!currentContent || !isEnabled()) { return; }
+    if (!currentContent || !isEnabled() || !draggable) { return; }
 
     componentDragger.dragComponent(contentContainer.getChildComponent(0), e, nullptr);
 
@@ -341,7 +351,7 @@ void HackAudio::Viewport::mouseUp(const juce::MouseEvent& e)
 void HackAudio::Viewport::mouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& w)
 {
 
-    if (!currentContent || !isEnabled()) { return; }
+    if (!currentContent || !isEnabled() || !draggable) { return; }
 
     juce::Point<int> pos(currentContent->getPosition());
 

@@ -79,6 +79,15 @@ public:
      Returns the viewport's current font
     */
     juce::Font getFont() const;
+    
+    /**
+     Sets whether or not the diagrams can be moved inside the viewport. Viewports
+     are draggable by default.
+     
+     If disabled, labels part of diagrams will still be clickable (unlike
+     disabling the entire component).
+    */
+    void setDraggable(bool isDraggable);
 
 private:
 
@@ -101,6 +110,8 @@ private:
     void paintOverChildren(juce::Graphics& g) override;
 
     void resized() override;
+    
+    bool draggable;
 
     juce::Font viewportFont;
 
