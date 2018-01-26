@@ -138,7 +138,7 @@ void HackAudio::Viewport::traverseDown(HackAudio::Diagram &d)
 
     if (!isEnabled()) { return; }
 
-    assert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
+    jassert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
 
     backButton.setVisible(true);
     topButton.setVisible(true);
@@ -157,8 +157,8 @@ void HackAudio::Viewport::traverseUp()
 
     if (!isEnabled()) { return; }
 
-    assert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
-    assert(parentContent.size() > 0);                       /* Warning: Viewport Is Already On Top-Level Diagram */
+    jassert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
+    jassert(parentContent.size() > 0);                       /* Warning: Viewport Is Already On Top-Level Diagram */
     
     HackAudio::Diagram* d = parentContent.removeAndReturn(parentContent.size() - 1);
 
@@ -171,8 +171,8 @@ void HackAudio::Viewport::traverseTop()
 
     if (!isEnabled()) { return; }
 
-    assert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
-    assert(!parentContent.isEmpty());                       /* Warning: Viewport Is Already On Top-Level Diagram */
+    jassert(contentContainer.getNumChildComponents() > 0);   /* Warning: Viewport Is Empty */
+    jassert(!parentContent.isEmpty());                       /* Warning: Viewport Is Already On Top-Level Diagram */
 
     setDiagram(*parentContent.getFirst());
 

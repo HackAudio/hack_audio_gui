@@ -47,7 +47,7 @@ HackAudio::Graph::Node::Node(HackAudio::Graph* graph) : owner(*graph)
 void HackAudio::Graph::Node::setAxisLocking(bool shouldLockVertical, bool shouldLockHorizontal)
 {
 
-    assert(!(shouldLockVertical == true && shouldLockHorizontal == true));
+    jassert(!(shouldLockVertical == true && shouldLockHorizontal == true));
 
     axisLockedY = shouldLockVertical;
     axisLockedX = shouldLockHorizontal;
@@ -71,7 +71,7 @@ void HackAudio::Graph::Node::setValueDisplay(bool shouldDisplayValues)
 void HackAudio::Graph::Node::setXValue(float newX)
 {
 
-    assert(newX >= 0.0f && newX <= 1.0f);
+    jassert(newX >= 0.0f && newX <= 1.0f);
 
     int width = getParentWidth() - getWidth();
 
@@ -94,7 +94,7 @@ float HackAudio::Graph::Node::getXValue() const
 void HackAudio::Graph::Node::setYValue(float newY)
 {
 
-    assert(newY >= 0.0f && newY <= 1.0f);
+    jassert(newY >= 0.0f && newY <= 1.0f);
 
     int height = getParentHeight() - getHeight();
 
@@ -488,7 +488,7 @@ void HackAudio::Graph::remove(const juce::String& nodeId)
 void HackAudio::Graph::setNodeSize(int newSize)
 {
 
-    assert(nodeSize > 0);
+    jassert(nodeSize > 0);
 
     nodeSize = newSize;
 
@@ -521,7 +521,7 @@ int HackAudio::Graph::getNodeSize() const
 void HackAudio::Graph::setLineWidth(float width)
 {
 
-    assert(lineWidth > 0.0f);
+    jassert(lineWidth > 0.0f);
 
     lineWidth = width;
     repaint();
@@ -553,7 +553,7 @@ bool HackAudio::Graph::getGraphPointStatus() const
 void HackAudio::Graph::setStartPoint(float pos)
 {
 
-    assert(pos >= 0.0f && pos <= 1.0f);
+    jassert(pos >= 0.0f && pos <= 1.0f);
     startPoint = contentContainer.getY() + (pos * contentContainer.getHeight());
     repaint();
 
@@ -569,7 +569,7 @@ float HackAudio::Graph::getStartPoint() const
 void HackAudio::Graph::setEndPoint(float pos)
 {
 
-    assert(pos >= 0.0f && pos <= 1.0f);
+    jassert(pos >= 0.0f && pos <= 1.0f);
     endPoint = contentContainer.getY() + (pos * contentContainer.getHeight());
     repaint();
 

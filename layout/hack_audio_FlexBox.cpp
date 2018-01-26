@@ -502,7 +502,7 @@ void HackAudio::FlexBox::applyLayout()
     for (int i = 0; i < flexbox.items.size(); ++i)
     {
 
-        assert(flexbox.items[i].associatedComponent || flexbox.items[i].associatedFlexBox); /* Warning: FlexItem Does Not Control Anything */
+        jassert(flexbox.items[i].associatedComponent || flexbox.items[i].associatedFlexBox); /* Warning: FlexItem Does Not Control Anything */
         
     }
 

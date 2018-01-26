@@ -204,7 +204,7 @@ juce::Array<juce::Component*> HackAudio::Diagram::getDiagramOutputs() const
 void HackAudio::Diagram::connect(juce::Component& source, juce::Component& destination)
 {
 
-    assert(&source != &destination);    /* Warning: Can't Connect Components To Themselves */
+    jassert(&source != &destination);    /* Warning: Can't Connect Components To Themselves */
 
     addAndMakeVisible(source);
     addAndMakeVisible(destination);
@@ -233,7 +233,7 @@ void HackAudio::Diagram::connect(juce::Component& source, juce::Component& desti
 void HackAudio::Diagram::connect(HackAudio::Diagram::Junction& source, juce::Component& destination, Junction::Direction directionFromSource)
 {
 
-    assert(&source != &destination);    /* Warning: Can't Connect Components To Themselves */
+    jassert(&source != &destination);    /* Warning: Can't Connect Components To Themselves */
 
     addAndMakeVisible(source);
     addAndMakeVisible(destination);
@@ -420,8 +420,8 @@ void HackAudio::Diagram::reroute(juce::Component& source, juce::Component& oldDe
 void HackAudio::Diagram::setSubDiagram(juce::Component& source, HackAudio::Diagram& subDiagram)
 {
 
-    assert(getIndexOfChildComponent(&source) != -1);    /* Warning: Subdiagram Trigger Component Must Be A Child Of Your Diagram */
-    assert(dynamic_cast<HackAudio::Label*>(&source));    /* Warning: Sources May Only Be HackAudio::Labels */
+    jassert(getIndexOfChildComponent(&source) != -1);    /* Warning: Subdiagram Trigger Component Must Be A Child Of Your Diagram */
+    jassert(dynamic_cast<HackAudio::Label*>(&source));    /* Warning: Sources May Only Be HackAudio::Labels */
 
     dynamic_cast<HackAudio::Label*>(&source)->highlightStatus = true;
 
@@ -1162,7 +1162,7 @@ void HackAudio::Diagram::paintOverChildren(juce::Graphics& g)
             else if (diffY <= 8 || sourceY == destinationY)
             {
 
-                assert(diffX > 8);    /* Warning: Components Are Placed Directly On Top Of Each Other */
+                jassert(diffX > 8);    /* Warning: Components Are Placed Directly On Top Of Each Other */
 
                 if (sourceX < destinationX)
                 {
