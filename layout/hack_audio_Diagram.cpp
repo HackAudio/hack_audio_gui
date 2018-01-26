@@ -54,11 +54,11 @@ void HackAudio::Diagram::Junction::setSymbol(HackAudio::Diagram::Junction::Symbo
             break;
 
         case HackAudio::Diagram::Junction::Symbol::Divide:
-            currentSymbol = juce::String::CharPointerType("\xc3\xb7");
+            currentSymbol = juce::CharPointer_UTF8("\xc3\xb7");
             break;
 
         case HackAudio::Diagram::Junction::Symbol::Multiply:
-            currentSymbol = juce::String::CharPointerType("\xc3\x97");
+            currentSymbol = juce::CharPointer_UTF8("\xc3\x97");
             break;
 
         case HackAudio::Diagram::Junction::Symbol::Power:
@@ -66,7 +66,7 @@ void HackAudio::Diagram::Junction::setSymbol(HackAudio::Diagram::Junction::Symbo
             break;
 
         case HackAudio::Diagram::Junction::Symbol::Sqrt:
-            currentSymbol = juce::String::CharPointerType("\xe2\x88\x9a");
+            currentSymbol = juce::CharPointer_UTF8("\xe2\x88\x9a");
             break;
 
         case HackAudio::Diagram::Junction::Symbol::Average:
