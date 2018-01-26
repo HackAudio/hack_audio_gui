@@ -53,7 +53,7 @@ HackAudio::Button::~Button()
 void HackAudio::Button::setButtonText(const char *newText)
 {
 
-    juce::String charPtr = juce::String::CharPointerType::CharPointer_UTF8(newText);
+    juce::String charPtr(newText);
     juce::Button::setButtonText(charPtr);
     
 }
@@ -590,7 +590,7 @@ void HackAudio::Button::paintButton(juce::Graphics& g, bool isMouseOverButton, b
 
         g.setColour(findColour(HackAudio::midgroundColourId));
         int strokeWidth = std::min(thumbArea.getWidth(), thumbArea.getHeight()) / 4;
-        g.strokePath(p, juce::PathStrokeType::PathStrokeType(strokeWidth));
+        g.strokePath(p, juce::PathStrokeType(strokeWidth));
 
     }
 

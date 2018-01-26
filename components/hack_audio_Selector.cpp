@@ -82,7 +82,7 @@ void HackAudio::Selector::add(const char* newItemText, int itemIndex)
 {
 
     itemIndex = (itemIndex = -1) ? selectorItems.size() : itemIndex;
-    juce::String charPtr = juce::String::CharPointerType::CharPointer_UTF8(newItemText);
+    juce::String charPtr = juce::String(newItemText);
     selectorItems.insert(itemIndex, charPtr);
 
     repaint();
@@ -120,7 +120,7 @@ void HackAudio::Selector::set(int itemIndex, const juce::String& newText)
 void HackAudio::Selector::set(int itemIndex, const char* newText)
 {
 
-    juce::String charPtr = juce::String::CharPointerType::CharPointer_UTF8(newText);
+    juce::String charPtr = juce::String(newText);
     selectorItems[itemIndex] = charPtr;
     repaint();
     
@@ -192,7 +192,7 @@ int HackAudio::Selector::getIndexForItem(const juce::String& itemText) const
 int HackAudio::Selector::getIndexForItem(const char* itemText) const
 {
 
-    juce::String charPtr = juce::String::CharPointerType::CharPointer_UTF8(itemText);
+    juce::String charPtr = juce::String(itemText);
 
     for (int i = 0; i < selectorItems.size(); ++i)
     {

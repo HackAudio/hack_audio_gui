@@ -30,7 +30,7 @@ namespace HackAudio
 /**
  A class that displays HackAudio::Labels in a signal flow diagram
 */
-class Diagram : private juce::Component,
+class Diagram : public juce::Component,
                 private juce::ComponentListener
 {
 
