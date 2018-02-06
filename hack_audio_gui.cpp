@@ -39,8 +39,8 @@
 #define CORNER_RADIUS   24
 #define CORNER_CONFIG   CORNER_RADIUS, CORNER_RADIUS, false, true, true, false
 
-#define ROTARY_ANGLESTART ((7.0f * M_PI) / 6.0f)
-#define ROTARY_ANGLERANGE ((5.0f * M_PI) / 3.0f)
+#define ROTARY_ANGLESTART ((7.0f * float_Pi) / 6.0f)
+#define ROTARY_ANGLERANGE ((5.0f * float_Pi) / 3.0f)
 
 #define DEFAULT_PIPMIN 6
 #define DEFAULT_PIPMAX 8

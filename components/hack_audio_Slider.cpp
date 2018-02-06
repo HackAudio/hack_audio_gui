@@ -603,7 +603,7 @@ void HackAudio::Slider::timerCallback()
         }
 
 
-        currentAngle += (animationVel * M_PI) / 180;
+        currentAngle += (animationVel * float_Pi) / 180;
         juce::Point<float> destination = thumbArea.getCentre().getPointOnCircumference(radius, currentAngle);
 
         indicatorArea.setCentre(destination.x, destination.y);
@@ -1000,7 +1000,7 @@ void HackAudio::Slider::resized()
 
         setSize(width, height);
 
-        setMouseDragSensitivity(2 * M_PI * 32);
+        setMouseDragSensitivity(2 * float_Pi * 32);
 
     }
 
