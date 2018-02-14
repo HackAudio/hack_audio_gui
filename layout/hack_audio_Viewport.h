@@ -32,7 +32,7 @@ namespace HackAudio
 */
 class Viewport : public juce::Component,
                  private juce::ComponentListener,
-                 private juce::ButtonListener
+                 private juce::Button::Listener
 {
 
 public:

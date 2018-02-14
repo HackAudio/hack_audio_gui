@@ -32,7 +32,7 @@ namespace HackAudio
 */
 class Slider : public juce::Slider,
                private juce::Timer,
-               private juce::SliderListener
+               private juce::Slider::Listener
 {
 public:
 

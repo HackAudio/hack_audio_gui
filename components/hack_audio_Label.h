@@ -31,7 +31,7 @@ namespace HackAudio
  A custom label using the juce::Label API that also supports pre/post-fixes and text formatting
 */
 class Label : public  juce::Label,
-              private juce::LabelListener,
+              private juce::Label::Listener,
               private juce::MultiTimer
 {
 
